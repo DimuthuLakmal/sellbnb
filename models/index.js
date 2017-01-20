@@ -4,8 +4,8 @@ var mysql = require('mysql');
 var fs = require('fs');
 var path = require('path');
 
-var sequelize = new Sequelize('seller_bnb', 'root', 'ijse', {
-    host: 'localhost',
+var sequelize = new Sequelize('heroku_b49e2e6a6b341c4', 'b2f77e7393c63c', '9a0a721c', {
+    host: 'us-cdbr-iron-east-04.cleardb.net',
     dialect: 'mysql',
     pool: {
         max: 5,
