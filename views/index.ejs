@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <% if(!isAuthenticated) { %>
+      <a href = "/login">Login here</a>
+    <% } else { %>
+        Hello, <%= user.name %>!
+        <a href="/logout">Logout</a>
+    <% } %>
+  </body>
+</html>

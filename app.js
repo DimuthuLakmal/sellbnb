@@ -1,0 +1,116 @@
+var express = require('express');
+var expressSession = require('express-session');
+var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var passport = require('passport');
+var passportLocal = require('passport-local');
+var passportHttp = require('passport-http');
+
+var routes = require('./routes/index');
+var users = require('./routes/users');
+var login = require('./routes/login');
+var news = require('./routes/news');
+
+var app = express();
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+//setting up passportjs
+app.use(expressSession({
+  secret: process.env.SESSION_SECRET || 'secret',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new passportLocal.Strategy(verifyCredentials));
+passport.use(new passportHttp.BasicStrategy(verifyCredentials));
+passport.serializeUser(function (user, done) {
+  done(null, user.id);
+});
+passport.deserializeUser(function(id, done) {
+  //Query database of cache here!
+  done(null, {id: id, name: id});
+});
+function ensureAuthenticated(req, res, next) {
+  if(req.isAuthenticated()) {
+    next();
+  } else {
+    res.send(403);
+  }
+}
+function verifyCredentials(username, password, done) {
+  if(username === password) {
+    done(null, {id: username, name: username});
+  } else {
+    done(null, null);
+  }
+}
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/news/start', express.static(path.join(__dirname, 'public')));
+app.use('/news/id', express.static(path.join(__dirname, 'public')));
+
+app.use('/', routes);
+app.use('/users', users);
+app.use('/login', login);
+app.use('/logout', function (req, res) {
+  req.logout();
+  res.redirect('/');
+});
+
+//app.use('/api', passport.authenticate('basic', {session: false}));
+app.use('/api/news', news);
+
+app.get('/api/data', ensureAuthenticated,function (req, res) {
+  res.json([
+    {value: 'Dimuthu'},
+    {value: 'Ruwan'},
+    {value: 'Kamal'}
+  ])
+})
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
+});
+
+
+module.exports = app;
