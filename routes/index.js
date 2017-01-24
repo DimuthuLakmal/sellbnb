@@ -71,4 +71,20 @@ router.get('/news/id/:id', function(req, res) {
   res.render('viewnews', {News: news});
 });
 
+//view basic details
+router.get('/user/basic', function(req, res) {
+  //check whether use logged or not
+  if(req.isAuthenticated()) {
+    res.render('useraccountbasics', {
+      isAuthenticated : req.isAuthenticated(),
+      user: req.user
+    });
+  } else {
+    //set visited path to session. It uses to rediect to again to that page when login success.
+    req.session.returnTo = req.path;
+    res.redirect('/user/login');
+  }
+});
+
+
 module.exports = router;

@@ -26,7 +26,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 //setting up passportjs
+var flash=require("connect-flash");
+app.use(flash());
 app.use(expressSession({
   secret: process.env.SESSION_SECRET || 'secret',
   resave: false,
@@ -34,52 +37,58 @@ app.use(expressSession({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new passportLocal.Strategy(verifyCredentials));
-passport.use(new passportHttp.BasicStrategy(verifyCredentials));
-passport.serializeUser(function (user, done) {
-  done(null, user.id);
-});
-passport.deserializeUser(function(id, done) {
-  //Query database of cache here!
-  done(null, {id: id, name: id});
-});
-function ensureAuthenticated(req, res, next) {
-  if(req.isAuthenticated()) {
-    next();
-  } else {
-    res.send(403);
-  }
-}
-function verifyCredentials(username, password, done) {
-  if(username === password) {
-    done(null, {id: username, name: username});
-  } else {
-    done(null, null);
-  }
-}
+
+//----------------- Following methods moved to user route-------------------
+// passport.use(new passportLocal.Strategy(verifyCredentials));
+// passport.use(new passportHttp.BasicStrategy(verifyCredentials));
+// passport.serializeUser(function (user, done) {
+//   done(null, user.id);
+// });
+// passport.deserializeUser(function(id, done) {
+//   //Query database of cache here!
+//   done(null, {id: id, name: id});
+// });
+// function ensureAuthenticated(req, res, next) {
+//   if(req.isAuthenticated()) {
+//     next();
+//   } else {
+//     res.send(403);
+//   }
+// }
+// function verifyCredentials(username, password, done) {
+//   if(username === password) {
+//     done(null, {id: username, name: username});
+//   } else {
+//     done(null, null);
+//   }
+// }
+//---------------------------------------------------------------------
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/news/start', express.static(path.join(__dirname, 'public')));
 app.use('/news/id', express.static(path.join(__dirname, 'public')));
+app.use('/user', express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
-app.use('/login', login);
-app.use('/logout', function (req, res) {
-  req.logout();
-  res.redirect('/');
-});
+app.use('/user', users);
+// app.use('/logout', function (req, res) {
+//   req.logout();
+//   res.redirect('/');
+// });
 
 //app.use('/api', passport.authenticate('basic', {session: false}));
 app.use('/api/news', news);
 
-app.get('/api/data', ensureAuthenticated,function (req, res) {
-  res.json([
-    {value: 'Dimuthu'},
-    {value: 'Ruwan'},
-    {value: 'Kamal'}
-  ])
-})
+//----------------- Following methods moved to user route---------------
+// app.get('/api/data', ensureAuthenticated,function (req, res) {
+//   res.json([
+//     {value: 'Dimuthu'},
+//     {value: 'Ruwan'},
+//     {value: 'Kamal'}
+//   ])
+// })
+//---------------------------------------------------------------------
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
