@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<!--[if IE 8 ]>
+<html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en"> <!--<![endif]-->
 <head>
 
     <!-- Basic Page Needs
@@ -14,6 +16,7 @@
 
     <!-- CSS
     ================================================== -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/colors/blue.css" id="colors">
 
@@ -74,12 +77,14 @@
             </div>
 
             <!-- Search -->
-            <nav class="top-search">
-                <form action="#" method="get">
-                    <button><i class="fa fa-search"></i></button>
-                    <input class="search-field" type="text" placeholder="Search" value="" size="5" maxlength="4"/>
-                </form>
-            </nav>
+            <div align="center">
+                <nav class="top-search">
+                    <form action="#" method="get">
+                        <button><i class="fa fa-search"></i></button>
+                        <input class="search-field" type="text" placeholder="Search" value="" size="5" maxlength="4"/>
+                    </form>
+                </nav>
+            </div>
 
         </div>
 
@@ -124,106 +129,151 @@
         <div class="parallax-overlay"></div>
 
         <div class="parallax-content">
-            <h2>News <span>With Trust</span></h2>
+            <h2>User Account <span>Contact Details</span></h2>
 
             <nav id="breadcrumbs">
                 <ul>
                     <li>Home</li>
-                    <li>News</li>
+                    <li>Account</li>
+                    <li>Contact Details</li>
                 </ul>
             </nav>
         </div>
     </section>
 
-
-    <!-- Content
-    ================================================== -->
-
-    <!-- Container -->
     <div class="container">
 
-        <div class="six columns centered">
+        <!-- Sidebar
+        ================================================== -->
+        <div class="four columns">
 
-            <ul class="tabs-nav my-account">
-                <li class=""><a href="#tab1">Sign In</a></li>
-                <li><a href="#tab2">Register</a></li>
-            </ul>
+            <!-- Categories -->
+            <div class="widget margin-top-0">
 
-            <div class="tabs-container">
-                <!-- Login -->
-                <div class="tab-content" id="tab1" style="display: none;">
+                <ul id="categories">
 
-                    <h3 class="headline">Login</h3><span class="line" style="margin-bottom:20px;"></span><div class="clearfix"></div>
+                    <li><a href="#">Basic Account</a></li>
+                    <li><a href="#">Contact Information</a></li>
+                    <li><a href="#">Bank Account</a></li>
+                    <li><a href="#">Business Information</a></li>
+                    <li><a href="#">Notification Preferences</a></li>
 
-                    <form method="post" class="login" action="">
+                </ul>
+                <div class="clearfix"></div>
 
-                        <%if(message != '') { %>
-                            <div class="notification error closeable">
-                                <p><span>Error!</span> <%= message %></p>
-                                <a class="close" href="#"></a>
-                            </div>
-                        <% } %>
-
-                        <p class="form-row form-row-wide">
-                            <label for="username">Username or Email Address: <span class="required">*</span></label>
-                            <input type="text" class="input-text" name="username" id="username" value="" />
-                        </p>
-
-                        <p class="form-row form-row-wide">
-                            <label for="password">Password: <span class="required">*</span></label>
-                            <input class="input-text" type="password" name="password" id="password" />
-                        </p>
-
-                        <p class="form-row">
-                            <input type="submit" class="button" name="login" value="Sign In" />
-
-                            <label for="rememberme" class="rememberme">
-                                <input name="rememberme" type="checkbox" id="rememberme" value="forever" /> Remember Me</label>
-                        </p>
-
-                        <p class="lost_password">
-                            <a href="#" >Lost Your Password?</a>
-                        </p>
-
-
-                    </form>
-                </div>
-
-                <!-- Register -->
-                <div class="tab-content" id="tab2" style="display: none;">
-
-                    <h3 class="headline">Register</h3><span class="line" style="margin-bottom:20px;"></span><div class="clearfix"></div>
-
-                    <form method="post" class="register">
-
-                        <p class="form-row form-row-wide">
-                            <label for="reg_email">Email Address: <span class="required">*</span></label>
-                            <input type="email" class="input-text" name="email" id="reg_email" value="" />
-                        </p>
-
-
-                        <p class="form-row form-row-wide">
-                            <label for="reg_password">Password: <span class="required">*</span></label>
-                            <input type="password" class="input-text" name="password" id="reg_password" />
-                        </p>
-
-                        <p class="form-row form-row-wide">
-                            <label for="reg_password2">Repeat Password: <span class="required">*</span></label>
-                            <input type="password" class="input-text" name="password" id="reg_password2" />
-                        </p>
-
-                        <p class="form-row">
-                            <input type="submit" class="button" name="register" value="Register" />
-                        </p>
-
-                    </form>
-                </div>
             </div>
+
         </div>
+
+
+        <!-- Content
+        ================================================== -->
+
+        <div class="twelve columns products">
+
+            <section class="variables">
+
+                <form method="post" name="bidform">
+
+                    <fieldset>
+
+                        <div class="twelve alpha columns bidform">
+                            <label>Images : </label>
+                            <div class="ten columns" id="imagepreview-div"></div>
+                            <div class="ten columns" id="imagepreview-div"></div>
+                            <button class="commodity-uploadimage" id="commodity-uploadimage">Upload Images</button>
+                            <input type="file" name="fileToUpload" id="fileToUpload" style="display: none" multiple>
+                        </div>
+
+                        <div class="twelve alpha columns bidform">
+                            <label>Name : </label>
+                            <input name="name" type="text" id="name"/>
+                        </div>
+
+                        <div class="twelve alpha columns bidform">
+                            <label>Segment : </label>
+                            <input name="segment" type="text" id="segment"/>
+                        </div>
+
+                        <div class="twelve alpha columns bidform">
+                            <label>Family : </label>
+                            <input name="family" type="text" id="family"/>
+                        </div>
+
+                        <div class="twelve alpha columns bidform">
+                            <label>Class : </label>
+                            <input name="class" type="text" id="class"/>
+                        </div>
+
+                        <div class="twelve alpha columns bidform">
+                            <label>Measure Unit : </label>
+                            <input name="measure_unit" type="text" id="measure_unit"/>
+                        </div>
+
+                        <div class="twelve alpha columns bidform">
+                            <label>Alternative Names : </label>
+                            <input name="alternative_names" type="text" id="alternative_names" placeholder="Alternative Name 1, Alternative Name 2, Alternative Name 3"/>
+                        </div>
+
+                        <div class="twelve alpha columns bidform">
+                            <label>Specifications: </label>
+                            <textarea name="specification" cols="91" rows="3" id="specification" spellcheck="true" style="width: 97%"></textarea>
+                        </div>
+
+                        <div class="twelve alpha columns bidform">
+                            <table class="basic-table" style="display: none" id="parameter-table">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: center;">Parameter</th>
+                                    <th style="text-align: center;">Value</th>
+                                    <th style="text-align: center;"></th>
+                                </tr>
+                                </thead>
+                                <tbody id="parameter-table-body"></tbody>
+                            </table>
+                            <a class="popup-with-zoom-anim" href="#addparameter-dialog" style="color:#2db2ea; float: right">Add Parameters</a>
+                        </div>
+
+                        <div class="twelve columns bidform">
+                            <input type="submit" class="submit" id="submit" value="Add"/>
+                        </div>
+
+                    </fieldset>
+                    <br>
+                    <div class="notification success closeable" style="display: none" id="message_success">
+                        <p><span>Success! </span>Commodity was successfully added</p>
+                        <a class="close" href="#"></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </form>
+                <div id="addparameter-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
+                    <h2 class="margin-bottom-10">Add Parameters</h2>
+                    <form name="editform">
+
+                        <fieldset>
+
+                            <div class="twelve alpha columns editform">
+                                <input name="parameter_name" type="text" id="parameter_name" placeholder="Parameter"/>
+                            </div>
+
+                            <div class="twelve alpha columns editform">
+                                <input name="value" type="text" id="value" placeholder="Value"/>
+                            </div>
+
+                            <div class="twelve columns editform">
+                                <input type="submit" class="submit" id="submitparameter" value="Add"/>
+                            </div>
+                        </fieldset>
+
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </section>
+        </div>
+
     </div>
 
     <div class="margin-top-50"></div>
-
 
     <!-- Footer
     ================================================== -->
@@ -234,7 +284,8 @@
 
             <div class="four columns">
                 <img src="images/logo-footer.png" alt="" class="margin-top-10"/>
-                <p class="margin-top-15">Nulla facilisis feugiat magna, ut molestie metus hendrerit vitae. Vivamus tristique lectus at varius rutrum. Integer lobortis mauris non consectetur eleifend.</p>
+                <p class="margin-top-15">Nulla facilisis feugiat magna, ut molestie metus hendrerit vitae. Vivamus
+                    tristique lectus at varius rutrum. Integer lobortis mauris non consectetur eleifend.</p>
             </div>
 
             <div class="four columns">
@@ -275,7 +326,8 @@
                 <h3 class="headline footer">Newsletter</h3>
                 <span class="line"></span>
                 <div class="clearfix"></div>
-                <p>Sign up to receive email updates on new product announcements, gift ideas, special promotions, sales and more.</p>
+                <p>Sign up to receive email updates on new product announcements, gift ideas, special promotions, sales
+                    and more.</p>
 
                 <form action="#" method="get">
                     <button class="newsletter-btn" type="submit">Join</button>
@@ -298,11 +350,11 @@
             <div class="eight columns">© Copyright 2014 by <a href="#">trizzy</a>. All Rights Reserved.</div>
             <div class="eight columns">
                 <ul class="payment-icons">
-                    <li><img src="images/visa.png" alt="" /></li>
-                    <li><img src="images/mastercard.png" alt="" /></li>
-                    <li><img src="images/skrill.png" alt="" /></li>
-                    <li><img src="images/moneybookers.png" alt="" /></li>
-                    <li><img src="images/paypal.png" alt="" /></li>
+                    <li><img src="images/visa.png" alt=""/></li>
+                    <li><img src="images/mastercard.png" alt=""/></li>
+                    <li><img src="images/skrill.png" alt=""/></li>
+                    <li><img src="images/moneybookers.png" alt=""/></li>
+                    <li><img src="images/paypal.png" alt=""/></li>
                 </ul>
             </div>
 
@@ -343,6 +395,7 @@
 <script src="scripts/puregrid.js"></script>
 <script src="scripts/stacktable.js"></script>
 <script src="scripts/custom.js"></script>
+<script src="scripts/views/addcommodity.js"></script>
 
 </body>
 </html>
