@@ -63,13 +63,50 @@ router.get('/login', function(req, res, next) {
 router.post('/login', function (req, res, next) {
     //redirect to previously visited page if login success, otherwise to login page.
     var redirectTo = req.session.returnTo || '/';
-    delete req.session.returnTo;
 
     passport.authenticate('local', {
         successRedirect: redirectTo,
         failureRedirect: 'login',
         failureFlash: true
     })(req, res, next);
+});
+
+
+/* Change password */
+router.post('/password', function (req, res) {
+    //retrieve data from req object
+    var newpassword = req.body.newpassword;
+    var currentpassword = req.body.currentpassword;
+    var userId = req.body.id;
+
+    //retrieve current password of userid and validate, then update password
+    sequelize.sync().then(
+        function () {
+            var User = models.User;
+            User.findAll({
+                where: {
+                    id: userId,
+                    password: currentpassword,
+                }
+            }).then(function (User) {
+                if(!_.isUndefined(User[0])) {
+                    var user = User[0].dataValues;
+                    var User = models.User;
+                    User.update(
+                        { password: newpassword },
+                        { where: { id: userId } }
+                    ).then(function (results) {
+                        res.redirect('/user/basic');
+                    });
+                } else {
+                    req.session.errorMessage = 'Current Password is invalid.';
+                    res.redirect('/user/basic');
+                }
+            });
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
 });
 
 module.exports = router;
