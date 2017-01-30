@@ -63,13 +63,129 @@ router.get('/login', function(req, res, next) {
 router.post('/login', function (req, res, next) {
     //redirect to previously visited page if login success, otherwise to login page.
     var redirectTo = req.session.returnTo || '/';
-    delete req.session.returnTo;
 
     passport.authenticate('local', {
         successRedirect: redirectTo,
         failureRedirect: 'login',
         failureFlash: true
     })(req, res, next);
+});
+
+
+/* Change password */
+router.post('/password', function (req, res) {
+    //retrieve data from req object
+    var newpassword = req.body.newpassword;
+    var currentpassword = req.body.currentpassword;
+    var userId = req.body.id;
+
+    //retrieve current password of userid and validate, then update password
+    sequelize.sync().then(
+        function () {
+            var User = models.User;
+            User.findAll({
+                where: {
+                    id: userId,
+                    password: currentpassword,
+                }
+            }).then(function (User) {
+                if(!_.isUndefined(User[0])) {
+                    var user = User[0].dataValues;
+                    var User = models.User;
+                    User.update(
+                        { password: newpassword },
+                        { where: { id: userId } }
+                    ).then(function (results) {
+                        res.redirect('/user/basic');
+                    });
+                } else {
+                    req.session.errorMessage = 'Current Password is invalid.';
+                    res.redirect('/user/basic');
+                }
+            });
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+});
+
+/* Change FullName */
+router.post('/fullname', function (req, res) {
+    //retrieve data from req object
+    var newfullname = req.body.newfullname;
+    var userId = req.body.id;
+
+    //update fullname of user table
+    sequelize.sync().then(
+        function () {
+            var User = models.User;
+            User.update(
+                { full_name: newfullname },
+                { where: { id: userId } }
+            ).then(function (results) {
+                res.redirect('/user/basic');
+            }).catch(function (error) {
+                req.session.errorMessage = 'Invalid Full Name.';
+                res.redirect('/user/basic');
+            });
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+});
+
+/* Change Company Name */
+router.post('/companyname', function (req, res) {
+    //retrieve data from req object
+    var newcompanyname = req.body.newcompanyname;
+    var userId = req.body.id;
+
+    //update fullname of user table
+    sequelize.sync().then(
+        function () {
+            var User = models.User;
+            User.update(
+                { company_name: newcompanyname },
+                { where: { id: userId } }
+            ).then(function (results) {
+                res.redirect('/user/basic');
+            }).catch(function (error) {
+                req.session.errorMessage = 'Invalid Company Name';
+                res.redirect('/user/basic');
+            });
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+});
+
+/* Change Location */
+router.post('/location', function (req, res) {
+    //retrieve data from req object
+    var newaddress1 = req.body.newaddress1;
+    var newaddress2 = req.body.newaddress2;
+    var newcity = req.body.newcity;
+    var userId = req.body.id;
+
+    //update fullname of user table
+    sequelize.sync().then(
+        function () {
+            var User = models.User;
+            User.update(
+                { mailingddress1: newaddress1 ,
+                  mailingddress2: newaddress2 ,
+                  mailingCity: newcity },
+                { where: { id: userId } }
+            ).then(function (results) {
+                res.redirect('/user/basic');
+            }).catch(function (error) {
+                req.session.errorMessage = 'Invalid Location.';
+                res.redirect('/user/basic');
+            });
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
 });
 
 module.exports = router;

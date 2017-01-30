@@ -74,14 +74,40 @@ router.get('/news/id/:id', function(req, res) {
 //view basic details
 router.get('/user/basic', function(req, res) {
   //check whether use logged or not
+  var errorMessage = req.session.errorMessage || '';
+  delete req.session.errorMessage;
   if(req.isAuthenticated()) {
+    delete req.session.returnTo;
     res.render('useraccountbasics', {
       isAuthenticated : req.isAuthenticated(),
-      user: req.user
+      user: req.user,
+      errorMessage: errorMessage,
     });
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path;
+    console.log(req.session.returnTo);
+    res.redirect('/user/login');
+  }
+});
+
+
+//view contact details
+router.get('/user/contact', function(req, res) {
+  //check whether use logged or not
+  var errorMessage = req.session.errorMessage || '';
+  delete req.session.errorMessage;
+  if(req.isAuthenticated()) {
+    delete req.session.returnTo;
+    res.render('useraccountcontactinformation', {
+      isAuthenticated : req.isAuthenticated(),
+      user: req.user,
+      errorMessage: errorMessage,
+    });
+  } else {
+    //set visited path to session. It uses to rediect to again to that page when login success.
+    req.session.returnTo = req.path;
+    console.log(req.session.returnTo);
     res.redirect('/user/login');
   }
 });

@@ -71,6 +71,7 @@ app.use('/user', express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/user', users);
+app.use('/api/user', users);
 // app.use('/logout', function (req, res) {
 //   req.logout();
 //   res.redirect('/');
