@@ -16,6 +16,7 @@ module.exports = function (sequelize, DataTypes) {
             associate: function (models) {
                 Commodity.hasMany(models.CommodityParameter);
                 Commodity.hasMany(models.CommodityAlterName);
+                Commodity.hasMany(models.CommodityImage);
             }
         }
     });

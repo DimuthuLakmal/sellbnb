@@ -13,6 +13,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
 var news = require('./routes/news');
+var commodity = require('./routes/commodity');
 
 var app = express();
 
@@ -23,8 +24,8 @@ app.set('view engine', 'ejs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '5mb'}));
+app.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
 app.use(cookieParser());
 
 //setting up passportjs
@@ -68,10 +69,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/news/start', express.static(path.join(__dirname, 'public')));
 app.use('/news/id', express.static(path.join(__dirname, 'public')));
 app.use('/user', express.static(path.join(__dirname, 'public')));
+app.use('/commodity/add', express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/user', users);
 app.use('/api/user', users);
+app.use('/api/commodity', commodity);
 // app.use('/logout', function (req, res) {
 //   req.logout();
 //   res.redirect('/');
