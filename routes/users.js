@@ -41,7 +41,7 @@ function verifyCredentials(username, password, done) {
         User.findAll({
           where: {
             username: username,
-            password: password,
+            password: bcrypt.hashSync(password, salt),
           }
         }).then(function (User) {
           if(!_.isUndefined(User[0])) {
