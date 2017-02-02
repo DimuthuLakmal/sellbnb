@@ -2,7 +2,7 @@
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
-
+    <% var message="";%>
     <!-- Basic Page Needs
     ================================================== -->
     <meta charset="utf-8">
@@ -194,11 +194,11 @@
 
                     <h3 class="headline">Register</h3><span class="line" style="margin-bottom:20px;"></span><div class="clearfix"></div>
 
-                    <form method="post" class="register">
+                    <form method="post" class="register" action="/user/adduser">
 
                         <p class="form-row form-row-wide">
                             <label for="reg_email">Email Address: <span class="required">*</span></label>
-                            <input type="email" class="input-text" name="email" id="reg_email" value="" />
+                            <input type="email" class="input-text" name="username" id="reg_email" value="" />
                         </p>
 
 

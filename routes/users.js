@@ -41,7 +41,7 @@ function verifyCredentials(username, password, done) {
         User.findAll({
           where: {
             username: username,
-            password: password,
+            password: bcrypt.hashSync(password, salt),
           }
         }).then(function (User) {
           if(!_.isUndefined(User[0])) {
@@ -113,7 +113,7 @@ router.post('/password', function (req, res) {
 
 router.post('/adduser', function (req, res) {
     if (typeof(req.body.username) != "undefined" && typeof req.body.password != "undefined") {
-        var hash = bcrypt.hashSync(req.body.password, salt);
+        var hash = bcrypt.hashSync(req.body.password[0], salt);
         models.User.create({username: req.body.username, password: hash}).then(function () {
 
             console.log(hash);
