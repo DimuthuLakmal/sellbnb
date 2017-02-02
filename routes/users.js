@@ -5,6 +5,8 @@ var models = require('./../models');
 var sequelize = models.sequelize;
 var passport = require('passport');
 var passportLocal   = require('passport-local');
+var bcrypt = require('bcryptjs');
+var salt = bcrypt.genSaltSync(10);
 
 //local strategy use verifyCredentials
 passport.use(new passportLocal.Strategy(verifyCredentials));
@@ -107,6 +109,25 @@ router.post('/password', function (req, res) {
     ).catch(function (error) {
         console.log(error);
     });
+});
+
+router.post('/adduser', function (req, res) {
+    if (typeof(req.body.username) != "undefined" && typeof req.body.password != "undefined") {
+        var hash = bcrypt.hashSync(req.body.password, salt);
+        models.User.create({username: req.body.username, password: hash}).then(function () {
+
+            console.log(hash);
+            res.redirect('/user/basic');
+        })
+    } else {
+        res.send("error in adding user!");
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
+    }
+
 });
 
 module.exports = router;

@@ -14,6 +14,7 @@ var users = require('./routes/users');
 var login = require('./routes/login');
 var news = require('./routes/news');
 var commodity = require('./routes/commodity');
+var signup = require('./routes/signup');
 
 var app = express();
 
@@ -93,6 +94,7 @@ app.use('/api/news', news);
 // })
 //---------------------------------------------------------------------
 
+app.use('/signup', signup);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
