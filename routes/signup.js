@@ -4,7 +4,7 @@ var passport = require('passport');
 
 /* GET login */
 router.get('/', function(req, res, next) {
-    res.render('login',{name:'dinuka sala'});
+    res.render('login');
 });
 
 router.post('/',function (req,res) {
