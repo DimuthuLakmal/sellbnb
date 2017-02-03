@@ -1,8 +1,13 @@
 <!DOCTYPE html>
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<!--[if IE 8 ]>
+<html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en"> <!--<![endif]-->
 <head>
-    <% var message="";%>
+    <%
+    if (typeof(message)== undefined)
+        var message = "";
+    %>
     <!-- Basic Page Needs
     ================================================== -->
     <meta charset="utf-8">
@@ -118,9 +123,9 @@
 
     <!-- Titlebar
     ================================================== -->
-    <section class="parallax-titlebar fullwidth-element"  data-background="#000" data-opacity="0.45" data-height="160">
+    <section class="parallax-titlebar fullwidth-element" data-background="#000" data-opacity="0.45" data-height="160">
 
-        <img src="images/titlebar_bg_02.jpg" alt="" />
+        <img src="images/titlebar_bg_02.jpg" alt=""/>
         <div class="parallax-overlay"></div>
 
         <div class="parallax-content">
@@ -153,36 +158,38 @@
                 <!-- Login -->
                 <div class="tab-content" id="tab1" style="display: none;">
 
-                    <h3 class="headline">Login</h3><span class="line" style="margin-bottom:20px;"></span><div class="clearfix"></div>
+                    <h3 class="headline">Login</h3><span class="line" style="margin-bottom:20px;"></span>
+                    <div class="clearfix"></div>
 
                     <form method="post" class="login" action="">
 
-                        <%if(message != '') { %>
-                            <div class="notification error closeable">
-                                <p><span>Error!</span> <%= message %></p>
-                                <a class="close" href="#"></a>
-                            </div>
+                        <% if(message != '') { %>
+                        <div class="notification error closeable">
+                            <p><span>Error!</span> <%= message %></p>
+                            <a class="close" href="#"></a>
+                        </div>
                         <% } %>
 
                         <p class="form-row form-row-wide">
                             <label for="username">Username or Email Address: <span class="required">*</span></label>
-                            <input type="text" class="input-text" name="username" id="username" value="" />
+                            <input type="text" class="input-text" name="username" id="username" value=""/>
                         </p>
 
                         <p class="form-row form-row-wide">
                             <label for="password">Password: <span class="required">*</span></label>
-                            <input class="input-text" type="password" name="password" id="password" />
+                            <input class="input-text" type="password" name="password" id="password"/>
                         </p>
 
                         <p class="form-row">
-                            <input type="submit" class="button" name="login" value="Sign In" />
+                            <input type="submit" class="button" name="login" value="Sign In"/>
 
                             <label for="rememberme" class="rememberme">
-                                <input name="rememberme" type="checkbox" id="rememberme" value="forever" /> Remember Me</label>
+                                <input name="rememberme" type="checkbox" id="rememberme" value="forever"/> Remember
+                                Me</label>
                         </p>
 
                         <p class="lost_password">
-                            <a href="#" >Lost Your Password?</a>
+                            <a href="#">Lost Your Password?</a>
                         </p>
 
 
@@ -192,28 +199,29 @@
                 <!-- Register -->
                 <div class="tab-content" id="tab2" style="display: none;">
 
-                    <h3 class="headline">Register</h3><span class="line" style="margin-bottom:20px;"></span><div class="clearfix"></div>
+                    <h3 class="headline">Register</h3><span class="line" style="margin-bottom:20px;"></span>
+                    <div class="clearfix"></div>
 
                     <form method="post" class="register" action="/user/adduser">
 
                         <p class="form-row form-row-wide">
                             <label for="reg_email">Email Address: <span class="required">*</span></label>
-                            <input type="email" class="input-text" name="username" id="reg_email" value="" />
+                            <input type="email" class="input-text" name="username" id="reg_email" value=""/>
                         </p>
 
 
                         <p class="form-row form-row-wide">
                             <label for="reg_password">Password: <span class="required">*</span></label>
-                            <input type="password" class="input-text" name="password" id="reg_password" />
+                            <input type="password" class="input-text" name="password" id="reg_password"/>
                         </p>
 
                         <p class="form-row form-row-wide">
                             <label for="reg_password2">Repeat Password: <span class="required">*</span></label>
-                            <input type="password" class="input-text" name="password" id="reg_password2" />
+                            <input type="password" class="input-text" name="password" id="reg_password2"/>
                         </p>
 
                         <p class="form-row">
-                            <input type="submit" class="button" name="register" value="Register" />
+                            <input type="submit" class="button" name="register" value="Register"/>
                         </p>
 
                     </form>
@@ -234,7 +242,8 @@
 
             <div class="four columns">
                 <img src="images/logo-footer.png" alt="" class="margin-top-10"/>
-                <p class="margin-top-15">Nulla facilisis feugiat magna, ut molestie metus hendrerit vitae. Vivamus tristique lectus at varius rutrum. Integer lobortis mauris non consectetur eleifend.</p>
+                <p class="margin-top-15">Nulla facilisis feugiat magna, ut molestie metus hendrerit vitae. Vivamus
+                    tristique lectus at varius rutrum. Integer lobortis mauris non consectetur eleifend.</p>
             </div>
 
             <div class="four columns">
@@ -275,7 +284,8 @@
                 <h3 class="headline footer">Newsletter</h3>
                 <span class="line"></span>
                 <div class="clearfix"></div>
-                <p>Sign up to receive email updates on new product announcements, gift ideas, special promotions, sales and more.</p>
+                <p>Sign up to receive email updates on new product announcements, gift ideas, special promotions, sales
+                    and more.</p>
 
                 <form action="#" method="get">
                     <button class="newsletter-btn" type="submit">Join</button>
@@ -298,11 +308,11 @@
             <div class="eight columns">© Copyright 2014 by <a href="#">trizzy</a>. All Rights Reserved.</div>
             <div class="eight columns">
                 <ul class="payment-icons">
-                    <li><img src="images/visa.png" alt="" /></li>
-                    <li><img src="images/mastercard.png" alt="" /></li>
-                    <li><img src="images/skrill.png" alt="" /></li>
-                    <li><img src="images/moneybookers.png" alt="" /></li>
-                    <li><img src="images/paypal.png" alt="" /></li>
+                    <li><img src="images/visa.png" alt=""/></li>
+                    <li><img src="images/mastercard.png" alt=""/></li>
+                    <li><img src="images/skrill.png" alt=""/></li>
+                    <li><img src="images/moneybookers.png" alt=""/></li>
+                    <li><img src="images/paypal.png" alt=""/></li>
                 </ul>
             </div>
 
