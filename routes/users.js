@@ -33,7 +33,6 @@ passport.deserializeUser(function (id, done) {
 
 //verffying username and password
 function verifyCredentials(username, password, done) {
-
     sequelize.sync().then(
         function () {
             var User = models.User;
@@ -62,6 +61,10 @@ function verifyCredentials(username, password, done) {
 
 /* GET users listing. */
 router.get('/login', function (req, res, next) {
+    res.render('login', {message: req.flash("error")});
+});
+
+router.get('/signup', function (req, res, next) {
     res.render('login', {message: req.flash("error")});
 });
 
@@ -124,13 +127,12 @@ router.post('/adduser', function (req, res) {
             }
         }).then(function (User) {
             if (!_.isUndefined(User[0])) {
-                res.redirect('/signup', {message: 'Username already exists!'});
+                res.redirect('/signup');
             } else {
                 //set error message to flash
                 //done(null, false, { message: 'Wrong username or password!' } );
                 var hash = bcrypt.hashSync(req.body.password[0], salt);
                 models.User.create({username: req.body.username, password: hash}).then(function () {
-                    console.log(hash);
                     res.redirect('/user/basic');
                 });
             }
