@@ -4,6 +4,7 @@
 /* Item Model */
 module.exports = function (sequelize, DataTypes) {
     var Item = sequelize.define('Item', {
+        title: DataTypes.STRING,
         quantity: DataTypes.STRING,
         packageType: DataTypes.STRING,
         deliveryBy: DataTypes.STRING,
@@ -12,7 +13,8 @@ module.exports = function (sequelize, DataTypes) {
         suggestedPrice: DataTypes.STRING,
         note: DataTypes.STRING,
         status: DataTypes.STRING,
-        duration: DataTypes.STRING,
+        duration: DataTypes.INTEGER,
+        hits: DataTypes.INTEGER,
     }, {
         // Define Associations for Item table here.
         classMethods: {

@@ -188,4 +188,27 @@ router.post('/location', function (req, res) {
     });
 });
 
+/* Get Warehouses */
+router.get('/view/warehouses/userId/:userId', function (req, res) {
+    //retrieve data from req object
+    var userId = req.params.userId;
+    //get warehouses details of user
+    sequelize.sync().then(
+        function () {
+            var User = models.User;
+            var WareHouse = models.WareHouse;
+            User.findAll({
+                where: {id: userId},
+                include: [WareHouse],
+            }).then(function (User) {
+                var user = User[0].dataValues;
+                req.session.warehouses = user.WareHouses;
+                res.redirect('/items/add');
+            });
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+});
+
 module.exports = router;
