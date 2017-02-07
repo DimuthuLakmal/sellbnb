@@ -43,7 +43,6 @@ function verifyCredentials(username, password, done) {
                     //password: bcrypt.compareSync(password, hash),
                 }
             }).then(function (User) {
-                console.log(User[0].dataValues.password);
                 if (!_.isUndefined(User[0])) {
                     if (bcrypt.compareSync(password, User[0].dataValues.password)) {    //checking password
                         var user = User[0].dataValues;
