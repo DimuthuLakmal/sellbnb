@@ -15,6 +15,7 @@ var login = require('./routes/login');
 var news = require('./routes/news');
 var commodity = require('./routes/commodity');
 var items = require('./routes/items');
+var signup = require('./routes/signup');
 
 var app = express();
 
@@ -96,7 +97,6 @@ app.use('/api/news', news);
 //   ])
 // })
 //---------------------------------------------------------------------
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
