@@ -16,7 +16,7 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/colors/blue.css" id="colors">
 
@@ -249,15 +249,25 @@
                 </tr>
                 <tr>
                     <td> Full Name</td>
-                    <td> Nimal Senarathne</td>
+                    <td> <%= user.full_name %></td>
                     <td>
-                        <a class="popup-with-zoom-anim" href="#fullname-edit-dialog" style="color:#2db2ea;">Edit</a><br/>
+                        <% if(user.full_name != '') { %>
+                            <a class="popup-with-zoom-anim" href="#fullname-edit-dialog" style="color:#2db2ea;">Edit</a><br/>
+                        <% } else { %>
+                            <a class="popup-with-zoom-anim" href="#fullname-edit-dialog" style="color:#2db2ea;">Add</a><br/>
+                        <% } %>
 
                         <div id="fullname-edit-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
                             <h2 class="margin-bottom-10">Edit Full Name</h2>
-                            <form method="post" name="editform">
+                            <form method="post" name="editform" action="http://localhost:3000/api/user/fullname" id="fullnameChangeForm">
 
                                 <fieldset>
+                                    <div class="notification error closeable" style="display: none" id="fullnameErrorMessage">
+                                        <p><span>Error!</span> Please enter valid Name</p>
+                                        <a class="close" href="#"></a>
+                                    </div>
+
+                                    <input name="id" type="hidden" id="fullname_userid" value="<%= user.id %>"/>
 
                                     <div class="twelve alpha columns editform">
                                         <input name="newfullname" type="text" id="newfullname" placeholder="New Full Name"/>
@@ -276,15 +286,25 @@
                 </tr>
                 <tr>
                     <td> Company Name</td>
-                    <td> DSI Holdings (pvt) Ltd</td>
+                    <td> <%= user.company_name %></td>
                     <td>
+                        <% if(user.company_name != '') { %>
                         <a class="popup-with-zoom-anim" href="#companyname-edit-dialog" style="color:#2db2ea;">Edit</a><br/>
+                        <% } else { %>
+                        <a class="popup-with-zoom-anim" href="#companyname-edit-dialog" style="color:#2db2ea;">Add</a><br/>
+                        <% } %>
 
                         <div id="companyname-edit-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
                             <h2 class="margin-bottom-10">Edit Company Name</h2>
-                            <form method="post" name="editform">
+                            <form method="post" name="editform" action="http://localhost:3000/api/user/companyname" id="companynameChangeForm">
 
                                 <fieldset>
+                                    <div class="notification error closeable" style="display: none" id="companynameErrorMessage">
+                                        <p><span>Error!</span> Please enter valid Comapny Name</p>
+                                        <a class="close" href="#"></a>
+                                    </div>
+
+                                    <input name="id" type="hidden" id="companyname_userid" value="<%= user.id %>"/>
 
                                     <div class="twelve alpha columns editform">
                                         <input name="newcompanyname" type="text" id="newcompanyname" placeholder="New Company Name"/>
@@ -303,15 +323,37 @@
                 </tr>
                 <tr>
                     <td> Location</td>
-                    <td> Galle, Sri Lanka</td>
+                    <% if(user.mailingddress1 != null) {
+                        var address = user.mailingddress1;
+                        if(user.mailingddress2 != '') {
+                            address += ', ' + user.mailingddress2;
+                        }
+                        if(user.mailingCity != '') {
+                            address += ', ' + user.mailingCity;
+                        }
+                    %>
+                        <td> <%= address %></td>
+                    <% } else { %>
+                        <td></td>
+                    <% } %>
                     <td>
-                        <a class="popup-with-zoom-anim" href="#location-edit-dialog" style="color:#2db2ea;">Edit</a><br/>
+                        <% if(user.mailingddress1 != null) { %>
+                            <a class="popup-with-zoom-anim" href="#location-edit-dialog" style="color:#2db2ea;">Edit</a><br/>
+                        <% } else { %>
+                            <a class="popup-with-zoom-anim" href="#location-edit-dialog" style="color:#2db2ea;">Add</a><br/>
+                        <% } %>
 
                         <div id="location-edit-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
                             <h2 class="margin-bottom-10">Edit Location</h2>
-                            <form method="post" name="editform">
+                            <form method="post" name="editform" action="http://localhost:3000/api/user/location" id="locationChangeForm">
 
                                 <fieldset>
+                                    <div class="notification error closeable" style="display: none" id="locationErrorMessage">
+                                        <p><span>Error!</span> Please enter valid Address</p>
+                                        <a class="close" href="#"></a>
+                                    </div>
+
+                                    <input name="id" type="hidden" id="location_userid" value="<%= user.id %>"/>
 
                                     <div class="twelve alpha columns editform">
                                         <input name="newaddress1" type="text" id="newaddress1" placeholder="New Address Line 1"/>
@@ -336,30 +378,30 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
-                    <td> Account Deactivate</td>
-                    <td> </td>
-                    <td>  <a class="popup-with-zoom-anim" href="#deactivate-dialog" style="color:#2db2ea;">Deactivate</a><br/>
+                <!--<tr>-->
+                    <!--<td> Account Deactivate</td>-->
+                    <!--<td> </td>-->
+                    <!--<td>  <a class="popup-with-zoom-anim" href="#deactivate-dialog" style="color:#2db2ea;">Deactivate</a><br/>-->
 
-                        <div id="deactivate-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
-                            <h2 class="margin-bottom-10">Deactivate Account</h2>
-                            <form method="post" name="editform">
+                        <!--<div id="deactivate-dialog" class="small-dialog zoom-anim-dialog mfp-hide">-->
+                            <!--<h2 class="margin-bottom-10">Deactivate Account</h2>-->
+                            <!--<form method="post" name="editform">-->
 
-                                <fieldset>
+                                <!--<fieldset>-->
 
-                                    <p>Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah</p>
+                                    <!--<p>Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah</p>-->
 
-                                    <div class="twelve columns editform">
-                                        <input type="submit" class="submit" id="submitdeactivation" value="Confirm"/>
-                                    </div>
+                                    <!--<div class="twelve columns editform">-->
+                                        <!--<input type="submit" class="submit" id="submitdeactivation" value="Confirm"/>-->
+                                    <!--</div>-->
 
-                                </fieldset>
+                                <!--</fieldset>-->
 
-                                <div class="clearfix"></div>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
+                                <!--<div class="clearfix"></div>-->
+                            <!--</form>-->
+                        <!--</div>-->
+                    <!--</td>-->
+                <!--</tr>-->
                 </tbody>
             </table>
 
@@ -466,8 +508,8 @@
 
 <!-- Java Script
 ================================================== -->
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="scripts/jquery-1.11.0.min.js"></script>
+<script src="scripts/jquery-migrate-1.2.1.min.js"></script>
 <script src="scripts/jquery.jpanelmenu.js"></script>
 <script src="scripts/jquery.themepunch.plugins.min.js"></script>
 <script src="scripts/jquery.themepunch.revolution.min.js"></script>

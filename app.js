@@ -14,6 +14,7 @@ var users = require('./routes/users');
 var login = require('./routes/login');
 var news = require('./routes/news');
 var commodity = require('./routes/commodity');
+var items = require('./routes/items');
 var signup = require('./routes/signup');
 
 var app = express();
@@ -71,11 +72,14 @@ app.use('/news/start', express.static(path.join(__dirname, 'public')));
 app.use('/news/id', express.static(path.join(__dirname, 'public')));
 app.use('/user', express.static(path.join(__dirname, 'public')));
 app.use('/commodity/add', express.static(path.join(__dirname, 'public')));
+app.use('/items', express.static(path.join(__dirname, 'public')));
+app.use('/items/add', express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/user', users);
 app.use('/api/user', users);
 app.use('/api/commodity', commodity);
+app.use('/api/items', items);
 // app.use('/logout', function (req, res) {
 //   req.logout();
 //   res.redirect('/');

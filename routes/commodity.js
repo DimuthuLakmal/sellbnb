@@ -77,8 +77,6 @@ router.post('/add', function (req, res, next) {
     ).catch(function (error) {
         console.log(error);
     });
-
-    res.redirect('/addnews');
 });
 
 //function to decode base64 image
@@ -96,5 +94,100 @@ function decodeBase64Image(dataString) {
     return response;
 }
 
+
+/* Retrieve all commodities from database*/
+router.get('/viewall', function (req, res) {
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var Commodity = models.Commodity;
+            // var CommodityImage = models.CommodityImage;
+            // var CommodityAlterName = models.CommodityAlterName;
+            // var CommodityAlterName = models.CommodityAlterName;
+            Commodity.findAndCountAll().then(function (Commodities) {
+                //saving news array to a session and redirect
+                req.session.commodities = Commodities;
+                res.redirect('/items/search');
+            });
+        }
+    );
+});
+
+
+/* Retrieve all commodities from database*/
+/* Usage: Main Menu */
+router.get('/names', function (req, res) {
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var Commodity = models.Commodity;
+            Commodity.findAndCountAll().then(function (Commodities) {
+                var commodityNames = [];
+                //saving commodity names to the array and redirect after set the names to session
+                _.forEach(Commodities.rows, function(commodity, index) {
+                    commodityNames.push(commodity.dataValues.name);
+                });
+                req.session.commodityNames = commodityNames;
+                res.redirect('/');
+            });
+        }
+    );
+});
+
+
+/* Retrieve popluar commodities from database */
+router.get('/viewpopular', function (req, res) {
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var Commodity = models.Commodity;
+            var CommodityImage = models.CommodityImage;
+            Commodity.findAndCountAll({
+                limit: 10,
+                include: [CommodityImage],
+                order: '`hits` DESC'
+            }).then(function (Commodities) {
+                var commoditiesArr = [];
+                //pushing retrieved data to commodity array
+                _.forEach(Commodities.rows, function(commodity, index) {
+                    var id = commodity.id;
+                    var name = commodity.name;
+
+                    commoditiesArr.push({'id': id, 'name': name, 'images': commodity.CommodityImages});
+                });
+                req.session.commodityPopular = commoditiesArr;
+                res.redirect('/');
+            });
+        }
+    );
+});
+
+
+/* Retrieve specific commodity from database */
+/* Usage: searchcommodityadd page */
+router.post('/search', function (req, res) {
+    //extract name of commodity
+    var commodityName = req.body.commodity;
+
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var Commodity = models.Commodity;
+            var CommodityAlterName = models.CommodityAlterName;
+            var CommodityParameter = models.CommodityParameter;
+            var CommodityImage = models.CommodityImage;
+
+            Commodity.findAll({
+                where: {name: commodityName},
+                include: [CommodityAlterName,CommodityParameter,CommodityImage],
+            }).then(function (Commodity) {
+                var commodity = Commodity[0].dataValues;
+                req.session.commodity = commodity;
+
+                res.redirect('/items/add/commoditydetails');
+            });
+        }
+    );
+});
 
 module.exports = router;

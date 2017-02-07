@@ -10,6 +10,7 @@ module.exports = function (sequelize, DataTypes) {
         class: DataTypes.STRING,
         measureUnit: DataTypes.STRING,
         specification: DataTypes.TEXT,
+        hits: DataTypes.INTEGER,
     }, {
         // Define Associations for Commodity Table here.
         classMethods: {
