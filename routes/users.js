@@ -43,7 +43,6 @@ function verifyCredentials(username, password, done) {
                     //password: bcrypt.compareSync(password, hash),
                 }
             }).then(function (User) {
-                console.log(User[0].dataValues.password);
                 if (!_.isUndefined(User[0])) {
                     if (bcrypt.compareSync(password, User[0].dataValues.password)) {    //checking password
                         var user = User[0].dataValues;
@@ -213,6 +212,31 @@ router.get('/view/warehouses/userId/:userId', function (req, res) {
                 var user = User[0].dataValues;
                 req.session.warehouses = user.WareHouses;
                 res.redirect('/items/add');
+            });
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+});
+
+
+/* Get Warehouses for bidding page*/
+router.get('/bidding/warehouses/userId/:userId/itemId/:itemId', function (req, res) {
+    //retrieve data from req object
+    var userId = req.params.userId;
+    var itemId = req.params.itemId;
+    //get warehouses details of user
+    sequelize.sync().then(
+        function () {
+            var User = models.User;
+            var WareHouse = models.WareHouse;
+            User.findAll({
+                where: {id: userId},
+                include: [WareHouse],
+            }).then(function (User) {
+                var user = User[0].dataValues;
+                req.session.bidwarehouses = user.WareHouses;
+                res.redirect('/items/id/'+itemId);
             });
         }
     ).catch(function (error) {

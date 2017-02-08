@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]>
+<html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en"> <!--<![endif]-->
 <head>
@@ -126,12 +129,13 @@
         <div class="parallax-overlay"></div>
 
         <div class="parallax-content">
-            <h2>Search Results <span>Keyword: <%= keyword %></span></h2>
+            <h2>User Account <span>Payment Information</span></h2>
 
             <nav id="breadcrumbs">
                 <ul>
                     <li>Home</li>
-                    <li>Search</li>
+                    <li>Account</li>
+                    <li>Payment Information</li>
                 </ul>
             </nav>
         </div>
@@ -143,69 +147,21 @@
         ================================================== -->
         <div class="four columns">
 
-            <!-- Widget -->
-            <div class="widget">
-                <h3 class="headline">Filter By Price</h3><span class="line"></span><div class="clearfix"></div>
+            <!-- Categories -->
+            <div class="widget margin-top-0">
 
-                <form action="/api/items/search/start/0" method="get" id="priceFilterForm">
-                    <div id="price-range">
-                        <div class="padding-range"><div id="slider-range"></div></div>
-                        <label for="amount">Price:</label>
-                        <input type="hidden" id="maxPrice" value="<%= maxPrice %>"/>
-                        <input type="hidden" name="keyword" value="<%= keyword %>"/>
-                        <input type="hidden" id="startPrice" name="startPrice" value=<%= startPrice %>/>
-                        <input type="hidden" id="endPrice" name="endPrice" value=<%= endPrice %>/>
-                        <input type="text" id="amount"/>
-                        <a class="button color" id="priceFilterButton">Filter</a>
-                    </div>
-                </form>
+                <ul id="categories">
+
+                    <li><a href="#">Basic Account</a></li>
+                    <li><a href="#">Contact Information</a></li>
+                    <li><a href="#">Bank Account</a></li>
+                    <li><a href="#">Business Information</a></li>
+                    <li><a href="#">Notification Preferences</a></li>
+
+                </ul>
                 <div class="clearfix"></div>
+
             </div>
-
-            <% if(distinctCharacteristics[1].length > 0) {%>
-                <!-- Classes -->
-                <div class="widget">
-                    <h3 class="headline" style="z-index: 0 !important;">Classes</h3><span class="line"></span><div class="clearfix"></div>
-                    <% for(var classIndex = 0; classIndex < distinctCharacteristics[1].length; classIndex++) {%>
-                        <form action="/api/items/search/start/0" method="get">
-                            <input type="hidden" value="0" name="start"/>
-                            <input type="hidden" value="<%= keyword %>" name="keyword"/>
-                            <input type="hidden" value="<%= distinctCharacteristics[1][classIndex] %>" name="class"/>
-                            <% if(selectedClass == distinctCharacteristics[1][classIndex]) {%>
-                                <input type="checkbox" value="<%= distinctCharacteristics[1][classIndex] %>"
-                                       class="class_check_box" checked/> <%= distinctCharacteristics[1][classIndex] %><br>
-                            <% } else {%>
-                                <input type="checkbox" value="<%= distinctCharacteristics[1][classIndex] %>"
-                                       class="class_check_box" /> <%= distinctCharacteristics[1][classIndex] %><br>
-                            <% } %>
-                        </form>
-                    <% } %>
-                    <div class="clearfix"></div>
-                </div>
-            <% } %>
-
-            <% if(distinctCharacteristics[0].length > 0) {%>
-            <!-- Segments -->
-            <div class="widget">
-                <h3 class="headline" style="z-index: 0 !important;">Segments</h3><span class="line"></span><div class="clearfix"></div>
-                <% for(var segmentIndex = 0; segmentIndex < distinctCharacteristics[0].length; segmentIndex++) {%>
-                <form action="/api/items/search/start/0" method="get">
-                    <input type="hidden" value="0" name="start"/>
-                    <input type="hidden" value="<%= keyword %>" name="keyword"/>
-                    <input type="hidden" value="<%= distinctCharacteristics[0][segmentIndex] %>" name="segment"/>
-                    <% if(selectedSegment == distinctCharacteristics[0][segmentIndex]) {%>
-                        <input type="checkbox" value="<%= distinctCharacteristics[0][segmentIndex] %>"
-                               class="class_check_box" checked/> <%= distinctCharacteristics[0][segmentIndex] %><br>
-                    <% } else {%>
-                        <input type="checkbox" value="<%= distinctCharacteristics[0][segmentIndex] %>"
-                               class="class_check_box" /> <%= distinctCharacteristics[0][segmentIndex] %><br>
-                    <% } %>
-
-                </form>
-                <% } %>
-                <div class="clearfix"></div>
-            </div>
-            <% } %>
 
         </div>
 
@@ -215,93 +171,70 @@
 
         <div class="twelve columns products">
 
-            <% for(var itemIndex = 0; itemIndex < items.length; itemIndex++) {
-                var item = items[itemIndex];
-                var remainingTime = remainingTimes[itemIndex];
-                var numdays = Math.floor(remainingTime / 86400);
-                var numhours = Math.floor((remainingTime % 86400) / 3600);
-                var numminutes = Math.floor(((remainingTime % 86400) % 3600) / 60);
-                var numseconds = Math.floor(((remainingTime % 86400) % 3600) % 60);
+            <h3 class="headline">Account 01</h3><span class="line margin-bottom-30"></span><div class="clearfix"></div>
+            <table class="basic-table" style="">
 
-                var formattedAddress = "";
-                formattedAddress = numdays != 0 ? (formattedAddress += numdays + " days ") : formattedAddress;
-                formattedAddress = numhours != 0 ? (formattedAddress += numhours + " hrs ") : formattedAddress;
-                formattedAddress = numminutes != 0 ? (formattedAddress += numminutes + " mins ") : formattedAddress;
-                formattedAddress = numseconds != 0 ? (formattedAddress += numseconds + " secs ") : formattedAddress;
-            %>
-                <div class="item-selling-div twelve columns">
-                    <div class="item-selling-div">
-                        <div class="two columns">
-                            <% if (item.ItemImages.length > 0) {%>
-                                <img src="uploads/items/<%= item.ItemImages[0].url%>"/>
-                            <% } else { %>
-                                <img src="images/blog-widget-01.png"/>
-                            <% } %>
-                        </div>
-                        <div class="five columns">
-                            <h3><%= item.title %></h3>
-                            <p>Time Remaining: <%= formattedAddress %><br>
-                                Seller: <%= item.User.username %><br>
-                                Suggested Price: <%= item.suggestedPrice %></p><br>
-                        </div>
-                        <div class="four columns" style="float:right">
-                            <form action="/items/id/<%= item.id %>" method="get">
-                                <input type="submit" class="item-selling-btn" value="View Details"/><br>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                <tbody>
+                <tr>
+                    <td>Bank Account No</td>
+                    <td>4565671549</td>
+                </tr>
+                <tr>
+                    <td>Account Type </td>
+                    <td>Saving</td>
+                </tr>
+                <tr>
+                    <td>Account Name </td>
+                    <td>Nimal Diasanayaka</td>
+                </tr>
+                <tr>
+                    <td>Bank Name</td>
+                    <td>Commercial Bank</td>
+                </tr>
+                <tr>
+                    <td>Bank Branch</td>
+                    <td>Galle</td>
+                </tr>
+                <tr>
+                    <td>Country</td>
+                    <td>Sri Lanka</td>
+                </tr>
+                </tbody>
+            </table>
+            <a href="#" style="color:#2db2ea;float: right">Remove</a><br><br>
 
-                <span class="line" style="margin-top:10px;margin-bottom: 0px"></span><div class="clearfix"></div>
-            <% } %>
+            <h3 class="headline">Account 02</h3><span class="line margin-bottom-30"></span><div class="clearfix"></div>
+            <table class="basic-table" style="">
 
-            <div class="clearfix"></div>
-
-            <!-- Pagination -->
-            <div class="pagination-container">
-                <nav class="pagination">
-                    <ul>
-                        <%
-                        var pageOne = (pageMultipationFactor * 10) + 1;
-                        var pageTwo = (pageMultipationFactor * 10) + 2;
-                        var pageThree = (pageMultipationFactor * 10) + 3;
-                        %>
-                        <% if(maxPageCount >= pageOne) {%>
-                        <li>
-                            <a href="http://localhost:3000/api/items/search/start/<%= (pageOne-1) * 10 %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
-                                <%= pageOne %>
-                            </a>
-                        </li>
-                        <% } %>
-                        <% if(maxPageCount >= pageTwo) {%>
-                        <li>
-                            <a href="/api/items/search/start/<%= (pageTwo-1) * 10 %>" <% if(pageTwo === currentPageNumber) { %>class="current-page"<% } %>>
-                                <%= pageTwo %>
-                            </a>
-                        </li>
-                        <% } %>
-                        <% if(maxPageCount >= pageThree) {%>
-                        <li>
-                            <a href="/api/items/search/start/<%= (pageThree-1) * 10 %>" <% if(pageThree === currentPageNumber) { %>class="current-page"<% } %>>
-                                <%= pageThree %>
-                            </a>
-                        </li>
-                        <% } %>
-                    </ul>
-                </nav>
-
-                <nav class="pagination-next-prev">
-                    <ul>
-                        <% if(0 < pageMultipationFactor) {%>
-                        <li><a href="/news/start/<%= (pageMultipationFactor - 1) * 30 %>" class="prev"></a></li>
-                        <% } %>
-                        <% if(maxPageCount >= (pageMultipationFactor * 10) + 4) {%>
-                        <li><a href="/news/start/<%= (pageMultipationFactor + 1) * 30 %>" class="next"></a></li>
-                        <% } %>
-                    </ul>
-                </nav>
-            </div>
-
+                <tbody>
+                    <tr>
+                        <td>Bank Account No</td>
+                        <td>4565671549</td>
+                    </tr>
+                    <tr>
+                        <td>Account Type </td>
+                        <td>Saving</td>
+                    </tr>
+                    <tr>
+                        <td>Account Name </td>
+                        <td>Nimal Diasanayaka</td>
+                    </tr>
+                    <tr>
+                        <td>Bank Name</td>
+                        <td>Commercial Bank</td>
+                    </tr>
+                    <tr>
+                        <td>Bank Branch</td>
+                        <td>Galle</td>
+                    </tr>
+                    <tr>
+                        <td>Country</td>
+                        <td>Sri Lanka</td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="#" style="color:#2db2ea;float: right">Remove</a><br><br>
+            <a href="#" style="color:#2db2ea;float: right">Add Account</a>
         </div>
 
     </div>
@@ -428,8 +361,6 @@
 <script src="scripts/puregrid.js"></script>
 <script src="scripts/stacktable.js"></script>
 <script src="scripts/custom.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
-<script src="scripts/views/searchresults.js"></script>
 
 </body>
 </html>

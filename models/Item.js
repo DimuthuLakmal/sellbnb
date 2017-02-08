@@ -24,6 +24,7 @@ module.exports = function (sequelize, DataTypes) {
                 Item.belongsTo(models.WareHouse);
                 Item.hasMany(models.ItemImage);
                 Item.hasMany(models.Bidding);
+                Item.hasMany(models.ItemComment);
             }
         }
     });

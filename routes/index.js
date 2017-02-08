@@ -226,6 +226,7 @@ router.get('/items/search', function(req, res) {
 /* GET view search results page*/
 router.get('/items', function(req, res) {
   var searchResult = req.session.searchResult;
+  var searchResultRemainingTime = req.session.searchResultRemainingTime;
   var maxPrice = req.session.maxPrice;
   var distinctCharacteristics = req.session.distinctCharacteristics;
   var selectedClass = req.session.selectedClass;
@@ -246,6 +247,7 @@ router.get('/items', function(req, res) {
 
   res.render('searchresults', {
     items: searchResult,
+    remainingTimes: searchResultRemainingTime,
     distinctCharacteristics: distinctCharacteristics,
     maxPrice: maxPrice,
     selectedClass: selectedClass,
@@ -311,6 +313,58 @@ router.get('/items/add', function(req, res) {
     console.log(req.session.returnTo);
     res.redirect('/user/login');
   }
+});
+
+router.get('/items/id/:id', function(req, res) {
+  removeSessionParameters(req);
+  var item = req.session.specificBiddingItem;
+  var bidwarehouses = req.session.bidwarehouses;
+  var lastBid = req.session.lastBid;
+  var lastUserBid = req.session.lastUserBid;
+  var user = {id: 1};
+
+  //check whether item is retrieved from database
+  if (item === null || item === undefined) {
+    res.redirect('/api/items/id/'+req.params.id);
+  }
+
+  //check whether bid details are retrieved from database
+  if (lastBid === null || lastBid === undefined) {
+    res.redirect('/api/bid/items/userId/'+user.id+'/itemId/'+req.params.id);
+  }
+
+  console.log(item.itemComments);
+
+  //check whether user is set. this is needed to retrieve user's warehouses
+  if ((bidwarehouses === null || bidwarehouses === undefined) && (user !=null && user != undefined)) {
+    res.redirect('/api/user/bidding/warehouses/userId/'+user.id+'/itemId/'+item.item.id);
+  }
+
+  req.session.lastBid = null;
+  req.session.lastUserBid = null;
+  req.session.specificBiddingItem = null;
+  res.render('bidpage', {
+    item: item,
+    userWareHouses: bidwarehouses,
+    itemComments: item.itemComments,
+    user: user,
+    lastBid: lastBid[0],
+    lastUserBid: lastUserBid[0],
+  });
+
+  // if(req.isAuthenticated()) {
+  //   delete req.session.returnTo;
+  //   res.render('bidpage', {
+  //     isAuthenticated : req.isAuthenticated(),
+  //     user: req.user,
+  //     item: item,
+  //   });
+  // } else {
+  //   //set visited path to session. It uses to rediect to again to that page when login success.
+  //   req.session.returnTo = req.path;
+  //   console.log(req.session.returnTo);
+  //   res.redirect('/user/login');
+  // }
 });
 
 //to remove unnecessary session parameters

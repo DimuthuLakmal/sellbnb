@@ -90,6 +90,7 @@ router.post('/add', function (req, res) {
     });
 });
 
+
 /* Retrieve latest items from database */
 /* Usage: Home Page */
 router.get('/viewlatest', function (req, res) {
@@ -279,6 +280,17 @@ router.get('/search/start/:start', function (req, res) {
                             req.session.itemsOffset = parseInt(req.params.start);
                             req.session.keyword = keyword;
                             req.session.searchResult = Items.rows;
+
+                            //calculate remaining times for biddings
+                            var currentTime = new Date().getTime() / 1000;
+                            var remainingTimes = []
+                            _.forEach(Items.rows, function(item, index) {
+                                //calculate remaining time
+                                var difference = ((item.createdAt.getTime() / 1000) + item.duration) - currentTime;
+                                remainingTimes.push(difference);
+                            });
+                            req.session.searchResultRemainingTime = remainingTimes;
+
                             res.redirect('/items');
                         }
                     );
@@ -400,6 +412,102 @@ router.post('/keyword', function (req, res) {
             });
         }
     );
+});
+
+/* Retrieve specific item and its comments from database */
+/* Usage: Search Page */
+router.get('/id/:id', function (req, res) {
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var Item = models.Item;
+            var User = models.User;
+            var ItemImage = models.ItemImage;
+            var ItemComment = models.ItemComment;
+            var Commodity = models.Commodity;
+            var WareHouse = models.WareHouse;
+
+            var itemId = req.params.id;
+            Item.findAll({
+                where: {id: itemId},
+                include: [User, ItemImage, Commodity, WareHouse],
+            }).then(function (Items) {
+                var item = Items[0].dataValues;
+                var id = item.id;
+                var hits = item.hits;
+                var user = item.User;
+                var itemImages = item.ItemImages;
+                var commodity = item.Commodity;
+                var warehouse = item.WareHouse;
+
+                //calculate remaining time
+                var currentTime = new Date().getTime() / 1000;
+                var difference = ((item.createdAt.getTime() / 1000) + item.duration) - currentTime;
+
+                //retrieve similar items
+                Item.findAll({
+                    where: {
+                        CommodityId: item.CommodityId,
+                        duration: {
+                            gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
+                        },
+                        id: {
+                            $ne: id,
+                        }
+                    },
+                    include: [ItemImage],
+                }).then(function (Items) {
+                    var similarItems = Items;
+
+                    ItemComment.findAll({
+                        where: {
+                            ItemId: id,
+                        },
+                        include: [User],
+                    }).then(function (Comments) {
+                        req.session.specificBiddingItem = {'item': item, 'commodity': commodity, 'itemImages': itemImages,
+                            'user': user, 'itemComments': Comments, 'warehouse': warehouse, 'remainingTime': difference,
+                            'similarItems': similarItems};
+
+                        Item.update(
+                            { hits: (hits+1) },
+                            { where: { id: id } }
+                        ).then(function (results) {
+                            res.redirect('/items/id/'+itemId);
+                        });
+                    });
+                });
+            });
+        }
+    );
+});
+
+/* Add feedback to database. */
+router.post('/feedback', function (req, res) {
+    //retrieve data from req object
+    var userId = req.body.userId;
+    var rating = req.body.rating;
+    var feedback = req.body.feedback;
+    var itemId = req.body.id;
+
+    //store news in database
+    sequelize.sync().then(
+        function () {
+            var ItemComment = models.ItemComment;
+            ItemComment.create({
+                rate: rating,
+                comment: feedback,
+                ItemId: itemId,
+                UserId: userId,
+            }).then(function (insertedComment) {
+                console.log(insertedComment.dataValues);
+            });
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+
+    res.redirect('/items/id/'+itemId);
 });
 
 //function to decode base64 image

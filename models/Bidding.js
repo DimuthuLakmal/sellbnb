@@ -4,11 +4,11 @@
 /* Bidding Model */
 module.exports = function (sequelize, DataTypes) {
     var Bidding = sequelize.define('Bidding', {
+        bid: DataTypes.DOUBLE,
         quantity: DataTypes.STRING,
         packageType: DataTypes.STRING,
         deliveryBy: DataTypes.STRING,
         paymentTerms: DataTypes.STRING,
-        biddingPrice: DataTypes.STRING,
         note: DataTypes.STRING,
         status: DataTypes.STRING,
     }, {
