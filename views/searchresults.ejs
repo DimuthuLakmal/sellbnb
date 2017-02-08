@@ -217,10 +217,11 @@
 
             <% for(var itemIndex = 0; itemIndex < items.length; itemIndex++) {
                 var item = items[itemIndex];
-                var numdays = Math.floor(item.duration / 86400);
-                var numhours = Math.floor((item.duration % 86400) / 3600);
-                var numminutes = Math.floor(((item.duration % 86400) % 3600) / 60);
-                var numseconds = ((item.duration % 86400) % 3600) % 60;
+                var remainingTime = remainingTimes[itemIndex];
+                var numdays = Math.floor(remainingTime / 86400);
+                var numhours = Math.floor((remainingTime % 86400) / 3600);
+                var numminutes = Math.floor(((remainingTime % 86400) % 3600) / 60);
+                var numseconds = Math.floor(((remainingTime % 86400) % 3600) % 60);
 
                 var formattedAddress = "";
                 formattedAddress = numdays != 0 ? (formattedAddress += numdays + " days ") : formattedAddress;
@@ -244,7 +245,9 @@
                                 Suggested Price: <%= item.suggestedPrice %></p><br>
                         </div>
                         <div class="four columns" style="float:right">
-                            <button class="item-selling-btn">View Details</button><br>
+                            <form action="/items/id/<%= item.id %>" method="get">
+                                <input type="submit" class="item-selling-btn" value="View Details"/><br>
+                            </form>
                         </div>
                     </div>
                 </div>

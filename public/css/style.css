@@ -12,6 +12,7 @@
 @import url("responsive.css");			/* Responsive Grid */
 @import url("font-awesome.css");		/* Font Awesome Icons */
 @import url("http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800");
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
 
 /* ------------------------------------------------------------------- */
@@ -2898,8 +2899,7 @@ blockquote {
 
 .add-comment textarea {
 	margin: 0 0 18px 0;
-	width: auto;
-	min-width: 97.5%;
+	width: 100%;
 	min-height: 180px;
 	resize: vertical;
 	-webkit-transition: none;
@@ -3795,7 +3795,6 @@ a.caption-btn:hover {
 }
 
 
-
 /* Magnific Popup CSS
 ------------------------------------- */
 .mfp-bg {
@@ -3881,6 +3880,7 @@ a.caption-btn:hover {
 }
 
 .mfp-auto-cursor .mfp-content {
+	top: -30%;
 	cursor: auto;
 }
 
@@ -4068,7 +4068,6 @@ button.mfp-arrow {
 	top: 0px;
 }
 
-
 /* Popup */
 .small-dialog {
 	background: #fff;
@@ -4201,7 +4200,6 @@ img.mfp-img {
 	cursor: pointer;
 }
 
-
 /* Media Queries for Magnific Popup */
 @media screen and (max-width: 800px) and (orientation: landscape), screen and (max-height: 300px) {
 
@@ -4316,7 +4314,6 @@ img.mfp-img {
 .mfp-fade.mfp-wrap.mfp-removing .mfp-content {
 	opacity: 0;
 }
-
 
 
 /* Hover Image Captions
@@ -6026,7 +6023,7 @@ img.rsImg {
 }
 
 .bidform input[type=text]{
-	width: 98.5%;
+	width: 100%;
 	padding-right: 0px;
 }
 
@@ -7885,3 +7882,43 @@ div.layout-style {
 }
 
 @media only screen and (max-width: 1024px) {#style-switcher {display: none;}}
+
+
+/******** Feedback start  ***************/
+
+/****** Style Star Rating Widget *****/
+
+.feedback-rating {
+	border: none;
+	float: left;
+}
+
+.feedback-rating > input { display: none; }
+.feedback-rating > label:before {
+	margin: 5px;
+	font-size: 1.25em;
+	font-family: FontAwesome;
+	display: inline-block;
+	content: "\f005";
+}
+
+.feedback-rating > .half:before {
+	content: "\f089";
+	position: absolute;
+}
+
+.feedback-rating > label {
+	color: #ddd;
+	float: right;
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.feedback-rating > input:checked ~ label, /* show gold star when clicked */
+.feedback-rating:not(:checked) > label:hover, /* hover current star */
+.feedback-rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+.feedback-rating > input:checked + label:hover, /* hover current star when changing rating */
+.feedback-rating > input:checked ~ label:hover,
+.feedback-rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.feedback-rating > input:checked ~ label:hover ~ label { color: #FFED85;  }

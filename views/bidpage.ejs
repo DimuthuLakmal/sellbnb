@@ -1,6 +1,3 @@
-<!DOCTYPE html>
-<!--[if IE 8 ]>
-<html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en"> <!--<![endif]-->
 <head>
@@ -16,6 +13,7 @@
 
     <!-- CSS
     ================================================== -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/colors/blue.css" id="colors">
 
@@ -28,60 +26,8 @@
 <body class="boxed">
 <div id="wrapper">
 
-
-    <!-- Top Bar
-    ================================================== -->
-    <div id="top-bar">
-        <div class="container">
-
-            <!-- Top Bar Menu -->
-            <div class="ten columns">
-                <ul class="top-bar-menu">
-                    <li><i class="fa fa-phone"></i> (564) 123 4567</li>
-                    <li><i class="fa fa-envelope"></i> <a href="#">sellerbnb@gmail.com</a></li>
-                    <li>
-                        <div class="top-bar-dropdown">
-                            <span>English</span>
-                            <ul class="options">
-                                <li>
-                                    <div class="arrow"></div>
-                                </li>
-                                <li><a href="#">English</a></li>
-                                <li><a href="#">Sinhala</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="top-bar-dropdown">
-                            <span>USD</span>
-                            <ul class="options">
-                                <li>
-                                    <div class="arrow"></div>
-                                </li>
-                                <li><a href="#">USD</a></li>
-                                <li><a href="#">LKR</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Social Icons -->
-            <div class="six columns">
-                <ul class="social-icons">
-                    <li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
-                    <li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>
-                </ul>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="clearfix"></div>
-
-
     <!-- Header
-    ================================================== -->
+        ================================================== -->
     <div class="container">
 
         <!-- Logo -->
@@ -96,10 +42,8 @@
         <div class="twelve columns">
             <div id="additional-menu">
                 <ul>
-                    <li><a href="shopping-cart.html">Shopping Cart</a></li>
-                    <li><a href="wishlist.html">WishList <span>(2)</span></a></li>
-                    <li><a href="checkout-billing-details.html">Checkout</a></li>
-                    <li><a href="my-account.html">Account</a></li>
+                    <li><a href="checkout-billing-details.html">English</a></li>
+                    <li><a href="my-account.html">Sinhala</a></li>
                 </ul>
             </div>
         </div>
@@ -108,57 +52,36 @@
         <!-- Shopping Cart -->
         <div class="twelve columns">
 
-            <div id="cart">
-
+            <div class="cart">
                 <!-- Button -->
-                <div class="cart-btn">
-                    <a href="#" class="button adc">$178.00</a>
+                <div class="icon-box">
+                    <span><i class="fa fa-mail-forward"></i></span>
                 </div>
+            </div>
 
-                <div class="cart-list">
-
-                    <div class="arrow"></div>
-
-                    <div class="cart-amount">
-                        <span>2 items in the shopping cart</span>
-                    </div>
-
-                    <ul>
-                        <li>
-                            <a href="#"><img src="images/small_product_list_08.jpg" alt=""/></a>
-                            <a href="#">Converse All Star Trainers</a>
-                            <span>1 x $79.00</span>
-                            <div class="clearfix"></div>
-                        </li>
-
-                        <li>
-                            <a href="#"><img src="images/small_product_list_09.jpg" alt=""/></a>
-                            <a href="#">Tommy Hilfiger <br/> Shirt Beat</a>
-                            <span>1 x $99.00</span>
-                            <div class="clearfix"></div>
-                        </li>
-                    </ul>
-
-                    <div class="cart-buttons button">
-                        <a href="shopping-cart.html" class="view-cart"><span
-                                data-hover="View Cart"><span>View Cart</span></span></a>
-                        <a href="checkout-billing-details.html" class="checkout"><span
-                                data-hover="Checkout">Checkout</span></a>
-                    </div>
-                    <div class="clearfix">
-
-                    </div>
+            <div class="cart">
+                <!-- Button -->
+                <div class="icon-box">
+                    <span><i class="fa fa-folder"></i></span>
                 </div>
+            </div>
 
+            <div class="cart">
+                <!-- Button -->
+                <div class="icon-box">
+                    <span><i class="fa fa-user"></i></span>
+                </div>
             </div>
 
             <!-- Search -->
-            <nav class="top-search">
-                <form action="#" method="get">
-                    <button><i class="fa fa-search"></i></button>
-                    <input class="search-field" type="text" placeholder="Search" value="" size="5" maxlength="4"/>
-                </form>
-            </nav>
+            <div align="center">
+                <nav class="top-search">
+                    <form action="#" method="get">
+                        <button><i class="fa fa-search"></i></button>
+                        <input class="search-field" type="text" placeholder="Search" value="" size="5" maxlength="4"/>
+                    </form>
+                </nav>
+            </div>
 
         </div>
 
@@ -177,121 +100,16 @@
 
                     <li><a href="index.html" class="homepage">Home</a></li>
 
-
-                    <li class="dropdown">
-                        <a href="#">Shop</a>
-                        <ul>
-                            <li><a href="shop-with-sidebar.html">Shop With Sidebar</a></li>
-                            <li><a href="shop-full-width.html">Shop Full Width</a></li>
-                            <li><a href="checkout-billing-details.html">Checkout Pages</a></li>
-                            <li><a href="shop-categories-grid.html">Categories Grid</a></li>
-                            <li><a href="single-product-page.html">Single Product Page</a></li>
-                            <li><a href="variable-product-page.html">Variable Product Page</a></li>
-                            <li><a href="wishlist.html">Wishlist Page</a></li>
-                            <li><a href="shopping-cart.html">Shopping Cart</a></li>
-                        </ul>
+                    <li class="demo-button">
+                        <a href="#">Market News</a>
                     </li>
-
-
-                    <li>
-                        <a href="#">Features</a>
-                        <div class="mega">
-                            <div class="mega-container">
-
-                                <div class="one-column">
-                                    <ul>
-                                        <li><span class="mega-headline">Example Pages</span></li>
-                                        <li><a href="contact.html">Contact</a></li>
-                                        <li><a href="about.html">About Us</a></li>
-                                        <li><a href="services.html">Services</a></li>
-                                        <li><a href="faq.html">FAQ</a></li>
-                                        <li><a href="404-page.html">404 Page</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="one-column">
-                                    <ul>
-                                        <li><span class="mega-headline">Featured Pages</span></li>
-                                        <li><a href="index-2.html">Business Homepage</a></li>
-                                        <li><a href="shop-with-sidebar.html">Default Shop</a></li>
-                                        <li><a href="blog-masonry.html">Masonry Blog</a></li>
-                                        <li><a href="variable-product-page.html">Variable Product</a></li>
-                                        <li><a href="portfolio-dynamic-grid.html">Dynamic Grid</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="one-column hidden-on-mobile">
-                                    <ul>
-                                        <li><span class="mega-headline">Paragraph</span></li>
-                                        <li><p>This <a href="#">Mega Menu</a> can handle everything. Lists, paragraphs,
-                                            forms...</p></li>
-                                    </ul>
-                                </div>
-
-                                <div class="one-fourth-column hidden-on-mobile">
-                                    <a href="#" class="img-caption margin-reset">
-                                        <figure>
-                                            <img src="images/menu-banner-01.jpg" alt=""/>
-                                            <figcaption>
-                                                <h3>Jeans</h3>
-                                                <span>Pack for Style</span>
-                                            </figcaption>
-                                        </figure>
-                                    </a>
-                                </div>
-
-                                <div class="one-fourth-column hidden-on-mobile">
-                                    <a href="#" class="img-caption margin-reset">
-                                        <figure>
-                                            <img src="images/menu-banner-02.jpg" alt=""/>
-                                            <figcaption>
-                                                <h3>Sunglasses</h3>
-                                                <span>Nail the Basics</span>
-                                            </figcaption>
-                                        </figure>
-                                    </a>
-                                </div>
-
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                    </li>
-
-
-                    <li class="dropdown">
-                        <a href="#">Shortcodes</a>
-                        <ul>
-                            <li><a href="elements.html">Elements</a></li>
-                            <li><a href="typography.html">Typography</a></li>
-                            <li><a href="pricing-tables.html">Pricing Tables</a></li>
-                            <li><a href="icons.html">Icons</a></li>
-                        </ul>
-                    </li>
-
-
-                    <li class="dropdown">
-                        <a href="#">Portfolio</a>
-                        <ul>
-                            <li><a href="portfolio-3-columns.html">3 Columns</a></li>
-                            <li><a href="portfolio-4-columns.html">4 Columns</a></li>
-                            <li><a href="portfolio-dynamic-grid.html">Dynamic Grid</a></li>
-                            <li><a href="single-project.html">Single Project</a></li>
-                        </ul>
-                    </li>
-
-
-                    <li class="dropdown">
-                        <a href="#">Blog</a>
-                        <ul>
-                            <li><a href="blog-standard.html">Blog Standard</a></li>
-                            <li><a href="blog-masonry.html">Blog Masonry</a></li>
-                            <li><a href="blog-single-post.html">Single Post</a></li>
-                        </ul>
-                    </li>
-
 
                     <li class="demo-button">
-                        <a href="#">Get This Theme</a>
+                        <a href="#">Sell Account</a>
+                    </li>
+
+                    <li class="demo-button">
+                        <a href="#">Buy Account</a>
                     </li>
 
                 </ul>
@@ -302,22 +120,15 @@
 
     <!-- Titlebar
     ================================================== -->
-    <section class="titlebar">
-        <div class="container">
-            <div class="sixteen columns">
-                <h2>Shop</h2>
+    <section class="parallax-titlebar fullwidth-element"  data-background="#000" data-opacity="0.45" data-height="160">
 
-                <nav id="breadcrumbs">
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Products</a></li>
-                        <li><a href="#">Sheet Rubber</a></li>
-                    </ul>
-                </nav>
-            </div>
+        <img src="images/titlebar_bg_02.jpg" alt="" />
+        <div class="parallax-overlay"></div>
+
+        <div class="parallax-content">
+            <h2><%= item.item.title %></h2>
         </div>
     </section>
-
 
     <div class="container">
 
@@ -326,24 +137,16 @@
         <div class="eight columns">
             <div class="slider-padding">
                 <div id="product-slider" class="royalSlider rsDefault">
-                    <img class="rsImg" src="images/product_item_01a.jpg" data-rsTmb="images/product_item_thumb_01a.png"
-                         alt=""/>
-                    <img class="rsImg" src="images/product_item_02a.jpg" data-rsTmb="images/product_item_thumb_02a.png"
-                         alt=""/>
-                    <img class="rsImg" src="images/product_item_03a.jpg" data-rsTmb="images/product_item_thumb_03a.png"
-                         alt=""/>
-                    <img class="rsImg" src="images/product_item_01b.jpg" data-rsTmb="images/product_item_thumb_01b.png"
-                         alt=""/>
-                    <img class="rsImg" src="images/product_item_02b.jpg" data-rsTmb="images/product_item_thumb_02b.png"
-                         alt=""/>
-                    <img class="rsImg" src="images/product_item_03b.jpg" data-rsTmb="images/product_item_thumb_03b.png"
-                         alt=""/>
-                    <img class="rsImg" src="images/product_item_01c.jpg" data-rsTmb="images/product_item_thumb_01c.png"
-                         alt=""/>
-                    <img class="rsImg" src="images/product_item_02c.jpg" data-rsTmb="images/product_item_thumb_02c.png"
-                         alt=""/>
-                    <img class="rsImg" src="images/product_item_03c.jpg" data-rsTmb="images/product_item_thumb_03c.png"
-                         alt=""/>
+                    <% if(item.itemImages.length > 0) {%>
+                        <% for(imageIndex = 0; imageIndex < item.itemImages.length; imageIndex++) {;%>
+                            <img class="rsImg" src="uploads/items/<%= item.itemImages[imageIndex].url %>"
+                                 data-rsTmb="uploads/items/<%= item.itemImages[imageIndex].url %>"
+                                 alt=""/>
+                        <% } %>
+                    <% } else {  %>
+                        <img class="rsImg" src="images/product_item_01a.jpg" data-rsTmb="images/product_item_thumb_01a.png"
+                             alt=""/>
+                    <% } %>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -357,16 +160,28 @@
 
                 <!-- Headline -->
                 <section class="title">
-                    <h2>Ribbed Smoked Sheet 3 - Sri Lanka</h2>
-                    <h3>Dammika Prasad, Kegalle</h3>
+                    <h2><%= item.item.title %></h2>
+                    <h3><%= item.user.full_name%></h3>
 
-                    <div class="reviews-counter-product">
-                        <div class="rating five-stars">
-                            <div class="star-rating"></div>
-                            <div class="star-bg"></div>
+                    <%
+                        var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
+                        var feedbackCount = itemComments.length;
+                        var rateSum = 0;
+                        for( var commentIndex = 0; commentIndex < itemComments.length; commentIndex++) {
+                            rateSum += parseInt(itemComments[commentIndex].rate);
+                        }
+                        var avgRate = feedbackCount != 0? Math.floor(rateSum/feedbackCount) : 0;
+                    %>
+
+                    <% if(feedbackCount != 0) {%>
+                        <div class="reviews-counter-product">
+                            <div class="rating <%= rateInString[avgRate] %>-stars">
+                                <div class="star-rating"></div>
+                                <div class="star-bg"></div>
+                            </div>
+                            <span><%= rateSum/feedbackCount %> stars</span>
                         </div>
-                        <span>3 Reviews</span>
-                    </div>
+                    <% } %>
                 </section>
 
                 <section>
@@ -376,43 +191,64 @@
                         <table class="basic-table">
                             <tr>
                                 <th>Quantity</th>
-                                <td>5000 KGS</td>
+                                <td><%= item.item.quantity %></td>
                             </tr>
 
                             <tr>
                                 <th>Packing Type</th>
-                                <td>Loose Bale packed in Foil</td>
+                                <td><%= item.item.packageType %></td>
                             </tr>
 
                             <tr>
                                 <th>Delivery By</th>
-                                <td>Buyer</td>
+                                <td><%= item.item.deliveryBy %></td>
                             </tr>
 
                             <tr>
                                 <th>Warehouse Address</th>
-                                <td>No 5, Richmond Hill Road, Galle, Sri Lanka</td>
+                                <%
+                                    var warehouse = item.warehouse;
+                                    var formattedAddress = "";
+                                    formattedAddress = (warehouse.warehouseAddress1 != null && warehouse.warehouseAddress1 != undefined) ?
+                                            warehouse.warehouseAddress1 : formattedAddress;
+                                    formattedAddress = (warehouse.warehouseAddress2 != null && warehouse.warehouseAddress2 != undefined) ?
+                                            formattedAddress + ", " +warehouse.warehouseAddress2 : formattedAddress;
+                                    formattedAddress = (warehouse.warehouseCity != null && warehouse.warehouseCity != undefined) ?
+                                            formattedAddress + ", " +warehouse.warehouseCity : formattedAddress;
+                                %>
+                                <td><%= formattedAddress %></td>
                             </tr>
 
                             <tr>
                                 <th>Payment terms</th>
-                                <td>Cash on delivery</td>
+                                <td><%= item.item.paymentTerms %></td>
                             </tr>
 
                             <tr>
                                 <th>Suggested Price</th>
-                                <td>LKR 500</td>
+                                <td><%= item.item.suggestedPrice %></td>
                             </tr>
                         </table>
                     </div>
 
                     <div class="product-seller-note">
-                        <p class="margin-reset"><strong>Seller Note : </strong>The dirt content is higher, and packing
-                            can be done according to buyer requirement</p>
+                        <p class="margin-reset"><strong>Seller Note : </strong><%= item.item.note%></p>
                     </div>
 
                     <div class="notification notice" align="center">
-                        <p><span>Time left : </span> 1d 23h 40m 17s</p>
+                        <%
+                        var numdays = Math.floor(item.remainingTime / 86400);
+                        var numhours = Math.floor((item.remainingTime % 86400) / 3600);
+                        var numminutes = Math.floor(((item.remainingTime % 86400) % 3600) / 60);
+                        var numseconds = Math.floor(((item.remainingTime % 86400) % 3600) % 60);
+
+
+                        var formattedTime = "";
+                        formattedTime = numdays != 0 ? (formattedTime += numdays + " days ") : formattedTime;
+                        formattedTime = numhours != 0 ? (formattedTime += numhours + " hrs ") : formattedTime;
+                        formattedTime = numminutes != 0 ? (formattedTime += numminutes + " mins ") : formattedTime;
+                        formattedTime = numseconds != 0 ? (formattedTime += numseconds + " secs ") : formattedTime; %>
+                        <p><span>Time left : </span> <%= formattedTime %></p>
                     </div>
 
                     <!-- Bid Table -->
@@ -423,7 +259,7 @@
                                     <strong>Last Bid </strong>
                                 </td>
                                 <td>
-                                    LKR 4592.00
+                                    <%= lastBid != undefined ? lastBid.bid : 'No Bids' %>
                                 </td>
                             </tr>
                             <tr>
@@ -431,7 +267,7 @@
                                     <strong>Your Last Bid </strong>
                                 </td>
                                 <td>
-                                    LKR 4200.00
+                                    <%= lastUserBid != undefined ? lastUserBid.bid : 'No Bids' %>
                                 </td>
                             </tr>
                             <tr>
@@ -460,7 +296,7 @@
             <!-- Tabs Navigation -->
             <ul class="tabs-nav">
                 <li class="active"><a href="#tab1">Your Preferences</a></li>
-                <li><a href="#tab2">Reviews <span class="tab-reviews">(3)</span></a></li>
+                <li><a href="#tab2">Reviews <span class="tab-reviews"><%= '(' + itemComments.length+ ')'%></span></a></li>
             </ul>
 
             <!-- Tabs Content -->
@@ -470,13 +306,14 @@
 
                     <section class="variables">
 
-                        <form method="post" name="bidform">
+                        <form method="post" name="bidform" action="/api/bid/add">
 
                             <fieldset>
-
+                                <input type="hidden" name="id" value="<%= item.item.id %>"/>
+                                <input type="hidden" name="userId" value="<%= user.id %>"/>
                                 <div class="twelve alpha columns bidform">
                                     <label>Your Bid : </label>
-                                    <input name="your_bid" type="text" id="your_bid"/>
+                                    <input name="bid" type="text" id="your_bid"/>
                                 </div>
 
                                 <div class="twelve alpha columns bidform">
@@ -500,8 +337,18 @@
                                 <div class="twelve alpha columns bidform">
                                     <label for="warehouse">Warehouse : </label>
                                     <select id="warehouse" name="warehouse">
-                                        <option>Gothatuwa Watta, Baddegama</option>
-                                        <option>Add New</option>
+                                        <% for(var warehouseIndex = 0; warehouseIndex < userWareHouses.length; warehouseIndex++) {
+                                            var warehouse = userWareHouses[warehouseIndex];
+                                            var formattedAddress = "";
+                                            formattedAddress = (warehouse.warehouseAddress1 != null && warehouse.warehouseAddress1 != undefined) ?
+                                                    warehouse.warehouseAddress1 : formattedAddress;
+                                            formattedAddress = (warehouse.warehouseAddress2 != null && warehouse.warehouseAddress2 != undefined) ?
+                                            formattedAddress + ", " +warehouse.warehouseAddress2 : formattedAddress;
+                                            formattedAddress = (warehouse.warehouseCity != null && warehouse.warehouseCity != undefined) ?
+                                            formattedAddress + ", " +warehouse.warehouseCity : formattedAddress;
+                                        %>
+                                            <option value="<%= warehouse.id %>"><%= formattedAddress %></option>
+                                        <% } %>
                                     </select>
                                 </div>
 
@@ -526,7 +373,7 @@
 
                                 <div class="twelve alpha columns bidform">
                                     <label>Buyer Note: <span>*</span></label>
-                                    <textarea name="comment" cols="91" rows="3" id="comment" spellcheck="true" style="width: 97%"></textarea>
+                                    <textarea name="buyer_note" cols="91" rows="3" id="comment" spellcheck="true" style="width: 100%"></textarea>
                                 </div>
 
                                 <div class="twelve columns bidform">
@@ -546,102 +393,60 @@
 
                     <!-- Reviews -->
                     <section class="comments">
-
                         <ul>
-                            <li>
-                                <div class="avatar"><img
-                                        src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70"
-                                        alt=""/></div>
-                                <div class="comment-content">
-                                    <div class="arrow-comment"></div>
-                                    <div class="comment-by"><strong>John Doe</strong><span
-                                            class="date">May 28, 2014</span>
-                                        <div class="rating five-stars">
-                                            <div class="star-rating"></div>
-                                            <div class="star-bg"></div>
+                            <% for(commentIndex = 0; commentIndex < itemComments.length; commentIndex++) {
+                                var comment = itemComments[commentIndex];
+                                var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
+                            %>
+                                <li>
+                                    <div class="avatar"><img
+                                                src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70"
+                                                alt=""/></div>
+                                    <div class="comment-content">
+                                        <div class="arrow-comment"></div>
+                                        <div class="comment-by"><strong><%= comment.User.full_name %></strong><span
+                                                    class="date"><%= comment.createdAt.split('T')[0] %></span>
+                                            <div class="rating <%= rateInString[comment.rate] %>-stars">
+                                                <div class="star-rating"></div>
+                                                <div class="star-bg"></div>
+                                            </div>
                                         </div>
+                                        <p><%= comment.comment%></p>
                                     </div>
-                                    <p>Maecenas dignissim euismod nunc, in commodo est luctus eget. Proin in nunc
-                                        laoreet justo volutpat blandit enim. Sem felis, ullamcorper vel aliquam non,
-                                        varius eget just.</p>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="avatar"><img
-                                        src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70"
-                                        alt=""/></div>
-                                <div class="comment-content">
-                                    <div class="arrow-comment"></div>
-                                    <div class="comment-by"><strong>Kathy Brown</strong><span
-                                            class="date">May 18, 2014</span>
-                                        <div class="rating five-stars">
-                                            <div class="star-rating"></div>
-                                            <div class="star-bg"></div>
-                                        </div>
-                                    </div>
-                                    <p>Morbi velit eros, sagittis in facilisis non, rhoncus et erat. Nam posuere
-                                        tristique sem, eu ultricies tortor imperdiet vitae. Curabitur lacinia neque non
-                                        metus</p>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="avatar"><img
-                                        src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70"
-                                        alt=""/></div>
-                                <div class="comment-content">
-                                    <div class="arrow-comment"></div>
-                                    <div class="comment-by"><strong>John Doe</strong><span
-                                            class="date">May 10, 2014</span>
-                                        <div class="rating four-stars">
-                                            <div class="star-rating"></div>
-                                            <div class="star-bg"></div>
-                                        </div>
-                                    </div>
-                                    <p>Commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim. Sem
-                                        felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc tellus
-                                        sollicitudin mauris.</p>
-                                </div>
-
-                            </li>
+                                </li>
+                            <% } %>
                         </ul>
 
                         <a href="#small-dialog" class="popup-with-zoom-anim button color">Add Review</a>
 
-                        <div id="small-dialog" class="zoom-anim-dialog mfp-hide">
+                        <div id="small-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
                             <h3 class="headline">Add Review</h3><span class="line margin-bottom-25"></span>
                             <div class="clearfix"></div>
 
                             <!-- Form -->
-                            <form id="add-comment" class="add-comment">
+                            <form id="add-comment" class="add-comment" action="/api/items/feedback" method="POST">
+                                <input type="hidden" name="rating" id="rating" value="0"/>
+                                <input type="hidden" name="id" value="<%= item.item.id %>"/>
+                                <input type="hidden" name="userId" value="<%= user.id %>"/>
                                 <fieldset>
-
-                                    <div>
-                                        <label>Name:</label>
-                                        <input type="text" value=""/>
+                                    <div class="feedback-rating">
+                                        <span style="float:left">Rating:</span>
+                                        <input type="radio" id="star5" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+                                        <input type="radio" id="star4" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+                                        <input type="radio" id="star3" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+                                        <input type="radio" id="star2" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+                                        <input type="radio" id="star1" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
                                     </div>
 
+                                    <br><br>
                                     <div>
-                                        <label>Rating:</label>
-                                        <span class="rate">
-											<span class="star"></span>
-											<span class="star"></span>
-											<span class="star"></span>
-											<span class="star"></span>
-											<span class="star"></span>
-										</span>
-                                        <div class="clearfix"></div>
-                                    </div>
-
-                                    <div>
-                                        <label>Review: <span>*</span></label>
-                                        <textarea cols="40" rows="3"></textarea>
+                                        <label>Review:</label>
+                                        <textarea cols="40" rows="3" name="feedback"></textarea>
                                     </div>
 
                                 </fieldset>
 
-                                <a href="#" class="button color">Add Review</a>
+                                <input type="submit" class="button color" value="Add Review" style="width: 100%"/>
                                 <div class="clearfix"></div>
 
                             </form>
@@ -655,112 +460,56 @@
         </div>
     </div>
 
-    <!-- Related Products -->
-    <div class="container margin-top-5">
+    <% if(item.similarItems.length > 0) {%>
+        <!-- Related Products -->
+        <div class="container margin-top-5">
 
-        <!-- Headline -->
-        <div class="sixteen columns">
-            <h3 class="headline">Related Products</h3>
-            <span class="line margin-bottom-0"></span>
+            <!-- Headline -->
+            <div class="sixteen columns">
+                <h3 class="headline">Related Products</h3>
+                <span class="line margin-bottom-0"></span>
+            </div>
+
+            <!-- Products -->
+            <div class="products">
+
+                <% for(var itemIndex = 0; itemIndex < item.similarItems.length; itemIndex++) {
+                    var similarItem = item.similarItems[itemIndex];
+                    if(similarItem.id != item.item.id) {
+                %>
+                    <div class="four columns">
+                        <figure class="product">
+                            <div class="mediaholder">
+                                <% if(similarItem.ItemImages.length > 0) {%>
+                                    <img alt="" src="uploads/items/<%= similarItem.ItemImages[0].url %>"/>
+                                <% } else { %>
+                                    <img alt="" src="images/shop_item_01.jpg"/>
+                                <% } %>
+                                <% if(similarItem.ItemImages.length > 1) {%>
+                                    <div class="cover">
+                                        <img alt="" src="uploads/items/<%= similarItem.ItemImages[1].url %>"/>
+                                    </div>
+                                <% } %>
+                                <a href="#" class="product-button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+                            </div>
+
+                            <a href="#">
+                                <section>
+                                    <span class="product-category">Skirts</span>
+                                    <h5>Brown Mini Skirt</h5>
+                                    <span class="product-price">$79.00</span>
+                                </section>
+                            </a>
+                        </figure>
+                    </div>
+                <%  }
+                }
+                %>
+
+            </div>
         </div>
 
-        <!-- Products -->
-        <div class="products">
-
-            <!-- Product #1 -->
-            <div class="four columns">
-                <figure class="product">
-                    <div class="mediaholder">
-                        <a href="#">
-                            <img alt="" src="images/shop_item_01.jpg"/>
-                            <div class="cover">
-                                <img alt="" src="images/shop_item_01_hover.jpg"/>
-                            </div>
-                        </a>
-                        <a href="#" class="product-button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
-                    </div>
-
-                    <a href="#">
-                        <section>
-                            <span class="product-category">Skirts</span>
-                            <h5>Brown Mini Skirt</h5>
-                            <span class="product-price">$79.00</span>
-                        </section>
-                    </a>
-                </figure>
-            </div>
-
-            <!-- Product #2 -->
-            <div class="four columns">
-                <figure class="product">
-                    <div class="mediaholder">
-                        <a href="#">
-                            <img alt="" src="images/shop_item_04.jpg"/>
-                            <div class="cover">
-                                <img alt="" src="images/shop_item_04_hover.jpg"/>
-                            </div>
-                        </a>
-                        <a href="#" class="product-button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
-                    </div>
-
-                    <a href="#">
-                        <section>
-                            <span class="product-category">Shirts</span>
-                            <h5>Vintage Stripe Jumper</h5>
-                            <span class="product-price">$49.00</span>
-                        </section>
-                    </a>
-                </figure>
-            </div>
-
-            <!-- Product #3 -->
-            <div class="four columns">
-                <figure class="product">
-                    <div class="mediaholder">
-                        <a href="#">
-                            <img alt="" src="images/shop_item_07.jpg"/>
-                            <div class="cover">
-                                <img alt="" src="images/shop_item_07_hover.jpg"/>
-                            </div>
-                        </a>
-                        <a href="#" class="product-button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
-                    </div>
-
-                    <a href="#">
-                        <section>
-                            <span class="product-category">Shirts</span>
-                            <h5>Shirt in Navy Stripe</h5>
-                            <span class="product-price">$49.00</span>
-                        </section>
-                    </a>
-                </figure>
-            </div>
-
-            <!-- Product #4 -->
-            <div class="four columns">
-                <figure class="product">
-                    <div class="mediaholder">
-                        <a href="#">
-                            <img alt="" src="images/shop_item_09.jpg"/>
-                            <div class="cover">
-                                <img alt="" src="images/shop_item_09_hover.jpg"/>
-                            </div>
-                        </a>
-                        <a href="#" class="product-button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
-                    </div>
-
-                    <a href="#">
-                        <section>
-                            <span class="product-category">Shirts</span>
-                            <h5>Long Sleeve Check Shirt</h5>
-                            <span class="product-price">$69.00</span>
-                        </section>
-                    </a>
-                </figure>
-            </div>
-
-        </div>
-    </div>
+    <% } %>
 
     <div class="margin-top-50"></div>
 
@@ -884,6 +633,7 @@
 <script src="scripts/puregrid.js"></script>
 <script src="scripts/stacktable.js"></script>
 <script src="scripts/custom.js"></script>
+<script src="scripts/views/bid.js"></script>
 
 </body>
 </html>
