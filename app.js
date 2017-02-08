@@ -15,6 +15,7 @@ var login = require('./routes/login');
 var news = require('./routes/news');
 var commodity = require('./routes/commodity');
 var signup = require('./routes/signup');
+var cookieSession = require('cookie-session')
 
 var app = express();
 
@@ -28,6 +29,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
 app.use(cookieParser());
+app.use(cookieSession({ secret: 'secret', cookie: { maxAge: 60 * 60 * 1000 }}));
 
 //setting up passportjs
 var flash=require("connect-flash");
@@ -39,7 +41,6 @@ app.use(expressSession({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
 //----------------- Following methods moved to user route-------------------
 // passport.use(new passportLocal.Strategy(verifyCredentials));
 // passport.use(new passportHttp.BasicStrategy(verifyCredentials));
@@ -124,6 +125,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;

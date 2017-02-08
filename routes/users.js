@@ -43,7 +43,6 @@ function verifyCredentials(username, password, done) {
                     //password: bcrypt.compareSync(password, hash),
                 }
             }).then(function (User) {
-                console.log(User[0].dataValues.password);
                 if (!_.isUndefined(User[0])) {
                     if (bcrypt.compareSync(password, User[0].dataValues.password)) {    //checking password
                         var user = User[0].dataValues;
@@ -61,6 +60,7 @@ function verifyCredentials(username, password, done) {
 
 /* GET users listing. */
 router.get('/login', function (req, res, next) {
+    console.error(req);
     res.render('login', {message: req.flash("error")});
 });
 
@@ -70,14 +70,23 @@ router.get('/signup', function (req, res, next) {
 
 /* POST request from login form. User passport local method for authentication */
 router.post('/login', function (req, res, next) {
+    //console.error(req);
+
+    if (req.body.rememberme) {
+        //req.session = null;
+    }
     //redirect to previously visited page if login success, otherwise to login page.
-    var redirectTo = req.session.returnTo || '/';
+    var redirectTo = req.session.returnTo || '/user/basic';
 
     passport.authenticate('local', {
         successRedirect: redirectTo,
         failureRedirect: 'login',
         failureFlash: true
     })(req, res, next);
+    if(req.body.rememberme){
+        res.cookie('session',null);
+        console.error("okay");
+    }
 });
 
 
@@ -155,6 +164,11 @@ router.get('/delall', function () {
     }).then(function () {
         res.send("ok");
     });
+});
+
+router.get('/logout',function(req,res){
+    req.session = null;
+    res.redirect('/user/login');
 });
 
 module.exports = router;
