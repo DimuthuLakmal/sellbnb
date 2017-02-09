@@ -60,6 +60,7 @@ function verifyCredentials(username, password, done) {
 
 /* GET users listing. */
 router.get('/login', function (req, res, next) {
+    console.error(req);
     res.render('login', {message: req.flash("error")});
 });
 
@@ -69,6 +70,11 @@ router.get('/signup', function (req, res, next) {
 
 /* POST request from login form. User passport local method for authentication */
 router.post('/login', function (req, res, next) {
+    //console.error(req);
+
+    if (req.body.rememberme) {
+        //req.session = null;
+    }
     //redirect to previously visited page if login success, otherwise to login page.
     var redirectTo = req.session.returnTo || '/';
 
@@ -281,6 +287,27 @@ router.get('/delall', function () {
     }).then(function () {
         res.send("ok");
     });
+});
+
+router.get('/logout',function(req,res){
+    req.session = null;
+    res.redirect('/user/login');
+});
+
+router.get('/contactinfo',function(req,res){
+    res.render('useraccountcontactinformation');
+});
+
+router.get('/bankacc',function(req,res){
+    res.render('usercontactinformation');
+});
+
+router.get('/bizinfo',function(req,res){
+    res.render('userbusinessinformation');
+});
+
+router.get('/notfpref',function(req,res){
+    res.render('usernotificationpreference');
 });
 
 module.exports = router;

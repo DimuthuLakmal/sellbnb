@@ -16,6 +16,8 @@ var news = require('./routes/news');
 var commodity = require('./routes/commodity');
 var items = require('./routes/items');
 var signup = require('./routes/signup');
+var cookieSession = require('cookie-session')
+var bid = require('./routes/bid');
 var bid = require('./routes/bid');
 
 var app = express();
@@ -30,6 +32,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
 app.use(cookieParser());
+app.use(cookieSession({ secret: 'secret', cookie: { maxAge: 60 * 60 * 1000 }}));
 
 //setting up passportjs
 var flash=require("connect-flash");
