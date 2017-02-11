@@ -10,6 +10,7 @@ var fs = require('fs');
 var path = require('path');
 var moment = require('moment');
 var async = require('async');
+var forEach = require('async-foreach').forEach;
 
 /* Retrieve all items from database */
 router.get('/viewall', function (req, res) {
@@ -132,176 +133,14 @@ router.get('/viewlatest', function (req, res) {
 /* Usage: Search Results Page */
 router.get('/search/start/:start', function (req, res) {
     var keyword = req.query['keyword'] ? req.query['keyword'] : req.session.keyword;
-    var start = req.params.start;
-    var class_ = req.query['class'] ? req.query['class'] : req.session.selectedClass;
-    var segment = req.query['segment'] ? req.query['segment'] : req.session.selectedSegment;
-    var startPrice = req.query['startPrice'] ? req.query['startPrice'] : req.session.startPrice;
+    retrieveItems(req, res, keyword);
+});
 
-    //check whether checkbox is already ticked or not
-    if(req.query['class'] == req.session.selectedClass) {
-        class_ = null;
-        delete req.session.selectedClass;
-    }
-
-    //check whether checkbox is already ticked or not
-    if(req.query['segment'] == req.session.selectedSegment) {
-        segment = null;
-        delete req.session.selectedSegment;
-    }
-
-    //define where object of sequelize object according to parameter selected in search results page
-    var whereObject = {
-        duration: {
-            gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
-        },
-        $or: [
-            {'$Commodity.name$': {$like: '%'+keyword+'%'}},
-            {title: {$like: '%'+keyword+'%'}}
-        ],
-    };
-    if(class_ != null && class_ != undefined) {
-        whereObject["$Commodity.class$"] = {$like: '%'+class_+'%'};
-        req.session.selectedClass = class_;
-    }
-    if (segment != null && segment != undefined) {
-        whereObject["$Commodity.segment$"] = {$like: '%'+segment+'%'};
-        req.session.selectedSegment = segment;
-    }
-
-    //Filter by price range
-    if(startPrice != null && startPrice != undefined) {
-        var endPrice = req.query['endPrice'] ? req.query['endPrice'] : req.session.endPrice;
-        whereObject['suggestedPrice'] = {$between: [parseFloat(startPrice), parseFloat(endPrice)]};
-        req.session.startPrice = startPrice;
-        req.session.endPrice = endPrice;
-    }
-
-    //retrieve data from req object
-    sequelize.sync().then(
-        function () {
-            var Item = models.Item;
-            var Commodity = models.Commodity;
-            var ItemImage = models.ItemImage;
-            var User = models.User;
-            Item.findAndCountAll({
-                where: whereObject,
-                subQuery:false,
-                include: [Commodity, ItemImage, User],
-                order: '`id` DESC',
-                limit: 10,
-                offset: parseInt(start),
-            }).then(function (Items) {
-                if(start == 0 && (keyword != null && keyword != undefined) &&
-                    ((class_ == null || class_ == undefined) && (segment == null || segment == undefined))) {
-                    /* Waterfall is needed since below two functions are db functions */
-                    async.waterfall([
-                            function (callback) {
-                                //Identify distinct characteristics of commodities according to keyword search
-                                /*Usage: sidebar of search result page */
-                                var segments = [];
-                                var classes = [];
-                                sequelize.sync().then(
-                                    function () {
-                                        var Item = models.Item;
-                                        var Commodity = models.Commodity;
-                                        Item.aggregate('segment', 'DISTINCT',{
-                                            plain: false,
-                                            where: {
-                                                duration: {
-                                                    gte: sequelize.fn("TIME_TO_SEC",
-                                                        sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
-                                                },
-                                                $or: [
-                                                    {'$Commodity.name$': {$like: '%'+keyword+'%'}},
-                                                    {title: {$like: '%'+keyword+'%'}}
-                                                ],
-                                            },
-                                            include: [Commodity],
-                                            group: ['segment'],
-                                        }).then(function (Segments) {
-                                            _.forEach(Segments, function(segment, index) {
-                                                segments.push(segment.DISTINCT);
-                                            });
-
-                                            Item.aggregate('class', 'DISTINCT',{
-                                                plain: false,
-                                                where: {
-                                                    duration: {
-                                                        gte: sequelize.fn("TIME_TO_SEC",
-                                                            sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
-                                                    },
-                                                    $or: [
-                                                        {'$Commodity.name$': {$like: '%'+keyword+'%'}},
-                                                        {title: {$like: '%'+keyword+'%'}}
-                                                    ],
-                                                },
-                                                include: [Commodity],
-                                                group: ['class'],
-                                            }).then(function (Classes) {
-                                                _.forEach(Classes, function(class_, index) {
-                                                    classes.push(class_.DISTINCT);
-                                                });
-                                                req.session.distinctCharacteristics = [segments, classes];
-                                                callback(null, keyword, req);
-                                            });
-                                        });
-                                    }
-                                );
-                            },
-                            function (keyword, req, callback) {
-                                //retrieve max price of the search results
-                                /*Usage: sidebar of search result page */
-                                sequelize.sync().then(
-                                    function () {
-                                        var Item = models.Item;
-                                        var Commodity = models.Commodity;
-                                        Item.aggregate('suggestedPrice', 'MAX',{
-                                            plain: false,
-                                            where: {
-                                                duration: {
-                                                    gte: sequelize.fn("TIME_TO_SEC",
-                                                        sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
-                                                },
-                                                $or: [
-                                                    {'$Commodity.name$': {$like: '%'+keyword+'%'}},
-                                                    {title: {$like: '%'+keyword+'%'}}
-                                                ],
-                                            },
-                                            include: [Commodity],
-                                        }).then(function (Price) {
-                                            req.session.maxPrice =  Price[0].MAX;
-                                            callback(null,req);
-                                        });
-                                    }
-                                );
-                            }],
-                        function (err, req) {
-                            req.session.itemsCount = Items.count;
-                            req.session.itemsOffset = parseInt(req.params.start);
-                            req.session.keyword = keyword;
-                            req.session.searchResult = Items.rows;
-
-                            //calculate remaining times for biddings
-                            var currentTime = new Date().getTime() / 1000;
-                            var remainingTimes = []
-                            _.forEach(Items.rows, function(item, index) {
-                                //calculate remaining time
-                                var difference = ((item.createdAt.getTime() / 1000) + item.duration) - currentTime;
-                                remainingTimes.push(difference);
-                            });
-                            req.session.searchResultRemainingTime = remainingTimes;
-
-                            res.redirect('/items');
-                        }
-                    );
-                } else {
-                    req.session.searchResult = Items.rows;
-                    res.redirect('/items');
-                }
-
-            });
-        }
-    );
+/* Retrieve items for search from database */
+/* Usage: Heading Menu. Category Search*/
+router.get('/search/start/:start/keyword/:keyword', function (req, res) {
+    var keyword = req.params.keyword ? req.params.keyword : req.session.keyword;
+    retrieveItems(req, res, keyword);
 });
 
 /* Retrieve items for search from database. use selected class of commodity */
@@ -510,6 +349,145 @@ router.post('/feedback', function (req, res) {
     res.redirect('/items/id/'+itemId);
 });
 
+/* Retrieve item added by a specific user */
+/* Usage: User Account Selling Page */
+router.get('/start/:start/userId/:userId', function (req, res) {
+    //retrieve data from req object
+    var userId = req.params.userId;
+    var start = req.params.start;
+    var sellpageItemOption = req.query['sellpageItemOption'] ? req.query['sellpageItemOption'] : req.session.sellpageItemOption;
+
+    //define where object of sequelize object according to filtering parameters selected in User Account Selling page
+    var whereObject = {
+        UserId: userId
+    };
+
+    if(sellpageItemOption == 'All') {
+        whereObject = {
+            UserId: userId
+        };
+        req.session.sellpageItemOption = 'All'
+    } else if(sellpageItemOption == 'Open') {
+        whereObject["duration"] =
+            {gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))}
+
+        req.session.sellpageItemOption = 'Open';
+    } else if(sellpageItemOption == 'Closed') {
+        whereObject["duration"] =
+            {lt: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))}
+        req.session.sellpageItemOption = 'Closed';
+    } else {
+        req.session.sellpageItemOption = 'All';
+    }
+
+    sequelize.sync().then(
+        function () {
+            var Item = models.Item;
+            var ItemImage = models.ItemImage;
+            var Bidding = models.Bidding;
+            var User = models.User;
+            Item.findAndCountAll({
+                where: whereObject,
+                offset: parseInt(start),
+                limit: 10,
+                include: [ItemImage, Bidding],
+                order: '`createdAt` DESC'
+            }).then(function (Items) {
+                //calculate remaining times for bidding items & bidding details of each item
+                var currentTime = new Date().getTime() / 1000;
+                var remainingTimes = [];
+                var allBiddings = [];
+                async.forEach(Items.rows, function(item, callback1) {
+                    //calculate remaining time
+                    var difference = ((item.createdAt.getTime() / 1000) + item.duration) - currentTime;
+                    if(difference < 0) {
+                        difference = 0;
+                    }
+
+                    //calculate bidding close time
+                    var closedTimeinSec = ((item.createdAt.getTime() / 1000) + item.duration)*1000;
+                    var closedTime = moment(closedTimeinSec).format('YYYY-MM-DD HH:mm:ss');
+
+                    var formatedTimeCreated = moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss');
+                    remainingTimes.push([difference, formatedTimeCreated, closedTime]);
+
+                    //retrieve user of bidding.
+                    var biddings = []
+                    async.forEach(item.Biddings, function(bidding, callback2) {
+                        var userId = bidding.UserId;
+                        User.findAll({
+                            where: {
+                                id: userId,
+                            },
+                        }).then(function (user) {
+                            bidding.dataValues['username'] = user[0].username;
+                            biddings.push(bidding);
+                            callback2(null);
+                        });
+                    }, callback1);
+                    allBiddings.push(biddings);
+                }, function (err) {
+                    //console.log(allBiddings);
+                    //pushing retrieved data to commodity array
+                    req.session.sellingList = [Items.rows, allBiddings];
+                    req.session.itemsSellingAccountCount = Items.count;
+                    req.session.itemsSellingAccountOffset = parseInt(req.params.start);
+                    req.session.searchResultRemainingTimeSelling = remainingTimes;
+                    res.redirect('/user/sell/list/start/'+start);
+                });
+
+            });
+        }
+    );
+});
+
+
+/* Update item status */
+/* Usage: User Account Selling Page. When action triggered */
+router.post('/update/status', function (req, res) {
+    //retrieve data from req object
+    var itemId = req.body.itemId;
+    var status = req.body.action;
+
+    sequelize.sync().then(
+        function () {
+            var Item = models.Item;
+            Item.update(
+                { status: status },
+                { where: { id: itemId } }
+            ).then(function (results) {
+                res.redirect('/user/sell/list/start/0');
+            });
+        }
+    );
+});
+
+
+/* Retrieve specific item and its comments from database */
+/* Usage: View Bidding Details Seller Page */
+router.get('/sell/id/:id', function (req, res) {
+    var itemId = req.params.id;
+
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var Item = models.Item;
+            var User = models.User;
+            var ItemImage = models.ItemImage;
+            var Commodity = models.Commodity;
+            var WareHouse = models.WareHouse;
+            Item.findAll({
+                where: {id: itemId},
+                include: [User, ItemImage, Commodity, WareHouse],
+            }).then(function (Items) {
+                req.session.specificBiddingItemSell = Items[0];
+                res.redirect('/user/sell/bids/start/0?itemId='+itemId);
+            });
+        }
+    );
+});
+
+
 //function to decode base64 image
 function decodeBase64Image(dataString) {
     var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
@@ -523,6 +501,180 @@ function decodeBase64Image(dataString) {
     response.data = new Buffer(matches[2], 'base64');
 
     return response;
+}
+
+//retreive item list from db.
+function retrieveItems(req, res, keyword) {
+    var start = req.params.start;
+    var class_ = req.query['class'] ? req.query['class'] : req.session.selectedClass;
+    var segment = req.query['segment'] ? req.query['segment'] : req.session.selectedSegment;
+    var startPrice = req.query['startPrice'] ? req.query['startPrice'] : req.session.startPrice;
+
+    //check whether checkbox is already ticked or not
+    if(req.query['class'] == req.session.selectedClass) {
+        class_ = null;
+        delete req.session.selectedClass;
+    }
+
+    //check whether checkbox is already ticked or not
+    if(req.query['segment'] == req.session.selectedSegment) {
+        segment = null;
+        delete req.session.selectedSegment;
+    }
+
+    //define where object of sequelize object according to parameter selected in search results page
+    var whereObject = {
+        duration: {
+            gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
+        },
+        $or: [
+            {'$Commodity.name$': {$like: '%'+keyword+'%'}},
+            {title: {$like: '%'+keyword+'%'}}
+        ],
+    };
+    if(class_ != null && class_ != undefined) {
+        whereObject["$Commodity.class$"] = {$like: '%'+class_+'%'};
+        req.session.selectedClass = class_;
+    }
+    if (segment != null && segment != undefined) {
+        whereObject["$Commodity.segment$"] = {$like: '%'+segment+'%'};
+        req.session.selectedSegment = segment;
+    }
+
+    //Filter by price range
+    if(startPrice != null && startPrice != undefined) {
+        var endPrice = req.query['endPrice'] ? req.query['endPrice'] : req.session.endPrice;
+        whereObject['suggestedPrice'] = {$between: [parseFloat(startPrice), parseFloat(endPrice)]};
+        req.session.startPrice = startPrice;
+        req.session.endPrice = endPrice;
+    }
+
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var Item = models.Item;
+            var Commodity = models.Commodity;
+            var ItemImage = models.ItemImage;
+            var User = models.User;
+            Item.findAndCountAll({
+                where: whereObject,
+                subQuery:false,
+                include: [Commodity, ItemImage, User],
+                order: '`id` DESC',
+                limit: 10,
+                offset: parseInt(start),
+            }).then(function (Items) {
+                if(start == 0 && (keyword != null && keyword != undefined) &&
+                    ((class_ == null || class_ == undefined) && (segment == null || segment == undefined))) {
+                    /* Waterfall is needed since below two functions are db functions */
+                    async.waterfall([
+                            function (callback) {
+                                //Identify distinct characteristics of commodities according to keyword search
+                                /*Usage: sidebar of search result page */
+                                var segments = [];
+                                var classes = [];
+                                sequelize.sync().then(
+                                    function () {
+                                        var Item = models.Item;
+                                        var Commodity = models.Commodity;
+                                        Item.aggregate('segment', 'DISTINCT',{
+                                            plain: false,
+                                            where: {
+                                                duration: {
+                                                    gte: sequelize.fn("TIME_TO_SEC",
+                                                        sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
+                                                },
+                                                $or: [
+                                                    {'$Commodity.name$': {$like: '%'+keyword+'%'}},
+                                                    {title: {$like: '%'+keyword+'%'}}
+                                                ],
+                                            },
+                                            include: [Commodity],
+                                            group: ['segment'],
+                                        }).then(function (Segments) {
+                                            _.forEach(Segments, function(segment, index) {
+                                                segments.push(segment.DISTINCT);
+                                            });
+
+                                            Item.aggregate('class', 'DISTINCT',{
+                                                plain: false,
+                                                where: {
+                                                    duration: {
+                                                        gte: sequelize.fn("TIME_TO_SEC",
+                                                            sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
+                                                    },
+                                                    $or: [
+                                                        {'$Commodity.name$': {$like: '%'+keyword+'%'}},
+                                                        {title: {$like: '%'+keyword+'%'}}
+                                                    ],
+                                                },
+                                                include: [Commodity],
+                                                group: ['class'],
+                                            }).then(function (Classes) {
+                                                _.forEach(Classes, function(class_, index) {
+                                                    classes.push(class_.DISTINCT);
+                                                });
+                                                req.session.distinctCharacteristics = [segments, classes];
+                                                callback(null, keyword, req);
+                                            });
+                                        });
+                                    }
+                                );
+                            },
+                            function (keyword, req, callback) {
+                                //retrieve max price of the search results
+                                /*Usage: sidebar of search result page */
+                                sequelize.sync().then(
+                                    function () {
+                                        var Item = models.Item;
+                                        var Commodity = models.Commodity;
+                                        Item.aggregate('suggestedPrice', 'MAX',{
+                                            plain: false,
+                                            where: {
+                                                duration: {
+                                                    gte: sequelize.fn("TIME_TO_SEC",
+                                                        sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
+                                                },
+                                                $or: [
+                                                    {'$Commodity.name$': {$like: '%'+keyword+'%'}},
+                                                    {title: {$like: '%'+keyword+'%'}}
+                                                ],
+                                            },
+                                            include: [Commodity],
+                                        }).then(function (Price) {
+                                            req.session.maxPrice =  Price[0].MAX;
+                                            callback(null,req);
+                                        });
+                                    }
+                                );
+                            }],
+                        function (err, req) {
+                            req.session.itemsCount = Items.count;
+                            req.session.itemsOffset = parseInt(req.params.start);
+                            req.session.keyword = keyword;
+                            req.session.searchResult = Items.rows;
+
+                            //calculate remaining times for biddings
+                            var currentTime = new Date().getTime() / 1000;
+                            var remainingTimes = []
+                            _.forEach(Items.rows, function(item, index) {
+                                //calculate remaining time
+                                var difference = ((item.createdAt.getTime() / 1000) + item.duration) - currentTime;
+                                remainingTimes.push(difference);
+                            });
+                            req.session.searchResultRemainingTime = remainingTimes;
+
+                            res.redirect('/items');
+                        }
+                    );
+                } else {
+                    req.session.searchResult = Items.rows;
+                    res.redirect('/items');
+                }
+
+            });
+        }
+    );
 }
 
 module.exports = router;

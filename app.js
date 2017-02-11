@@ -76,6 +76,8 @@ app.use('/commodity/add', express.static(path.join(__dirname, 'public')));
 app.use('/items', express.static(path.join(__dirname, 'public')));
 app.use('/items/add', express.static(path.join(__dirname, 'public')));
 app.use('/items/id', express.static(path.join(__dirname, 'public')));
+app.use('/user/sell/list/start', express.static(path.join(__dirname, 'public')));
+app.use('/user/sell/bids/start', express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/user', users);
