@@ -1,14 +1,634 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <% if(!isAuthenticated) { %>
-      <a href = "/login">Login here</a>
-    <% } else { %>
-        Hello, <%= user.name %>!
-        <a href="/logout">Logout</a>
-    <% } %>
-  </body>
+<!--[if IE 8 ]>
+<html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en"> <!--<![endif]-->
+<head>
+
+  <!-- Basic Page Needs
+  ================================================== -->
+  <meta charset="utf-8">
+  <title>Seller BnB</title>
+
+  <!-- Mobile Specific Metas
+  ================================================== -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- CSS
+  ================================================== -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/colors/blue.css" id="colors">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+</head>
+
+<body class="boxed">
+<div id="wrapper">
+
+  <!-- Header
+      ================================================== -->
+  <div class="container">
+
+    <!-- Logo -->
+    <div class="four columns">
+      <div id="logo">
+        <h1><a href="index.html"><img src="images/logo.png" alt="Trizzy"/></a></h1>
+      </div>
+    </div>
+
+
+    <!-- Additional Menu -->
+    <div class="twelve columns">
+      <div id="additional-menu">
+        <ul>
+          <li><a href="checkout-billing-details.html">English</a></li>
+          <li><a href="my-account.html">Sinhala</a></li>
+        </ul>
+      </div>
+    </div>
+
+
+    <!-- Shopping Cart -->
+    <div class="twelve columns">
+
+      <div class="cart">
+        <!-- Button -->
+        <div class="icon-box">
+          <span><i class="fa fa-mail-forward"></i></span>
+        </div>
+      </div>
+
+      <div class="cart">
+        <!-- Button -->
+        <div class="icon-box">
+          <span><i class="fa fa-folder"></i></span>
+        </div>
+      </div>
+
+      <div class="cart">
+        <!-- Button -->
+        <div class="icon-box">
+          <span><i class="fa fa-user"></i></span>
+        </div>
+      </div>
+
+      <!-- Search -->
+      <div align="center">
+        <nav class="top-search">
+          <form action="http://localhost:3000/api/items/search/start/0" method="get">
+            <button><i class="fa fa-search"></i></button>
+            <input type="hidden" value="0" name="start"/>
+            <input class="search-field" name="keyword" type="text" placeholder="Search" id="top_search" list="searchresults"/>
+            <datalist id="searchresults"></datalist>
+          </form>
+        </nav>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Navigation
+  ================================================== -->
+  <div class="container">
+    <div class="sixteen columns">
+
+      <a href="#menu" class="menu-trigger"><i class="fa fa-bars"></i> Menu</a>
+
+      <nav id="navigation">
+        <ul class="menu" id="responsive">
+
+          <li><a href="index.html" class="homepage">Home</a></li>
+
+          <li class="demo-button">
+            <a href="#">Market News</a>
+          </li>
+
+          <li class="demo-button">
+            <a href="#">Sell Account</a>
+          </li>
+
+          <li class="demo-button">
+            <a href="#">Buy Account</a>
+          </li>
+
+          <li class="dropdown">
+            <a href="#">Commodities</a>
+            <ul>
+              <% for(var nameIndex = 0; nameIndex < commodityNames.length; nameIndex++) {%>
+                <li><a href="shop-with-sidebar.html"><%= commodityNames[nameIndex] %></a></li>
+              <% } %>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+
+  <!-- Slider
+  ================================================== -->
+  <div class="container fullwidth-element home-slider">
+
+    <div class="tp-banner-container">
+      <div class="tp-banner">
+        <ul>
+          <!-- Slide 1  -->
+          <li data-transition="fade" data-slotamount="7" data-masterspeed="1500" >
+            <img src="images/slider.jpg"  alt="slidebg1"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+            <div class="caption sfb fadeout" data-x="145" data-y="170" data-speed="400" data-start="800"  data-easing="Power4.easeOut">
+              <h2>Dress Sharp</h2>
+              <h3>Learn from the classics</h3>
+              <a href="shop-with-sidebar.html" class="caption-btn">Shop The Collection</a>
+            </div>
+          </li>
+
+          <!-- Slide 2  -->
+          <li data-transition="zoomout" data-slotamount="7" data-masterspeed="1000">
+            <img src="images/slider2.jpg"  alt="darkblurbg"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+            <div class="caption dark sfb fadeout" data-x="750" data-y="170" data-speed="400" data-start="800"  data-easing="Power4.easeOut">
+              <h2>Urban Style</h2>
+              <h3>Every cut and colour</h3>
+              <a href="shop-with-sidebar.html" class="caption-btn">Shop The Collection</a>
+            </div>
+          </li>
+
+          <!-- Slide 3  -->
+          <li data-transition="fadetotopfadefrombottom" data-slotamount="7" data-masterspeed="1000">
+            <img src="images/slider3.jpg"  alt="darkblurbg"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+            <div class="caption dark sfb fadeout" data-x="850" data-y="170" data-speed="400" data-start="800"  data-easing="Power4.easeOut">
+              <h2>New In</h2>
+              <h3>Pants and T-Shirts</h3>
+              <a href="shop-with-sidebar.html" class="caption-btn">Shop The Collection</a>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Featured
+  ================================================== -->
+  <div class="container" >
+
+
+    <!-- Headline -->
+    <div class="sixteen columns">
+      <h3 class="headline">Commodities</h3>
+      <span class="line margin-bottom-0"></span>
+    </div>
+
+    <!-- Carousel -->
+    <div id="category-div" class="showbiz-container sixteen columns" >
+
+      <!-- Navigation -->
+      <div class="showbiz-navigation">
+        <div id="showbiz_left_1" class="sb-navigation-left"><i class="fa fa-angle-left"></i></div>
+        <div id="showbiz_right_1" class="sb-navigation-right"><i class="fa fa-angle-right"></i></div>
+      </div>
+      <div class="clearfix"></div>
+
+      <!-- Products -->
+      <div class="showbiz" data-left="#showbiz_left_1" data-right="#showbiz_right_1" data-play="#showbiz_play_1" >
+        <div class="overflowholder">
+
+          <ul>
+            <% for(var commodityIndex = 0; commodityIndex < commodityPopular.length; commodityIndex++) {%>
+              <li>
+                <div class="one-third column">
+                  <a href="#" class="img-caption" >
+                    <figure style="width: 280px">
+                      <% if(commodityPopular[commodityIndex].images.length > 0) {%>
+                        <img src="uploads/commodity/<%= commodityPopular[commodityIndex].images[0].url %>"
+                             alt="" style="width: 280px; height: 185px"/>
+                      <% } else { %>
+                        <img src="images/featured_img_3.jpg" alt="" style="width: 280px; height: 185px"/>
+                      <% } %>
+                      <figcaption>
+                        <h3><%= commodityPopular[commodityIndex].name %></h3>
+                      </figcaption>
+                    </figure>
+                  </a>
+                </div>
+              </li>
+            <% } %>
+
+          </ul>
+          <div class="clearfix"></div>
+
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+
+  </div>
+  <div class="clearfix"></div>
+
+
+  <!-- New Listing
+  ================================================== -->
+  <div class="container">
+
+    <!-- Headline -->
+    <div class="sixteen columns">
+      <h3 class="headline">New Listings</h3>
+      <span class="line margin-bottom-0"></span>
+    </div>
+
+    <!-- Carousel -->
+    <div id="new-arrivals" class="showbiz-container sixteen columns" >
+
+      <!-- Navigation -->
+      <div class="showbiz-navigation">
+        <div id="showbiz_left_2" class="sb-navigation-left"><i class="fa fa-angle-left"></i></div>
+        <div id="showbiz_right_2" class="sb-navigation-right"><i class="fa fa-angle-right"></i></div>
+      </div>
+      <div class="clearfix"></div>
+
+      <!-- Products -->
+      <div class="showbiz" data-left="#showbiz_left_2" data-right="#showbiz_right_2" data-play="#showbiz_play_1" >
+        <div class="overflowholder">
+
+          <ul>
+            <% for(var itemIndex = 0; itemIndex < latestItems.length; itemIndex++) { %>
+            <li>
+              <figure class="product">
+                <div class="mediaholder">
+                  <a href="variable-product-page.html">
+                    <% if(latestItems[itemIndex].images.length > 0) {%>
+                      <img alt="" src="uploads/items/<%= latestItems[itemIndex].images[0].url %>"/>
+                    <% } else { %>
+                      <img alt="" src="images/shop_item_01.jpg"/>
+                    <% } %>
+                    <% if(latestItems[itemIndex].images.length > 1) {%>
+                      <div class="cover">
+                        <img alt="" src="uploads/items/<%= latestItems[itemIndex].images[1].url %>"/>
+                      </div>
+                    <% } %>
+                  </a>
+                  <a href="#" class="product-button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+                </div>
+
+                <a href="variable-product-page.html">
+                  <section>
+                    <span class="product-category"><%= latestItems[itemIndex].commodity.name %></span>
+                    <h5>Brown Mini Skirt</h5>
+                    <span class="product-price"><%= latestItems[itemIndex].suggestedPrice %></span>
+                  </section>
+                </a>
+              </figure>
+            </li>
+            <% } %>
+
+          </ul>
+          <div class="clearfix"></div>
+
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- Product Lists
+  ================================================== -->
+  <div class="container margin-bottom-25">
+
+    <!-- Best Sellers -->
+    <div class="one-third column">
+
+      <!-- Headline -->
+      <h3 class="headline">Best Sellers</h3>
+      <span class="line margin-bottom-0"></span>
+      <div class="clearfix"></div>
+
+
+      <ul class="product-list">
+
+        <li><a href="#">
+            <img src="images/small_product_list_01.jpg" alt="" />
+            <div class="product-list-desc">Canvas Backpack <i>$59.00</i></div>
+          </a></li>
+
+        <li><a href="#">
+            <img src="images/small_product_list_02.jpg" alt="" />
+            <div class="product-list-desc">Long Sleeve Shirt <i>$29.00</i></div>
+          </a></li>
+
+        <li><a href="#">
+            <img src="images/small_product_list_03.jpg" alt="" />
+            <div class="product-list-desc">Tommy Hilfiger Shirt Beat <i>$89.00</i></div>
+          </a></li>
+
+        <li><div class="clearfix"></div></li>
+
+      </ul>
+
+    </div>
+
+
+    <!-- Top Rated -->
+    <div class="one-third column">
+
+      <!-- Headline -->
+      <h3 class="headline">Top Rated</h3>
+      <span class="line margin-bottom-0"></span>
+      <div class="clearfix"></div>
+
+
+      <ul class="product-list top-rated">
+
+        <li><a href="#">
+            <img src="images/small_product_list_04.jpg" alt="" />
+            <div class="product-list-desc with-rating">Brogue Boots in Leather <i>$99.00</i>
+              <div class="rating five-stars">
+                <div class="star-rating"></div>
+                <div class="star-bg"></div>
+              </div>
+            </div>
+          </a></li>
+
+        <li><a href="#">
+            <img src="images/small_product_list_05.jpg" alt="" />
+            <div class="product-list-desc with-rating">Slim Jeans With Blue Tint <i>$79.00</i>
+              <div class="rating four-stars">
+                <div class="star-rating"></div>
+                <div class="star-bg"></div>
+              </div>
+            </div>
+          </a></li>
+
+        <li><a href="#">
+            <img src="images/small_product_list_06.jpg" alt="" />
+            <div class="product-list-desc with-rating">New Look Fairisle Scarf <i>$19.00</i>
+              <div class="rating three-stars">
+                <div class="star-rating"></div>
+                <div class="star-bg"></div>
+              </div>
+            </div>
+          </a></li>
+
+        <li><div class="clearfix"></div></li>
+
+      </ul>
+
+    </div>
+
+
+    <!-- Weekly Sales -->
+    <div class="one-third column">
+
+      <!-- Headline -->
+      <h3 class="headline">Weekly Sales</h3>
+      <span class="line margin-bottom-0"></span>
+      <div class="clearfix"></div>
+
+
+      <ul class="product-list discount">
+
+        <li><a href="#">
+            <img src="images/small_product_list_07.jpg" alt="" />
+            <div class="product-list-desc">Short Sleeve Polo Shirt <i>$29.00<b>$19.00</b></i></div>
+          </a></li>
+
+        <li><a href="#">
+            <img src="images/small_product_list_08.jpg" alt="" />
+            <div class="product-list-desc">Long Sleeve Shirt <i>$99.00<b>$79.00</b></i></div>
+          </a></li>
+
+        <li><a href="#">
+            <img src="images/small_product_list_09.jpg" alt="" />
+            <div class="product-list-desc">Tommy Hilfiger Shirt Beat <i>$499.00<b>$399.00</b></i></div>
+          </a></li>
+
+        <li><div class="clearfix"></div></li>
+
+      </ul>
+
+    </div>
+
+  </div>
+  <div class="clearfix"></div>
+
+
+  <!-- Latest Articles
+  ================================================== -->
+  <div class="container" >
+
+    <!-- Headline -->
+    <div class="sixteen columns" >
+      <h3 class="headline">Latest Articles</h3>
+      <span class="line margin-bottom-30"></span>
+    </div>
+
+    <!-- Post #1 -->
+    <div class="four columns">
+      <article class="from-the-blog">
+
+        <figure class="from-the-blog-image">
+          <a href="blog-single-post.html"><img src="images/from_the_blog_01.jpg" alt="" /></a>
+          <div class="hover-icon"></div>
+        </figure>
+
+        <section class="from-the-blog-content">
+          <a href="blog-single-post.html"><h5>Amazon Raises Threshold for Free Shipping</h5></a>
+          <i>By Vasterad on May 31, 2014</i>
+          <span>Pellentesque ultricies vehicula eleifend. Aenean eu nunc semper faucibus sapien viverra.</span>
+          <a href="blog-single-post.html" class="button gray">Read More</a>
+        </section>
+
+      </article>
+    </div>
+
+    <!-- Post #2 -->
+    <div class="four columns">
+      <article class="from-the-blog">
+
+        <figure class="from-the-blog-image">
+          <a href="blog-single-post.html"><img src="images/from_the_blog_02.jpg" alt="" /></a>
+          <div class="hover-icon"></div>
+        </figure>
+
+        <section class="from-the-blog-content">
+          <a href="blog-single-post.html"><h5>How To Read The Symbols on Your Clothing Tags</h5></a>
+          <i>By Vasterad on May 16, 2014</i>
+          <span>Morbi quis magna nec lacus nunc eratu pharetra lorem sed sapien velit adipiscing. </span>
+          <a href="blog-single-post.html" class="button gray">Read More</a>
+        </section>
+
+      </article>
+    </div>
+
+    <!-- Post #3 -->
+    <div class="four columns">
+      <article class="from-the-blog">
+
+        <figure class="from-the-blog-image">
+          <a href="blog-single-post.html"><img src="images/from_the_blog_03.jpg" alt="" /></a>
+          <div class="hover-icon"></div>
+        </figure>
+
+        <section class="from-the-blog-content">
+          <a href="blog-single-post.html"><h5>Online Shopping Hit New Highs on Mobile Sales</h5></a>
+          <i>By Vasterad on May 10, 2014</i>
+          <span>Donec non egestas nisl. Aliquam tincidunt sem sed nisl dictum. Fusce gravida arius gravida.</span>
+          <a href="blog-single-post.html" class="button gray">Read More</a>
+        </section>
+
+      </article>
+    </div>
+
+    <!-- Post #4 -->
+    <div class="four columns">
+      <article class="from-the-blog">
+
+        <figure class="from-the-blog-image">
+          <a href="blog-single-post.html"><img src="images/from_the_blog_04.jpg" alt="" /></a>
+          <div class="hover-icon"></div>
+        </figure>
+
+        <section class="from-the-blog-content">
+          <a href="blog-single-post.html"><h5>How to Choose Size - Does Your Shirt Fit Properly?</h5></a>
+          <i>By Vasterad on April 20, 2014</i>
+          <span>Nullam eget ante cursus, dignissim velit sit amet, tempus massa bibendum venenatis.</span>
+          <a href="blog-single-post.html" class="button gray">Read More</a>
+        </section>
+
+      </article>
+    </div>
+
+  </div>
+
+  <div class="margin-top-50"></div>
+
+  <!-- Footer
+  ================================================== -->
+  <div id="footer">
+
+    <!-- Container -->
+    <div class="container">
+
+      <div class="four columns">
+        <img src="images/logo-footer.png" alt="" class="margin-top-10"/>
+        <p class="margin-top-15">Nulla facilisis feugiat magna, ut molestie metus hendrerit vitae. Vivamus tristique lectus at varius rutrum. Integer lobortis mauris non consectetur eleifend.</p>
+      </div>
+
+      <div class="four columns">
+
+        <!-- Headline -->
+        <h3 class="headline footer">Customer Service</h3>
+        <span class="line"></span>
+        <div class="clearfix"></div>
+
+        <ul class="footer-links">
+          <li><a href="#">Order Status</a></li>
+          <li><a href="#">Payment Methods</a></li>
+          <li><a href="#">Delivery & Returns</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+        </ul>
+
+      </div>
+
+      <div class="four columns">
+
+        <!-- Headline -->
+        <h3 class="headline footer">My Account</h3>
+        <span class="line"></span>
+        <div class="clearfix"></div>
+
+        <ul class="footer-links">
+          <li><a href="#">My Account</a></li>
+          <li><a href="#">Order History</a></li>
+          <li><a href="#">Wish List</a></li>
+        </ul>
+
+      </div>
+
+      <div class="four columns">
+
+        <!-- Headline -->
+        <h3 class="headline footer">Newsletter</h3>
+        <span class="line"></span>
+        <div class="clearfix"></div>
+        <p>Sign up to receive email updates on new product announcements, gift ideas, special promotions, sales and more.</p>
+
+        <form action="#" method="get">
+          <button class="newsletter-btn" type="submit">Join</button>
+          <input class="newsletter" type="text" placeholder="mail@example.com" value=""/>
+        </form>
+      </div>
+
+    </div>
+    <!-- Container / End -->
+
+  </div>
+  <!-- Footer / End -->
+
+  <!-- Footer Bottom / Start -->
+  <div id="footer-bottom">
+
+    <!-- Container -->
+    <div class="container">
+
+      <div class="eight columns">© Copyright 2014 by <a href="#">trizzy</a>. All Rights Reserved.</div>
+      <div class="eight columns">
+        <ul class="payment-icons">
+          <li><img src="images/visa.png" alt="" /></li>
+          <li><img src="images/mastercard.png" alt="" /></li>
+          <li><img src="images/skrill.png" alt="" /></li>
+          <li><img src="images/moneybookers.png" alt="" /></li>
+          <li><img src="images/paypal.png" alt="" /></li>
+        </ul>
+      </div>
+
+    </div>
+    <!-- Container / End -->
+
+  </div>
+  <!-- Footer Bottom / End -->
+
+  <!-- Back To Top Button -->
+  <div id="backtotop"><a href="#"></a></div>
+
+</div>
+
+
+<!-- Java Script
+================================================== -->
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="scripts/jquery.jpanelmenu.js"></script>
+<script src="scripts/jquery.themepunch.plugins.min.js"></script>
+<script src="scripts/jquery.themepunch.revolution.min.js"></script>
+<script src="scripts/jquery.themepunch.showbizpro.min.js"></script>
+<script src="scripts/jquery.magnific-popup.min.js"></script>
+<script src="scripts/hoverIntent.js"></script>
+<script src="scripts/superfish.js"></script>
+<script src="scripts/jquery.pureparallax.js"></script>
+<script src="scripts/jquery.pricefilter.js"></script>
+<script src="scripts/jquery.selectric.min.js"></script>
+<script src="scripts/jquery.royalslider.min.js"></script>
+<script src="scripts/SelectBox.js"></script>
+<script src="scripts/modernizr.custom.js"></script>
+<script src="scripts/waypoints.min.js"></script>
+<script src="scripts/jquery.flexslider-min.js"></script>
+<script src="scripts/jquery.counterup.min.js"></script>
+<script src="scripts/jquery.tooltips.min.js"></script>
+<script src="scripts/jquery.isotope.min.js"></script>
+<script src="scripts/puregrid.js"></script>
+<script src="scripts/stacktable.js"></script>
+<script src="scripts/custom.js"></script>
+<script src="scripts/views/index.js"></script>
+
+
+</body>
 </html>

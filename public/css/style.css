@@ -12,6 +12,7 @@
 @import url("responsive.css");			/* Responsive Grid */
 @import url("font-awesome.css");		/* Font Awesome Icons */
 @import url("http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800");
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
 
 /* ------------------------------------------------------------------- */
@@ -852,6 +853,21 @@ span.skill-title i {
 
 /* Search
 ------------------------------------- */
+.commodity-search {
+	width: 100%;
+	float: left;
+	display: block;
+	margin: 0;
+}
+
+.commodity-search input,
+.apply-coupon input {
+	font-size: 13px;
+	width: 92.2%;
+	padding: 10px 13px 10px 13px;
+	float: left;
+}
+
 .top-search {
 	float: right;
 	display: block;
@@ -936,6 +952,25 @@ span.skill-title i {
 	transition: background-color 0.2s ease-in-out;
 }
 
+.commodity-search button {
+	background: #c0c0c0;
+	border: none;
+	cursor: pointer;
+	color: #fff;
+	float: right;
+	width: 40px;
+	height: 40px;
+	display: inline;
+	padding: 0;
+	border: none;
+	position: relative;
+	-webkit-transition: background-color 0.2s ease-in-out;
+	-moz-transition: background-color 0.2s ease-in-out;
+	-ms-transition: background-color 0.2s ease-in-out;
+	-o-transition: background-color 0.2s ease-in-out;
+	transition: background-color 0.2s ease-in-out;
+}
+
 .apply-coupon a {
 	display: block;
 	float: left;
@@ -944,6 +979,8 @@ span.skill-title i {
 .top-search button:hover { background-color: #808080; }
 
 .item-search button:hover { background-color: #808080; }
+
+.commodity-search button:hover { background-color: #808080; }
 
 .top-search button i {
 	top: 0;
@@ -954,6 +991,14 @@ span.skill-title i {
 }
 
 .item-search button i {
+	top: 0;
+	left: 0;
+	position: relative;
+	display: block;
+	z-index: 20;
+}
+
+.commodity-search button i {
 	top: 0;
 	left: 0;
 	position: relative;
@@ -2854,8 +2899,7 @@ blockquote {
 
 .add-comment textarea {
 	margin: 0 0 18px 0;
-	width: auto;
-	min-width: 97.5%;
+	width: 100%;
 	min-height: 180px;
 	resize: vertical;
 	-webkit-transition: none;
@@ -3751,7 +3795,6 @@ a.caption-btn:hover {
 }
 
 
-
 /* Magnific Popup CSS
 ------------------------------------- */
 .mfp-bg {
@@ -3837,6 +3880,7 @@ a.caption-btn:hover {
 }
 
 .mfp-auto-cursor .mfp-content {
+	top: -30%;
 	cursor: auto;
 }
 
@@ -4024,7 +4068,6 @@ button.mfp-arrow {
 	top: 0px;
 }
 
-
 /* Popup */
 .small-dialog {
 	background: #fff;
@@ -4157,7 +4200,6 @@ img.mfp-img {
 	cursor: pointer;
 }
 
-
 /* Media Queries for Magnific Popup */
 @media screen and (max-width: 800px) and (orientation: landscape), screen and (max-height: 300px) {
 
@@ -4272,7 +4314,6 @@ img.mfp-img {
 .mfp-fade.mfp-wrap.mfp-removing .mfp-content {
 	opacity: 0;
 }
-
 
 
 /* Hover Image Captions
@@ -5353,6 +5394,31 @@ ul.footer-links { margin: 0 0 15px 0; }
 	box-shadow: none;
 }
 
+.commoditysearch-nextbtn {
+	font-size: 13px;
+	text-transform: uppercase;
+	font-weight: 700;
+	color: #fff;
+	cursor: pointer;
+	z-index: 5;
+	position: relative;
+	padding: 10px 15px;
+	line-height: 18px;
+	margin-bottom: 5px;
+	height: 40px;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	background-color: #2db2ea;
+	border: none;
+	color: #fff;
+	box-shadow: none;
+	margin-top: 10px;
+	float: right;
+}
+
 .item-selling-btn:hover { background-color: #c0c0c0; }
 
 /*
@@ -5937,8 +6003,27 @@ img.rsImg {
 	width: 100%;
 }
 
+.editform input[type=text]{
+	margin-bottom: 10px;
+	width: 97%;
+}
+
+.editform input[type=password]{
+	margin-bottom: 10px;
+	width: 97%;
+}
+
+.editform input[type=email]{
+	margin-bottom: 10px;
+	width: 97%;
+}
+
+.editform input[type=submit]{
+	width: 100%;
+}
+
 .bidform input[type=text]{
-	width: 98.5%;
+	width: 100%;
 	padding-right: 0px;
 }
 
@@ -7469,6 +7554,8 @@ html[xmlns] .slides {display: block;}
 
 	.item-search { float: right; }
 
+	.commodity-search { float: right; }
+
 	.cart,
 	.top-search { margin: 35px 0 0 0; }
 
@@ -7567,6 +7654,13 @@ html[xmlns] .slides {display: block;}
 		float: left;
 	}
 
+	.commodity-search input { width: 83%; }
+
+	.commodity-search {
+		margin-top: 20px;
+		padding-left: 0px;
+		float: left;
+	}
 	.apply-coupon input { width: 233px; }
 	.cart-list { width: 420px; }
 
@@ -7601,6 +7695,12 @@ html[xmlns] .slides {display: block;}
 		float: left;
 	}
 
+	.commodity-search input { width: 87.7%; }
+
+	.commodity-search {
+		margin-top: 20px;
+		float: left;
+	}
 }
 
 
@@ -7611,11 +7711,19 @@ html[xmlns] .slides {display: block;}
 
 	.item-search input { width: 76.5% }
 
+	.commodity-search input { width: 76.5% }
+
 	.apply-coupon input { width: 112px; }
 
 	.top-search { float: right; }
 
 	.item-search {
+		margin-top: 20px;
+		padding-left: 0px;
+		float: left;
+	}
+
+	.commodity-search {
 		margin-top: 20px;
 		padding-left: 0px;
 		float: left;
@@ -7774,3 +7882,43 @@ div.layout-style {
 }
 
 @media only screen and (max-width: 1024px) {#style-switcher {display: none;}}
+
+
+/******** Feedback start  ***************/
+
+/****** Style Star Rating Widget *****/
+
+.feedback-rating {
+	border: none;
+	float: left;
+}
+
+.feedback-rating > input { display: none; }
+.feedback-rating > label:before {
+	margin: 5px;
+	font-size: 1.25em;
+	font-family: FontAwesome;
+	display: inline-block;
+	content: "\f005";
+}
+
+.feedback-rating > .half:before {
+	content: "\f089";
+	position: absolute;
+}
+
+.feedback-rating > label {
+	color: #ddd;
+	float: right;
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.feedback-rating > input:checked ~ label, /* show gold star when clicked */
+.feedback-rating:not(:checked) > label:hover, /* hover current star */
+.feedback-rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+.feedback-rating > input:checked + label:hover, /* hover current star when changing rating */
+.feedback-rating > input:checked ~ label:hover,
+.feedback-rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.feedback-rating > input:checked ~ label:hover ~ label { color: #FFED85;  }

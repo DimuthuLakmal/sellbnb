@@ -60,11 +60,11 @@
 		//----------------------------------------//
 
 		$('ul.menu').superfish({
-				delay:       400,                    // delay on mouseout
-				speed:       200,                    // faster animation speed
-				speedOut:    100,                    // speed of the closing animation
-				autoArrows:  true                    // disable generation of arrow mark-up
-			});
+			delay:       400,                    // delay on mouseout
+			speed:       200,                    // faster animation speed
+			speedOut:    100,                    // speed of the closing animation
+			autoArrows:  true                    // disable generation of arrow mark-up
+		});
 
 
 
@@ -88,21 +88,21 @@
 			return false;
 		});
 
-			// Removes SuperFish Styles
-			$('#jPanelMenu-menu').removeClass('menu');
-			$('ul#jPanelMenu-menu li').removeClass('dropdown');
-			$('ul#jPanelMenu-menu li ul').removeAttr('style');
-			$('ul#jPanelMenu-menu li div').removeClass('mega');
-			$('ul#jPanelMenu-menu li div').removeAttr('style');
-			$('ul#jPanelMenu-menu li div div').removeClass('mega-container');
+		// Removes SuperFish Styles
+		$('#jPanelMenu-menu').removeClass('menu');
+		$('ul#jPanelMenu-menu li').removeClass('dropdown');
+		$('ul#jPanelMenu-menu li ul').removeAttr('style');
+		$('ul#jPanelMenu-menu li div').removeClass('mega');
+		$('ul#jPanelMenu-menu li div').removeAttr('style');
+		$('ul#jPanelMenu-menu li div div').removeClass('mega-container');
 
 
-			$(window).resize(function (){
-				var winWidth = $(window).width();
-				if(winWidth>767) {
-					jPanelMenu.close();
-				}
-			});
+		$(window).resize(function (){
+			var winWidth = $(window).width();
+			if(winWidth>767) {
+				jPanelMenu.close();
+			}
+		});
 
 
 
@@ -127,6 +127,21 @@
 		// ShowBiz Carousel
 		//----------------------------------------//
 		$('#new-arrivals').showbizpro({
+			dragAndScroll:"off",
+			visibleElementsArray:[4,4,3,1],
+			carousel:"off",
+			entrySizeOffset:0,
+			allEntryAtOnce:"off",
+			rewindFromEnd:"off",
+			autoPlay:"off",
+			delay:2000,
+			speed:400,
+			easing:'Back.easeOut'
+		});
+
+		// ShowBiz Carousel
+		//----------------------------------------//
+		$('#category-div').showbizpro({
 			dragAndScroll:"off",
 			visibleElementsArray:[4,4,3,1],
 			carousel:"off",
@@ -173,16 +188,16 @@
 		// Categories
 
 		function addLevelClass($parent, level) {
-		    $parent.addClass('parent-'+level);
-		    var $children = $parent.children('li');
-		    $children.addClass('child-'+level).data('level',level);
-		    $children.each(function() {
-		        var $sublist = $(this).children('ul');
-		        if ($sublist.length > 0) {
-		            $(this).addClass('has-sublist');
-		            addLevelClass($sublist, level+1);
-		        }
-		    });
+			$parent.addClass('parent-'+level);
+			var $children = $parent.children('li');
+			$children.addClass('child-'+level).data('level',level);
+			$children.each(function() {
+				var $sublist = $(this).children('ul');
+				if ($sublist.length > 0) {
+					$(this).addClass('has-sublist');
+					addLevelClass($sublist, level+1);
+				}
+			});
 		}
 
 		addLevelClass($('#categories'), 1);
@@ -217,24 +232,6 @@
 				}
 			}
 		});
-
-
-
-		// Filter by Price
-		//----------------------------------------//
-
-		$( "#slider-range" ).slider({
-			range: true,
-			min: 0,
-			max: 500,
-			values: [ 0, 500 ],
-			slide: function( event, ui ) {
-        event = event;
-				$( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-			}
-		});
-		$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-			" - $" + $( "#slider-range" ).slider( "values", 1 ) );
 
 
 
@@ -371,14 +368,14 @@
 		// Tabs
 		//----------------------------------------//
 		var $tabsNav    = $('.tabs-nav'),
-		$tabsNavLis = $tabsNav.children('li');
+			$tabsNavLis = $tabsNav.children('li');
 		// $tabContent = $('.tab-content');
 
 		$tabsNav.each(function() {
 			var $this = $(this);
 
 			$this.next().children('.tab-content').stop(true,true).hide()
-			.first().show();
+				.first().show();
 
 			$this.children('li').first().addClass('active').stop(true,true).show();
 		});
@@ -387,10 +384,10 @@
 			var $this = $(this);
 
 			$this.siblings().removeClass('active').end()
-			.addClass('active');
+				.addClass('active');
 
 			$this.parent().next().children('.tab-content').stop(true,true).hide()
-			.siblings( $this.find('a').attr('href') ).fadeIn();
+				.siblings( $this.find('a').attr('href') ).fadeIn();
 
 			e.preventDefault();
 		});
@@ -597,12 +594,12 @@
 
 				$('.skill-bar-value').each(function() {
 					$(this)
-					.data("origWidth", $(this)[0].style.width)
-					.css('width','1%').show();
+						.data("origWidth", $(this)[0].style.width)
+						.css('width','1%').show();
 					$(this)
-					.animate({
-						width: $(this).data("origWidth")
-					}, 1200);
+						.animate({
+							width: $(this).data("origWidth")
+						}, 1200);
 				});
 
 				$('.skill-bar-value .dot').each(function() {
@@ -653,7 +650,7 @@
 		$('.option-set li').click(function(event) {
 			event.preventDefault();
 			var item = $(".og-grid li"),
-			image = item.find('a.grid-item-image img');
+				image = item.find('a.grid-item-image img');
 			item.removeClass('clickable unclickable');
 			image.stop().animate({opacity: 1});
 			var filter = $(this).children('a').data('filter');
@@ -766,11 +763,11 @@
 				jQuery("#backtotop").fadeOut(fadeOutTime);
 			}
 		});
-			 
+
 		jQuery('#backtotop a').click(function(){
-			jQuery('html, body').animate({scrollTop:0}, scrollSpeed); 
-			return false; 
-		}); 
+			jQuery('html, body').animate({scrollTop:0}, scrollSpeed);
+			return false;
+		});
 
 
 
@@ -782,65 +779,65 @@
 
 			e.preventDefault();
 			var user_name       = $('input[name=name]').val();
-      var user_email      = $('input[name=email]').val();
-      var user_comment    = $('textarea[name=comment]').val();
+			var user_email      = $('input[name=email]').val();
+			var user_comment    = $('textarea[name=comment]').val();
 
-      //simple validation at client's end
-      //we simply change border color to red if empty field using .css()
-      var proceed = true;
-      if(user_name===""){
-					$('input[name=name]').addClass('error');
-						proceed = false;
+			//simple validation at client's end
+			//we simply change border color to red if empty field using .css()
+			var proceed = true;
+			if(user_name===""){
+				$('input[name=name]').addClass('error');
+				proceed = false;
+			}
+			if(user_email===""){
+				$('input[name=email]').addClass('error');
+				proceed = false;
+			}
+			if(user_comment==="") {
+				$('textarea[name=comment]').addClass('error');
+				proceed = false;
+			}
+
+			//everything looks good! proceed...
+			if(proceed) {
+				$('.hide').fadeIn();
+				$("#contactform .submit").fadeOut();
+				//data to be sent to server
+				var post_data = {'userName':user_name, 'userEmail':user_email, 'userComment':user_comment};
+
+				//Ajax post data to server
+				$.post('contact.php', post_data, function(response){
+					var output;
+					//load json data from server and output comment
+					if(response.type == 'error')
+					{
+						output = '<div class="error">'+response.text+'</div>';
+						$('.hide').fadeOut();
+						$("#contactform .submit").fadeIn();
+					} else {
+
+						output = '<div class="success">'+response.text+'</div>';
+						//reset values in all input fields
+						$('#contact div input').val('');
+						$('#contact textarea').val('');
+						$('.hide').fadeOut();
+						$("#contactform .submit").fadeIn().attr("disabled", "disabled").css({'backgroundColor':'#c0c0c0', 'cursor': 'default' });
 					}
-					if(user_email===""){
-						$('input[name=email]').addClass('error');
-						proceed = false;
-					}
-					if(user_comment==="") {
-						$('textarea[name=comment]').addClass('error');
-						proceed = false;
-					}
 
-					//everything looks good! proceed...
-					if(proceed) {
-						$('.hide').fadeIn();
-						$("#contactform .submit").fadeOut();
-							//data to be sent to server
-							var post_data = {'userName':user_name, 'userEmail':user_email, 'userComment':user_comment};
+					$("#result").hide().html(output).slideDown();
+				}, 'json');
+			}
+		});
 
-							//Ajax post data to server
-							$.post('contact.php', post_data, function(response){
-								var output;
-								//load json data from server and output comment
-								if(response.type == 'error')
-									{
-										output = '<div class="error">'+response.text+'</div>';
-										$('.hide').fadeOut();
-										$("#contactform .submit").fadeIn();
-									} else {
-
-										output = '<div class="success">'+response.text+'</div>';
-										//reset values in all input fields
-										$('#contact div input').val('');
-										$('#contact textarea').val('');
-										$('.hide').fadeOut();
-										$("#contactform .submit").fadeIn().attr("disabled", "disabled").css({'backgroundColor':'#c0c0c0', 'cursor': 'default' });
-									}
-
-									$("#result").hide().html(output).slideDown();
-								}, 'json');
-						}
-			});
-
-			//reset previously set border colors and hide all comment on .keyup()
-			$("#contactform input, #contactform textarea").keyup(function() {
-				$("#contactform input, #contactform textarea").removeClass('error');
-				$("#result").slideUp();
-			});
+		//reset previously set border colors and hide all comment on .keyup()
+		$("#contactform input, #contactform textarea").keyup(function() {
+			$("#contactform input, #contactform textarea").removeClass('error');
+			$("#result").slideUp();
+		});
 
 
 
-   // ------------------ End Document ------------------ //
-});
+		// ------------------ End Document ------------------ //
+	});
 
 })(this.jQuery);

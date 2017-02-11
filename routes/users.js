@@ -127,6 +127,133 @@ router.post('/password', function (req, res) {
     });
 });
 
+/* Change FullName */
+router.post('/fullname', function (req, res) {
+    //retrieve data from req object
+    var newfullname = req.body.newfullname;
+    var userId = req.body.id;
+
+    //update fullname of user table
+    sequelize.sync().then(
+        function () {
+            var User = models.User;
+            User.update(
+                { full_name: newfullname },
+                { where: { id: userId } }
+            ).then(function (results) {
+                res.redirect('/user/basic');
+            }).catch(function (error) {
+                req.session.errorMessage = 'Invalid Full Name.';
+                res.redirect('/user/basic');
+            });
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+});
+
+/* Change Company Name */
+router.post('/companyname', function (req, res) {
+    //retrieve data from req object
+    var newcompanyname = req.body.newcompanyname;
+    var userId = req.body.id;
+
+    //update fullname of user table
+    sequelize.sync().then(
+        function () {
+            var User = models.User;
+            User.update(
+                { company_name: newcompanyname },
+                { where: { id: userId } }
+            ).then(function (results) {
+                res.redirect('/user/basic');
+            }).catch(function (error) {
+                req.session.errorMessage = 'Invalid Company Name';
+                res.redirect('/user/basic');
+            });
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+});
+
+/* Change Location */
+router.post('/location', function (req, res) {
+    //retrieve data from req object
+    var newaddress1 = req.body.newaddress1;
+    var newaddress2 = req.body.newaddress2;
+    var newcity = req.body.newcity;
+    var userId = req.body.id;
+
+    //update fullname of user table
+    sequelize.sync().then(
+        function () {
+            var User = models.User;
+            User.update(
+                { mailingddress1: newaddress1 ,
+                  mailingddress2: newaddress2 ,
+                  mailingCity: newcity },
+                { where: { id: userId } }
+            ).then(function (results) {
+                res.redirect('/user/basic');
+            }).catch(function (error) {
+                req.session.errorMessage = 'Invalid Location.';
+                res.redirect('/user/basic');
+            });
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+});
+
+/* Get Warehouses */
+router.get('/view/warehouses/userId/:userId', function (req, res) {
+    //retrieve data from req object
+    var userId = req.params.userId;
+    //get warehouses details of user
+    sequelize.sync().then(
+        function () {
+            var User = models.User;
+            var WareHouse = models.WareHouse;
+            User.findAll({
+                where: {id: userId},
+                include: [WareHouse],
+            }).then(function (User) {
+                var user = User[0].dataValues;
+                req.session.warehouses = user.WareHouses;
+                res.redirect('/items/add');
+            });
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+});
+
+
+/* Get Warehouses for bidding page*/
+router.get('/bidding/warehouses/userId/:userId/itemId/:itemId', function (req, res) {
+    //retrieve data from req object
+    var userId = req.params.userId;
+    var itemId = req.params.itemId;
+    //get warehouses details of user
+    sequelize.sync().then(
+        function () {
+            var User = models.User;
+            var WareHouse = models.WareHouse;
+            User.findAll({
+                where: {id: userId},
+                include: [WareHouse],
+            }).then(function (User) {
+                var user = User[0].dataValues;
+                req.session.bidwarehouses = user.WareHouses;
+                res.redirect('/items/id/'+itemId);
+            });
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+});
+
 router.post('/adduser', function (req, res) {
     if (typeof(req.body.username) != "undefined" && typeof req.body.password != "undefined") {
 
@@ -169,6 +296,22 @@ router.get('/delall', function () {
 router.get('/logout',function(req,res){
     req.session = null;
     res.redirect('/user/login');
+});
+
+router.get('/contactinfo',function(req,res){
+    res.render('useraccountcontactinformation');
+});
+
+router.get('/bankacc',function(req,res){
+    res.render('usercontactinformation');
+});
+
+router.get('/bizinfo',function(req,res){
+    res.render('userbusinessinformation');
+});
+
+router.get('/notfpref',function(req,res){
+    res.render('usernotificationpreference');
 });
 
 module.exports = router;

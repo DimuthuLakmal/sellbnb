@@ -16,7 +16,7 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/colors/blue.css" id="colors">
 
@@ -121,9 +121,9 @@
 
     <!-- Titlebar
     ================================================== -->
-    <section class="parallax-titlebar fullwidth-element"  data-background="#000" data-opacity="0.45" data-height="160">
+    <section class="parallax-titlebar fullwidth-element" data-background="#000" data-opacity="0.45" data-height="160">
 
-        <img src="images/titlebar_bg_02.jpg" alt="" />
+        <img src="images/titlebar_bg_02.jpg" alt=""/>
         <div class="parallax-overlay"></div>
 
         <div class="parallax-content">
@@ -139,108 +139,87 @@
         </div>
     </section>
 
-    <div class="container">
+    <%- include sidenavbar.ejs %>
 
-        <!-- Sidebar
-        ================================================== -->
-        <div class="four columns">
+    <!-- Content
+    ================================================== -->
 
-            <!-- Categories -->
-            <div class="widget margin-top-0">
+    <div class="twelve columns products">
 
-                <ul id="categories">
-
-                    <li><a href="#" class="active">Basic Account</a></li>
-                    <li><a href="#">Contact Information</a></li>
-                    <li><a href="#">Bank Account</a></li>
-                    <li><a href="#">Business Information</a></li>
-                    <li><a href="#">Notification Preferences</a></li>
-
-                </ul>
-                <div class="clearfix"></div>
-
-            </div>
-
+        <% if(errorMessage != '') { %>
+        <div class="notification error closeable" id="passwordErrorMessage">
+            <p><span>Error!</span> <%= errorMessage %></p>
+            <a class="close" href="#"></a>
         </div>
+        <% } %>
+        <table class="basic-table" style="">
 
+            <tbody>
+            <tr>
+                <td> User Name</td>
+                <td> <%= user.username %></td>
+                <td>
+                    <!--<a class="popup-with-zoom-anim" href="#username-edit-dialog" style="color:#2db2ea;">Edit</a><br/>-->
 
-        <!-- Content
-        ================================================== -->
+                    <!--<div id="username-edit-dialog" class="small-dialog zoom-anim-dialog mfp-hide">-->
+                    <!--<h2 class="margin-bottom-10">Edit User Name</h2>-->
+                    <!--<form method="post" name="editform">-->
 
-        <div class="twelve columns products">
+                    <!--<fieldset>-->
 
-            <% if(errorMessage != '') { %>
-                <div class="notification error closeable" id="passwordErrorMessage">
-                    <p><span>Error!</span> <%= errorMessage %></p>
-                    <a class="close" href="#"></a>
-                </div>
-            <% } %>
+                    <!--<div class="twelve alpha columns editform">-->
+                    <!--<input name="newusername" type="text" id="newusername" placeholder="New User Name"/>-->
+                    <!--</div>-->
 
-            <table class="basic-table" style="">
+                    <!--<div class="twelve columns editform">-->
+                    <!--<input type="submit" class="submit" id="submitusername" value="Save"/>-->
+                    <!--</div>-->
 
-                <tbody>
-                <tr>
-                    <td> User Name</td>
-                    <td> <%= user.username %></td>
-                    <td>
-                        <!--<a class="popup-with-zoom-anim" href="#username-edit-dialog" style="color:#2db2ea;">Edit</a><br/>-->
+                    <!--</fieldset>-->
 
-                        <!--<div id="username-edit-dialog" class="small-dialog zoom-anim-dialog mfp-hide">-->
-                            <!--<h2 class="margin-bottom-10">Edit User Name</h2>-->
-                            <!--<form method="post" name="editform">-->
+                    <!--<div class="clearfix"></div>-->
+                    <!--</form>-->
+    </div>
+    </td>
+    </tr>
+    <tr>
+        <td> Password</td>
+        <td> ************</td>
+        <td>
+            <a class="popup-with-zoom-anim" href="#password-edit-dialog" style="color:#2db2ea;">Edit</a><br/>
 
-                                <!--<fieldset>-->
+            <div id="password-edit-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
+                <h2 class="margin-bottom-10">Edit Password</h2>
+                <form method="post" name="editform" action="http://localhost:3000/api/user/password"
+                      id="passwordChangeForm">
 
-                                    <!--<div class="twelve alpha columns editform">-->
-                                        <!--<input name="newusername" type="text" id="newusername" placeholder="New User Name"/>-->
-                                    <!--</div>-->
-
-                                    <!--<div class="twelve columns editform">-->
-                                        <!--<input type="submit" class="submit" id="submitusername" value="Save"/>-->
-                                    <!--</div>-->
-
-                                <!--</fieldset>-->
-
-                                <!--<div class="clearfix"></div>-->
-                            <!--</form>-->
+                    <fieldset>
+                        <div class="notification error closeable" style="display: none" id="passwordErrorMessage">
+                            <p><span>Error!</span> New Password & Reentered New Password don't match</p>
+                            <a class="close" href="#"></a>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td> Password</td>
-                    <td> ************</td>
-                    <td>
-                        <a class="popup-with-zoom-anim" href="#password-edit-dialog" style="color:#2db2ea;">Edit</a><br/>
 
-                        <div id="password-edit-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
-                            <h2 class="margin-bottom-10">Edit Password</h2>
-                            <form method="post" name="editform" action="http://localhost:3000/api/user/password" id="passwordChangeForm">
+                        <input name="id" type="hidden" id="id" value="<%= user.id %>"/>
 
-                                <fieldset>
-                                    <div class="notification error closeable" style="display: none" id="passwordErrorMessage">
-                                        <p><span>Error!</span> New Password & Reentered New Password don't match</p>
-                                        <a class="close" href="#"></a>
-                                    </div>
+                        <div class="twelve alpha columns editform">
+                            <input name="currentpassword" type="password" id="currentpassword"
+                                   placeholder="Current Password"/>
+                        </div>
 
-                                    <input name="id" type="hidden" id="id" value="<%= user.id %>"/>
+                        <div class="twelve alpha columns editform">
+                            <input name="newpassword" type="password" id="newpassword" placeholder="New Password"/>
+                        </div>
 
-                                    <div class="twelve alpha columns editform">
-                                        <input name="currentpassword" type="password" id="currentpassword" placeholder="Current Password"/>
-                                    </div>
+                        <div class="twelve alpha columns editform">
+                            <input name="newrepassword" type="password" id="newrepassword"
+                                   placeholder="Reenter Password"/>
+                        </div>
 
-                                    <div class="twelve alpha columns editform">
-                                        <input name="newpassword" type="password" id="newpassword" placeholder="New Password"/>
-                                    </div>
+                        <div class="twelve columns editform">
+                            <input type="submit" class="submit" id="submitpassword" value="Save"/>
+                        </div>
 
-                                    <div class="twelve alpha columns editform">
-                                        <input name="newrepassword" type="password" id="newrepassword" placeholder="Reenter Password"/>
-                                    </div>
-
-                                    <div class="twelve columns editform">
-                                        <input type="submit" class="submit" id="submitpassword" value="Save"/>
-                                    </div>
-
-                                </fieldset>
+                    </fieldset>
 
                                 <div class="clearfix"></div>
                             </form>
@@ -249,15 +228,32 @@
                 </tr>
                 <tr>
                     <td> Full Name</td>
-                    <td> Nimal Senarathne</td>
+                    <td> <%= user.full_name %></td>
                     <td>
-                        <a class="popup-with-zoom-anim" href="#fullname-edit-dialog" style="color:#2db2ea;">Edit</a><br/>
+                        <% if(user.full_name != '') { %>
+                            <a class="popup-with-zoom-anim" href="#fullname-edit-dialog" style="color:#2db2ea;">Edit</a><br/>
+                        <% } else { %>
+                            <a class="popup-with-zoom-anim" href="#fullname-edit-dialog" style="color:#2db2ea;">Add</a><br/>
+                        <% } %>
 
                         <div id="fullname-edit-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
                             <h2 class="margin-bottom-10">Edit Full Name</h2>
-                            <form method="post" name="editform">
+                            <form method="post" name="editform" action="http://localhost:3000/api/user/fullname" id="fullnameChangeForm">
 
                                 <fieldset>
+                                    <div class="notification error closeable" style="display: none" id="fullnameErrorMessage">
+                                        <p><span>Error!</span> Please enter valid Name</p>
+                                        <a class="close" href="#"></a>
+                                    </div>
+
+                                    <input name="id" type="hidden" id="fullname_userid" value="<%= user.id %>"/>
+                    <fieldset>
+                        <div class="notification error closeable" style="display: none" id="fullnameErrorMessage">
+                            <p><span>Error!</span> Please enter valid Name</p>
+                            <a class="close" href="#"></a>
+                        </div>
+
+                        <input name="id" type="hidden" id="fullname_userid" value="<%= user.id %>"/>
 
                                     <div class="twelve alpha columns editform">
                                         <input name="newfullname" type="text" id="newfullname" placeholder="New Full Name"/>
@@ -276,15 +272,25 @@
                 </tr>
                 <tr>
                     <td> Company Name</td>
-                    <td> DSI Holdings (pvt) Ltd</td>
+                    <td> <%= user.company_name %></td>
                     <td>
+                        <% if(user.company_name != '') { %>
                         <a class="popup-with-zoom-anim" href="#companyname-edit-dialog" style="color:#2db2ea;">Edit</a><br/>
+                        <% } else { %>
+                        <a class="popup-with-zoom-anim" href="#companyname-edit-dialog" style="color:#2db2ea;">Add</a><br/>
+                        <% } %>
 
                         <div id="companyname-edit-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
                             <h2 class="margin-bottom-10">Edit Company Name</h2>
-                            <form method="post" name="editform">
+                            <form method="post" name="editform" action="http://localhost:3000/api/user/companyname" id="companynameChangeForm">
 
                                 <fieldset>
+                                    <div class="notification error closeable" style="display: none" id="companynameErrorMessage">
+                                        <p><span>Error!</span> Please enter valid Comapny Name</p>
+                                        <a class="close" href="#"></a>
+                                    </div>
+
+                                    <input name="id" type="hidden" id="companyname_userid" value="<%= user.id %>"/>
 
                                     <div class="twelve alpha columns editform">
                                         <input name="newcompanyname" type="text" id="newcompanyname" placeholder="New Company Name"/>
@@ -303,15 +309,37 @@
                 </tr>
                 <tr>
                     <td> Location</td>
-                    <td> Galle, Sri Lanka</td>
+                    <% if(user.mailingddress1 != null) {
+                        var address = user.mailingddress1;
+                        if(user.mailingddress2 != '') {
+                            address += ', ' + user.mailingddress2;
+                        }
+                        if(user.mailingCity != '') {
+                            address += ', ' + user.mailingCity;
+                        }
+                    %>
+                        <td> <%= address %></td>
+                    <% } else { %>
+                        <td></td>
+                    <% } %>
                     <td>
-                        <a class="popup-with-zoom-anim" href="#location-edit-dialog" style="color:#2db2ea;">Edit</a><br/>
+                        <% if(user.mailingddress1 != null) { %>
+                            <a class="popup-with-zoom-anim" href="#location-edit-dialog" style="color:#2db2ea;">Edit</a><br/>
+                        <% } else { %>
+                            <a class="popup-with-zoom-anim" href="#location-edit-dialog" style="color:#2db2ea;">Add</a><br/>
+                        <% } %>
 
                         <div id="location-edit-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
                             <h2 class="margin-bottom-10">Edit Location</h2>
-                            <form method="post" name="editform">
+                            <form method="post" name="editform" action="http://localhost:3000/api/user/location" id="locationChangeForm">
 
                                 <fieldset>
+                                    <div class="notification error closeable" style="display: none" id="locationErrorMessage">
+                                        <p><span>Error!</span> Please enter valid Address</p>
+                                        <a class="close" href="#"></a>
+                                    </div>
+
+                                    <input name="id" type="hidden" id="location_userid" value="<%= user.id %>"/>
 
                                     <div class="twelve alpha columns editform">
                                         <input name="newaddress1" type="text" id="newaddress1" placeholder="New Address Line 1"/>
@@ -336,30 +364,30 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
-                    <td> Account Deactivate</td>
-                    <td> </td>
-                    <td>  <a class="popup-with-zoom-anim" href="#deactivate-dialog" style="color:#2db2ea;">Deactivate</a><br/>
+                <!--<tr>-->
+                    <!--<td> Account Deactivate</td>-->
+                    <!--<td> </td>-->
+                    <!--<td>  <a class="popup-with-zoom-anim" href="#deactivate-dialog" style="color:#2db2ea;">Deactivate</a><br/>-->
 
-                        <div id="deactivate-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
-                            <h2 class="margin-bottom-10">Deactivate Account</h2>
-                            <form method="post" name="editform">
+                        <!--<div id="deactivate-dialog" class="small-dialog zoom-anim-dialog mfp-hide">-->
+                            <!--<h2 class="margin-bottom-10">Deactivate Account</h2>-->
+                            <!--<form method="post" name="editform">-->
 
-                                <fieldset>
+                                <!--<fieldset>-->
 
-                                    <p>Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah</p>
+                                    <!--<p>Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah</p>-->
 
-                                    <div class="twelve columns editform">
-                                        <input type="submit" class="submit" id="submitdeactivation" value="Confirm"/>
-                                    </div>
+                                    <!--<div class="twelve columns editform">-->
+                                        <!--<input type="submit" class="submit" id="submitdeactivation" value="Confirm"/>-->
+                                    <!--</div>-->
 
-                                </fieldset>
+                                <!--</fieldset>-->
 
-                                <div class="clearfix"></div>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
+                                <!--<div class="clearfix"></div>-->
+                            <!--</form>-->
+                        <!--</div>-->
+                    <!--</td>-->
+                <!--</tr>-->
                 </tbody>
             </table>
 

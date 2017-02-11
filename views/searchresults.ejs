@@ -1,0 +1,435 @@
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en"> <!--<![endif]-->
+<head>
+
+    <!-- Basic Page Needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>Seller BnB</title>
+
+    <!-- Mobile Specific Metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/colors/blue.css" id="colors">
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+</head>
+
+<body class="boxed">
+<div id="wrapper">
+
+    <!-- Header
+        ================================================== -->
+    <div class="container">
+
+        <!-- Logo -->
+        <div class="four columns">
+            <div id="logo">
+                <h1><a href="index.html"><img src="images/logo.png" alt="Trizzy"/></a></h1>
+            </div>
+        </div>
+
+
+        <!-- Additional Menu -->
+        <div class="twelve columns">
+            <div id="additional-menu">
+                <ul>
+                    <li><a href="checkout-billing-details.html">English</a></li>
+                    <li><a href="my-account.html">Sinhala</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- Shopping Cart -->
+        <div class="twelve columns">
+
+            <div class="cart">
+                <!-- Button -->
+                <div class="icon-box">
+                    <span><i class="fa fa-mail-forward"></i></span>
+                </div>
+            </div>
+
+            <div class="cart">
+                <!-- Button -->
+                <div class="icon-box">
+                    <span><i class="fa fa-folder"></i></span>
+                </div>
+            </div>
+
+            <div class="cart">
+                <!-- Button -->
+                <div class="icon-box">
+                    <span><i class="fa fa-user"></i></span>
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div align="center">
+                <nav class="top-search">
+                    <form action="#" method="get">
+                        <button><i class="fa fa-search"></i></button>
+                        <input class="search-field" type="text" placeholder="Search" value="" size="5" maxlength="4"/>
+                    </form>
+                </nav>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Navigation
+    ================================================== -->
+    <div class="container">
+        <div class="sixteen columns">
+
+            <a href="#menu" class="menu-trigger"><i class="fa fa-bars"></i> Menu</a>
+
+            <nav id="navigation">
+                <ul class="menu" id="responsive">
+
+                    <li><a href="index.html" class="homepage">Home</a></li>
+
+                    <li class="demo-button">
+                        <a href="#">Market News</a>
+                    </li>
+
+                    <li class="demo-button">
+                        <a href="#">Sell Account</a>
+                    </li>
+
+                    <li class="demo-button">
+                        <a href="#">Buy Account</a>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+
+    <!-- Titlebar
+    ================================================== -->
+    <section class="parallax-titlebar fullwidth-element"  data-background="#000" data-opacity="0.45" data-height="160">
+
+        <img src="images/titlebar_bg_02.jpg" alt="" />
+        <div class="parallax-overlay"></div>
+
+        <div class="parallax-content">
+            <h2>Search Results <span>Keyword: <%= keyword %></span></h2>
+
+            <nav id="breadcrumbs">
+                <ul>
+                    <li>Home</li>
+                    <li>Search</li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <div class="container">
+
+        <!-- Sidebar
+        ================================================== -->
+        <div class="four columns">
+
+            <!-- Widget -->
+            <div class="widget">
+                <h3 class="headline">Filter By Price</h3><span class="line"></span><div class="clearfix"></div>
+
+                <form action="/api/items/search/start/0" method="get" id="priceFilterForm">
+                    <div id="price-range">
+                        <div class="padding-range"><div id="slider-range"></div></div>
+                        <label for="amount">Price:</label>
+                        <input type="hidden" id="maxPrice" value="<%= maxPrice %>"/>
+                        <input type="hidden" name="keyword" value="<%= keyword %>"/>
+                        <input type="hidden" id="startPrice" name="startPrice" value=<%= startPrice %>/>
+                        <input type="hidden" id="endPrice" name="endPrice" value=<%= endPrice %>/>
+                        <input type="text" id="amount"/>
+                        <a class="button color" id="priceFilterButton">Filter</a>
+                    </div>
+                </form>
+                <div class="clearfix"></div>
+            </div>
+
+            <% if(distinctCharacteristics[1].length > 0) {%>
+                <!-- Classes -->
+                <div class="widget">
+                    <h3 class="headline" style="z-index: 0 !important;">Classes</h3><span class="line"></span><div class="clearfix"></div>
+                    <% for(var classIndex = 0; classIndex < distinctCharacteristics[1].length; classIndex++) {%>
+                        <form action="/api/items/search/start/0" method="get">
+                            <input type="hidden" value="0" name="start"/>
+                            <input type="hidden" value="<%= keyword %>" name="keyword"/>
+                            <input type="hidden" value="<%= distinctCharacteristics[1][classIndex] %>" name="class"/>
+                            <% if(selectedClass == distinctCharacteristics[1][classIndex]) {%>
+                                <input type="checkbox" value="<%= distinctCharacteristics[1][classIndex] %>"
+                                       class="class_check_box" checked/> <%= distinctCharacteristics[1][classIndex] %><br>
+                            <% } else {%>
+                                <input type="checkbox" value="<%= distinctCharacteristics[1][classIndex] %>"
+                                       class="class_check_box" /> <%= distinctCharacteristics[1][classIndex] %><br>
+                            <% } %>
+                        </form>
+                    <% } %>
+                    <div class="clearfix"></div>
+                </div>
+            <% } %>
+
+            <% if(distinctCharacteristics[0].length > 0) {%>
+            <!-- Segments -->
+            <div class="widget">
+                <h3 class="headline" style="z-index: 0 !important;">Segments</h3><span class="line"></span><div class="clearfix"></div>
+                <% for(var segmentIndex = 0; segmentIndex < distinctCharacteristics[0].length; segmentIndex++) {%>
+                <form action="/api/items/search/start/0" method="get">
+                    <input type="hidden" value="0" name="start"/>
+                    <input type="hidden" value="<%= keyword %>" name="keyword"/>
+                    <input type="hidden" value="<%= distinctCharacteristics[0][segmentIndex] %>" name="segment"/>
+                    <% if(selectedSegment == distinctCharacteristics[0][segmentIndex]) {%>
+                        <input type="checkbox" value="<%= distinctCharacteristics[0][segmentIndex] %>"
+                               class="class_check_box" checked/> <%= distinctCharacteristics[0][segmentIndex] %><br>
+                    <% } else {%>
+                        <input type="checkbox" value="<%= distinctCharacteristics[0][segmentIndex] %>"
+                               class="class_check_box" /> <%= distinctCharacteristics[0][segmentIndex] %><br>
+                    <% } %>
+
+                </form>
+                <% } %>
+                <div class="clearfix"></div>
+            </div>
+            <% } %>
+
+        </div>
+
+
+        <!-- Content
+        ================================================== -->
+
+        <div class="twelve columns products">
+
+            <% for(var itemIndex = 0; itemIndex < items.length; itemIndex++) {
+                var item = items[itemIndex];
+                var remainingTime = remainingTimes[itemIndex];
+                var numdays = Math.floor(remainingTime / 86400);
+                var numhours = Math.floor((remainingTime % 86400) / 3600);
+                var numminutes = Math.floor(((remainingTime % 86400) % 3600) / 60);
+                var numseconds = Math.floor(((remainingTime % 86400) % 3600) % 60);
+
+                var formattedAddress = "";
+                formattedAddress = numdays != 0 ? (formattedAddress += numdays + " days ") : formattedAddress;
+                formattedAddress = numhours != 0 ? (formattedAddress += numhours + " hrs ") : formattedAddress;
+                formattedAddress = numminutes != 0 ? (formattedAddress += numminutes + " mins ") : formattedAddress;
+                formattedAddress = numseconds != 0 ? (formattedAddress += numseconds + " secs ") : formattedAddress;
+            %>
+                <div class="item-selling-div twelve columns">
+                    <div class="item-selling-div">
+                        <div class="two columns">
+                            <% if (item.ItemImages.length > 0) {%>
+                                <img src="uploads/items/<%= item.ItemImages[0].url%>"/>
+                            <% } else { %>
+                                <img src="images/blog-widget-01.png"/>
+                            <% } %>
+                        </div>
+                        <div class="five columns">
+                            <h3><%= item.title %></h3>
+                            <p>Time Remaining: <%= formattedAddress %><br>
+                                Seller: <%= item.User.username %><br>
+                                Suggested Price: <%= item.suggestedPrice %></p><br>
+                        </div>
+                        <div class="four columns" style="float:right">
+                            <form action="/items/id/<%= item.id %>" method="get">
+                                <input type="submit" class="item-selling-btn" value="View Details"/><br>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <span class="line" style="margin-top:10px;margin-bottom: 0px"></span><div class="clearfix"></div>
+            <% } %>
+
+            <div class="clearfix"></div>
+
+            <!-- Pagination -->
+            <div class="pagination-container">
+                <nav class="pagination">
+                    <ul>
+                        <%
+                        var pageOne = (pageMultipationFactor * 10) + 1;
+                        var pageTwo = (pageMultipationFactor * 10) + 2;
+                        var pageThree = (pageMultipationFactor * 10) + 3;
+                        %>
+                        <% if(maxPageCount >= pageOne) {%>
+                        <li>
+                            <a href="http://localhost:3000/api/items/search/start/<%= (pageOne-1) * 10 %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
+                                <%= pageOne %>
+                            </a>
+                        </li>
+                        <% } %>
+                        <% if(maxPageCount >= pageTwo) {%>
+                        <li>
+                            <a href="/api/items/search/start/<%= (pageTwo-1) * 10 %>" <% if(pageTwo === currentPageNumber) { %>class="current-page"<% } %>>
+                                <%= pageTwo %>
+                            </a>
+                        </li>
+                        <% } %>
+                        <% if(maxPageCount >= pageThree) {%>
+                        <li>
+                            <a href="/api/items/search/start/<%= (pageThree-1) * 10 %>" <% if(pageThree === currentPageNumber) { %>class="current-page"<% } %>>
+                                <%= pageThree %>
+                            </a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </nav>
+
+                <nav class="pagination-next-prev">
+                    <ul>
+                        <% if(0 < pageMultipationFactor) {%>
+                        <li><a href="/news/start/<%= (pageMultipationFactor - 1) * 30 %>" class="prev"></a></li>
+                        <% } %>
+                        <% if(maxPageCount >= (pageMultipationFactor * 10) + 4) {%>
+                        <li><a href="/news/start/<%= (pageMultipationFactor + 1) * 30 %>" class="next"></a></li>
+                        <% } %>
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="margin-top-50"></div>
+
+    <!-- Footer
+    ================================================== -->
+    <div id="footer">
+
+        <!-- Container -->
+        <div class="container">
+
+            <div class="four columns">
+                <img src="images/logo-footer.png" alt="" class="margin-top-10"/>
+                <p class="margin-top-15">Nulla facilisis feugiat magna, ut molestie metus hendrerit vitae. Vivamus
+                    tristique lectus at varius rutrum. Integer lobortis mauris non consectetur eleifend.</p>
+            </div>
+
+            <div class="four columns">
+
+                <!-- Headline -->
+                <h3 class="headline footer">Customer Service</h3>
+                <span class="line"></span>
+                <div class="clearfix"></div>
+
+                <ul class="footer-links">
+                    <li><a href="#">Order Status</a></li>
+                    <li><a href="#">Payment Methods</a></li>
+                    <li><a href="#">Delivery & Returns</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                </ul>
+
+            </div>
+
+            <div class="four columns">
+
+                <!-- Headline -->
+                <h3 class="headline footer">My Account</h3>
+                <span class="line"></span>
+                <div class="clearfix"></div>
+
+                <ul class="footer-links">
+                    <li><a href="#">My Account</a></li>
+                    <li><a href="#">Order History</a></li>
+                    <li><a href="#">Wish List</a></li>
+                </ul>
+
+            </div>
+
+            <div class="four columns">
+
+                <!-- Headline -->
+                <h3 class="headline footer">Newsletter</h3>
+                <span class="line"></span>
+                <div class="clearfix"></div>
+                <p>Sign up to receive email updates on new product announcements, gift ideas, special promotions, sales
+                    and more.</p>
+
+                <form action="#" method="get">
+                    <button class="newsletter-btn" type="submit">Join</button>
+                    <input class="newsletter" type="text" placeholder="mail@example.com" value=""/>
+                </form>
+            </div>
+
+        </div>
+        <!-- Container / End -->
+
+    </div>
+    <!-- Footer / End -->
+
+    <!-- Footer Bottom / Start -->
+    <div id="footer-bottom">
+
+        <!-- Container -->
+        <div class="container">
+
+            <div class="eight columns">© Copyright 2014 by <a href="#">trizzy</a>. All Rights Reserved.</div>
+            <div class="eight columns">
+                <ul class="payment-icons">
+                    <li><img src="images/visa.png" alt=""/></li>
+                    <li><img src="images/mastercard.png" alt=""/></li>
+                    <li><img src="images/skrill.png" alt=""/></li>
+                    <li><img src="images/moneybookers.png" alt=""/></li>
+                    <li><img src="images/paypal.png" alt=""/></li>
+                </ul>
+            </div>
+
+        </div>
+        <!-- Container / End -->
+
+    </div>
+    <!-- Footer Bottom / End -->
+
+    <!-- Back To Top Button -->
+    <div id="backtotop"><a href="#"></a></div>
+
+</div>
+
+
+<!-- Java Script
+================================================== -->
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="scripts/jquery.jpanelmenu.js"></script>
+<script src="scripts/jquery.themepunch.plugins.min.js"></script>
+<script src="scripts/jquery.themepunch.revolution.min.js"></script>
+<script src="scripts/jquery.themepunch.showbizpro.min.js"></script>
+<script src="scripts/jquery.magnific-popup.min.js"></script>
+<script src="scripts/hoverIntent.js"></script>
+<script src="scripts/superfish.js"></script>
+<script src="scripts/jquery.pureparallax.js"></script>
+<script src="scripts/jquery.pricefilter.js"></script>
+<script src="scripts/jquery.selectric.min.js"></script>
+<script src="scripts/jquery.royalslider.min.js"></script>
+<script src="scripts/SelectBox.js"></script>
+<script src="scripts/modernizr.custom.js"></script>
+<script src="scripts/waypoints.min.js"></script>
+<script src="scripts/jquery.flexslider-min.js"></script>
+<script src="scripts/jquery.counterup.min.js"></script>
+<script src="scripts/jquery.tooltips.min.js"></script>
+<script src="scripts/jquery.isotope.min.js"></script>
+<script src="scripts/puregrid.js"></script>
+<script src="scripts/stacktable.js"></script>
+<script src="scripts/custom.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+<script src="scripts/views/searchresults.js"></script>
+
+</body>
+</html>

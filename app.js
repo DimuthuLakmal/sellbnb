@@ -14,8 +14,11 @@ var users = require('./routes/users');
 var login = require('./routes/login');
 var news = require('./routes/news');
 var commodity = require('./routes/commodity');
+var items = require('./routes/items');
 var signup = require('./routes/signup');
 var cookieSession = require('cookie-session')
+var bid = require('./routes/bid');
+var bid = require('./routes/bid');
 
 var app = express();
 
@@ -41,6 +44,7 @@ app.use(expressSession({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
 //----------------- Following methods moved to user route-------------------
 // passport.use(new passportLocal.Strategy(verifyCredentials));
 // passport.use(new passportHttp.BasicStrategy(verifyCredentials));
@@ -72,11 +76,16 @@ app.use('/news/start', express.static(path.join(__dirname, 'public')));
 app.use('/news/id', express.static(path.join(__dirname, 'public')));
 app.use('/user', express.static(path.join(__dirname, 'public')));
 app.use('/commodity/add', express.static(path.join(__dirname, 'public')));
+app.use('/items', express.static(path.join(__dirname, 'public')));
+app.use('/items/add', express.static(path.join(__dirname, 'public')));
+app.use('/items/id', express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/user', users);
 app.use('/api/user', users);
 app.use('/api/commodity', commodity);
+app.use('/api/items', items);
+app.use('/api/bid', bid);
 // app.use('/logout', function (req, res) {
 //   req.logout();
 //   res.redirect('/');
@@ -125,5 +134,6 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
 
 module.exports = app;
