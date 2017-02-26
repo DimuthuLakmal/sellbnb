@@ -4,7 +4,10 @@
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en"> <!--<![endif]-->
 <head>
-
+    <%
+    if (typeof(message)== undefined)
+        var message = "";
+    %>
     <!-- Basic Page Needs
     ================================================== -->
     <meta charset="utf-8">
@@ -29,298 +32,25 @@
 <body class="boxed">
 <div id="wrapper">
 
-
-    <!-- Top Bar
-    ================================================== -->
-    <div id="top-bar">
-        <div class="container">
-
-            <!-- Top Bar Menu -->
-            <div class="ten columns">
-                <ul class="top-bar-menu">
-                    <li><i class="fa fa-phone"></i> (564) 123 4567</li>
-                    <li><i class="fa fa-envelope"></i> <a href="#">sellerbnb@gmail.com</a></li>
-                    <li>
-                        <div class="top-bar-dropdown">
-                            <span>English</span>
-                            <ul class="options">
-                                <li>
-                                    <div class="arrow"></div>
-                                </li>
-                                <li><a href="#">English</a></li>
-                                <li><a href="#">Sinhala</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="top-bar-dropdown">
-                            <span>USD</span>
-                            <ul class="options">
-                                <li>
-                                    <div class="arrow"></div>
-                                </li>
-                                <li><a href="#">USD</a></li>
-                                <li><a href="#">LKR</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Social Icons -->
-            <div class="six columns">
-                <ul class="social-icons">
-                    <li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
-                    <li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>
-                </ul>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="clearfix"></div>
-
-
-    <!-- Header
-    ================================================== -->
-    <div class="container">
-
-        <!-- Logo -->
-        <div class="four columns">
-            <div id="logo">
-                <h1><a href="index.html"><img src="images/logo.png" alt="Trizzy"/></a></h1>
-            </div>
-        </div>
-
-
-        <!-- Additional Menu -->
-        <div class="twelve columns">
-            <div id="additional-menu">
-                <ul>
-                    <li><a href="shopping-cart.html">Shopping Cart</a></li>
-                    <li><a href="wishlist.html">WishList <span>(2)</span></a></li>
-                    <li><a href="checkout-billing-details.html">Checkout</a></li>
-                    <li><a href="my-account.html">Account</a></li>
-                </ul>
-            </div>
-        </div>
-
-
-        <!-- Shopping Cart -->
-        <div class="twelve columns">
-
-            <div id="cart">
-
-                <!-- Button -->
-                <div class="cart-btn">
-                    <a href="#" class="button adc">$178.00</a>
-                </div>
-
-                <div class="cart-list">
-
-                    <div class="arrow"></div>
-
-                    <div class="cart-amount">
-                        <span>2 items in the shopping cart</span>
-                    </div>
-
-                    <ul>
-                        <li>
-                            <a href="#"><img src="images/small_product_list_08.jpg" alt=""/></a>
-                            <a href="#">Converse All Star Trainers</a>
-                            <span>1 x $79.00</span>
-                            <div class="clearfix"></div>
-                        </li>
-
-                        <li>
-                            <a href="#"><img src="images/small_product_list_09.jpg" alt=""/></a>
-                            <a href="#">Tommy Hilfiger <br/> Shirt Beat</a>
-                            <span>1 x $99.00</span>
-                            <div class="clearfix"></div>
-                        </li>
-                    </ul>
-
-                    <div class="cart-buttons button">
-                        <a href="shopping-cart.html" class="view-cart"><span
-                                data-hover="View Cart"><span>View Cart</span></span></a>
-                        <a href="checkout-billing-details.html" class="checkout"><span
-                                data-hover="Checkout">Checkout</span></a>
-                    </div>
-                    <div class="clearfix">
-
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Search -->
-            <nav class="top-search">
-                <form action="#" method="get">
-                    <button><i class="fa fa-search"></i></button>
-                    <input class="search-field" type="text" placeholder="Search" value="" size="5" maxlength="4"/>
-                </form>
-            </nav>
-
-        </div>
-
-    </div>
-
-
-    <!-- Navigation
-    ================================================== -->
-    <div class="container">
-        <div class="sixteen columns">
-
-            <a href="#menu" class="menu-trigger"><i class="fa fa-bars"></i> Menu</a>
-
-            <nav id="navigation">
-                <ul class="menu" id="responsive">
-
-                    <li><a href="index.html" class="homepage">Home</a></li>
-
-
-                    <li class="dropdown">
-                        <a href="#">Shop</a>
-                        <ul>
-                            <li><a href="shop-with-sidebar.html">Shop With Sidebar</a></li>
-                            <li><a href="shop-full-width.html">Shop Full Width</a></li>
-                            <li><a href="checkout-billing-details.html">Checkout Pages</a></li>
-                            <li><a href="shop-categories-grid.html">Categories Grid</a></li>
-                            <li><a href="single-product-page.html">Single Product Page</a></li>
-                            <li><a href="variable-product-page.html">Variable Product Page</a></li>
-                            <li><a href="wishlist.html">Wishlist Page</a></li>
-                            <li><a href="shopping-cart.html">Shopping Cart</a></li>
-                        </ul>
-                    </li>
-
-
-                    <li>
-                        <a href="#">Features</a>
-                        <div class="mega">
-                            <div class="mega-container">
-
-                                <div class="one-column">
-                                    <ul>
-                                        <li><span class="mega-headline">Example Pages</span></li>
-                                        <li><a href="contact.html">Contact</a></li>
-                                        <li><a href="about.html">About Us</a></li>
-                                        <li><a href="services.html">Services</a></li>
-                                        <li><a href="faq.html">FAQ</a></li>
-                                        <li><a href="404-page.html">404 Page</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="one-column">
-                                    <ul>
-                                        <li><span class="mega-headline">Featured Pages</span></li>
-                                        <li><a href="index-2.html">Business Homepage</a></li>
-                                        <li><a href="shop-with-sidebar.html">Default Shop</a></li>
-                                        <li><a href="blog-masonry.html">Masonry Blog</a></li>
-                                        <li><a href="variable-product-page.html">Variable Product</a></li>
-                                        <li><a href="portfolio-dynamic-grid.html">Dynamic Grid</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="one-column hidden-on-mobile">
-                                    <ul>
-                                        <li><span class="mega-headline">Paragraph</span></li>
-                                        <li><p>This <a href="#">Mega Menu</a> can handle everything. Lists, paragraphs,
-                                            forms...</p></li>
-                                    </ul>
-                                </div>
-
-                                <div class="one-fourth-column hidden-on-mobile">
-                                    <a href="#" class="img-caption margin-reset">
-                                        <figure>
-                                            <img src="images/menu-banner-01.jpg" alt=""/>
-                                            <figcaption>
-                                                <h3>Jeans</h3>
-                                                <span>Pack for Style</span>
-                                            </figcaption>
-                                        </figure>
-                                    </a>
-                                </div>
-
-                                <div class="one-fourth-column hidden-on-mobile">
-                                    <a href="#" class="img-caption margin-reset">
-                                        <figure>
-                                            <img src="images/menu-banner-02.jpg" alt=""/>
-                                            <figcaption>
-                                                <h3>Sunglasses</h3>
-                                                <span>Nail the Basics</span>
-                                            </figcaption>
-                                        </figure>
-                                    </a>
-                                </div>
-
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                    </li>
-
-
-                    <li class="dropdown">
-                        <a href="#">Shortcodes</a>
-                        <ul>
-                            <li><a href="elements.html">Elements</a></li>
-                            <li><a href="typography.html">Typography</a></li>
-                            <li><a href="pricing-tables.html">Pricing Tables</a></li>
-                            <li><a href="icons.html">Icons</a></li>
-                        </ul>
-                    </li>
-
-
-                    <li class="dropdown">
-                        <a href="#">Portfolio</a>
-                        <ul>
-                            <li><a href="portfolio-3-columns.html">3 Columns</a></li>
-                            <li><a href="portfolio-4-columns.html">4 Columns</a></li>
-                            <li><a href="portfolio-dynamic-grid.html">Dynamic Grid</a></li>
-                            <li><a href="single-project.html">Single Project</a></li>
-                        </ul>
-                    </li>
-
-
-                    <li class="dropdown">
-                        <a href="#">Blog</a>
-                        <ul>
-                            <li><a href="blog-standard.html">Blog Standard</a></li>
-                            <li><a href="blog-masonry.html">Blog Masonry</a></li>
-                            <li><a href="blog-single-post.html">Single Post</a></li>
-                        </ul>
-                    </li>
-
-
-                    <li class="demo-button">
-                        <a href="#">Get This Theme</a>
-                    </li>
-
-                </ul>
-            </nav>
-        </div>
-    </div>
-
+    <% include header.ejs %>
 
     <!-- Titlebar
     ================================================== -->
-    <section class="parallax-titlebar fullwidth-element"  data-background="#000" data-opacity="0.45" data-height="160">
+    <section class="parallax-titlebar fullwidth-element" data-background="#000" data-opacity="0.45" data-height="160">
 
-        <img src="images/titlebar_bg_01.jpg" alt="" />
+        <img src="images/titlebar_bg_02.jpg" alt=""/>
         <div class="parallax-overlay"></div>
 
-
         <div class="parallax-content">
-            <h2>Account</h2>
+            <h2>Account <span>Bidding Items</span></h2>
 
-            <nav id="breadcrumbs_account">
+            <nav id="breadcrumbs">
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li>Account</li>
-                    <li>Selling</li>
+                    <li>Home</li>
+                    <li>News</li>
                 </ul>
             </nav>
         </div>
-
     </section>
 
     <div class="container">
@@ -334,13 +64,12 @@
 
                 <ul id="categories">
 
-                    <li><a href="#">Summary</a></li>
-                    <li><a href="#">Membership</a></li>
-                    <li><a href="#">Selling</a></li>
-                    <li><a href="#">Buying</a></li>
-                    <li><a href="#">Contract</a></li>
-                    <li><a href="#">News</a></li>
-                    <li><a href="#">Adding Commodities</a></li>
+                    <li><a href="/user/basic">Basic Account</a></li>
+                    <li><a href="/user/contact">Contact Information</a></li>
+                    <li><a href="/user/payment">Payment Information</a></li>
+                    <li><a href="/user/business">Business Information</a></li>
+                    <li><a href="/user/notification" class="active">Notification Preferences</a></li>
+                    <li><a href="/items/search">Sell</a></li>
 
                 </ul>
                 <div class="clearfix"></div>
@@ -348,48 +77,70 @@
             </div>
 
 
-            <!-- Widget -->
-            <div class="widget">
-                <h3 class="headline">Filter By Price</h3><span class="line"></span><div class="clearfix"></div>
+            <!--&lt;!&ndash; Widget &ndash;&gt;-->
+            <!--<div class="widget">-->
+                <!--<h3 class="headline">Filter By Price</h3><span class="line"></span><div class="clearfix"></div>-->
 
-                <div id="price-range">
-                    <div class="padding-range"><div id="slider-range"></div></div>
-                    <label for="amount">Price:</label>
-                    <input type="text" id="amount"/>
-                    <a href="#" class="button color">Filter</a>
+                <!--<div id="price-range">-->
+                    <!--<div class="padding-range"><div id="slider-range"></div></div>-->
+                    <!--<label for="amount">Price:</label>-->
+                    <!--<input type="text" id="amount"/>-->
+                    <!--<a href="#" class="button color">Filter</a>-->
+                <!--</div>-->
+                <!--<div class="clearfix"></div>-->
+            <!--</div>-->
+
+            <!--&lt;!&ndash; Sorting &ndash;&gt;-->
+            <form action="/api/items/start/0/userId/<%= user.id %>" method = "GET" id="filter_form">
+                <div class="widget">
+                    <h3 class="headline" style="z-index: 0 !important;">Filter By</h3><span class="line"></span><div class="clearfix"></div>
+
+                    <select class="orderby" name="sellpageItemOption" id="filter_options">
+                        <% if(filterParamer == 'All') {%>
+                            <option selected>All</option>
+                            <option>Open</option>
+                            <option>Closed</option>
+                            <option>Hold</option>
+                        <% } %>
+                        <% if(filterParamer == 'Open') {%>
+                            <option>All</option>
+                            <option selected>Open</option>
+                            <option>Closed</option>
+                            <option>Hold</option>
+                        <% } %>
+                        <% if(filterParamer == 'Closed') {%>
+                            <option>All</option>
+                            <option>Open</option>
+                            <option selected>Closed</option>
+                            <option>Hold</option>
+                        <% } %>
+                        <% if(filterParamer == 'Hold') {%>
+                            <option>All</option>
+                            <option>Open</option>
+                            <option>Closed</option>
+                            <option selected>Hold</option>
+                        <% } %>
+                    </select>
+                    <div class="clearfix"></div>
                 </div>
-                <div class="clearfix"></div>
-            </div>
-
-            <!-- Sorting -->
-            <div class="widget">
-                <h3 class="headline" style="z-index: 0 !important;">Sorting</h3><span class="line"></span><div class="clearfix"></div>
-
-                <select class="orderby">
-                    <option>Default Sorting</option>
-                    <option>City</option>
-                    <option>Country</option>
-                    <option>Commodity</option>
-                    <option>Family</option>
-                    <option>Segment</option>
-                    <option>Class</option>
-                </select>
-                <div class="clearfix"></div>
-            </div>
+            </form>
 
             <!-- Sorting -->
             <div class="widget">
                 <h3 class="headline" style="z-index: 0 !important;">Date</h3><span class="line"></span><div class="clearfix"></div>
 
 
-                <div class="fifteen alpha columns">
+                <div class="four alpha columns">
                     <label>From : </label>
-                    <input type="text" id="from" />
+                    <input type="text" id="from" style="width: 91%; z-index: 100"/>
                 </div>
-
-                <div class="fifteen alpha columns">
+                <br><br><br>
+                <div class="four alpha columns">
                     <label>To : </label>
-                    <input type="text" id="to" />
+                    <input type="text" id="to" style="width: 91%; z-index: 100"/>
+                </div>
+                <div class="four alpha columns" style="margin-top:10px">
+                    <input type="submit" class="button color" style="float: right; z-index: 0" value="Filter"/>
                 </div>
 
                 <div class="clearfix"></div>
@@ -400,152 +151,96 @@
 
         <!-- Content
         ================================================== -->
-        <div class="twelve columns">
+        <!--<div class="twelve columns">-->
 
-            <!-- Search -->
-            <div class="item-search">
-                <form action="#" method="get">
-                    <button><i class="fa fa-search"></i></button>
-                    <input class="search-field" type="text" placeholder="Search" value="" size="5" maxlength="4"/>
-                </form>
-            </div>
+            <!--&lt;!&ndash; Search &ndash;&gt;-->
+            <!--<div class="item-search">-->
+                <!--<form action="#" method="get">-->
+                    <!--<button><i class="fa fa-search"></i></button>-->
+                    <!--<input class="search-field" type="text" placeholder="Search" value="" size="5" maxlength="4"/>-->
+                <!--</form>-->
+            <!--</div>-->
 
-        </div>
+        <!--</div>-->
 
         <div class="twelve columns products">
 
-            <!-- Selling Items -->
-            <div class="item-selling-div twelve columns">
-                <div class="item-selling-div">
-                    <div class="two columns">
-                        <img src="images/blog-widget-01.png"/>
-                    </div>
-                    <div class="five columns">
-                        <h3>RSS 1</h3>
-                        <p>Last Bid: LKR.300 by DSI (pvt) Ltd<br>
-                            Bidding Closed At: Dec 07, 2016 2:03PM</p>
-                    </div>
-                    <div class="four columns" style="float:right">
-                        <button class="item-selling-btn">View Details</button><br>
-                        <select class="orderby">More Actions
-                            <option>More Actions</option>
-                            <option>Stop Bidding</option>
-                            <option>Delete</option>
-                            <option>Hold</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+            <% for(var itemIndex = 0; itemIndex < sellingList.length; itemIndex++) {
+                var item = sellingList[itemIndex];
+                var biddingDetails = biddingDetailList[itemIndex];
+                var lastBidding = {};
+                if((biddingDetails != undefined && biddingDetails != null) && biddingDetails.length > 0) {
+                    lastBidding = biddingDetails[biddingDetails.length-1];
+                }
+            %>
+                <!-- Selling Items -->
+                <div class="item-selling-div twelve columns">
+                    <div class="item-selling-div">
+                        <div class="two columns">
+                            <% if(item.ItemImages.length > 0) {%>
+                            <img src="uploads/items/<%= item.ItemImages[0].url %>"/>
+                            <% } %>
+                        </div>
+                        <div class="five columns">
+                            <h3><%= item.title %></h3>
+                            <p>
+                                <% if((biddingDetails != undefined && biddingDetails != null) && biddingDetails.length > 0) {%>
+                                    Last Bid: <%= lastBidding.bid+' by '+lastBidding.username %><br>
+                                <% } else { %>
+                                    No Bids <br>
+                                <% } %>
+                                <% if(remainingTimes[itemIndex][0] != 0) {
+                                    var remainingTime = remainingTimes[itemIndex][0];
+                                    var numdays = Math.floor(remainingTime / 86400);
+                                    var numhours = Math.floor((remainingTime % 86400) / 3600);
+                                    var numminutes = Math.floor(((remainingTime % 86400) % 3600) / 60);
+                                    var numseconds = Math.floor(((remainingTime % 86400) % 3600) % 60);
 
-            <div class="item-selling-div twelve columns">
-                <div class="item-selling-div">
-                    <div class="two columns">
-                        <img src="images/blog-widget-01.png"/>
-                    </div>
-                    <div class="five columns">
-                        <h3>RSS 1</h3>
-                        <p>Last Bid: LKR.300 by DSI (pvt) Ltd<br>
-                            Bidding Closed At: Dec 07, 2016 2:03PM</p>
-                    </div>
-                    <div class="four columns" style="float:right">
-                        <button class="item-selling-btn">View Details</button><br>
-                        <select class="orderby">More Actions
-                            <option>More Actions</option>
-                            <option>Stop Bidding</option>
-                            <option>Delete</option>
-                            <option>Hold</option>
-                        </select>
+                                    var formattedTime = "";
+                                    formattedTime = numdays != 0 ? (formattedTime += numdays + " days ") : formattedTime;
+                                    formattedTime = numhours != 0 ? (formattedTime += numhours + " hrs ") : formattedTime;
+                                    formattedTime = numminutes != 0 ? (formattedTime += numminutes + " mins ") : formattedTime;
+                                    formattedTime = numseconds != 0 ? (formattedTime += numseconds + " secs ") : formattedTime;
+                                %>
+                                    <%= 'Time Left: '+formattedTime %>
+                                <% } else {%>
+                                    <%= 'Bidding Closed At: ' + remainingTimes[itemIndex][2] %>
+                                <% } %>
+                            </p>
+                        </div>
+                        <a class="popup-with-zoom-anim" href="#fullname-edit-dialog" id="action-modal"
+                           style="color:#2db2ea; display: none">Action Modal</a><br/>
+                        <div id="fullname-edit-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
+                            <h2 class="margin-bottom-10" id="action-heading"></h2>
+                            <form method="POST" name="editform" action="http://localhost:3000/api/items/update/status">
+                                <p id="action-description"></p>
+                                <fieldset>
+                                    <div class="twelve columns editform">
+                                        <input type="hidden" name="action" id="actionToSubmit" />
+                                        <input type="hidden" name="itemId" value="<%= item.id %>" />
+                                        <input type="submit" class="submit" value="Yes"/>
+                                    </div>
+                                </fieldset>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                        <div class="four columns" style="float:right">
+                            <form action="http://localhost:3000/user/sell/bids/start/0" method="get">
+                                <input type="hidden" name="itemId" value="<%= item.id %>"/>
+                                <input type="submit" class="item-selling-btn" value="View Details/ Bids"/>
+                            </form>
+                            <select class="orderby actions">More Actions
+                                <option>More Actions</option>
+                                <option>Stop Bidding</option>
+                                <option>Delete</option>
+                                <option>Hold</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="item-selling-div twelve columns">
-                <div class="item-selling-div">
-                    <div class="two columns">
-                        <img src="images/blog-widget-01.png"/>
-                    </div>
-                    <div class="five columns">
-                        <h3>RSS 1</h3>
-                        <p>Last Bid: LKR.300 by DSI (pvt) Ltd<br>
-                            Bidding Closed At: Dec 07, 2016 2:03PM</p>
-                    </div>
-                    <div class="four columns" style="float:right">
-                        <button class="item-selling-btn">View Details</button><br>
-                        <select class="orderby">More Actions
-                            <option>More Actions</option>
-                            <option>Stop Bidding</option>
-                            <option>Delete</option>
-                            <option>Hold</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="item-selling-div twelve columns">
-                <div class="item-selling-div">
-                    <div class="two columns">
-                        <img src="images/blog-widget-01.png"/>
-                    </div>
-                    <div class="five columns">
-                        <h3>RSS 1</h3>
-                        <p>Last Bid: LKR.300 by DSI (pvt) Ltd<br>
-                            Bidding Closed At: Dec 07, 2016 2:03PM</p>
-                    </div>
-                    <div class="four columns" style="float:right">
-                        <button class="item-selling-btn">View Details</button><br>
-                        <select class="orderby">More Actions
-                            <option>More Actions</option>
-                            <option>Stop Bidding</option>
-                            <option>Delete</option>
-                            <option>Hold</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="item-selling-div twelve columns">
-                <div class="item-selling-div">
-                    <div class="two columns">
-                        <img src="images/blog-widget-01.png"/>
-                    </div>
-                    <div class="five columns">
-                        <h3>RSS 1</h3>
-                        <p>Last Bid: LKR.300 by DSI (pvt) Ltd<br>
-                            Bidding Closed At: Dec 07, 2016 2:03PM</p>
-                    </div>
-                    <div class="four columns" style="float:right">
-                        <button class="item-selling-btn">View Details</button><br>
-                        <select class="orderby">More Actions
-                            <option>More Actions</option>
-                            <option>Stop Bidding</option>
-                            <option>Delete</option>
-                            <option>Hold</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="item-selling-div twelve columns">
-                <div class="item-selling-div">
-                    <div class="two columns">
-                        <img src="images/blog-widget-01.png"/>
-                    </div>
-                    <div class="five columns">
-                        <h3>RSS 1</h3>
-                        <p>Last Bid: LKR.300 by DSI (pvt) Ltd<br>
-                            Bidding Closed At: Dec 07, 2016 2:03PM</p>
-                    </div>
-                    <div class="four columns" style="float:right">
-                        <button class="item-selling-btn">View Details</button><br>
-                        <select class="orderby">More Actions
-                            <option>More Actions</option>
-                            <option>Stop Bidding</option>
-                            <option>Delete</option>
-                            <option>Hold</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+                <span class="line" style="margin-top:10px;margin-bottom: 0px"></span><div class="clearfix"></div>
+            <% } %>
 
 
             <div class="clearfix"></div>
@@ -554,16 +249,43 @@
             <div class="pagination-container">
                 <nav class="pagination">
                     <ul>
-                        <li><a href="#" class="current-page">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
+                        <%
+                        var pageOne = (pageMultipationFactor * 10) + 1;
+                        var pageTwo = (pageMultipationFactor * 10) + 2;
+                        var pageThree = (pageMultipationFactor * 10) + 3;
+                        %>
+                        <% if(maxPageCount >= pageOne) {%>
+                        <li>
+                            <a href="http://localhost:3000/user/sell/list/start/<%= (pageOne-1) * 10 %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
+                                <%= pageOne %>
+                            </a>
+                        </li>
+                        <% } %>
+                        <% if(maxPageCount >= pageTwo) {%>
+                        <li>
+                            <a href="http://localhost:3000/user/sell/list/start/<%= (pageTwo-1) * 10 %>" <% if(pageTwo === currentPageNumber) { %>class="current-page"<% } %>>
+                                <%= pageTwo %>
+                            </a>
+                        </li>
+                        <% } %>
+                        <% if(maxPageCount >= pageThree) {%>
+                        <li>
+                            <a href="http://localhost:3000/user/sell/list/start/<%= (pageThree-1) * 10 %>" <% if(pageThree === currentPageNumber) { %>class="current-page"<% } %>>
+                                <%= pageThree %>
+                            </a>
+                        </li>
+                        <% } %>
                     </ul>
                 </nav>
 
                 <nav class="pagination-next-prev">
                     <ul>
-                        <li><a href="#" class="prev"></a></li>
-                        <li><a href="#" class="next"></a></li>
+                        <% if(0 < pageMultipationFactor) {%>
+                        <li><a href="http://localhost:3000/user/sell/list/start/<%= (pageMultipationFactor - 1) * 30 %>" class="prev"></a></li>
+                        <% } %>
+                        <% if(maxPageCount >= (pageMultipationFactor * 10) + 4) {%>
+                        <li><a href="http://localhost:3000/user/sell/list/start/<%= (pageMultipationFactor + 1) * 30 %>" class="next"></a></li>
+                        <% } %>
                     </ul>
                 </nav>
             </div>
@@ -694,6 +416,7 @@
 <script src="scripts/puregrid.js"></script>
 <script src="scripts/stacktable.js"></script>
 <script src="scripts/custom.js"></script>
+<script src="scripts/views/useraccountselling.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
 
 <script>

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]>
+<html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en"> <!--<![endif]-->
+<head>
+    <%
+    if (typeof(message)== undefined)
+        var message = "";
+    %>
+    <!-- Basic Page Needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>Seller BnB</title>
+
+    <!-- Mobile Specific Metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/colors/blue.css" id="colors">
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+</head>
+
+<body class="boxed">
+<div id="wrapper">
+
+    <% include header.ejs %>
+
+    <!-- Titlebar
+    ================================================== -->
+    <section class="parallax-titlebar fullwidth-element" data-background="#000" data-opacity="0.45" data-height="160">
+
+        <img src="images/titlebar_bg_02.jpg" alt=""/>
+        <div class="parallax-overlay"></div>
+
+        <div class="parallax-content">
+            <h2>Account <span>Bidding Items</span></h2>
+
+            <nav id="breadcrumbs">
+                <ul>
+                    <li>Home</li>
+                    <li>News</li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <div class="container">
+
+        <!-- Sidebar
+        ================================================== -->
+        <div class="four columns">
+
+            <!-- Categories -->
+            <div class="widget margin-top-0">
+
+                <ul id="categories">
+
+                    <li><a href="/user/basic">Basic Account</a></li>
+                    <li><a href="/user/contact">Contact Information</a></li>
+                    <li><a href="/user/payment">Payment Information</a></li>
+                    <li><a href="/user/business">Business Information</a></li>
+                    <li><a href="/user/notification" class="active">Notification Preferences</a></li>
+                    <li><a href="/items/search">Sell</a></li>
+
+                </ul>
+                <div class="clearfix"></div>
+
+            </div>
+
+
+            <!--&lt;!&ndash; Widget &ndash;&gt;-->
+            <!--<div class="widget">-->
+            <!--<h3 class="headline">Filter By Price</h3><span class="line"></span><div class="clearfix"></div>-->
+
+            <!--<div id="price-range">-->
+            <!--<div class="padding-range"><div id="slider-range"></div></div>-->
+            <!--<label for="amount">Price:</label>-->
+            <!--<input type="text" id="amount"/>-->
+            <!--<a href="#" class="button color">Filter</a>-->
+            <!--</div>-->
+            <!--<div class="clearfix"></div>-->
+            <!--</div>-->
+
+            <!--&lt;!&ndash; Sorting &ndash;&gt;-->
+            <!--<div class="widget">-->
+            <!--<h3 class="headline" style="z-index: 0 !important;">Sorting</h3><span class="line"></span><div class="clearfix"></div>-->
+
+            <!--<select class="orderby">-->
+            <!--<option>Default Sorting</option>-->
+            <!--<option>City</option>-->
+            <!--<option>Country</option>-->
+            <!--<option>Commodity</option>-->
+            <!--<option>Family</option>-->
+            <!--<option>Segment</option>-->
+            <!--<option>Class</option>-->
+            <!--</select>-->
+            <!--<div class="clearfix"></div>-->
+            <!--</div>-->
+
+            <!-- Sorting -->
+            <div class="widget">
+                <h3 class="headline" style="z-index: 0 !important;">Date</h3><span class="line"></span><div class="clearfix"></div>
+
+
+                <div class="four alpha columns">
+                    <label>From : </label>
+                    <input type="text" id="from" style="width: 91%; z-index: 100"/>
+                </div>
+                <br><br><br>
+                <div class="four alpha columns">
+                    <label>To : </label>
+                    <input type="text" id="to" style="width: 91%; z-index: 100"/>
+                </div>
+                <div class="four alpha columns" style="margin-top:10px">
+                    <input type="submit" class="button color" style="float: right; z-index: 0" value="Filter"/>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+        </div>
+
+
+        <!-- Content
+        ================================================== -->
+        <!--<div class="twelve columns">-->
+
+        <!--&lt;!&ndash; Search &ndash;&gt;-->
+        <!--<div class="item-search">-->
+        <!--<form action="#" method="get">-->
+        <!--<button><i class="fa fa-search"></i></button>-->
+        <!--<input class="search-field" type="text" placeholder="Search" value="" size="5" maxlength="4"/>-->
+        <!--</form>-->
+        <!--</div>-->
+
+        <!--</div>-->
+
+        <div class="twelve columns">
+
+            <!-- Tabs Navigation -->
+            <ul class="tabs-nav">
+                <li class="active"><a href="#tab1">Bids</a></li>
+                <li><a href="#tab2">Edit Details <span class="tab-reviews">(3)</span></a></li>
+            </ul>
+
+            <!-- Tabs Content -->
+            <div class="tabs-container">
+
+                <div class="tab-content" id="tab1">
+
+                    <section class="variables">
+                        <!-- Selling Items -->
+                        <% for(var biddingIndex = 0; biddingIndex < biddingList.length; biddingIndex++) {
+                            var bidding = biddingList[biddingIndex];
+
+                            var warehouse = bidding.WareHouse;
+                            var formattedAddress = "";
+                            formattedAddress = (warehouse.warehouseAddress1 != null && warehouse.warehouseAddress1 != undefined) ?
+                                    warehouse.warehouseAddress1 : formattedAddress;
+                            formattedAddress = (warehouse.warehouseAddress2 != null && warehouse.warehouseAddress2 != undefined) ?
+                            formattedAddress + ", " +warehouse.warehouseAddress2 : formattedAddress;
+                            formattedAddress = (warehouse.warehouseCity != null && warehouse.warehouseCity != undefined) ?
+                            formattedAddress + ", " +warehouse.warehouseCity : formattedAddress;
+                        %>
+                            <div class="item-selling-div twelve columns" style="margin-top: -20px;">
+                                <div class="item-selling-div">
+                                    <div class="eight columns" style="padding-top: 20px;">
+                                        <h3><%= bidding.bid %></h3>
+                                        <p>Quantity: <%= bidding.quantity %><br>
+                                            Buyer: <%= bidding.User.username %><br>
+                                            Status: <%= bidding.status %>
+                                        </p>
+                                    </div>
+                                    <div class="two columns">
+                                        <a class="popup-with-zoom-anim " href="#bid-detail-dialog-<%= bidding.id %>" style="display: none">Edit</a><br/>
+
+                                        <a class="popup-with-zoom-anim " href="#bidding-accept-modal-<%= bidding.id%>" id="bidding-accept-modal-button"
+                                           style="display: none">Edit</a><br/>
+
+                                        <div id="bid-detail-dialog-<%= bidding.id %>" class="small-dialog zoom-anim-dialog mfp-hide">
+                                            <h2 class="margin-bottom-10">Bid Details</h2>
+
+                                                    <div>
+                                                        <table class="basic-table">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>Bid</td>
+                                                                <td id="bid"><%= bidding.bid %></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Quantity</td>
+                                                                <td id="quantity"><%= bidding.quantity %></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Buyer</td>
+                                                                <td id="buyer"><%= bidding.User.full_name %></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Package Type</td>
+                                                                <td id="package_type"><%= bidding.packageType %></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Delivery By</td>
+                                                                <td id="delivery_by"><%= bidding.deliveryBy %></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Payment Terms</td>
+                                                                <td id="payment_terms"><%= bidding.paymentTerms %></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Warehouse</td>
+                                                                <td id="warehouse"><%= formattedAddress %></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Note</td>
+                                                                <td id="note"><%= bidding.note %></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Status</td>
+                                                                <td id="status"><%= bidding.status %></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Bid at:</td>
+                                                                <td id="updatedAt"><%= bidsCreatedAt[biddingIndex] %></td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                <form method="post" name="editform" action="/api/bid/update/status">
+
+                                                    <fieldset>
+                                                        <input type="hidden" name="itemId" value="<%= bidding.ItemId %>" />
+                                                        <input type="hidden" name="bidId" value="<%= bidding.id %>" />
+                                                        <input type="hidden" name="status" value="accepted" />
+                                                        <div class="twelve columns editform">
+                                                            <input type="submit" class="submit" value="Accept"/>
+                                                        </div>
+
+                                                    </fieldset>
+
+                                                    <div class="clearfix"></div>
+                                                </form>
+                                        </div>
+
+                                        <div id="bidding-accept-modal-<%= bidding.id%>" class="small-dialog zoom-anim-dialog mfp-hide">
+                                            <h2 class="margin-bottom-10">Accept Bidding</h2>
+                                            <form method="post" name="editform" action="/api/bid/update/status">
+                                                <p> Are you sure to accept this bid? </p>
+                                                <fieldset>
+                                                    <input type="hidden" name="itemId" value="<%= bidding.ItemId %>" />
+                                                    <input type="hidden" name="bidId" value="<%= bidding.id %>" />
+                                                    <input type="hidden" name="status" value="accepted" />
+                                                    <input type="submit" class="submit" value="Accept" style="width: 100%" />
+                                                </fieldset>
+
+                                                <div class="clearfix"></div>
+                                            </form>
+                                        </div>
+
+                                        <input type="hidden" value="<%= bidding.id %>"/>
+                                        <button class="item-selling-btn" style="width: 100%">View Details</button><br>
+                                        <button class="bidding-accept-btn" style="width: 100%">Accept</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="line" style="margin-top:10px;margin-bottom: 0px"></span><div class="clearfix"></div>
+                        <% } %>
+
+                        <div class="clearfix"></div>
+
+                        <!-- Pagination -->
+                        <div class="pagination-container" style="padding-top:20px; padding-left: 20px">
+                            <nav class="pagination">
+                                <ul>
+                                    <%
+                                    var pageOne = (pageMultipationFactor * 10) + 1;
+                                    var pageTwo = (pageMultipationFactor * 10) + 2;
+                                    var pageThree = (pageMultipationFactor * 10) + 3;
+                                    %>
+                                    <% if(maxPageCount >= pageOne) {%>
+                                    <li>
+                                        <a href="http://localhost:3000/user/sell/bids/start/<%= (pageOne-1) * 10 %>?itemId=<%= itemId %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
+                                            <%= pageOne %>
+                                        </a>
+                                    </li>
+                                    <% } %>
+                                    <% if(maxPageCount >= pageTwo) {%>
+                                    <li>
+                                        <a href="http://localhost:3000/user/sell/bids/start/<%= (pageTwo-1) * 10 %>?itemId=<%= itemId %>" <% if(pageTwo === currentPageNumber) { %>class="current-page"<% } %>>
+                                            <%= pageTwo %>
+                                        </a>
+                                    </li>
+                                    <% } %>
+                                    <% if(maxPageCount >= pageThree) {%>
+                                    <li>
+                                        <a href="http://localhost:3000/user/sell/bids/start/<%= (pageThree-1) * 10 %>?itemId=<%= itemId %>" <% if(pageThree === currentPageNumber) { %>class="current-page"<% } %>>
+                                            <%= pageThree %>
+                                        </a>
+                                    </li>
+                                    <% } %>
+                                </ul>
+                            </nav>
+
+                            <nav class="pagination-next-prev">
+                                <ul>
+                                    <% if(0 < pageMultipationFactor) {%>
+                                    <li><a href="http://localhost:3000/user/sell/bids/start/<%= (pageMultipationFactor - 1) * 30 %>?itemId=<%= itemId %>" class="prev"></a></li>
+                                    <% } %>
+                                    <% if(maxPageCount >= (pageMultipationFactor * 10) + 4) {%>
+                                    <li><a href="http://localhost:3000/user/sell/bids/start/<%= (pageMultipationFactor + 1) * 30 %>?itemId=<%= itemId %>" class="next"></a></li>
+                                    <% } %>
+                                </ul>
+                            </nav>
+                        </div>
+
+                    </section>
+
+                </div>
+
+                <div class="tab-content" id="tab2">
+
+                    <!-- Reviews -->
+                    <section class="comments">
+
+                        <form method="post" name="bidform">
+
+                            <fieldset>
+
+                                <div class="twelve alpha columns bidform">
+                                    <label>Images : </label>
+                                    <div class="ten columns">
+                                        <% for(imageIndex = 0; imageIndex < item.ItemImages.length; imageIndex++) {%>
+                                            <div class="two columns">
+                                                <img src="uploads/items/<%= item.ItemImages[imageIndex].url %>"
+                                                     alt="" style="width: 120px; height: 120px"/>
+                                                <a href="#">(Remove)</a>
+                                            </div>
+                                        <% } %>
+                                    </div>
+                                    <button class="commodity-uploadimage">Upload Images</button>
+                                    <input type="file" name="fileToUpload" id="fileToUpload" style="display: none">
+                                </div>
+
+                                <div class="twelve alpha columns bidform">
+                                    <label>Title : </label>
+                                    <input name="title" type="text" id="title" value="<%= item.title %>"/>
+                                </div>
+
+                                <div class="twelve alpha columns bidform">
+                                    <label>Quantity : </label>
+                                    <input name="quantity" type="text" id="quantity" value="<%= item.quantity %>"/>
+                                </div>
+
+                                <div class="twelve alpha columns bidform">
+                                    <label for="delivery_by">Delivery By : </label>
+                                    <select id="delivery_by" name="delivery_by">
+                                        <% if(item.deliveryBy == 'Buyer') { %>
+                                            <option selected>Buyer</option>
+                                        <% } else {%>
+                                            <option>Buyer</option>
+                                        <%} %>
+                                        <% if(item.deliveryBy == 'Seller') { %>
+                                            <option selected>Buyer</option>
+                                        <% } else {%>
+                                            <option>Seller</option>
+                                        <%} %>
+                                    </select>
+                                </div>
+
+                                <div class="twelve alpha columns bidform">
+                                    <label for="warehouse">Warehouse : </label>
+                                    <select id="warehouse" name="warehouse">
+                                        <% for(var warehouseIndex = 0; warehouseIndex < userWareHousesSell.length; warehouseIndex++) {
+                                            var warehouse = userWareHousesSell[warehouseIndex];
+                                            var formattedAddress = "";
+                                            formattedAddress = (warehouse.warehouseAddress1 != null && warehouse.warehouseAddress1 != undefined) ?
+                                                    warehouse.warehouseAddress1 : formattedAddress;
+                                            formattedAddress = (warehouse.warehouseAddress2 != null && warehouse.warehouseAddress2 != undefined) ?
+                                            formattedAddress + ", " + warehouse.warehouseAddress2 : formattedAddress;
+                                            formattedAddress = (warehouse.warehouseCity != null && warehouse.warehouseCity != undefined) ?
+                                            formattedAddress + ", " + warehouse.warehouseCity : formattedAddress;
+
+                                        %>
+                                        <option><%= formattedAddress %></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+
+                                <div class="twelve alpha columns bidform">
+                                    <label>Packing Type : </label>
+                                    <input name="packing_type" type="text" id="packing_type" value="<%= item.packageType %>"/>
+                                </div>
+
+                                <div class="twelve alpha columns bidform">
+                                    <label for="payment_terms">Payment Terms : </label>
+                                    <select id="payment_terms" name="payment_terms" value="<%= item.paymentTerms %>">
+                                        <% if(item.paymentTerms == '1 month credit') { %>
+                                            <option selected>1 month credit</option>
+                                        <% } else {%>
+                                            <option>1 month credit</option>
+                                        <%} %>
+                                        <% if(item.paymentTerms == '1 week credit') { %>
+                                            <option selected>1 week credit</option>
+                                        <% } else {%>
+                                            <option>1 week credit</option>
+                                        <%} %>
+                                        <% if(item.paymentTerms == 'Cash On Delivery') { %>
+                                            <option selected>Cash On Delivery</option>
+                                        <% } else {%>
+                                            <option>Cash On Delivery</option>
+                                        <%} %>
+                                    </select>
+                                </div>
+
+                                <div class="twelve alpha columns bidform">
+                                    <label>Suggested Price : </label>
+                                    <input name="suggested_price" type="text" id="suggested_price" value="<%= item.suggestedPrice %>"/>
+                                </div>
+
+                                <div class="twelve alpha columns bidform">
+                                    <label>Seller Note: <span>*</span></label>
+                                    <textarea name="comment" cols="91" rows="3" id="comment" spellcheck="true" style="width: 97%">
+                                        <%= item.note %>
+                                    </textarea>
+                                </div>
+
+                                <div class="twelve columns bidform">
+                                    <input type="submit" class="submit" id="submit" value="Add"/>
+                                </div>
+
+                            </fieldset>
+
+                            <div class="clearfix"></div>
+                        </form>
+
+                    </section>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="margin-top-50"></div>
+
+    <!-- Footer
+    ================================================== -->
+    <div id="footer">
+
+        <!-- Container -->
+        <div class="container">
+
+            <div class="four columns">
+                <img src="images/logo-footer.png" alt="" class="margin-top-10"/>
+                <p class="margin-top-15">Nulla facilisis feugiat magna, ut molestie metus hendrerit vitae. Vivamus
+                    tristique lectus at varius rutrum. Integer lobortis mauris non consectetur eleifend.</p>
+            </div>
+
+            <div class="four columns">
+
+                <!-- Headline -->
+                <h3 class="headline footer">Customer Service</h3>
+                <span class="line"></span>
+                <div class="clearfix"></div>
+
+                <ul class="footer-links">
+                    <li><a href="#">Order Status</a></li>
+                    <li><a href="#">Payment Methods</a></li>
+                    <li><a href="#">Delivery & Returns</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                </ul>
+
+            </div>
+
+            <div class="four columns">
+
+                <!-- Headline -->
+                <h3 class="headline footer">My Account</h3>
+                <span class="line"></span>
+                <div class="clearfix"></div>
+
+                <ul class="footer-links">
+                    <li><a href="#">My Account</a></li>
+                    <li><a href="#">Order History</a></li>
+                    <li><a href="#">Wish List</a></li>
+                </ul>
+
+            </div>
+
+            <div class="four columns">
+
+                <!-- Headline -->
+                <h3 class="headline footer">Newsletter</h3>
+                <span class="line"></span>
+                <div class="clearfix"></div>
+                <p>Sign up to receive email updates on new product announcements, gift ideas, special promotions, sales
+                    and more.</p>
+
+                <form action="#" method="get">
+                    <button class="newsletter-btn" type="submit">Join</button>
+                    <input class="newsletter" type="text" placeholder="mail@example.com" value=""/>
+                </form>
+            </div>
+
+        </div>
+        <!-- Container / End -->
+
+    </div>
+    <!-- Footer / End -->
+
+    <!-- Footer Bottom / Start -->
+    <div id="footer-bottom">
+
+        <!-- Container -->
+        <div class="container">
+
+            <div class="eight columns">© Copyright 2014 by <a href="#">trizzy</a>. All Rights Reserved.</div>
+            <div class="eight columns">
+                <ul class="payment-icons">
+                    <li><img src="images/visa.png" alt=""/></li>
+                    <li><img src="images/mastercard.png" alt=""/></li>
+                    <li><img src="images/skrill.png" alt=""/></li>
+                    <li><img src="images/moneybookers.png" alt=""/></li>
+                    <li><img src="images/paypal.png" alt=""/></li>
+                </ul>
+            </div>
+
+        </div>
+        <!-- Container / End -->
+
+    </div>
+    <!-- Footer Bottom / End -->
+
+    <!-- Back To Top Button -->
+    <div id="backtotop"><a href="#"></a></div>
+
+</div>
+
+
+<!-- Java Script
+================================================== -->
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="scripts/jquery.jpanelmenu.js"></script>
+<script src="scripts/jquery.themepunch.plugins.min.js"></script>
+<script src="scripts/jquery.themepunch.revolution.min.js"></script>
+<script src="scripts/jquery.themepunch.showbizpro.min.js"></script>
+<script src="scripts/jquery.magnific-popup.min.js"></script>
+<script src="scripts/hoverIntent.js"></script>
+<script src="scripts/superfish.js"></script>
+<script src="scripts/jquery.pureparallax.js"></script>
+<script src="scripts/jquery.pricefilter.js"></script>
+<script src="scripts/jquery.selectric.min.js"></script>
+<script src="scripts/jquery.royalslider.min.js"></script>
+<script src="scripts/SelectBox.js"></script>
+<script src="scripts/modernizr.custom.js"></script>
+<script src="scripts/waypoints.min.js"></script>
+<script src="scripts/jquery.flexslider-min.js"></script>
+<script src="scripts/jquery.counterup.min.js"></script>
+<script src="scripts/jquery.tooltips.min.js"></script>
+<script src="scripts/jquery.isotope.min.js"></script>
+<script src="scripts/puregrid.js"></script>
+<script src="scripts/stacktable.js"></script>
+<script src="scripts/custom.js"></script>
+<script src="scripts/views/viewbiddingdetailsseller.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+
+</body>
+</html>
