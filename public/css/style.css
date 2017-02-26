@@ -877,7 +877,7 @@ span.skill-title i {
 .top-search input,
 .apply-coupon input {
 	font-size: 13px;
-	width: 500px;
+	width: 450px;
 	padding: 10px 13px 10px 13px;
 	float: left;
 }
@@ -3880,7 +3880,6 @@ a.caption-btn:hover {
 }
 
 .mfp-auto-cursor .mfp-content {
-	top: -30%;
 	cursor: auto;
 }
 
@@ -5420,6 +5419,32 @@ ul.footer-links { margin: 0 0 15px 0; }
 }
 
 .item-selling-btn:hover { background-color: #c0c0c0; }
+
+
+.bidding-accept-btn {
+	font-size: 13px;
+	text-transform: uppercase;
+	font-weight: 700;
+	color: #fff;
+	cursor: pointer;
+	z-index: 5;
+	position: relative;
+	padding: 10px 15px;
+	line-height: 18px;
+	margin-bottom: 5px;
+	height: 40px;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	background-color: #2db2ea;
+	border: none;
+	color: #fff;
+	box-shadow: none;
+}
+
+.bidding-accept-btn:hover { background-color: #c0c0c0; }
 
 /*
 ----------- Price Range User Account Selling ------*/

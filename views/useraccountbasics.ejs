@@ -29,95 +29,7 @@
 <body class="boxed">
 <div id="wrapper">
 
-    <!-- Header
-    ================================================== -->
-    <div class="container">
-
-        <!-- Logo -->
-        <div class="four columns">
-            <div id="logo">
-                <h1><a href="index.html"><img src="images/logo.png" alt="Trizzy"/></a></h1>
-            </div>
-        </div>
-
-
-        <!-- Additional Menu -->
-        <div class="twelve columns">
-            <div id="additional-menu">
-                <ul>
-                    <li><a href="checkout-billing-details.html">English</a></li>
-                    <li><a href="my-account.html">Sinhala</a></li>
-                </ul>
-            </div>
-        </div>
-
-
-        <!-- Shopping Cart -->
-        <div class="twelve columns">
-
-            <div class="cart">
-                <!-- Button -->
-                <div class="icon-box">
-                    <span><i class="fa fa-mail-forward"></i></span>
-                </div>
-            </div>
-
-            <div class="cart">
-                <!-- Button -->
-                <div class="icon-box">
-                    <span><i class="fa fa-folder"></i></span>
-                </div>
-            </div>
-
-            <div class="cart">
-                <!-- Button -->
-                <div class="icon-box">
-                    <span><i class="fa fa-user"></i></span>
-                </div>
-            </div>
-
-            <!-- Search -->
-            <nav class="top-search">
-                <form action="#" method="get">
-                    <button><i class="fa fa-search"></i></button>
-                    <input class="search-field" type="text" placeholder="Search" value="" size="5" maxlength="4"/>
-                </form>
-            </nav>
-
-        </div>
-
-    </div>
-
-
-    <!-- Navigation
-    ================================================== -->
-    <div class="container">
-        <div class="sixteen columns">
-
-            <a href="#menu" class="menu-trigger"><i class="fa fa-bars"></i> Menu</a>
-
-            <nav id="navigation">
-                <ul class="menu" id="responsive">
-
-                    <li><a href="index.html" class="homepage">Home</a></li>
-
-                    <li class="demo-button">
-                        <a href="#">Market News</a>
-                    </li>
-
-                    <li class="demo-button">
-                        <a href="#">Sell Account</a>
-                    </li>
-
-                    <li class="demo-button">
-                        <a href="#">Buy Account</a>
-                    </li>
-
-                </ul>
-            </nav>
-        </div>
-    </div>
-
+    <% include header.ejs %>
 
     <!-- Titlebar
     ================================================== -->
@@ -150,11 +62,12 @@
 
                 <ul id="categories">
 
-                    <li><a href="#" class="active">Basic Account</a></li>
-                    <li><a href="#">Contact Information</a></li>
-                    <li><a href="#">Bank Account</a></li>
-                    <li><a href="#">Business Information</a></li>
-                    <li><a href="#">Notification Preferences</a></li>
+                    <li><a href="/user/basic" class="active">Basic Account</a></li>
+                    <li><a href="/user/contact">Contact Information</a></li>
+                    <li><a href="/user/payment">Payment Information</a></li>
+                    <li><a href="/user/business">Business Information</a></li>
+                    <li><a href="/user/notification">Notification Preferences</a></li>
+                    <li><a href="/items/search">Sell</a></li>
 
                 </ul>
                 <div class="clearfix"></div>

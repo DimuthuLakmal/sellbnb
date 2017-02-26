@@ -43,11 +43,15 @@ function verifyCredentials(username, password, done) {
                     //password: bcrypt.compareSync(password, hash),
                 }
             }).then(function (User) {
+                console.log(User);
                 if (!_.isUndefined(User[0])) {
                     if (bcrypt.compareSync(password, User[0].dataValues.password)) {    //checking password
                         var user = User[0].dataValues;
                         done(null, {id: user.id});
                         console.log("login success!");
+                    } else {
+                        //set error message to flash
+                        done(null, false, {message: 'Invalid Username or Password!'});
                     }
                 } else {
                     //set error message to flash
@@ -60,7 +64,15 @@ function verifyCredentials(username, password, done) {
 
 /* GET users listing. */
 router.get('/login', function (req, res, next) {
-    res.render('login', {message: req.flash("error")});
+
+    //this will be needed to populate commodity names in top menu
+    var commodityNames = req.session.commodityNames
+    //check whether commodityNames session is set
+    if (commodityNames === null || commodityNames === undefined) {
+        res.redirect('/api/commodity/names');
+    }
+
+    res.render('login', {message: req.flash("error"), commodityNames: commodityNames});
 });
 
 router.get('/signup', function (req, res, next) {
@@ -222,27 +234,18 @@ router.get('/view/warehouses/userId/:userId', function (req, res) {
 
 /* Get Warehouses for bidding page*/
 router.get('/bidding/warehouses/userId/:userId/itemId/:itemId', function (req, res) {
-    //retrieve data from req object
-    var userId = req.params.userId;
     var itemId = req.params.itemId;
-    //get warehouses details of user
-    sequelize.sync().then(
-        function () {
-            var User = models.User;
-            var WareHouse = models.WareHouse;
-            User.findAll({
-                where: {id: userId},
-                include: [WareHouse],
-            }).then(function (User) {
-                var user = User[0].dataValues;
-                req.session.bidwarehouses = user.WareHouses;
-                res.redirect('/items/id/'+itemId);
-            });
-        }
-    ).catch(function (error) {
-        console.log(error);
-    });
+    getWareHouses(req, res, '/items/id/'+itemId )
 });
+
+/* Get Warehouses for viewbiddingdetailsseller page*/
+router.get('/sell/warehouses/userId/:userId/itemId/:itemId', function (req, res) {
+    var itemId = req.params.itemId;
+    console.log(itemId);
+    getWareHouses(req, res, '/user/sell/bids/start/0?itemId='+itemId );
+});
+
+
 
 router.post('/adduser', function (req, res) {
     if (typeof(req.body.username) != "undefined" && typeof req.body.password != "undefined") {
@@ -282,5 +285,29 @@ router.get('/delall', function () {
         res.send("ok");
     });
 });
+
+function getWareHouses(req, res, url) {
+    /* Get Warehouses for bidding page*/
+        //retrieve data from req object
+        var userId = req.params.userId;
+        var itemId = req.params.itemId;
+        //get warehouses details of user
+        sequelize.sync().then(
+            function () {
+                var User = models.User;
+                var WareHouse = models.WareHouse;
+                User.findAll({
+                    where: {id: userId},
+                    include: [WareHouse],
+                }).then(function (User) {
+                    var user = User[0].dataValues;
+                    req.session.bidwarehouses = user.WareHouses;
+                    res.redirect(url);
+                });
+            }
+        ).catch(function (error) {
+            console.log(error);
+        });
+}
 
 module.exports = router;
