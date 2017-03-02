@@ -144,8 +144,6 @@ router.post('/update/status', function (req, res) {
 /* Update bid status */
 /* Usage: buyercontract page to mutual cancellation the bid */
 router.post('/updatecontract/status', function (req, res) {
-    console.log(req.body.bidId);
-    console.log(req.body.status);
     updateStatus(req, res, 'http://localhost:3000/user/buy/contract/id/'+req.body.itemId);
 });
 
@@ -302,6 +300,28 @@ router.get('/contract/userId/:userId/itemId/:itemId', function (req, res) {
     );
 });
 
+/* Retrieve specific bid from database */
+/* Usage: View Contract Details Seller/Buyer Page */
+router.get('/sellcontract/bidId/:bidId', function (req, res) {
+    var bidId = req.params.bidId;
+
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var Bidding = models.Bidding;
+            var User = models.User;
+            Bidding.findAll({
+                where: {id: bidId},
+                include: [User],
+            }).then(function (Biddings) {
+                req.session.sellContractBid = Biddings[0];
+                req.session.contractDate = moment(Biddings[0].updatedAt).format('YYYY-MM-DD HH:mm:ss');
+                res.redirect('/api/items/sellcontract/id/'+Biddings[0].ItemId+'/bidId/'+bidId);
+            });
+        }
+    );
+});
+
 //update the status of bids
 function updateStatus(req, res, redirectRoute) {
     var bidId = req.body.bidId;
@@ -314,7 +334,12 @@ function updateStatus(req, res, redirectRoute) {
                 { status: status },
                 { where: { id: bidId } }
             ).then(function (results) {
-                res.redirect(redirectRoute);
+                if(_.includes(status, 'mutual')) {
+                    res.redirect('/api/notification/add/mutual/type/mutual-cancellation-buyer/itemName/'+
+                        req.body.itemName+'/itemId/'+req.body.itemId+'/userId/'+req.body.userId);
+                } else {
+                    res.redirect(redirectRoute);
+                }
             });
         }
     );

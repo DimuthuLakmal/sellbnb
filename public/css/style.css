@@ -1009,7 +1009,7 @@ span.skill-title i {
 
 /* Cart
 ------------------------------------- */
-.cart {
+.dropdown-notification {
 	float: right;
 	display: block;
 	margin: 0 0 0 5px;
@@ -1017,7 +1017,7 @@ span.skill-title i {
 	z-index: 100;
 }
 
-. a { color: #fff; }
+.dropdown-notification a { color: #fff; }
 
 
 .cart-list {
@@ -1067,31 +1067,31 @@ span.skill-title i {
 
 
 /* Cart List */
-.cart ul { padding: 16px; }
+.dropdown-notification ul { padding: 16px; }
 
-.cart ul li {
+.dropdown-notification ul li {
 	border-bottom: 1px solid #e5e5e5;
 	padding: 13px 0;
 	display: block;
 }
 
-.cart ul li:last-child {
+.dropdown-notification ul li:last-child {
 	border-bottom: none;
 	padding: 13px 0 0 0;
 }
 
-.cart ul li:first-child {
+.dropdown-notification ul li:first-child {
 	padding: 0 0 13px 0;
 }
 
-.cart ul li a {
+.dropdown-notification ul li a {
 	display: block;
 	color: #666;
 	font-size: 14px;
 	font-weight: 600;
 }
 
-.cart ul li span {
+.dropdown-notification ul li span {
 	display: block;
 	float: none;
 	padding: 0;
@@ -1100,7 +1100,7 @@ span.skill-title i {
 	line-height: 18px;
 }
 
-.cart ul li a img {
+.dropdown-notification ul li a img {
 	display: inline-block;
 	float: left;
 	padding: 0;
@@ -7573,7 +7573,7 @@ html[xmlns] .slides {display: block;}
 
 	#additional-menu { display: none; }
 
-	.cart { float: left; }
+	.dropdown-notification { float: left; }
 
 	.top-search { float: right; }
 
@@ -7581,7 +7581,7 @@ html[xmlns] .slides {display: block;}
 
 	.commodity-search { float: right; }
 
-	.cart,
+	.dropdown-notification,
 	.top-search { margin: 35px 0 0 0; }
 
 	.cart-list { left:0; }

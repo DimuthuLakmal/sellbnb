@@ -680,6 +680,17 @@ function retrieveItems(req, res, keyword) {
 /* Retrieve specific item from database */
 /* Usage: View Contract Details Seller/Buyer Page */
 router.get('/contract/id/:id', function (req, res) {
+    getItemForContract(req, res, '/user/buy/contract/id/'+req.params.id);
+});
+
+
+/* Retrieve specific item from database */
+/* Usage: View Contract Details Seller Page */
+router.get('/sellcontract/id/:id/bidId/:bidId', function (req, res) {
+    getItemForContract(req, res, '/user/sell/contract/bidId/'+req.params.bidId);
+});
+
+function getItemForContract(req, res, redirection) {
     var itemId = req.params.id;
 
     //retrieve data from req object
@@ -695,10 +706,10 @@ router.get('/contract/id/:id', function (req, res) {
                 include: [User, ItemImage, Commodity, WareHouse],
             }).then(function (Items) {
                 req.session.buyContractItem = Items[0];
-                res.redirect('/user/buy/contract/id/'+itemId);
+                res.redirect(redirection);
             });
         }
     );
-});
+}
 
 module.exports = router;

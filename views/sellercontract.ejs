@@ -329,7 +329,8 @@
 
             <div class="info-banner" align="center">
                 <div class="info-content">
-                    <h2>Contract Details - <strong>Dammika Prasad, Kegalle</strong></h2>
+                    <h2>Contract Details - <strong><%= sellContractItem.User.full_name %>,
+                            <%= sellContractItem.User.company_name%></strong></h2>
                 </div>
             </div>
 
@@ -337,18 +338,7 @@
                 <table class="basic-table" style="">
 
                     <tbody>
-                    <tr>
-                        <td> Contract ID</td>
-                        <td> 222225155</td>
-                    </tr>
-                    <tr>
-                        <td> Contract Date</td>
-                        <td> 2016-04-05 1400h</td>
-                    </tr>
-                    <tr>
-                        <td> Status</td>
-                        <td> Active</td>
-                    </tr>
+
 
                     </tbody>
                 </table>
@@ -359,24 +349,32 @@
 
                     <tbody>
                     <tr>
+                        <td> Contract ID</td>
+                        <td> 222225155</td>
+                    </tr>
+                    <tr>
+                        <td> Contract Date</td>
+                        <td> <%= contractDate %></td>
+                    </tr>
+                    <tr>
+                        <td> Status</td>
+                        <td> <%= sellContractBid.status %></td>
+                    </tr>
+                    <tr>
                         <td> Commodity Name</td>
-                        <td> Ceylon Cinnamon Powder Grade 01 - Sri Lanka</td>
+                        <td> <%= sellContractItem.Commodity.name %></td>
                     </tr>
                     <tr>
                         <td> Packing Type</td>
-                        <td> Loose Bale</td>
+                        <td> <%= sellContractBid.packageType %></td>
                     </tr>
                     <tr>
                         <td> Agreed Quantity</td>
-                        <td> 4,500 KG</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
+                        <td> <%= sellContractBid.quantity %></td>
                     </tr>
                     <tr>
                         <td>Delivery By</td>
-                        <td> Seller</td>
+                        <td> <%= sellContractBid.deliveryBy %></td>
                     </tr>
                     <tr>
                         <td>Delivery Date</td>
@@ -384,15 +382,11 @@
                     </tr>
                     <tr>
                         <td>Buyer Address</td>
-                        <td> 401, Richmond hill, Galle Sri Lanka</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
+                        <td> <%= sellContractBid.deliveryBy %></td>
                     </tr>
                     <tr>
                         <td> Payment Terms</td>
-                        <td>COD</td>
+                        <td><%= sellContractBid.paymentTerms %></td>
                     </tr>
                     <tr>
                         <td> Delivery Cost</td>
@@ -400,7 +394,7 @@
                     </tr>
                     <tr>
                         <td> Agreed Price</td>
-                        <td> LKR 45 per KG</td>
+                        <td> <%= sellContractBid.bid %></td>
                     </tr>
                     <tr>
                         <td>Grand Total</td>
@@ -408,18 +402,36 @@
                     </tr>
                     <tr>
                         <td>Seller Note</td>
-                        <td>Dirt content is bit higher than the usual</td>
+                        <td><%= sellContractItem.note %></td>
                     </tr>
                     <tr>
                         <td>Buyer Note</td>
-                        <td>Packaged in Aluminum Foil bag and request for USDA Organic Certificate. Also, please call
-                            before come
+                        <td><%= sellContractBid.note %>
                         </td>
                     </tr>
 
-
                     </tbody>
                 </table>
+                <a class="popup-with-zoom-anim" href="#fullname-edit-dialog" id="action-modal"
+                   style="color:#2db2ea; display: none">Action Modal</a><br/>
+                <div id="fullname-edit-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
+                    <h2 class="margin-bottom-10" id="action-heading">Mutual Cancellation Request</h2>
+                    <form method="POST" name="editform" action="http://localhost:3000/api/bid/updatecontract/status">
+                        <p id="action-description">Are you sure to request to cancel the contract?</p>
+                        <fieldset>
+                            <div class="twelve columns editform">
+                                <input type="hidden" name="status" value="mutual-cancellation-buyer" />
+                                <input type="hidden" name="userId" value="<%= sellContractItem.User.id %>" />
+                                <input type="hidden" name="itemName" value="<%= sellContractItem.title %>" />
+                                <input type="hidden" name="itemId" value="<%= sellContractItem.id %>" />
+                                <input type="hidden" name="bidId" value="<%= sellContractBid.id %>" />
+                                <input type="submit" class="submit" value="Yes"/>
+                            </div>
+                        </fieldset>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+                <button id="mutual_cancellation_btn" style="width: 100%" class="item-selling-btn">Mutual Cancelation Request</button>
             </div>
         </div>
     </div>
@@ -547,6 +559,7 @@
 <script src="scripts/puregrid.js"></script>
 <script src="scripts/stacktable.js"></script>
 <script src="scripts/custom.js"></script>
+<script src="scripts/views/buyercontract.js"></script>
 
 </body>
 </html>

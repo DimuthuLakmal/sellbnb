@@ -40,7 +40,7 @@
 		// Cart
 		//----------------------------------------//
 
-		$("#cart").hoverIntent({
+		$(".dropdown-notification").hoverIntent({
 			sensitivity: 3,
 			interval: 60,
 			over: function () {

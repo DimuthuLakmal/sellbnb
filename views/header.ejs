@@ -28,21 +28,49 @@
             <input class="newsletter-btn" type="submit" value="Sell" style="margin-left: 5px"/>
         </form>
 
-        <div class="cart">
+        <div class="cart dropdown-notification">
+
             <!-- Button -->
             <div class="icon-box">
                 <span><a href="#"><i class="fa fa-mail-forward"></i></a></span>
             </div>
+
+            <% if(notifications != undefined) { %>
+                <div class="cart-list">
+
+                    <div class="arrow"></div>
+
+                    <div class="cart-amount">
+                        <span>You have <%= notifications.length %> notifications</span>
+                    </div>
+
+                    <ul>
+                        <% for (var notificationIndex = 0; notificationIndex < notifications.length; notificationIndex++) {
+                            var notification = notifications[notificationIndex];
+                        %>
+                            <li>
+                                <a href="/api/notification/update/id/<%= notification.id %>"><%= notification.description %></a>
+                                <div class="clearfix"></div>
+                            </li>
+                        <% } %>
+                    </ul>
+
+                    <div class="clearfix">
+
+                    </div>
+                </div>
+            <% } %>
+
         </div>
 
-        <div class="cart">
+        <div class="cart  dropdown-notification">
             <!-- Button -->
             <div class="icon-box">
                 <span><i class="fa fa-folder"></i></span>
             </div>
         </div>
 
-        <div class="cart">
+        <div class="cart  dropdown-notification">
             <!-- Button -->
             <div class="icon-box">
                 <span><a href="/user/basic"><i class="fa fa-user"></i></a></span>
@@ -87,7 +115,7 @@
                 </li>
 
                 <li class="demo-button">
-                    <a href="#">Buy Account</a>
+                    <a href="/user/buy/list/start/0">Buy Account</a>
                 </li>
 
                 <li class="dropdown">

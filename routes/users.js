@@ -72,7 +72,17 @@ router.get('/login', function (req, res, next) {
         res.redirect('/api/commodity/names');
     }
 
-    res.render('login', {message: req.flash("error"), commodityNames: commodityNames});
+    //populate notification
+    var notifications = req.session.notifications;
+    //check whether notification session is set.
+    if(req.isAuthenticated()) {
+        if (notifications === null || notifications === undefined) {
+            res.redirect('/api/notification/userId/'+req.user.id);
+        }
+    }
+
+    res.render('login', {message: req.flash("error"), commodityNames: commodityNames,
+        notifications: notifications});
 });
 
 router.get('/signup', function (req, res, next) {

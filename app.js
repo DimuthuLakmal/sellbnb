@@ -6,8 +6,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-var passportLocal = require('passport-local');
-var passportHttp = require('passport-http');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -17,6 +15,7 @@ var commodity = require('./routes/commodity');
 var items = require('./routes/items');
 var signup = require('./routes/signup');
 var bid = require('./routes/bid');
+var notification = require('./routes/notification');
 
 var app = express();
 
@@ -80,6 +79,7 @@ app.use('/user/sell/list/start', express.static(path.join(__dirname, 'public')))
 app.use('/user/sell/bids/start', express.static(path.join(__dirname, 'public')));
 app.use('/user/buy/list/start', express.static(path.join(__dirname, 'public')));
 app.use('/user/buy/contract/id/', express.static(path.join(__dirname, 'public')));
+app.use('/user/sell/contract/bidId/', express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/user', users);
@@ -87,6 +87,7 @@ app.use('/api/user', users);
 app.use('/api/commodity', commodity);
 app.use('/api/items', items);
 app.use('/api/bid', bid);
+app.use('/api/notification', notification);
 // app.use('/logout', function (req, res) {
 //   req.logout();
 //   res.redirect('/');

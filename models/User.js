@@ -22,6 +22,7 @@ module.exports = function (sequelize, DataTypes) {
                 User.hasMany(models.TradingCommodity);
                 User.hasMany(models.BusinessCertificate);
                 User.hasMany(models.PaymentInformation);
+                User.hasMany(models.Notification);
             }
         }
     });

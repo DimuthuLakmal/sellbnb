@@ -421,6 +421,8 @@
                         <fieldset>
                             <div class="twelve columns editform">
                                 <input type="hidden" name="status" value="mutual-cancellation-buyer" />
+                                <input type="hidden" name="userId" value="<%= buyContractItem.User.id %>" />
+                                <input type="hidden" name="itemName" value="<%= buyContractItem.title %>" />
                                 <input type="hidden" name="itemId" value="<%= buyContractItem.id %>" />
                                 <input type="hidden" name="bidId" value="<%= buyContractBid.id %>" />
                                 <input type="submit" class="submit" value="Yes"/>
@@ -429,7 +431,7 @@
                         <div class="clearfix"></div>
                     </form>
                 </div>
-                <button id="mutual_cancellation_btn" class="item-selling-btn">Mutual Cancelation Request</button>
+                <button id="mutual_cancellation_btn" style="width: 100%" class="item-selling-btn">Mutual Cancelation Request</button>
             </div>
         </div>
     </div>
