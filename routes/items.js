@@ -677,4 +677,28 @@ function retrieveItems(req, res, keyword) {
     );
 }
 
+/* Retrieve specific item from database */
+/* Usage: View Contract Details Seller/Buyer Page */
+router.get('/contract/id/:id', function (req, res) {
+    var itemId = req.params.id;
+
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var Item = models.Item;
+            var User = models.User;
+            var ItemImage = models.ItemImage;
+            var Commodity = models.Commodity;
+            var WareHouse = models.WareHouse;
+            Item.findAll({
+                where: {id: itemId},
+                include: [User, ItemImage, Commodity, WareHouse],
+            }).then(function (Items) {
+                req.session.buyContractItem = Items[0];
+                res.redirect('/user/buy/contract/id/'+itemId);
+            });
+        }
+    );
+});
+
 module.exports = router;

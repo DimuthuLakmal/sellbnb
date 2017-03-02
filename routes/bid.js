@@ -8,6 +8,7 @@ var models = require('./../models');
 var sequelize = models.sequelize;
 var fs = require('fs');
 var moment = require('moment');
+var async = require('async');
 
 //store bidding details in database
 /* Usage: Bidding Page */
@@ -136,7 +137,173 @@ router.get('/start/:start/itemId/:itemId', function (req, res) {
 /* Update bid status */
 /* Usage: View Bidding Details Page in Seller. */
 router.post('/update/status', function (req, res) {
+    updateStatus(req, res, 'http://localhost:3000/user/sell/bids/start/0?itemId='+req.body.itemId);
+});
+
+
+/* Update bid status */
+/* Usage: buyercontract page to mutual cancellation the bid */
+router.post('/updatecontract/status', function (req, res) {
+    console.log(req.body.bidId);
+    console.log(req.body.status);
+    updateStatus(req, res, 'http://localhost:3000/user/buy/contract/id/'+req.body.itemId);
+});
+
+
+/* Retrieve bids by a specific user */
+/* Usage: User Account Buying Page */
+router.get('/start/:start/userId/:userId', function (req, res) {
     //retrieve data from req object
+    var userId = req.params.userId;
+    var start = req.params.start;
+    var buyingpageItemOption = req.query['buyingpageItemOption']? req.query['buyingpageItemOption'] : req.session.buyingpageItemOption;
+
+    //define where object of sequelize object according to filtering parameters selected in User Account Selling page
+    var whereObject = {};
+
+    if(buyingpageItemOption == 'All') {
+        whereObject = {
+            UserId: userId
+        };
+        req.session.buyingpageItemOption = 'All'
+    } else if(buyingpageItemOption == 'Pending') {
+        whereObject = {
+            UserId: userId,
+            '$Item.duration$': {gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))}
+        };
+        req.session.buyingpageItemOption = 'Pending';
+    } else if(buyingpageItemOption == 'Canceled') {
+        whereObject["duration"] =
+        {lt: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))}
+        req.session.buyingpageItemOption = 'Canceled';
+    } else {
+        whereObject = {
+            UserId: userId
+        };
+        req.session.buyingpageItemOption = 'All';
+    }
+
+    sequelize.sync().then(
+        function () {
+            var Item = models.Item;
+            var ItemImage = models.ItemImage;
+            var Bidding = models.Bidding;
+            var User = models.User;
+            Bidding.findAndCountAll({
+                where: whereObject,
+                offset: parseInt(start),
+                limit: 10,
+                include: [Item],
+                order: '`createdAt` DESC'
+            }).then(function (Biddings) {
+                //calculate remaining times for bidding items & bidding details of each item
+                var currentTime = new Date().getTime() / 1000;
+                var remainingTimes = [];
+                var itemImages = [];
+                var lastBid = [];
+
+                async.forEach(Biddings.rows, function(bidding, callback1) {
+                    //calculate remaining time
+                    var item = bidding.Item;
+                    var difference = ((item.createdAt.getTime() / 1000) + item.duration) - currentTime;
+                    if(difference < 0) {
+                        difference = 0;
+                    }
+
+                    //calculate bidding close time
+                    var closedTimeinSec = ((item.createdAt.getTime() / 1000) + item.duration)*1000;
+                    var closedTime = moment(closedTimeinSec).format('YYYY-MM-DD HH:mm:ss');
+
+                    var formatedTimeCreated = moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss');
+                    remainingTimes.push([difference, formatedTimeCreated, closedTime]);
+
+                    //retrieve item images.
+                    var itemId = bidding.Item.id;
+                    ItemImage.findAll({
+                        where: {
+                            ItemId: itemId,
+                        },
+                    }).then(function (images) {
+                        itemImages.push(images[0]);
+                        callback1(null);
+                    });
+                }, function (err) {
+
+                    async.forEach(Biddings.rows, function(bidding, callback2) {
+                        //calculate remaining time
+                        var itemId = bidding.Item.id;
+                        Bidding.findAll({
+                            where: {
+                                ItemId: itemId,
+                            },
+                            order: '`bid` DESC',
+                            limit: 1,
+                        }).then(function (biddings) {
+                            lastBid.push(biddings[0]);
+                            callback2(null);
+                        });
+                    }, function (err) {
+                        //pushing retrieved data to commodity array
+                        req.session.buyingList = [Biddings,itemImages,lastBid];
+                        req.session.itemsBuyingAccountCount = Biddings.count;
+                        req.session.itemsBuyingAccountOffset = parseInt(req.params.start);
+                        req.session.searchResultRemainingTimeBuying = remainingTimes;
+                        res.redirect('/user/buy/list/start/'+start);
+                    });
+                });
+
+
+            });
+        }
+    );
+});
+
+
+/* Update bid value */
+/* Usage: useraccountbuying page. */
+router.post('/update/bid', function (req, res) {
+    //retrieve data from req object
+    var id = req.body.id;
+    var bid = req.body.newbid;
+
+    sequelize.sync().then(
+        function () {
+            var Bidding = models.Bidding;
+            Bidding.update(
+                { bid: bid },
+                { where: { id: id } }
+            ).then(function (results) {
+                res.redirect('http://localhost:3000/user/buy/list/start/0');
+            });
+        }
+    );
+});
+
+/* Retrieve specific bid from database */
+/* Usage: View Contract Details Seller/Buyer Page */
+router.get('/contract/userId/:userId/itemId/:itemId', function (req, res) {
+    var userId = req.params.userId;
+    var itemId = req.params.itemId;
+
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var Bidding = models.Bidding;
+            var User = models.User;
+            Bidding.findAll({
+                where: {ItemId: itemId, UserId: userId},
+                include: [User],
+            }).then(function (Biddings) {
+                req.session.buyContractBid = Biddings[0];
+                req.session.contractDate = moment(Biddings[0].updatedAt).format('YYYY-MM-DD HH:mm:ss');
+                res.redirect('/user/buy/contract/id/'+itemId);
+            });
+        }
+    );
+});
+
+//update the status of bids
+function updateStatus(req, res, redirectRoute) {
     var bidId = req.body.bidId;
     var status = req.body.status;
 
@@ -147,11 +314,10 @@ router.post('/update/status', function (req, res) {
                 { status: status },
                 { where: { id: bidId } }
             ).then(function (results) {
-                res.redirect('http://localhost:3000/user/sell/bids/start/0?itemId='+req.body.itemId);
+                res.redirect(redirectRoute);
             });
         }
     );
-});
-
+}
 
 module.exports = router;

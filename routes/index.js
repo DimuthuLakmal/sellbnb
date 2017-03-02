@@ -37,24 +37,6 @@ router.get('/', function(req, res) {
     commodityPopular: commodityPopular,
   });
 
-  // if(req.isAuthenticated()) {
-  //   delete req.session.returnTo;
-  //   delete req.session.commodityPopular;
-  //   delete req.session.latestItems;
-  //   delete req.session.latestItems;
-  //   res.render('index', {
-  //     isAuthenticated : req.isAuthenticated(),
-  //     user: req.user,
-  //     commodityNames: commodityNames,
-  //     latestItems: latestItems,
-  //     commodityPopular: commodityPopular,
-  //   });
-  // } else {
-  //   //set visited path to session. It uses to rediect to again to that page when login success.
-  //   req.session.returnTo = req.path;
-  //   console.log(req.session.returnTo);
-  //   res.redirect('/user/login');
-  // }
 });
 
 
@@ -439,19 +421,6 @@ router.get('/items', function(req, res) {
     commodityNames: commodityNames,
   });
 
-  // if(req.isAuthenticated()) {
-  //   delete req.session.returnTo;
-  //   res.render('searchresults', {
-  //     isAuthenticated : req.isAuthenticated(),
-  //     user: req.user,
-  //     items: searchResult,
-  //   });
-  // } else {
-  //   //set visited path to session. It uses to rediect to again to that page when login success.
-  //   req.session.returnTo = req.path;
-  //   console.log(req.session.returnTo);
-  //   res.redirect('/user/login');
-  // }
 });
 
 /* GET view search commodity page for item add*/
@@ -486,9 +455,6 @@ router.get('/items/add/commoditydetails', function(req, res) {
       res.redirect('/user/login');
     }
 
-  // res.render('commoditydetailsadd', {Commodity: commodity, CommodityAlterNames: commodity.CommodityAlterNames,
-  //     CommodityImages: commodity.CommodityImages, CommodityParameters: commodity.CommodityParameters,
-  //     commodityNames: commodityNames});
 });
 
 /* GET view item add page*/
@@ -567,15 +533,6 @@ router.get('/items/id/:id', function(req, res) {
     req.session.lastBid = null;
     req.session.lastUserBid = null;
     req.session.specificBiddingItem = null;
-      // res.render('bidpage', {
-      //   item: item,
-      //   userWareHouses: bidwarehouses,
-      //   itemComments: item.itemComments,
-      //   user: user,
-      //   lastBid: lastBid[0],
-      //   lastUserBid: lastUserBid[0],
-      //   commodityNames: commodityNames,
-      // });
 
     delete req.session.returnTo;
     res.render('bidpage', {
@@ -599,17 +556,6 @@ router.get('/items/id/:id', function(req, res) {
 //view selling details of user
 router.get('/user/sell/list/start/:start', function(req, res) {
     removeSessionParameters(req);
-    // res.render('useraccountselling', {
-    //     user: user,
-    //     sellingList: sellingList[0],
-    //     biddingDetailList: sellingList[1],
-    //     remainingTimes: remainingTimes,
-    //     currentPageNumber: currentPageNumber,
-    //     maxPageCount: maxPageCount,
-    //     pageMultipationFactor: pageMultipationFactor,
-    //     filterParamer: filterParamer,
-    //     commodityNames: commodityNames,
-    // });
 
     // check whether use logged or not
     if(req.isAuthenticated()) {
@@ -665,22 +611,73 @@ router.get('/user/sell/list/start/:start', function(req, res) {
 });
 
 
+//view bidding details of user
+router.get('/user/buy/list/start/:start', function(req, res) {
+  removeSessionParameters(req);
+
+  var user = {id: 1};
+
+  // check whether use logged or not
+  //if(req.isAuthenticated()) {
+    //var user = req.user;
+    var buyingList = req.session.buyingList;
+    var remainingTimes = req.session.searchResultRemainingTimeBuying;
+    var filterParamer = req.session.buyingpageItemOption;
+
+    console.log(filterParamer);
+
+    //check whether biddinglist session is set
+    if (buyingList === null || buyingList === undefined) {
+      res.redirect('/api/bid/start/'+req.params.start+'/userId/'+user.id);
+    }
+    console.log(buyingList[2]);
+    //this will be needed to populate commodity names in top menu
+    var commodityNames = req.session.commodityNames
+    //check whether commodityNames session is set
+    if (commodityNames === null || commodityNames === undefined) {
+      res.redirect('/api/commodity/names');
+    }
+
+    var biddingsOffset = req.session.itemsBuyingAccountOffset;
+    var biddingsCount = req.session.itemsBuyingAccountCount;
+    var currentPageNumber = (parseInt(biddingsOffset)/10)+1;
+    var maxPageCount = Math.floor(biddingsCount/10);
+    //Note: check whether equation is correct. previous one is maxPageCount % 10 !== 0
+    if(biddingsCount % 10 !== 0) {
+      maxPageCount++;
+    }
+    var pageMultipationFactor = Math.floor((parseInt(biddingsOffset)/30));
+
+    req.session.buyingList = null;
+    delete req.session.itemsBuyingAccountOffset;
+    delete req.session.itemsBuyingAccountCount;
+    delete req.session.returnTo;
+    res.render('useraccountbuying', {
+      //isAuthenticated : req.isAuthenticated(),
+      user: user,
+      buyingList: buyingList[0],
+      itemImages: buyingList[1],
+      lastBid: buyingList[2],
+      remainingTimes: remainingTimes,
+      currentPageNumber: currentPageNumber,
+      maxPageCount: maxPageCount,
+      pageMultipationFactor: pageMultipationFactor,
+      filterParamer: filterParamer,
+      commodityNames: commodityNames,
+    });
+  // } else {
+  //   //set visited path to session. It uses to rediect to again to that page when login success.
+  //   req.session.returnTo = req.path;
+  //   console.log(req.session.returnTo);
+  //   res.redirect('/user/login');
+  // }
+});
+
+
 //view biddings for particular item
 router.get('/user/sell/bids/start/:start', function(req, res) {
     removeSessionParameters(req);
     removeSessionParameterSellingPage(req);
-    // res.render('viewbiddingdetailsseller', {
-    //     item: specificBiddingItemSell,
-    //     itemId: itemId,
-    //     user: user,
-    //     biddingList: biddingList,
-    //     bidsCreatedAt: bidsCreatedAt,
-    //     currentPageNumber: currentPageNumber,
-    //     maxPageCount: maxPageCount,
-    //     pageMultipationFactor: pageMultipationFactor,
-    //     userWareHousesSell: userwarehousesSell,
-    //     commodityNames: commodityNames,
-    // });
 
     //check whether use logged or not
     if(req.isAuthenticated()) {
@@ -749,6 +746,55 @@ router.get('/user/sell/bids/start/:start', function(req, res) {
       console.log(req.session.returnTo);
       res.redirect('/user/login');
     }
+});
+
+//view buyer contract
+router.get('/user/buy/contract/id/:id', function(req, res) {
+  removeSessionParameters(req);
+
+  // check whether use logged or not
+  //if(req.isAuthenticated()) {
+    var user = {id: 1};
+    var itemId = req.params.id;
+    var buyContractItem = req.session.buyContractItem;
+    var buyContractBid = req.session.buyContractBid;
+    var contractDate = req.session.contractDate;
+
+    //check whether contractedItem session is set
+    if (buyContractItem === null || buyContractItem === undefined) {
+      res.redirect('/api/items/contract/id/'+itemId);
+    }
+
+    //check whether contractBid session is set
+    if (buyContractBid === null || buyContractBid === undefined) {
+      res.redirect('/api/bid/contract/userId/'+user.id+'/itemId/'+itemId);
+    }
+
+    //this will be needed to populate commodity names in top menu
+    var commodityNames = req.session.commodityNames
+    //check whether commodityNames session is set
+    if (commodityNames === null || commodityNames === undefined) {
+      res.redirect('/api/commodity/names');
+    }
+
+    req.session.buyContractItem = null;
+    req.session.buyContractBid = null;
+    req.session.contractDate = null;
+    delete req.session.returnTo;
+    res.render('buyercontract', {
+      isAuthenticated : req.isAuthenticated(),
+      user: user,
+      buyContractItem: buyContractItem,
+      buyContractBid: buyContractBid,
+      commodityNames: commodityNames,
+      contractDate: contractDate,
+    });
+  // } else {
+  //   //set visited path to session. It uses to rediect to again to that page when login success.
+  //   req.session.returnTo = req.path;
+  //   console.log(req.session.returnTo);
+  //   res.redirect('/user/login');
+  // }
 });
 
 //to remove unnecessary session parameters
