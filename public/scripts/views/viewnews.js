@@ -3,7 +3,7 @@ $(document).ready(function () {
     jQuery.ajax({
         type: "GET",
         dataType: 'jsonp',
-        url: "http://sellerbnb.herokuapp.com/api/news/viewpopular",
+        url: "http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/api/news/viewpopular",
         success: function (obj, textstatus) {
             //populating news by creating dynamic <li>'s
             $.each(obj, function (index, news) {
@@ -17,10 +17,10 @@ $(document).ready(function () {
                 }
                 $('#popular_news').append('<li>' +
                     '<div class="widget-thumb">' +
-                    '<a href="http://sellerbnb.herokuapp.com/news/id/'+news.id+'"><img src=\"'+imgSrc+'\" alt="" width="90"  height="90"/></a>' +
+                    '<a href="http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/news/id/'+news.id+'"><img src=\"'+imgSrc+'\" alt="" width="90"  height="90"/></a>' +
                     '</div>' +
                     '<div class="widget-text">' +
-                    '<h4><a href="http://sellerbnb.herokuapp.com/news/id/'+news.id+'">'+news.title+'</a></h4>' +
+                    '<h4><a href="http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/news/id/'+news.id+'">'+news.title+'</a></h4>' +
                     '<span>'+news.date+' '+news.month+' '+news.year+'</span>' +
                     '</div>' +
                     '<div class="clearfix"></div>' +
@@ -33,7 +33,7 @@ $(document).ready(function () {
     jQuery.ajax({
         type: "GET",
         dataType: 'jsonp',
-        url: "http://sellerbnb.herokuapp.com/api/news/viewrecent",
+        url: "http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/api/news/viewrecent",
         success: function (obj, textstatus) {
             //populating news by creating dynamic <li>'s
             $.each(obj, function (index, news) {
@@ -47,10 +47,10 @@ $(document).ready(function () {
                 }
                 $('#recent_news').append('<li>' +
                     '<div class="widget-thumb">' +
-                    '<a href="http://sellerbnb.herokuapp.com/news/id/'+news.id+'"><img src=\"'+imgSrc+'\" alt="" width="90"  height="90"/></a>' +
+                    '<a href="http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/news/id/'+news.id+'"><img src=\"'+imgSrc+'\" alt="" width="90"  height="90"/></a>' +
                     '</div>' +
                     '<div class="widget-text">' +
-                    '<h4><a href="http://sellerbnb.herokuapp.com/news/id/'+news.id+'">'+news.title+'</a></h4>' +
+                    '<h4><a href="http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/news/id/'+news.id+'">'+news.title+'</a></h4>' +
                     '<span>'+news.date+' '+news.month+' '+news.year+'</span>' +
                     '</div>' +
                     '<div class="clearfix"></div>' +
