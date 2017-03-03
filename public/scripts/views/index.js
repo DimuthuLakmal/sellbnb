@@ -8,7 +8,7 @@ $('#top_search').keyup(function () {
     jQuery.ajax({
         type: "POST",
         dataType: 'jsonp',
-        url: "http://localhost:3000/api/items/keyword",
+        url: "http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/api/items/keyword",
         data: {keyword: keyword},
         success: function (obj, textstatus) {
             $('#searchresults').empty();

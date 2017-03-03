@@ -57,7 +57,7 @@ $('#submit').click(function (e) {
     var mins = $('#mins').val();
     var duration = parseInt(days) * 24 * 3600 + parseInt(hours) * 3600 + parseInt(mins) * 60;
 
-    $.ajax({url: "http://localhost:3000/api/items/add",
+    $.ajax({url: "http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/api/items/add",
         type: 'POST',
         data: {title:title, quantity: quantity, deliveryBy: deliveryBy, warehouseId: warehouseId, commodityId: commodityId,
             userId: userId, images: images, duration: duration, packingType: packingType,paymentTerms: paymentTerms,
@@ -73,7 +73,7 @@ $('#submit').click(function (e) {
 // $(document).ready(function () {
 //     var userId = $('#userId').val();
 //
-//     $.ajax({url: "http://localhost:3000/api/user/view/warehouses",
+//     $.ajax({url: "http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/api/user/view/warehouses",
 //         type: 'POST',
 //         data: {userId: userId},
 //         success: function(data, status, xhr) {

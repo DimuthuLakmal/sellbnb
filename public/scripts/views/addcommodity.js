@@ -50,7 +50,7 @@ $('#submit').click(function (e) {
     var specification = $('#specification').val();
     var alternativeNames = $('#alternative_names').val().split(',');
 
-    $.ajax({url: "http://localhost:3000/api/commodity/add",
+    $.ajax({url: "http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/api/commodity/add",
         type: 'POST',
         data: {name: name, segment: segment, family: family, classOfCommodity: classOfCommodity,measureUnit: measureUnit,
             specification: specification, images: images, alternativeNames: alternativeNames, parameters: parameters},

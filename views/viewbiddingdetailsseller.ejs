@@ -297,21 +297,21 @@
                                     %>
                                     <% if(maxPageCount >= pageOne) {%>
                                     <li>
-                                        <a href="http://localhost:3000/user/sell/bids/start/<%= (pageOne-1) * 10 %>?itemId=<%= itemId %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
+                                        <a href="http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/user/sell/bids/start/<%= (pageOne-1) * 10 %>?itemId=<%= itemId %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
                                             <%= pageOne %>
                                         </a>
                                     </li>
                                     <% } %>
                                     <% if(maxPageCount >= pageTwo) {%>
                                     <li>
-                                        <a href="http://localhost:3000/user/sell/bids/start/<%= (pageTwo-1) * 10 %>?itemId=<%= itemId %>" <% if(pageTwo === currentPageNumber) { %>class="current-page"<% } %>>
+                                        <a href="http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/user/sell/bids/start/<%= (pageTwo-1) * 10 %>?itemId=<%= itemId %>" <% if(pageTwo === currentPageNumber) { %>class="current-page"<% } %>>
                                             <%= pageTwo %>
                                         </a>
                                     </li>
                                     <% } %>
                                     <% if(maxPageCount >= pageThree) {%>
                                     <li>
-                                        <a href="http://localhost:3000/user/sell/bids/start/<%= (pageThree-1) * 10 %>?itemId=<%= itemId %>" <% if(pageThree === currentPageNumber) { %>class="current-page"<% } %>>
+                                        <a href="http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/user/sell/bids/start/<%= (pageThree-1) * 10 %>?itemId=<%= itemId %>" <% if(pageThree === currentPageNumber) { %>class="current-page"<% } %>>
                                             <%= pageThree %>
                                         </a>
                                     </li>
@@ -322,10 +322,10 @@
                             <nav class="pagination-next-prev">
                                 <ul>
                                     <% if(0 < pageMultipationFactor) {%>
-                                    <li><a href="http://localhost:3000/user/sell/bids/start/<%= (pageMultipationFactor - 1) * 30 %>?itemId=<%= itemId %>" class="prev"></a></li>
+                                    <li><a href="http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/user/sell/bids/start/<%= (pageMultipationFactor - 1) * 30 %>?itemId=<%= itemId %>" class="prev"></a></li>
                                     <% } %>
                                     <% if(maxPageCount >= (pageMultipationFactor * 10) + 4) {%>
-                                    <li><a href="http://localhost:3000/user/sell/bids/start/<%= (pageMultipationFactor + 1) * 30 %>?itemId=<%= itemId %>" class="next"></a></li>
+                                    <li><a href="http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/user/sell/bids/start/<%= (pageMultipationFactor + 1) * 30 %>?itemId=<%= itemId %>" class="next"></a></li>
                                     <% } %>
                                 </ul>
                             </nav>

@@ -137,20 +137,20 @@ router.get('/start/:start/itemId/:itemId', function (req, res) {
 /* Update bid status */
 /* Usage: View Bidding Details Page in Seller. */
 router.post('/update/status', function (req, res) {
-    updateStatus(req, res, 'http://localhost:3000/user/sell/bids/start/0?itemId='+req.body.itemId);
+    updateStatus(req, res, 'http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/user/sell/bids/start/0?itemId='+req.body.itemId);
 });
 
 
 /* Update bid status */
 /* Usage: buyercontract page to mutual cancellation the bid */
 router.post('/updatecontract/status', function (req, res) {
-    updateStatus(req, res, 'http://localhost:3000/user/buy/contract/id/'+req.body.itemId);
+    updateStatus(req, res, 'http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/user/buy/contract/id/'+req.body.itemId);
 });
 
 /* Update bid status */
 /* Usage: sellercontract page to mutual cancellation the bid */
 router.post('/updatesellcontract/status', function (req, res) {
-    updateStatus(req, res, 'http://localhost:3000/user/sell/contract/bidId/'+req.body.bidId);
+    updateStatus(req, res, 'http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/user/sell/contract/bidId/'+req.body.bidId);
 });
 
 
@@ -277,7 +277,7 @@ router.post('/update/bid', function (req, res) {
                 { bid: bid },
                 { where: { id: id } }
             ).then(function (results) {
-                res.redirect('http://localhost:3000/user/buy/list/start/0');
+                res.redirect('http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/user/buy/list/start/0');
             });
         }
     );
