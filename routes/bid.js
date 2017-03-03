@@ -147,6 +147,12 @@ router.post('/updatecontract/status', function (req, res) {
     updateStatus(req, res, 'http://localhost:3000/user/buy/contract/id/'+req.body.itemId);
 });
 
+/* Update bid status */
+/* Usage: sellercontract page to mutual cancellation the bid */
+router.post('/updatesellcontract/status', function (req, res) {
+    updateStatus(req, res, 'http://localhost:3000/user/sell/contract/bidId/'+req.body.bidId);
+});
+
 
 /* Retrieve bids by a specific user */
 /* Usage: User Account Buying Page */
@@ -334,9 +340,12 @@ function updateStatus(req, res, redirectRoute) {
                 { status: status },
                 { where: { id: bidId } }
             ).then(function (results) {
-                if(_.includes(status, 'mutual')) {
-                    res.redirect('/api/notification/add/mutual/type/mutual-cancellation-buyer/itemName/'+
-                        req.body.itemName+'/itemId/'+req.body.itemId+'/userId/'+req.body.userId);
+                if(req.body.requestFrom == 'Seller') {
+                    res.redirect('/api/notification/add/mutual/type/mutual-cancellation-seller/bidId/'+req.body.bidId+'/itemName/'+
+                        req.body.itemName+'/itemId/'+req.body.itemId+'/userId/'+req.body.userId+'/requestFrom/seller');
+                } else if(req.body.requestFrom == 'Buyer') {
+                    res.redirect('/api/notification/add/mutual/type/mutual-cancellation-buyer/bidId/'+req.body.bidId+'/itemName/'+
+                        req.body.itemName+'/itemId/'+req.body.itemId+'/userId/'+req.body.userId+'/requestFrom/buyer');
                 } else {
                     res.redirect(redirectRoute);
                 }

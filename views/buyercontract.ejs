@@ -420,7 +420,12 @@
                         <p id="action-description">Are you sure to request to cancel the contract?</p>
                         <fieldset>
                             <div class="twelve columns editform">
+                                <% if (buyContractBid.status == 'mutual-cancellation-seller') { %>
+                                <input type="hidden" name="status" value="mutual-cancellation-all" />
+                                <% } else { %>
                                 <input type="hidden" name="status" value="mutual-cancellation-buyer" />
+                                <% } %>
+                                <input type="hidden" name="requestFrom" value="Buyer" />
                                 <input type="hidden" name="userId" value="<%= buyContractItem.User.id %>" />
                                 <input type="hidden" name="itemName" value="<%= buyContractItem.title %>" />
                                 <input type="hidden" name="itemId" value="<%= buyContractItem.id %>" />
@@ -431,7 +436,13 @@
                         <div class="clearfix"></div>
                     </form>
                 </div>
-                <button id="mutual_cancellation_btn" style="width: 100%" class="item-selling-btn">Mutual Cancelation Request</button>
+                <% if (buyContractBid.status == 'mutual-cancellation-seller') { %>
+                <button id="mutual_cancellation_btn" style="width: 100%" class="item-selling-btn">Accept Mutual Cancellation Request</button>
+                <% } else if (buyContractBid.status == 'mutual-cancellation-buyer' || buyContractBid.status == 'mutual-cancellation-all') { %>
+                <button id="mutual_cancellation_btn" style="width: 100%" class="item-selling-btn" disabled>Request Mutual Cancellation Request</button>
+                <% } else { %>
+                <button id="mutual_cancellation_btn" style="width: 100%" class="item-selling-btn">Request Mutual Cancellation Request</button>
+                <% } %>
             </div>
         </div>
     </div>
