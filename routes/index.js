@@ -53,24 +53,24 @@ router.get('/addnews', function(req, res) {
   removeSessionParameters(req);
   removeSessionParameterSellingPage(req);
 
-  var notifications = req.session.notifications;
-  //check whether notification session is set.
-  if(req.isAuthenticated()) {
-    if (notifications === null || notifications === undefined) {
-      res.redirect('/api/notification/userId/'+req.user.id);
-    }
-  }
+  // var notifications = req.session.notifications;
+  // //check whether notification session is set.
+  // if(req.isAuthenticated()) {
+  //   if (notifications === null || notifications === undefined) {
+  //     res.redirect('/api/notification/userId/'+req.user.id);
+  //   }
+  // }
 
-  //this will be needed to populate commodity names in top menu
-  var commodityNames = req.session.commodityNames
-  //check whether commodityNames session is set
-  if (commodityNames === null || commodityNames === undefined) {
-    res.redirect('/api/commodity/names');
-  }
+  // //this will be needed to populate commodity names in top menu
+  // var commodityNames = req.session.commodityNames
+  // //check whether commodityNames session is set
+  // if (commodityNames === null || commodityNames === undefined) {
+  //   res.redirect('/api/commodity/names');
+  // }
 
   res.render('addnews', {
-    commodityNames: commodityNames,
-    notifications: notifications,
+    // commodityNames: commodityNames,
+    // notifications: notifications,
   });
 });
 
