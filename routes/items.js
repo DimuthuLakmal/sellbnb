@@ -36,6 +36,7 @@ router.get('/viewall', function (req, res) {
 router.post('/add', function (req, res) {
     //retrive data from reqeust header
     var quantity = req.body.quantity;
+    var measureUnit = req.body.measureUnit;
     var title = req.body.title;
     var deliveryBy = req.body.deliveryBy;
     var WareHouseId = req.body.warehouseId;
@@ -50,7 +51,7 @@ router.post('/add', function (req, res) {
     //write images to image files
     _.forEach(req.body.images, function(image, index) {
         var imageBuffer = decodeBase64Image(image.data); //decoding base64 images
-        fs.writeFile('public/uploads/items/'+image.filename, imageBuffer.data, function(err) {
+        fs.writeFile('../public/uploads/items/'+image.filename, imageBuffer.data, function(err) {
             console.log(err);
         });
     });
@@ -62,6 +63,7 @@ router.post('/add', function (req, res) {
             Item.create({
                 title: title,
                 quantity: quantity,
+                measureUnit: measureUnit,
                 deliveryBy: deliveryBy,
                 WareHouseId: WareHouseId,
                 packageType: packingType,
@@ -72,7 +74,6 @@ router.post('/add', function (req, res) {
                 CommodityId: CommodityId,
                 UserId: UserId,
             }).then(function (insertedItem) {
-                console.log(insertedItem);
                 var insertedItemId = insertedItem.dataValues.id;
                 //store item images
                 var ItemImage = models.ItemImage;
@@ -91,6 +92,66 @@ router.post('/add', function (req, res) {
     });
 });
 
+
+//update item in database
+router.post('/update', function (req, res) {
+    //retrive data from reqeust header
+    var quantity = req.body.quantity;
+    var measureUnit = req.body.measureUnit;
+    var title = req.body.title;
+    var deliveryBy = req.body.deliveryBy;
+    var WareHouseId = req.body.warehouseId;
+    var packingType = req.body.packingType;
+    var paymentTerms = req.body.paymentTerms;
+    var suggestedPrice = req.body.suggestedPrice;
+    var sellerNote = req.body.sellerNote;
+    var duration = req.body.duration;
+    var itemId = req.body.itemId;
+
+    //write images to image files
+    _.forEach(req.body.images, function(image, index) {
+        var imageBuffer = decodeBase64Image(image.data); //decoding base64 images
+        fs.writeFile('../public/uploads/items/'+image.filename, imageBuffer.data, function(err) {
+            console.log(err);
+        });
+    });
+
+    //store item in database
+    sequelize.sync().then(
+        function () {
+            var Item = models.Item;
+            Item.update(
+                {
+                    title: title,
+                    quantity: quantity,
+                    measureUnit: measureUnit,
+                    deliveryBy: deliveryBy,
+                    WareHouseId: WareHouseId,
+                    packageType: packingType,
+                    paymentTerms: paymentTerms,
+                    suggestedPrice: suggestedPrice,
+                    note: sellerNote,
+                    duration: duration
+                },
+                {where: { id: itemId }}
+            ).then(function (updatedItem) {
+                var updatedItemId = itemId;
+                //store item images
+                var ItemImage = models.ItemImage;
+                _.forEach(req.body.images, function(image, index) {
+                    ItemImage.create({
+                        url: image.filename,
+                        ItemId: updatedItemId,
+                    });
+                });
+            }).then(function () {
+                res.sendStatus(200);
+            });
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+});
 
 /* Retrieve latest items from database */
 /* Usage: Home Page */
@@ -427,7 +488,6 @@ router.get('/start/:start/userId/:userId', function (req, res) {
                     }, callback1);
                     allBiddings.push(biddings);
                 }, function (err) {
-                    //console.log(allBiddings);
                     //pushing retrieved data to commodity array
                     req.session.sellingList = [Items.rows, allBiddings];
                     req.session.itemsSellingAccountCount = Items.count;
@@ -475,13 +535,29 @@ router.get('/sell/id/:id', function (req, res) {
             var User = models.User;
             var ItemImage = models.ItemImage;
             var Commodity = models.Commodity;
+            var CommodityMeasureUnit = models.CommodityMeasureUnit;
+            var CommodityPriceUnit = models.CommodityPriceUnit;
             var WareHouse = models.WareHouse;
             Item.findAll({
                 where: {id: itemId},
                 include: [User, ItemImage, Commodity, WareHouse],
             }).then(function (Items) {
                 req.session.specificBiddingItemSell = Items[0];
-                res.redirect('/user/sell/bids/start/0?itemId='+itemId);
+
+                //retreive measure units
+                CommodityMeasureUnit.findAll({
+                    where: {CommodityId: Items[0].CommodityId}
+                }).then(function (Units) {
+                    req.session.specificBiddingItemSellMeasureUnits = Units;
+
+                    //retrieve price units
+                    CommodityPriceUnit.findAll({
+                        where: {CommodityId: Items[0].CommodityId}
+                    }).then(function (PriceUnits) {
+                        req.session.specificBiddingItemSellPriceUnits = PriceUnits;
+                        res.redirect('/user/sell/bids/start/0?itemId='+itemId);
+                    });
+                });
             });
         }
     );
@@ -688,6 +764,66 @@ router.get('/contract/id/:id', function (req, res) {
 /* Usage: View Contract Details Seller Page */
 router.get('/sellcontract/id/:id/bidId/:bidId', function (req, res) {
     getItemForContract(req, res, '/user/sell/contract/bidId/'+req.params.bidId);
+});
+
+/* Retrieve best sellers from database */
+/* Usage: Home Page Page */
+router.get('/bestsellers', function (req, res) {
+    sequelize.sync().then(
+        function () {
+            sequelize.query("SELECT avg(c.rate) as avg_seller, u.full_name, u.logo from items i, itemcomments c, users u WHERE i.id=c.ItemId AND u.id = i.UserId GROUP BY i.UserId ORDER BY avg_seller DESC limit 3", { type: sequelize.QueryTypes.SELECT})
+                .then(function(users) {
+                    req.session.bestsellers = users;
+                    //res.jsonp(users);
+                    res.redirect('/')
+                });
+        }
+    );
+});
+
+/* Retrieve top rated items from database */
+/* Usage: Home Page Page */
+router.get('/toprated', function (req, res) {
+    sequelize.sync().then(
+        function () {
+            sequelize.query("SELECT DISTINCT i.id,u.full_name,i.title,(SELECT im.url FROM itemimages im, items k WHERE im.ItemId = k.id AND i.id=k.id limit 1) as url, AVG(c.rate) as avg_rate FROM items i, itemcomments c, users u WHERE i.id = c.ItemId AND u.id = i.UserId GROUP BY c.ItemId ORDER BY avg_rate DESC limit 3;", { type: sequelize.QueryTypes.SELECT})
+                .then(function(items) {
+                    req.session.toprated = items;
+                    res.redirect('/');
+                });
+        }
+    );
+});
+
+
+/* Retrieve near close bids from database */
+/* Usage: Home Page Page */
+router.get('/neartoclose', function (req, res) {
+    sequelize.sync().then(
+        function () {
+            var Item = models.Item;
+            var ItemImage = models.ItemImage;
+            var ItemComment = models.ItemComment;
+            var User = models.User;
+            Item.findAll({
+                attributes: ['title',[sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")), 'left_time']],
+                where: {
+                    duration: {
+                        gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
+                    },
+                },
+                order: '`left_time` DESC',
+                include: [ItemImage, ItemComment, User],
+            }).then(function (items) {
+                var limitedItems = [];
+                _.forEach(items, function(item) {
+                    limitedItems.push(item);
+                });
+                req.session.neartocloseItems = limitedItems;
+                res.redirect('/');
+            })
+        }
+    );
 });
 
 function getItemForContract(req, res, redirection) {
