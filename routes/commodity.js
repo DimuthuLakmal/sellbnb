@@ -18,6 +18,8 @@ router.post('/add', function (req, res, next) {
     var specification = req.body.specification;
     var parameters = req.body.parameters;
     var alternativeNames = req.body.alternativeNames;
+    var measureUnits = req.body.measureUnits;
+    var priceUnits = req.body.priceUnits;
 
     console.log(parameters);
 
@@ -67,6 +69,24 @@ router.post('/add', function (req, res, next) {
                 _.forEach(alternativeNames, function(alternativeName, index) {
                     CommodityAlterName.create({
                         name: alternativeName,
+                        CommodityId: insertedCommodityId,
+                    });
+                });
+            }).then(function () {
+                //store commodity measureUnits
+                var CommodityMeasureUnit = models.CommodityMeasureUnit;
+                _.forEach(measureUnits, function(measureUnit, index) {
+                    CommodityMeasureUnit.create({
+                        unitName : measureUnit,
+                        CommodityId: insertedCommodityId,
+                    });
+                });
+            }).then(function () {
+                //store commodity measureUnits
+                var CommodityPriceUnit = models.CommodityPriceUnit;
+                _.forEach(priceUnits, function(priceUnit, index) {
+                    CommodityPriceUnit.create({
+                        unitName : priceUnit,
                         CommodityId: insertedCommodityId,
                     });
                 });
@@ -128,7 +148,33 @@ router.get('/names', function (req, res) {
                     commodityNames.push(commodity.dataValues.name);
                 });
                 req.session.commodityNames = commodityNames;
-                res.redirect('/');
+                res.redirect(req.session.returnToCommodityName);
+            });
+        }
+    );
+});
+
+/* Retrieve measurement Units from database*/
+/* Usage: Item Add Page*/
+router.get('/measureUnits/id/:id', function (req, res) {
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var CommodityMeasureUnit = models.CommodityMeasureUnit;
+            var CommodityPriceUnit = models.CommodityPriceUnit;
+            CommodityMeasureUnit.findAll({
+                where: {CommodityId: req.params.id},
+            }).then(function (measureUnits) {
+                //saving commodity measure units
+                req.session.measureUnits = measureUnits;
+
+                CommodityPriceUnit.findAll({
+                    where: {CommodityId: req.params.id},
+                }).then(function (priceUnits) {
+                    //saving commodity measure units
+                    req.session.priceUnits = priceUnits;
+                    res.redirect('/items/add');
+                });
             });
         }
     );
@@ -176,10 +222,11 @@ router.post('/search', function (req, res) {
             var CommodityAlterName = models.CommodityAlterName;
             var CommodityParameter = models.CommodityParameter;
             var CommodityImage = models.CommodityImage;
+            var CommodityMeasureUnit = models.CommodityMeasureUnit;
 
             Commodity.findAll({
                 where: {name: commodityName},
-                include: [CommodityAlterName,CommodityParameter,CommodityImage],
+                include: [CommodityAlterName,CommodityParameter,CommodityImage, CommodityMeasureUnit],
             }).then(function (Commodity) {
                 var commodity = Commodity[0].dataValues;
                 req.session.commodity = commodity;

@@ -297,21 +297,21 @@
                                     %>
                                     <% if(maxPageCount >= pageOne) {%>
                                     <li>
-                                        <a href="http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/user/sell/bids/start/<%= (pageOne-1) * 10 %>?itemId=<%= itemId %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
+                                        <a href="http://localhost:3000/user/sell/bids/start/<%= (pageOne-1) * 10 %>?itemId=<%= itemId %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
                                             <%= pageOne %>
                                         </a>
                                     </li>
                                     <% } %>
                                     <% if(maxPageCount >= pageTwo) {%>
                                     <li>
-                                        <a href="http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/user/sell/bids/start/<%= (pageTwo-1) * 10 %>?itemId=<%= itemId %>" <% if(pageTwo === currentPageNumber) { %>class="current-page"<% } %>>
+                                        <a href="http://localhost:3000/user/sell/bids/start/<%= (pageTwo-1) * 10 %>?itemId=<%= itemId %>" <% if(pageTwo === currentPageNumber) { %>class="current-page"<% } %>>
                                             <%= pageTwo %>
                                         </a>
                                     </li>
                                     <% } %>
                                     <% if(maxPageCount >= pageThree) {%>
                                     <li>
-                                        <a href="http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/user/sell/bids/start/<%= (pageThree-1) * 10 %>?itemId=<%= itemId %>" <% if(pageThree === currentPageNumber) { %>class="current-page"<% } %>>
+                                        <a href="http://localhost:3000/user/sell/bids/start/<%= (pageThree-1) * 10 %>?itemId=<%= itemId %>" <% if(pageThree === currentPageNumber) { %>class="current-page"<% } %>>
                                             <%= pageThree %>
                                         </a>
                                     </li>
@@ -322,10 +322,10 @@
                             <nav class="pagination-next-prev">
                                 <ul>
                                     <% if(0 < pageMultipationFactor) {%>
-                                    <li><a href="http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/user/sell/bids/start/<%= (pageMultipationFactor - 1) * 30 %>?itemId=<%= itemId %>" class="prev"></a></li>
+                                    <li><a href="http://localhost:3000/user/sell/bids/start/<%= (pageMultipationFactor - 1) * 30 %>?itemId=<%= itemId %>" class="prev"></a></li>
                                     <% } %>
                                     <% if(maxPageCount >= (pageMultipationFactor * 10) + 4) {%>
-                                    <li><a href="http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/user/sell/bids/start/<%= (pageMultipationFactor + 1) * 30 %>?itemId=<%= itemId %>" class="next"></a></li>
+                                    <li><a href="http://localhost:3000/user/sell/bids/start/<%= (pageMultipationFactor + 1) * 30 %>?itemId=<%= itemId %>" class="next"></a></li>
                                     <% } %>
                                 </ul>
                             </nav>
@@ -340,13 +340,15 @@
                     <!-- Reviews -->
                     <section class="comments">
 
-                        <form method="post" name="bidform">
+                        <form name="bidform">
 
                             <fieldset>
 
+                                <input type="hidden" id="itemId" name="itemId" value="<%= item.id %>"/>
+
                                 <div class="twelve alpha columns bidform">
                                     <label>Images : </label>
-                                    <div class="ten columns">
+                                    <div class="ten columns" id="imagepreview-div">
                                         <% for(imageIndex = 0; imageIndex < item.ItemImages.length; imageIndex++) {%>
                                             <div class="two columns">
                                                 <img src="uploads/items/<%= item.ItemImages[imageIndex].url %>"
@@ -355,7 +357,7 @@
                                             </div>
                                         <% } %>
                                     </div>
-                                    <button class="commodity-uploadimage">Upload Images</button>
+                                    <button class="commodity-uploadimage" id="commodity-uploadimage">Upload Images</button>
                                     <input type="file" name="fileToUpload" id="fileToUpload" style="display: none">
                                 </div>
 
@@ -364,9 +366,18 @@
                                     <input name="title" type="text" id="title" value="<%= item.title %>"/>
                                 </div>
 
-                                <div class="twelve alpha columns bidform">
+                                <div class="thirteen alpha columns editform">
                                     <label>Quantity : </label>
-                                    <input name="quantity" type="text" id="quantity" value="<%= item.quantity %>"/>
+                                    <div class="ten columns" style="margin-left:0px">
+                                        <input name="quantity" type="text" id="quantity" value="<%= item.quantity.split(" ")[0] %>"/>
+                                    </div>
+                                    <div class="two columns">
+                                        <select name="measureUnit" id="measureUnit">
+                                            <% for(var measureIndex = 0; measureIndex < specificBiddingItemSellMeasureUnits.length; measureIndex++) { %>
+                                            <option value="<%= specificBiddingItemSellMeasureUnits[measureIndex].unitName %>"><%= specificBiddingItemSellMeasureUnits[measureIndex].unitName %></option>
+                                            <% } %>
+                                        </select>
+                                    </div>
                                 </div>
 
                                 <div class="twelve alpha columns bidform">
@@ -399,7 +410,7 @@
                                             formattedAddress + ", " + warehouse.warehouseCity : formattedAddress;
 
                                         %>
-                                        <option><%= formattedAddress %></option>
+                                        <option value="<%= warehouse.id %>"><%= formattedAddress %></option>
                                         <% } %>
                                     </select>
                                 </div>
@@ -430,24 +441,56 @@
                                     </select>
                                 </div>
 
-                                <div class="twelve alpha columns bidform">
+                                <div class="thirteen alpha columns editform">
                                     <label>Suggested Price : </label>
-                                    <input name="suggested_price" type="text" id="suggested_price" value="<%= item.suggestedPrice %>"/>
+                                    <div class="ten columns" style="margin-left:0px">
+                                        <input name="suggested_price" type="text" id="suggested_price" value="<%= item.suggestedPrice.split(" ")[1] %>"/>
+                                    </div>
+                                    <div class="two columns">
+                                        <select name="priceUnit" id="priceUnit">
+                                            <% for(var priceIndex = 0; priceIndex < specificBiddingItemSellPriceUnits.length; priceIndex++) { %>
+                                            <option value="<%= specificBiddingItemSellPriceUnits[priceIndex].unitName %>"><%= specificBiddingItemSellPriceUnits[priceIndex].unitName %></option>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <%
+                                    var duration = item.duration;
+                                    var days = Math.floor(duration / (24 * 3600));
+                                    var hours = Math.floor((duration % (24 * 3600)) / 3600);
+                                    var mins = Math.floor(((duration % (24 * 3600)) % 3600) / 60);
+                                %>
+                                <div class="twelve alpha columns bidform">
+                                    <label for="payment_terms">Duration : </label>
+                                    <div class="two columns bidform" style="margin-left: 0px;">
+                                        <input name="days" type="number" id="days" value="<%= days %>"/>
+                                    </div>
+                                    <div class="two columns bidform">
+                                        <input name="hours" type="number" id="hours" value="<%= hours %>"/>
+                                    </div>
+                                    <div class="two columns bidform">
+                                        <input name="mins" type="number" id="mins" value="<%= mins %>"/>
+                                    </div>
                                 </div>
 
                                 <div class="twelve alpha columns bidform">
                                     <label>Seller Note: <span>*</span></label>
-                                    <textarea name="comment" cols="91" rows="3" id="comment" spellcheck="true" style="width: 97%">
+                                    <textarea name="seller_note" cols="91" rows="3" id="seller_note" spellcheck="true" style="width: 97%">
                                         <%= item.note %>
                                     </textarea>
                                 </div>
 
                                 <div class="twelve columns bidform">
-                                    <input type="submit" class="submit" id="submit" value="Add"/>
+                                    <input type="submit" class="submit" id="submit" value="Update"/>
                                 </div>
 
                             </fieldset>
-
+                            <br>
+                            <div class="notification success closeable" style="display: none" id="message_success">
+                                <p><span>Success! </span>Item details were updated successfully!</p>
+                                <a class="close" href="#"></a>
+                            </div>
                             <div class="clearfix"></div>
                         </form>
 
@@ -582,8 +625,8 @@
 <script src="scripts/puregrid.js"></script>
 <script src="scripts/stacktable.js"></script>
 <script src="scripts/custom.js"></script>
-<script src="scripts/views/viewbiddingdetailsseller.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+<script src="scripts/views/viewbiddingdetailsseller.js"></script>
 
 </body>
 </html>

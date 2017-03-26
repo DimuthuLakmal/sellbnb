@@ -137,7 +137,7 @@
                 <h3 class="headline">Add Comment</h3><span class="line margin-bottom-35"></span><div class="clearfix"></div>
 
                 <!-- Add Comment Form -->
-                <form id="add-comment" class="add-comment" method="POST" action="http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/api/news/addcomment">
+                <form id="add-comment" class="add-comment" method="POST" action="http://localhost:3000/api/news/addcomment">
                     <fieldset>
                         <input type="hidden" name="NewsId" value="<%= News.id %>" />
                         <div>
@@ -176,9 +176,9 @@
                 <h3 class="headline">Categories</h3><span class="line"></span><div class="clearfix"></div>
                 <nav class="categories">
                     <ul>
-                        <li><a href="http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/api/news/viewall/start/0/category/Stop Bidding">Stop Bidding</a></li>
-                        <li><a href="http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/api/news/viewall/start/0/category/Delete">Delete</a></li>
-                        <li><a href="http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/api/news/viewall/start/0/category/Hold">Hold</a></li>
+                        <li><a href="http://localhost:3000/api/news/viewall/start/0/category/Stop Bidding">Stop Bidding</a></li>
+                        <li><a href="http://localhost:3000/api/news/viewall/start/0/category/Delete">Delete</a></li>
+                        <li><a href="http://localhost:3000/api/news/viewall/start/0/category/Hold">Hold</a></li>
                     </ul>
                 </nav>
             </div>

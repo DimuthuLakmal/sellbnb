@@ -213,20 +213,31 @@
 
       <ul class="product-list">
 
-        <li><a href="#">
-            <img src="images/small_product_list_01.jpg" alt="" />
-            <div class="product-list-desc">Canvas Backpack <i>$59.00</i></div>
-          </a></li>
+        <% for(var sellerIndex = 0; sellerIndex < bestsellers.length; sellerIndex++) {
+          var Seller = bestsellers[sellerIndex];
+        %>
 
         <li><a href="#">
-            <img src="images/small_product_list_02.jpg" alt="" />
-            <div class="product-list-desc">Long Sleeve Shirt <i>$29.00</i></div>
+            <%if(Seller.logo == null) { %>
+              <img src="images/small_product_list_01.jpg" alt="" />
+            <% } else { %>
+              <img src="uploads/logo/<%= Seller.logo %>" alt="" />
+            <% } %>
+
+            <div class="product-list-desc"><%= Seller.full_name %>
+              <%
+                var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
+                var avgRate =  Math.floor(Seller.avg_seller);
+              %>
+              <div class="rating <%= rateInString[avgRate] %>-stars">
+                <div class="star-rating"></div>
+                <div class="star-bg"></div>
+              </div>
+              <span><%= Seller.avg_seller.toFixed(1) %> stars</span>
+            </div>
           </a></li>
 
-        <li><a href="#">
-            <img src="images/small_product_list_03.jpg" alt="" />
-            <div class="product-list-desc">Tommy Hilfiger Shirt Beat <i>$89.00</i></div>
-          </a></li>
+        <% } %>
 
         <li><div class="clearfix"></div></li>
 
@@ -239,42 +250,38 @@
     <div class="one-third column">
 
       <!-- Headline -->
-      <h3 class="headline">Top Rated</h3>
+      <h3 class="headline">Top Rated Items</h3>
       <span class="line margin-bottom-0"></span>
       <div class="clearfix"></div>
 
 
       <ul class="product-list top-rated">
 
+        <% for(var topratedIndex = 0; topratedIndex < toprated.length; topratedIndex++) {
+          var item = toprated[topratedIndex];
+        %>
+
         <li><a href="#">
-            <img src="images/small_product_list_04.jpg" alt="" />
-            <div class="product-list-desc with-rating">Brogue Boots in Leather <i>$99.00</i>
-              <div class="rating five-stars">
+            <%if(item.url == null) { %>
+            <img src="images/small_product_list_01.jpg" alt="" />
+            <% } else { %>
+            <img src="uploads/items/<%= item.url %>" alt="" style="width: 80px; height: 80px"/>
+            <% } %>
+
+            <div class="product-list-desc"><%= item.title %>
+              <%
+                var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
+                var avgRate =  Math.floor(item.avg_rate);
+              %>
+              <div class="rating <%= rateInString[avgRate] %>-stars">
                 <div class="star-rating"></div>
                 <div class="star-bg"></div>
               </div>
+              <span><%= item.avg_rate.toFixed(1) %> stars</span>
             </div>
           </a></li>
 
-        <li><a href="#">
-            <img src="images/small_product_list_05.jpg" alt="" />
-            <div class="product-list-desc with-rating">Slim Jeans With Blue Tint <i>$79.00</i>
-              <div class="rating four-stars">
-                <div class="star-rating"></div>
-                <div class="star-bg"></div>
-              </div>
-            </div>
-          </a></li>
-
-        <li><a href="#">
-            <img src="images/small_product_list_06.jpg" alt="" />
-            <div class="product-list-desc with-rating">New Look Fairisle Scarf <i>$19.00</i>
-              <div class="rating three-stars">
-                <div class="star-rating"></div>
-                <div class="star-bg"></div>
-              </div>
-            </div>
-          </a></li>
+        <% } %>
 
         <li><div class="clearfix"></div></li>
 
@@ -287,27 +294,43 @@
     <div class="one-third column">
 
       <!-- Headline -->
-      <h3 class="headline">Weekly Sales</h3>
+      <h3 class="headline">Near To Bid Close</h3>
       <span class="line margin-bottom-0"></span>
       <div class="clearfix"></div>
 
 
       <ul class="product-list discount">
 
-        <li><a href="#">
-            <img src="images/small_product_list_07.jpg" alt="" />
-            <div class="product-list-desc">Short Sleeve Polo Shirt <i>$29.00<b>$19.00</b></i></div>
-          </a></li>
+        <% for(var neartocloseItemsIndex = 0; neartocloseItemsIndex < neartocloseItems.length; neartocloseItemsIndex++) {
+          var item = neartocloseItems[neartocloseItemsIndex];
+        %>
 
         <li><a href="#">
-            <img src="images/small_product_list_08.jpg" alt="" />
-            <div class="product-list-desc">Long Sleeve Shirt <i>$99.00<b>$79.00</b></i></div>
+            <%if(item.ItemImages.length <= 0) { %>
+            <img src="images/small_product_list_01.jpg" alt="" />
+            <% } else { %>
+            <img src="uploads/items/<%= item.ItemImages[0].url %>" alt="" style="width: 80px; height: 80px"/>
+            <% } %>
+
+            <div class="product-list-desc"><%= item.title %>
+              <%
+                var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
+                var feedbackCount = item.ItemComments.length;
+                var rateSum = 0;
+                for( var commentIndex = 0; commentIndex < item.ItemComments.length; commentIndex++) {
+                  rateSum += parseInt(item.ItemComments[commentIndex].rate);
+                }
+                var avgRate = feedbackCount != 0? (rateSum/feedbackCount) : 0;
+              %>
+              <div class="rating <%= rateInString[avgRate] %>-stars">
+                <div class="star-rating"></div>
+                <div class="star-bg"></div>
+              </div>
+              <span><%= avgRate %> stars</span>
+            </div>
           </a></li>
 
-        <li><a href="#">
-            <img src="images/small_product_list_09.jpg" alt="" />
-            <div class="product-list-desc">Tommy Hilfiger Shirt Beat <i>$499.00<b>$399.00</b></i></div>
-          </a></li>
+        <% } %>
 
         <li><div class="clearfix"></div></li>
 
@@ -329,81 +352,32 @@
       <span class="line margin-bottom-30"></span>
     </div>
 
-    <!-- Post #1 -->
-    <div class="four columns">
-      <article class="from-the-blog">
+    <% for(var latestNewsIndex = 0; latestNewsIndex < latestNews.length; latestNewsIndex++) {
+      var news = latestNews[latestNewsIndex];
+    %>
+      <!-- Post #1 -->
+      <div class="four columns">
+        <article class="from-the-blog">
 
-        <figure class="from-the-blog-image">
-          <a href="blog-single-post.html"><img src="images/from_the_blog_01.jpg" alt="" /></a>
-          <div class="hover-icon"></div>
-        </figure>
+          <figure class="from-the-blog-image">
+            <% if(news.img == null) { %>
+              <a href="blog-single-post.html"><img src="images/from_the_blog_01.jpg" alt="" /></a>
+            <% } else { %>
+              <a href="blog-single-post.html"><img src="<%= news.img %>" alt="" /></a>
+            <% } %>
+            <div class="hover-icon"></div>
+          </figure>
 
-        <section class="from-the-blog-content">
-          <a href="blog-single-post.html"><h5>Amazon Raises Threshold for Free Shipping</h5></a>
-          <i>By Vasterad on May 31, 2014</i>
-          <span>Pellentesque ultricies vehicula eleifend. Aenean eu nunc semper faucibus sapien viverra.</span>
-          <a href="blog-single-post.html" class="button gray">Read More</a>
-        </section>
+          <section class="from-the-blog-content">
+            <a href="blog-single-post.html"><h5><%= news.title %></h5></a>
+            <i>By <%= news.user %> on <%= news.date+', '+news.month+' '+news.year %></i>
+            <span><%= news.content.substr(0,50)+' ...' %></span>
+            <a href="blog-single-post.html" class="button gray">Read More</a>
+          </section>
 
-      </article>
-    </div>
-
-    <!-- Post #2 -->
-    <div class="four columns">
-      <article class="from-the-blog">
-
-        <figure class="from-the-blog-image">
-          <a href="blog-single-post.html"><img src="images/from_the_blog_02.jpg" alt="" /></a>
-          <div class="hover-icon"></div>
-        </figure>
-
-        <section class="from-the-blog-content">
-          <a href="blog-single-post.html"><h5>How To Read The Symbols on Your Clothing Tags</h5></a>
-          <i>By Vasterad on May 16, 2014</i>
-          <span>Morbi quis magna nec lacus nunc eratu pharetra lorem sed sapien velit adipiscing. </span>
-          <a href="blog-single-post.html" class="button gray">Read More</a>
-        </section>
-
-      </article>
-    </div>
-
-    <!-- Post #3 -->
-    <div class="four columns">
-      <article class="from-the-blog">
-
-        <figure class="from-the-blog-image">
-          <a href="blog-single-post.html"><img src="images/from_the_blog_03.jpg" alt="" /></a>
-          <div class="hover-icon"></div>
-        </figure>
-
-        <section class="from-the-blog-content">
-          <a href="blog-single-post.html"><h5>Online Shopping Hit New Highs on Mobile Sales</h5></a>
-          <i>By Vasterad on May 10, 2014</i>
-          <span>Donec non egestas nisl. Aliquam tincidunt sem sed nisl dictum. Fusce gravida arius gravida.</span>
-          <a href="blog-single-post.html" class="button gray">Read More</a>
-        </section>
-
-      </article>
-    </div>
-
-    <!-- Post #4 -->
-    <div class="four columns">
-      <article class="from-the-blog">
-
-        <figure class="from-the-blog-image">
-          <a href="blog-single-post.html"><img src="images/from_the_blog_04.jpg" alt="" /></a>
-          <div class="hover-icon"></div>
-        </figure>
-
-        <section class="from-the-blog-content">
-          <a href="blog-single-post.html"><h5>How to Choose Size - Does Your Shirt Fit Properly?</h5></a>
-          <i>By Vasterad on April 20, 2014</i>
-          <span>Nullam eget ante cursus, dignissim velit sit amet, tempus massa bibendum venenatis.</span>
-          <a href="blog-single-post.html" class="button gray">Read More</a>
-        </section>
-
-      </article>
-    </div>
+        </article>
+      </div>
+    <% } %>
 
   </div>
 
@@ -528,7 +502,6 @@
 <script src="scripts/stacktable.js"></script>
 <script src="scripts/custom.js"></script>
 <script src="scripts/views/index.js"></script>
-
 
 </body>
 </html>

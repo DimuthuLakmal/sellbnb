@@ -124,16 +124,21 @@
                         <td><%= Commodity.class %></td>
                     </tr>
                     <tr>
-                        <td>Measurement Unit</td>
-                        <td><%= Commodity.measureUnit %></td>
-                    </tr>
-                    <tr>
                         <td>Alternative Names</td>
                         <td>
                             <% for(var alterNamesIndex = 0; alterNamesIndex < CommodityAlterNames.length-1; alterNamesIndex++) {%>
                                 <%= CommodityAlterNames[alterNamesIndex].name %><br>
                             <% } %>
                             <%= CommodityAlterNames[CommodityAlterNames.length-1].name %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Measure Units</td>
+                        <td>
+                            <% for(var unitIndex = 0; unitIndex < CommodityMeasureUnits.length-1; unitIndex++) {%>
+                            <%= CommodityMeasureUnits[unitIndex].unitName %><br>
+                            <% } %>
+                            <%= CommodityMeasureUnits[CommodityMeasureUnits.length-1].unitName %>
                         </td>
                     </tr>
                     </tbody>

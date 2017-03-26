@@ -47,13 +47,17 @@ $('#submit').click(function (e) {
     var family = $('#family').val();
     var classOfCommodity = $('#class').val();
     var measureUnit = $('#measure_unit').val();
+    var priceUnit = $('#price_unit').val();
     var specification = $('#specification').val();
     var alternativeNames = $('#alternative_names').val().split(',');
+    var measureUnits = $('#alternative_names').val().split(',');
+    var priceUnits = priceUnit.split(',');
 
-    $.ajax({url: "http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/api/commodity/add",
+    $.ajax({url: "http://localhost:3000/api/commodity/add",
         type: 'POST',
         data: {name: name, segment: segment, family: family, classOfCommodity: classOfCommodity,measureUnit: measureUnit,
-            specification: specification, images: images, alternativeNames: alternativeNames, parameters: parameters},
+            specification: specification, images: images, alternativeNames: alternativeNames, parameters: parameters,
+            measureUnits: measureUnits, priceUnits: priceUnits},
         success: function(data, status, xhr) {
             if(status == 'success') {
                 $('#message_success').show();

@@ -6,6 +6,7 @@ module.exports = function (sequelize, DataTypes) {
     var Item = sequelize.define('Item', {
         title: DataTypes.STRING,
         quantity: DataTypes.STRING,
+        measureUnit: DataTypes.STRING,
         packageType: DataTypes.STRING,
         deliveryBy: DataTypes.STRING,
         deliveryCost: DataTypes.STRING,

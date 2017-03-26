@@ -43,12 +43,10 @@ function verifyCredentials(username, password, done) {
                     //password: bcrypt.compareSync(password, hash),
                 }
             }).then(function (User) {
-                console.log(User);
                 if (!_.isUndefined(User[0])) {
                     if (bcrypt.compareSync(password, User[0].dataValues.password)) {    //checking password
                         var user = User[0].dataValues;
                         done(null, {id: user.id});
-                        console.log("login success!");
                     } else {
                         //set error message to flash
                         done(null, false, {message: 'Invalid Username or Password!'});
@@ -93,6 +91,9 @@ router.get('/signup', function (req, res, next) {
 router.post('/login', function (req, res, next) {
     //redirect to previously visited page if login success, otherwise to login page.
     var redirectTo = req.session.returnTo || '/';
+
+    console.log('A');
+    console.log(redirectTo);
 
     passport.authenticate('local', {
         successRedirect: redirectTo,
@@ -251,7 +252,6 @@ router.get('/bidding/warehouses/userId/:userId/itemId/:itemId', function (req, r
 /* Get Warehouses for viewbiddingdetailsseller page*/
 router.get('/sell/warehouses/userId/:userId/itemId/:itemId', function (req, res) {
     var itemId = req.params.itemId;
-    console.log(itemId);
     getWareHouses(req, res, '/user/sell/bids/start/0?itemId='+itemId );
 });
 

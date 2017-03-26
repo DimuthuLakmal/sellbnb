@@ -6052,6 +6052,11 @@ img.rsImg {
 	padding-right: 0px;
 }
 
+.bidform input[type=number]{
+	width: 100%;
+	padding-right: 0px;
+}
+
 .bidform input[type=submit]{
 	width: 100%;
 	margin-left: -10px;

@@ -22,7 +22,6 @@ router.post('/addnews', function (req, res) {
                 hits: 0,
                 UserId: 1,
             }).then(function (insertedNews) {
-                console.log(insertedNews.dataValues);
             });
         }
     ).catch(function (error) {
@@ -50,7 +49,6 @@ router.post('/addcomment', function (req, res) {
                 comment: comment,
                 NewsId: NewsId
             }).then(function (insertedComment) {
-                console.log(insertedComment.dataValues);
             });
         }
     ).catch(function (error) {
@@ -171,6 +169,28 @@ router.get('/viewrecent', function (req, res) {
     );
 });
 
+
+/* Retrieve recent news from database */
+/* Usage: Home Page */
+router.get('/viewlatest', function (req, res) {
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var News = models.News;
+            var User = models.User;
+            News.findAndCountAll({
+                limit: 3,
+                include: [User],
+                order: '`createdAt` DESC'
+            }).then(function (News) {
+                //saving news array to a session and redirect
+                newsArray(News, null, req, res);
+            });
+        }
+    );
+});
+
+
 /* Retrieve specific news and its comments from database */
 router.get('/id/:id', function (req, res) {
     //retrieve data from req object
@@ -260,15 +280,22 @@ function newsArray (News, offset , req, res) {
             'hits': hits, 'content': removedParagraphEndTag, 'user': user, 'date': dateOfNews,
             'month': monthOfNews,'year': yearOfNews});
     });
-    req.session.newsall = newsArr;
-    req.session.newsCount = News.count;
-    req.session.newsOffset = parseInt(req.params.start);
 
-    if(parseInt(offset) !== 0) {
-        res.redirect('/news/start/'+offset);
+    if(offset != null) {
+        req.session.newsall = newsArr;
+        req.session.newsCount = News.count;
+        req.session.newsOffset = parseInt(req.params.start);
+
+        if(parseInt(offset) !== 0) {
+            res.redirect('/news/start/'+offset);
+        } else {
+            res.redirect('/news');
+        }
     } else {
-        res.redirect('/news');
+        req.session.latestNews = newsArr;
+        res.redirect('/');
     }
+
 }
 
 module.exports = router;

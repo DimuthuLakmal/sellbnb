@@ -18,6 +18,8 @@ module.exports = function (sequelize, DataTypes) {
                 Commodity.hasMany(models.CommodityParameter);
                 Commodity.hasMany(models.CommodityAlterName);
                 Commodity.hasMany(models.CommodityImage);
+                Commodity.hasMany(models.CommodityMeasureUnit);
+                Commodity.hasMany(models.CommodityPriceUnit);
             }
         }
     });

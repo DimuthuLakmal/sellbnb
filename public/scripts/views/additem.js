@@ -42,7 +42,7 @@ $('#commodity-uploadimage').click(function (e) {
 $('#submit').click(function (e) {
     e.preventDefault();
 
-    var quantity = $('#quantity').val();
+    var quantity = $('#quantity').val()+' '+$('#measureUnit').val();
     var title = $('#title').val();
     var deliveryBy = $('#delivery_by').val();
     var warehouseId = $('#warehouse').val();
@@ -50,14 +50,14 @@ $('#submit').click(function (e) {
     var userId = $('#userId').val();
     var packingType = $('#packing_type').val();
     var paymentTerms = $('#payment_terms').val();
-    var suggestedPrice = $('#suggested_price').val();
+    var suggestedPrice = $('#priceUnit').val()+" "+$('#suggested_price').val();
     var sellerNote = $('#seller_note').val();
     var hours = $('#hours').val();
     var days = $('#days').val();
     var mins = $('#mins').val();
     var duration = parseInt(days) * 24 * 3600 + parseInt(hours) * 3600 + parseInt(mins) * 60;
 
-    $.ajax({url: "http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/api/items/add",
+    $.ajax({url: "http://localhost:3000/api/items/add",
         type: 'POST',
         data: {title:title, quantity: quantity, deliveryBy: deliveryBy, warehouseId: warehouseId, commodityId: commodityId,
             userId: userId, images: images, duration: duration, packingType: packingType,paymentTerms: paymentTerms,
@@ -73,7 +73,7 @@ $('#submit').click(function (e) {
 // $(document).ready(function () {
 //     var userId = $('#userId').val();
 //
-//     $.ajax({url: "http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/api/user/view/warehouses",
+//     $.ajax({url: "http://localhost:3000/api/user/view/warehouses",
 //         type: 'POST',
 //         data: {userId: userId},
 //         success: function(data, status, xhr) {
@@ -86,4 +86,17 @@ $('#submit').click(function (e) {
 //             });
 //         }
 //     });
+// });
+
+// jQuery.ajax({
+//     type: "GET",
+//     dataType: 'jsonp',
+//     url: "http://ipinfo.io",
+//     success: function (obj, textstatus) {
+//         if(obj.country == 'LK') {
+//             $("#suggested_price").val('LKR.');
+//         } else {
+//             $("#suggested_price").val('USD');
+//         }
+//     }
 // });

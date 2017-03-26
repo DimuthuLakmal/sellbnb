@@ -178,7 +178,7 @@
                         %>
                         <% if(maxPageCount >= pageOne) {%>
                         <li>
-                            <a href="http://ec2-35-154-154-55.ap-south-1.compute.amazonaws.com:3000/api/items/search/start/<%= (pageOne-1) * 10 %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
+                            <a href="http://localhost:3000/api/items/search/start/<%= (pageOne-1) * 10 %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
                                 <%= pageOne %>
                             </a>
                         </li>

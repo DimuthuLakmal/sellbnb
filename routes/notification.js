@@ -44,7 +44,7 @@ router.get('/userId/:userId', function (req, res) {
                 },
             }).then(function (Notications) {
                 req.session.notifications = Notications;
-                res.redirect('/');
+                res.redirect(req.session.returnToCommodityName);
             });
         }
     );
@@ -152,12 +152,16 @@ function sendEmail(userId, subject, message, redirection, res) {
                         //require the Twilio module and create a REST client
                         var client = require('twilio')(accountSid, authToken);
 
-                        client.messages.create({
+                        client.sendMessage({
                             to: SMSPhoneNumber.number,
-                            from: "+17542276508",
+                            from: "+12569987739 ",
                             body: "You have received Mutual Cancellation Request",
                         }, function(err, message) {
-                            console.log(message);
+                            if(err) {
+                                console.log(err);
+                            } else {
+                                console.log(message);
+                            }
                         });
                         callback(null,"Success");
                     }

@@ -89,7 +89,7 @@
                     <fieldset>
                         <input type="hidden" id="userId" name="userId" value="<%= user.id %>"/>
                         <input type="hidden" id="commodityId" name="commodityId" value="<%= CommodityId %>"/>
-                        <div class="twelve alpha columns bidform">
+                        <div class="twelve alpha columns editform">
                             <label>Images : </label>
                             <div class="ten columns" id="imagepreview-div">
                             </div>
@@ -97,24 +97,33 @@
                             <input type="file" name="fileToUpload" id="fileToUpload" style="display: none">
                         </div>
 
-                        <div class="twelve alpha columns bidform">
+                        <div class="twelve alpha columns editform">
                             <label>Title : </label>
                             <input name="title" type="text" id="title"/>
                         </div>
 
-                        <div class="twelve alpha columns bidform">
+                        <div class="thirteen alpha columns editform">
                             <label>Quantity : </label>
-                            <input name="quantity" type="text" id="quantity"/>
+                            <div class="ten columns" style="margin-left:0px">
+                                <input name="quantity" type="text" id="quantity"/>
+                            </div>
+                            <div class="two columns">
+                                <select name="measureUnit" id="measureUnit">
+                                    <% for(var measureIndex = 0; measureIndex < measureUnits.length; measureIndex++) { %>
+                                    <option value="<%= measureUnits[measureIndex].unitName %>"><%= measureUnits[measureIndex].unitName %></option>
+                                    <% } %>
+                                </select>
+                            </div>
                         </div>
 
-                        <div class="twelve alpha columns bidform">
+                        <div class="twelve alpha columns editform">
                             <label for="delivery_by">Delivery By : </label>
                             <select id="delivery_by" name="delivery_by">
                                 <option>Buyer</option>
                                 <option>Seller</option>
                             </select>
                         </div>
-                        <div class="twelve alpha columns bidform">
+                        <div class="twelve alpha columns editform">
                             <label for="warehouse">Warehouse : </label>
                             <select id="warehouse" name="warehouse">
                                 <% for(var warehouseIndex = 0; warehouseIndex < WareHouses.length; warehouseIndex++) {
@@ -137,12 +146,12 @@
                             </select>
                         </div>
 
-                        <div class="twelve alpha columns bidform">
+                        <div class="twelve alpha columns editform">
                             <label>Packing Type : </label>
                             <input name="packing_type" type="text" id="packing_type"/>
                         </div>
 
-                        <div class="twelve alpha columns bidform">
+                        <div class="twelve alpha columns editform">
                             <label for="payment_terms">Payment Terms : </label>
                             <select id="payment_terms" name="payment_terms">
                                 <option>1 month credit</option>
@@ -151,25 +160,34 @@
                             </select>
                         </div>
 
-                        <div class="twelve alpha columns bidform">
+                        <div class="thirteen alpha columns editform">
                             <label>Suggested Price : </label>
-                            <input name="suggested_price" type="text" id="suggested_price"/>
+                            <div class="ten columns" style="margin-left:0px">
+                                <input name="suggested_price" type="text" id="suggested_price"/>
+                            </div>
+                            <div class="two columns">
+                                <select name="priceUnit" id="priceUnit">
+                                    <% for(var priceIndex = 0; priceIndex < priceUnits.length; priceIndex++) { %>
+                                    <option value="<%= priceUnits[priceIndex].unitName %>"><%= priceUnits[priceIndex].unitName %></option>
+                                    <% } %>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="twelve alpha columns bidform">
                             <label for="payment_terms">Duration : </label>
-                            <div class="three columns bidform" style="margin-left: 0px;">
-                                <input name="days" type="text" id="days" placeholder="Days"/>
+                            <div class="two columns bidform" style="margin-left: 0px;">
+                                <input name="days" type="number" id="days" placeholder="Days"/>
                             </div>
-                            <div class="three columns bidform">
-                                <input name="hours" type="text" id="hours" placeholder="Hours"/>
+                            <div class="two columns bidform">
+                                <input name="hours" type="number" id="hours" placeholder="Hours"/>
                             </div>
-                            <div class="three columns bidform">
-                                <input name="mins" type="text" id="mins" placeholder="Mins"/>
+                            <div class="two columns bidform">
+                                <input name="mins" type="number" id="mins" placeholder="Mins"/>
                             </div>
                         </div>
 
-                        <div class="twelve alpha columns bidform">
+                        <div class="twelve alpha columns editform">
                             <label>Seller Note: <span>*</span></label>
                             <textarea name="seller_note" cols="91" rows="3" id="seller_note" spellcheck="true" style="width: 97%"></textarea>
                         </div>
@@ -315,6 +333,7 @@
 <script src="scripts/stacktable.js"></script>
 <script src="scripts/custom.js"></script>
 <script src="scripts/views/additem.js"></script>
+
 
 </body>
 </html>
