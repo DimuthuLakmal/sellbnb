@@ -32,110 +32,7 @@
 <body class="boxed">
 <div id="wrapper">
 
-    <!-- Header
-      ================================================== -->
-    <div class="container">
-
-        <!-- Logo -->
-        <div class="four columns">
-            <div id="logo">
-                <h1><a href="/"><img src="images/logo_sellbnb.png" alt="Trizzy"/></a></h1>
-            </div>
-        </div>
-
-
-        <!-- Additional Menu -->
-        <div class="twelve columns">
-            <div id="additional-menu">
-                <ul>
-                    <li><a href="checkout-billing-details.html">English</a></li>
-                    <li><a href="my-account.html">Sinhala</a></li>
-                </ul>
-            </div>
-        </div>
-
-
-        <!-- Shopping Cart -->
-        <div class="twelve columns">
-
-            <form action="/items/search" method="get">
-                <input class="newsletter-btn" type="submit" value="Sell" style="margin-left: 5px"/>
-            </form>
-
-            <div class="cart">
-                <!-- Button -->
-                <div class="icon-box">
-                    <span><a href="#"><i class="fa fa-mail-forward"></i></a></span>
-                </div>
-            </div>
-
-            <div class="cart">
-                <!-- Button -->
-                <div class="icon-box">
-                    <span><i class="fa fa-folder"></i></span>
-                </div>
-            </div>
-
-            <div class="cart">
-                <!-- Button -->
-                <div class="icon-box">
-                    <span><a href="/user/basic"><i class="fa fa-user"></i></a></span>
-                </div>
-            </div>
-
-            <!-- Search -->
-            <div align="center">
-                <nav class="top-search">
-                    <form action="http://localhost:3000/api/items/search/start/0" method="get">
-                        <button><i class="fa fa-search"></i></button>
-                        <input type="hidden" value="0" name="start"/>
-                        <input class="search-field" name="keyword" type="text" placeholder="Search" id="top_search" list="searchresults"/>
-                        <datalist id="searchresults"></datalist>
-                    </form>
-                </nav>
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- Navigation
-    ================================================== -->
-    <div class="container">
-        <div class="sixteen columns">
-
-            <a href="#menu" class="menu-trigger"><i class="fa fa-bars"></i> Menu</a>
-
-            <nav id="navigation">
-                <ul class="menu" id="responsive">
-
-                    <li><a href="/" class="homepage">Home</a></li>
-
-                    <li class="demo-button">
-                        <a href="/news">Market News</a>
-                    </li>
-
-                    <li class="demo-button">
-                        <a href="/user/sell/list/start/0">Sell Account</a>
-                    </li>
-
-                    <li class="demo-button">
-                        <a href="#">Buy Account</a>
-                    </li>
-
-                    <li class="dropdown">
-                        <a href="#">Commodities</a>
-                        <ul>
-                            <% for(var nameIndex = 0; nameIndex < commodityNames.length; nameIndex++) {%>
-                            <li><a href="/api/items/search/start/0/keyword/<%= commodityNames[nameIndex] %>"><%= commodityNames[nameIndex] %></a></li>
-                            <% } %>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </div>
+    <% include header.ejs %>
 
     <!-- Titlebar
     ================================================== -->
@@ -161,23 +58,6 @@
         <!-- Sidebar
         ================================================== -->
         <div class="four columns">
-
-            <!-- Categories -->
-            <div class="widget margin-top-0">
-
-                <ul id="categories">
-
-                    <li><a href="/user/basic">Basic Account</a></li>
-                    <li><a href="/user/contact">Contact Information</a></li>
-                    <li><a href="/user/payment">Payment Information</a></li>
-                    <li><a href="/user/business">Business Information</a></li>
-                    <li><a href="/user/notification" class="active">Notification Preferences</a></li>
-                    <li><a href="/items/search">Sell</a></li>
-
-                </ul>
-                <div class="clearfix"></div>
-
-            </div>
 
 
             <!--&lt;!&ndash; Widget &ndash;&gt;-->

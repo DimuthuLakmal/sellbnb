@@ -355,7 +355,7 @@ router.get('/id/:id', function (req, res) {
                             $ne: id,
                         }
                     },
-                    include: [ItemImage],
+                    include: [ItemImage, User],
                 }).then(function (Items) {
                     var similarItems = Items;
 
@@ -417,6 +417,8 @@ router.get('/start/:start/userId/:userId', function (req, res) {
     var userId = req.params.userId;
     var start = req.params.start;
     var sellpageItemOption = req.query['sellpageItemOption'] ? req.query['sellpageItemOption'] : req.session.sellpageItemOption;
+    var from = req.query['from'] ? req.query['from'] : req.session.sellpageFrom;
+    var to = req.query['to'] ? req.query['to'] : req.session.sellpagTo;
 
     //define where object of sequelize object according to filtering parameters selected in User Account Selling page
     var whereObject = {
@@ -437,8 +439,24 @@ router.get('/start/:start/userId/:userId', function (req, res) {
         whereObject["duration"] =
             {lt: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))}
         req.session.sellpageItemOption = 'Closed';
+    } else if(sellpageItemOption == 'Pending') {
+        whereObject["status"] = 'active';
+        req.session.sellpageItemOption = 'Pending';
+    } else if(sellpageItemOption == 'Cancelled') {
+        whereObject = {
+            $or: [{status: {$eq: "cancelled"}},{status: {$eq: "mutual-cancellation-buyer"}},
+                {status: {$eq: "mutual-cancellation-seller"}},{status: {$eq: "mutual-cancellation-all"}}],
+            UserId: userId,
+        }
+        req.session.sellpageItemOption = 'Cancelled';
     } else {
         req.session.sellpageItemOption = 'All';
+    }
+
+    //check the whether filter by date
+    if(from != '' && to != '' && from != undefined && to != undefined) {
+        whereObject["createdAt"] = {$gte: from}
+        whereObject["$and"] = {createdAt: {lte: to}}
     }
 
     sequelize.sync().then(

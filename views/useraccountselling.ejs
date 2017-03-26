@@ -59,24 +59,6 @@
         ================================================== -->
         <div class="four columns">
 
-            <!-- Categories -->
-            <div class="widget margin-top-0">
-
-                <ul id="categories">
-
-                    <li><a href="/user/basic">Basic Account</a></li>
-                    <li><a href="/user/contact">Contact Information</a></li>
-                    <li><a href="/user/payment">Payment Information</a></li>
-                    <li><a href="/user/business">Business Information</a></li>
-                    <li><a href="/user/notification" class="active">Notification Preferences</a></li>
-                    <li><a href="/items/search">Sell</a></li>
-
-                </ul>
-                <div class="clearfix"></div>
-
-            </div>
-
-
             <!--&lt;!&ndash; Widget &ndash;&gt;-->
             <!--<div class="widget">-->
                 <!--<h3 class="headline">Filter By Price</h3><span class="line"></span><div class="clearfix"></div>-->
@@ -98,53 +80,64 @@
                     <select class="orderby" name="sellpageItemOption" id="filter_options">
                         <% if(filterParamer == 'All') {%>
                             <option selected>All</option>
-                            <option>Open</option>
-                            <option>Closed</option>
-                            <option>Hold</option>
+                            <option>Open Contract</option>
+                            <option>Closed Contract</option>
+                            <option>Pending</option>
+                            <option>Cancelled</option>
                         <% } %>
                         <% if(filterParamer == 'Open') {%>
                             <option>All</option>
-                            <option selected>Open</option>
-                            <option>Closed</option>
-                            <option>Hold</option>
+                            <option selected>Open Contract</option>
+                            <option>Closed Contract</option>
+                            <option>Pending</option>
+                            <option>Cancelled</option>
                         <% } %>
                         <% if(filterParamer == 'Closed') {%>
                             <option>All</option>
-                            <option>Open</option>
-                            <option selected>Closed</option>
-                            <option>Hold</option>
+                            <option>Open Contract</option>
+                            <option selected>Closed Contract</option>
+                            <option>Pending</option>
+                            <option>Cancelled</option>
                         <% } %>
-                        <% if(filterParamer == 'Hold') {%>
+                        <% if(filterParamer == 'Pending') {%>
                             <option>All</option>
-                            <option>Open</option>
-                            <option>Closed</option>
-                            <option selected>Hold</option>
+                            <option>Open Contract</option>
+                            <option>Closed Contract</option>
+                            <option selected>Pending</option>
+                            <option>Cancelled</option>
+                        <% } %>
+                        <% if(filterParamer == 'Cancelled') {%>
+                            <option>All</option>
+                            <option>Open Contract</option>
+                            <option>Closed Contract</option>
+                            <option>Pending</option>
+                            <option selected>Cancelled</option>
                         <% } %>
                     </select>
                     <div class="clearfix"></div>
                 </div>
+
+                <!-- Sorting -->
+                <div class="widget">
+                    <h3 class="headline" style="z-index: 0 !important;">Date</h3><span class="line"></span><div class="clearfix"></div>
+
+
+                    <div class="four alpha columns">
+                        <label>From : </label>
+                        <input type="text" name="from" id="from" style="width: 91%; z-index: 100" value=""/>
+                    </div>
+                    <br><br><br>
+                    <div class="four alpha columns">
+                        <label>To : </label>
+                        <input type="text" name="to" id="to" style="width: 91%; z-index: 100" value=""/>
+                    </div>
+                    <div class="four alpha columns" style="margin-top:10px">
+                        <input type="submit" class="button color" style="float: right; z-index: 0" value="Filter"/>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
             </form>
-
-            <!-- Sorting -->
-            <div class="widget">
-                <h3 class="headline" style="z-index: 0 !important;">Date</h3><span class="line"></span><div class="clearfix"></div>
-
-
-                <div class="four alpha columns">
-                    <label>From : </label>
-                    <input type="text" id="from" style="width: 91%; z-index: 100"/>
-                </div>
-                <br><br><br>
-                <div class="four alpha columns">
-                    <label>To : </label>
-                    <input type="text" id="to" style="width: 91%; z-index: 100"/>
-                </div>
-                <div class="four alpha columns" style="margin-top:10px">
-                    <input type="submit" class="button color" style="float: right; z-index: 0" value="Filter"/>
-                </div>
-
-                <div class="clearfix"></div>
-            </div>
 
         </div>
 
@@ -234,6 +227,7 @@
                                 <option>Stop Bidding</option>
                                 <option>Delete</option>
                                 <option>Hold</option>
+                                <option>Cancel</option>
                             </select>
                         </div>
                     </div>
