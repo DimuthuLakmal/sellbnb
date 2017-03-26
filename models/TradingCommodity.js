@@ -10,7 +10,7 @@ module.exports = function (sequelize, DataTypes) {
         classMethods: {
             associate: function (models) {
                 TradingCommodity.belongsTo(models.User);
-                TradingCommodity.hasOne(models.Commodity, {as: 'Commodity', foreignKey: 'CommodityId'});
+                TradingCommodity.belongsTo(models.Commodity);
             }
         }
     });

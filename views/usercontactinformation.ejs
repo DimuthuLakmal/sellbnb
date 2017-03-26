@@ -171,13 +171,29 @@
 
         <div class="twelve columns products">
 
+            <% if(errorMessage != '') { %>
+            <div class="notification error closeable" id="passwordErrorMessage">
+                <p><span>Error!</span> <%= errorMessage %></p>
+                <a class="close" href="#"></a>
+            </div>
+            <% } %>
+
             <table class="basic-table" style="">
 
                 <tbody>
                 <tr>
                     <td> Email Addresses</td>
-                    <td> kjtdimuthu@gmail.com <a href="#" style="color:#2db2ea;">(Remove)</a><br>
-                         kjtdimuthu.13@cse.mrt.ac.lk <a href="#" style="color:#2db2ea;">(Remove)</a>
+                    <% var emails = userContactInformation.Emails %>
+                    <td>
+                        <% for(var emailIndex = 0; emailIndex < emails.length; emailIndex++) {%>
+                            <%if(emailIndex < emails.length - 1) { %>
+                                <%= emails[emailIndex].email %> <a href="#" style="color:#2db2ea;">(Remove)</a><br>
+                            <% } else { %>
+                                <%= emails[emailIndex].email %> <a href="#" style="color:#2db2ea;">(Remove)</a>
+                            <% }  %>
+                        <% } %>
+                        <!--kjtdimuthu@gmail.com <a href="#" style="color:#2db2ea;">(Remove)</a><br>-->
+                         <!--kjtdimuthu.13@cse.mrt.ac.lk <a href="#" style="color:#2db2ea;">(Remove)</a>-->
                     </td>
                     <td>
                         <a class="popup-with-zoom-anim" href="#email-add-dialog" style="color:#2db2ea;">Add</a><br/>

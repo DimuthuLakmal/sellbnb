@@ -237,4 +237,31 @@ router.post('/search', function (req, res) {
     );
 });
 
+/* Retrieve all commodities for search key word.*/
+/* Usage: User Business Information page */
+router.post('/keyword', function (req, res) {
+    //extract keyword of commodity from req body
+    var keyword = req.body.keyword;
+
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            //search commdities which include keyword
+            var Commodity = models.Commodity;
+            Commodity.findAll({
+                where: {
+                    name: {
+                        $like: '%'+keyword+'%',
+                    }
+
+                },
+            }).then(function (Commodities) {
+                //put search results grab from items and commodities and pass as json object
+                var searchResults = Commodities;
+                res.jsonp(searchResults);
+            });
+        }
+    );
+});
+
 module.exports = router;

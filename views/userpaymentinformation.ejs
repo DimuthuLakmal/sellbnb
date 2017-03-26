@@ -81,71 +81,89 @@
         ================================================== -->
 
         <div class="twelve columns products">
+            <% var paymentInfomations = userPaymentInformation.PaymentInformations %>
 
-            <h3 class="headline">Account 01</h3><span class="line margin-bottom-30"></span><div class="clearfix"></div>
-            <table class="basic-table" style="">
+            <% for(var paymentIndex = 0; paymentIndex < paymentInfomations.length; paymentIndex++) {
+                var paymentInfo = paymentInfomations[paymentIndex];
+            %>
+                <h3 class="headline">Account <%= paymentIndex + 1 %></h3><span class="line margin-bottom-30"></span><div class="clearfix"></div>
+                <table class="basic-table" style="">
 
-                <tbody>
-                <tr>
-                    <td>Bank Account No</td>
-                    <td>4565671549</td>
-                </tr>
-                <tr>
-                    <td>Account Type </td>
-                    <td>Saving</td>
-                </tr>
-                <tr>
-                    <td>Account Name </td>
-                    <td>Nimal Diasanayaka</td>
-                </tr>
-                <tr>
-                    <td>Bank Name</td>
-                    <td>Commercial Bank</td>
-                </tr>
-                <tr>
-                    <td>Bank Branch</td>
-                    <td>Galle</td>
-                </tr>
-                <tr>
-                    <td>Country</td>
-                    <td>Sri Lanka</td>
-                </tr>
-                </tbody>
-            </table>
-            <a href="#" style="color:#2db2ea;float: right">Remove</a><br><br>
-
-            <h3 class="headline">Account 02</h3><span class="line margin-bottom-30"></span><div class="clearfix"></div>
-            <table class="basic-table" style="">
-
-                <tbody>
+                    <tbody>
                     <tr>
                         <td>Bank Account No</td>
-                        <td>4565671549</td>
+                        <td><%= paymentInfo.bankAccountNo %></td>
                     </tr>
                     <tr>
                         <td>Account Type </td>
-                        <td>Saving</td>
+                        <td><%= paymentInfo.accountType %></td>
                     </tr>
                     <tr>
-                        <td>Account Name </td>
-                        <td>Nimal Diasanayaka</td>
+                        <td>Account Holder Name </td>
+                        <td><%= paymentInfo.accountName %></td>
                     </tr>
                     <tr>
                         <td>Bank Name</td>
-                        <td>Commercial Bank</td>
+                        <td><%= paymentInfo.bankName %></td>
                     </tr>
                     <tr>
                         <td>Bank Branch</td>
-                        <td>Galle</td>
+                        <td><%= paymentInfo.bankCBranch %></td>
                     </tr>
                     <tr>
                         <td>Country</td>
-                        <td>Sri Lanka</td>
+                        <td><%= paymentInfo.bankCountry %></td>
                     </tr>
-                </tbody>
-            </table>
-            <a href="#" style="color:#2db2ea;float: right">Remove</a><br><br>
-            <a href="#" style="color:#2db2ea;float: right">Add Account</a>
+                    </tbody>
+                </table>
+                <a style="color:#2db2ea;float: right" class="paymentinformationremove">Remove</a><br><br>
+                <form action="/api/user/paymentinfo/delete" method="post">
+                    <input type="hidden" value="<%= paymentInfo.id %>" name="paymentId"/>
+                </form>
+            <% } %>
+            <br>
+            <a class="popup-with-zoom-anim" href="#payment-add-dialog" style="color:#2db2ea;float: right">Add Account</a>
+            <div id="payment-add-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
+                <h2 class="margin-bottom-10">Add Payment Information</h2>
+                <form method="post" name="editform" action="/api/user/paymentinfo/add">
+
+                    <fieldset>
+
+                        <input name="id" type="hidden" value="<%= user.id %>"/>
+
+                        <div class="twelve alpha columns editform">
+                            <input name="newbankaccountno" type="text" id="newbankaccountno" placeholder="Bank Account Number"/>
+                        </div>
+
+                        <div class="twelve alpha columns editform">
+                            <input name="newbankaccounttype" type="text" id="newbankaccounttype" placeholder="Bank Account Number"/>
+                        </div>
+
+                        <div class="twelve alpha columns editform">
+                            <input name="newbankaccountname" type="text" id="newbankaccountname" placeholder="Bank Account Holder Name"/>
+                        </div>
+
+                        <div class="twelve alpha columns editform">
+                            <input name="newbankname" type="text" id="newbankname" placeholder="Bank Name"/>
+                        </div>
+
+                        <div class="twelve alpha columns editform">
+                            <input name="newbankbranch" type="text" id="newbankbranch" placeholder="Bank Branch"/>
+                        </div>
+
+                        <div class="twelve alpha columns editform">
+                            <input name="newbankcountry" type="text" id="newbankcountry" placeholder="Bank Country"/>
+                        </div>
+
+                        <div class="twelve columns editform">
+                            <input type="submit" class="submit" id="submitnewaccoutn" value="Save"/>
+                        </div>
+
+                    </fieldset>
+
+                    <div class="clearfix"></div>
+                </form>
+            </div>
         </div>
 
     </div>
@@ -272,6 +290,7 @@
 <script src="scripts/puregrid.js"></script>
 <script src="scripts/stacktable.js"></script>
 <script src="scripts/custom.js"></script>
+<script src="scripts/views/userpaymentinformation.js"></script>
 
 </body>
 </html>

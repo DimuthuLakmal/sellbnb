@@ -26,6 +26,7 @@ router.get('/', function(req, res) {
   }
 
   //check whether commodityNames session is set
+  req.session.returnToCommodityName = req.path;
   if (commodityNames === null || commodityNames === undefined) {
     res.redirect('/api/commodity/names');
   }
@@ -63,6 +64,7 @@ router.get('/', function(req, res) {
   }
 
   delete req.session.returnTo;
+  delete req.session.returnToCommodityName;
   delete req.session.commodityPopular;
   delete req.session.latestItems;
   delete req.session.latestItems;
@@ -133,6 +135,7 @@ router.get('/news', function(req, res) {
   //this will be needed to populate commodity names in top menu
   var commodityNames = req.session.commodityNames
   //check whether commodityNames session is set
+  req.session.returnToCommodityName = req.path;
   if (commodityNames === null || commodityNames === undefined) {
     res.redirect('/api/commodity/names');
   }
@@ -148,6 +151,7 @@ router.get('/news', function(req, res) {
   req.session.newsall = null;
   req.session.newsOffset = null;
   req.session.newsCount = null;
+  delete req.session.returnToCommodityName;
   res.render('viewnewsall', {
     News: newsAll,
     currentPageNumber: currentPageNumber,
@@ -181,6 +185,7 @@ router.get('/news/start/:start', function(req, res) {
   //this will be needed to populate commodity names in top menu
   var commodityNames = req.session.commodityNames
   //check whether commodityNames session is set
+  req.session.returnToCommodityName = req.path;
   if (commodityNames === null || commodityNames === undefined) {
     res.redirect('/api/commodity/names');
   }
@@ -196,6 +201,7 @@ router.get('/news/start/:start', function(req, res) {
   req.session.newsall = null;
   req.session.newsOffset = null;
   req.session.newsCount = null;
+  delete req.session.returnToCommodityName;
   res.render('viewnewsall', {
     News: newsAll,
     currentPageNumber: currentPageNumber,
@@ -220,6 +226,7 @@ router.get('/news/id/:id', function(req, res) {
   //this will be needed to populate commodity names in top menu
   var commodityNames = req.session.commodityNames
   //check whether commodityNames session is set
+  req.session.returnToCommodityName = req.path;
   if (commodityNames === null || commodityNames === undefined) {
     res.redirect('/api/commodity/names');
   }
@@ -233,6 +240,7 @@ router.get('/news/id/:id', function(req, res) {
   }
 
   req.session.specificNews = null;
+  delete req.session.returnToCommodityName;
   res.render('viewnews', {
         News: news,
         commodityNames: commodityNames,
@@ -253,6 +261,7 @@ router.get('/user/basic', function(req, res) {
     //this will be needed to populate commodity names in top menu
     var commodityNames = req.session.commodityNames
     //check whether commodityNames session is set
+    req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
       res.redirect('/api/commodity/names');
     }
@@ -266,6 +275,7 @@ router.get('/user/basic', function(req, res) {
     }
 
     delete req.session.returnTo;
+    delete req.session.returnToCommodityName;
     res.render('useraccountbasics', {
       isAuthenticated : req.isAuthenticated(),
       user: req.user,
@@ -288,11 +298,12 @@ router.get('/user/contact', function(req, res) {
 
   //check whether use logged or not
   var errorMessage = req.session.errorMessage || '';
-  delete req.session.errorMessage;
+
   if(req.isAuthenticated()) {
     //this will be needed to populate commodity names in top menu
     var commodityNames = req.session.commodityNames
     //check whether commodityNames session is set
+    req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
       res.redirect('/api/commodity/names');
     }
@@ -305,13 +316,25 @@ router.get('/user/contact', function(req, res) {
       }
     }
 
+    var userContactInformation = req.session.userContactInformation;
+    //retreive user contact information
+    if(req.isAuthenticated()) {
+      if (userContactInformation === null || userContactInformation === undefined) {
+        res.redirect('/api/user/contactinfo/userId/'+req.user.id);
+      }
+    }
+
     delete req.session.returnTo;
+    delete req.session.returnToCommodityName;
+    delete req.session.errorMessage;
+    delete req.session.userContactInformation;
     res.render('useraccountcontactinformation', {
       isAuthenticated : req.isAuthenticated(),
       user: req.user,
       errorMessage: errorMessage,
       commodityNames: commodityNames,
       notifications: notifications,
+      userContactInformation: userContactInformation,
     });
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
@@ -332,6 +355,7 @@ router.get('/user/business', function(req, res) {
         //this will be needed to populate commodity names in top menu
         var commodityNames = req.session.commodityNames
         //check whether commodityNames session is set
+        req.session.returnToCommodityName = req.path;
         if (commodityNames === null || commodityNames === undefined) {
             res.redirect('/api/commodity/names');
         }
@@ -344,13 +368,34 @@ router.get('/user/business', function(req, res) {
           }
         }
 
+        var userTradingBusinessInformation = req.session.userTradingBusinessInformation;
+        //check whether notification session is set.
+        if(req.isAuthenticated()) {
+          if (userTradingBusinessInformation === null || userTradingBusinessInformation === undefined) {
+            res.redirect('/api/user/businessinfo/userId/'+req.user.id);
+          }
+        }
+
+        var userCertificateInformation = req.session.userCertificateInformation;
+        //check whether notification session is set.
+        if(req.isAuthenticated()) {
+          if (userCertificateInformation === null || userCertificateInformation === undefined) {
+            res.redirect('/api/user/certificateinfo/userId/'+req.user.id);
+          }
+        }
+
         delete req.session.returnTo;
+        delete req.session.returnToCommodityName;
+        delete req.session.userCertificateInformation;
+        delete req.session.userTradingBusinessInformation;
         res.render('userbusinessinformation', {
             isAuthenticated : req.isAuthenticated(),
             user: req.user,
             errorMessage: errorMessage,
             commodityNames: commodityNames,
             notifications: notifications,
+            userTradingBusinessInformation: userTradingBusinessInformation,
+            userCertificateInformation: userCertificateInformation,
         });
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
@@ -371,6 +416,8 @@ router.get('/user/payment', function(req, res) {
         //this will be needed to populate commodity names in top menu
         var commodityNames = req.session.commodityNames
         //check whether commodityNames session is set
+        req.session.returnToCommodityName = req.path;
+        console.log(req.session.returnToCommodityName+ 'AAAA');
         if (commodityNames === null || commodityNames === undefined) {
             res.redirect('/api/commodity/names');
         }
@@ -383,13 +430,24 @@ router.get('/user/payment', function(req, res) {
           }
         }
 
+        var userPaymentInformation = req.session.userPaymentInformation;
+        //retreive user payment information
+        if(req.isAuthenticated()) {
+          if (userPaymentInformation === null || userPaymentInformation === undefined) {
+            res.redirect('/api/user/paymentinfo/userId/'+req.user.id);
+          }
+        }
+
         delete req.session.returnTo;
+        delete req.session.returnToCommodityName;
+        delete req.session.userPaymentInformation;
         res.render('userpaymentinformation', {
             isAuthenticated : req.isAuthenticated(),
             user: req.user,
             errorMessage: errorMessage,
             commodityNames: commodityNames,
             notifications: notifications,
+            userPaymentInformation: userPaymentInformation,
         });
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
@@ -411,6 +469,7 @@ router.get('/user/notification', function(req, res) {
         //this will be needed to populate commodity names in top menu
         var commodityNames = req.session.commodityNames
         //check whether commodityNames session is set
+        req.session.returnToCommodityName = req.path;
         if (commodityNames === null || commodityNames === undefined) {
             res.redirect('/api/commodity/names');
         }
@@ -424,6 +483,7 @@ router.get('/user/notification', function(req, res) {
         }
 
         delete req.session.returnTo;
+        delete req.session.returnToCommodityName;
         res.render('usernotificationpreference', {
             isAuthenticated : req.isAuthenticated(),
             user: req.user,
@@ -446,6 +506,7 @@ router.get('/commodity/add', function(req, res) {
   //this will be needed to populate commodity names in top menu
   var commodityNames = req.session.commodityNames
   //check whether commodityNames session is set
+  req.session.returnToCommodityName = req.path;
   if (commodityNames === null || commodityNames === undefined) {
     res.redirect('/api/commodity/names');
   }
@@ -458,6 +519,7 @@ router.get('/commodity/add', function(req, res) {
     }
   }
 
+  delete req.session.returnToCommodityName;
   res.render('addcommodity', {
     commodityNames: commodityNames,
     notifications: notifications,
@@ -490,6 +552,7 @@ router.get('/items/search', function(req, res) {
     //this will be needed to populate commodity names in top menu
     var commodityNames = req.session.commodityNames
     //check whether commodityNames session is set
+    req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
       res.redirect('/api/commodity/names');
     }
@@ -510,6 +573,7 @@ router.get('/items/search', function(req, res) {
 
     req.session.commodities = null;
     delete req.session.returnTo;
+    delete req.session.returnToCommodityName;
     res.render('searchcommodityadd', {
       isAuthenticated : req.isAuthenticated(),
       user: {id: 1},
@@ -540,6 +604,7 @@ router.get('/items', function(req, res) {
   //this will be needed to populate commodity names in top menu
   var commodityNames = req.session.commodityNames;
   //check whether commodityNames session is set
+  req.session.returnToCommodityName = req.path;
   if (commodityNames === null || commodityNames === undefined) {
     res.redirect('/api/commodity/names');
   }
@@ -562,6 +627,7 @@ router.get('/items', function(req, res) {
   }
   var pageMultipationFactor = Math.floor((parseInt(itemsOffset)/30));
 
+  delete req.session.returnToCommodityName;
   res.render('searchresults', {
     items: searchResult,
     remainingTimes: searchResultRemainingTime,
@@ -592,6 +658,7 @@ router.get('/items/add/commoditydetails', function(req, res) {
     //this will be needed to populate commodity names in top menu
     var commodityNames = req.session.commodityNames
     //check whether commodityNames session is set
+    req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
       res.redirect('/api/commodity/names');
     }
@@ -605,6 +672,7 @@ router.get('/items/add/commoditydetails', function(req, res) {
     }
 
     delete req.session.returnTo;
+    delete req.session.returnToCommodityName;
     res.render('commoditydetailsadd', {
       isAuthenticated : req.isAuthenticated(),
       user: {id: 1},
@@ -651,6 +719,7 @@ router.get('/items/add', function(req, res) {
     //this will be needed to populate commodity names in top menu
     var commodityNames = req.session.commodityNames
     //check whether commodityNames session is set
+    req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
       res.redirect('/api/commodity/names');
     }
@@ -663,6 +732,7 @@ router.get('/items/add', function(req, res) {
       }
 
     delete req.session.returnTo;
+    delete req.session.returnToCommodityName;
     delete req.session.priceUnits;
     delete req.session.measureUnits;
     delete req.session.warehouses;
@@ -710,6 +780,7 @@ router.get('/items/add', function(req, res) {
     //this will be needed to populate commodity names in top menu
     var commodityNames = req.session.commodityNames
     //check whether commodityNames session is set
+    req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
       res.redirect('/api/commodity/names');
     }
@@ -722,6 +793,7 @@ router.get('/items/add', function(req, res) {
     }
 
     delete req.session.returnTo;
+    delete req.session.returnToCommodityName;
     delete req.session.priceUnits;
     delete req.session.measureUnits;
     delete req.session.warehouses;
@@ -771,6 +843,7 @@ router.get('/items/id/:id', function(req, res) {
     //this will be needed to populate commodity names in top menu
     var commodityNames = req.session.commodityNames
     //check whether commodityNames session is set
+    req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
       res.redirect('/api/commodity/names');
     }
@@ -788,6 +861,7 @@ router.get('/items/id/:id', function(req, res) {
     req.session.specificBiddingItem = null;
 
     delete req.session.returnTo;
+    delete req.session.returnToCommodityName;
     res.render('bidpage', {
       isAuthenticated : req.isAuthenticated(),
       user: req.user,
@@ -825,6 +899,7 @@ router.get('/user/sell/list/start/:start', function(req, res) {
       //this will be needed to populate commodity names in top menu
       var commodityNames = req.session.commodityNames
       //check whether commodityNames session is set
+      req.session.returnToCommodityName = req.path;
       if (commodityNames === null || commodityNames === undefined) {
         res.redirect('/api/commodity/names');
       }
@@ -851,6 +926,7 @@ router.get('/user/sell/list/start/:start', function(req, res) {
       delete req.session.itemsSellingAccountOffset;
       delete req.session.itemsSellingAccountCount;
       delete req.session.returnTo;
+      delete req.session.returnToCommodityName;
       res.render('useraccountselling', {
         isAuthenticated : req.isAuthenticated(),
         user: req.user,
@@ -972,6 +1048,7 @@ router.get('/user/sell/bids/start/:start', function(req, res) {
       //this will be needed to populate commodity names in top menu
       var commodityNames = req.session.commodityNames
       //check whether commodityNames session is set
+      req.session.returnToCommodityName = req.path;
       if (commodityNames === null || commodityNames === undefined) {
         res.redirect('/api/commodity/names');
       }
@@ -1007,6 +1084,7 @@ router.get('/user/sell/bids/start/:start', function(req, res) {
       delete req.session.bidwarehouses;
       delete req.session.biddingSellingAccountCount;
       delete req.session.returnTo;
+      delete req.session.returnToCommodityName;
       delete req.session.specificBiddingItemSellMeasureUnits;
       delete req.session.specificBiddingItemSellPriceUnits;
       res.render('viewbiddingdetailsseller', {
@@ -1057,6 +1135,7 @@ router.get('/user/buy/contract/id/:id', function(req, res) {
     //this will be needed to populate commodity names in top menu
     var commodityNames = req.session.commodityNames
     //check whether commodityNames session is set
+    req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
       res.redirect('/api/commodity/names');
     }
@@ -1114,6 +1193,7 @@ router.get('/user/sell/contract/bidId/:bidId', function(req, res) {
     //this will be needed to populate commodity names in top menu
     var commodityNames = req.session.commodityNames
     //check whether commodityNames session is set
+    req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
       res.redirect('/api/commodity/names');
     }
@@ -1130,6 +1210,7 @@ router.get('/user/sell/contract/bidId/:bidId', function(req, res) {
     req.session.sellContractBid = null;
     req.session.contractDate = null;
     delete req.session.returnTo;
+    delete req.session.returnToCommodityName;
     res.render('sellercontract', {
       isAuthenticated : req.isAuthenticated(),
       user: user,

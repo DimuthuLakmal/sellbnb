@@ -82,22 +82,46 @@
 
         <div class="twelve columns products">
 
+            <% if(errorMessage != '') { %>
+            <div class="notification error closeable" id="passwordErrorMessage">
+                <p><span>Error!</span> <%= errorMessage %></p>
+                <a class="close" href="#"></a>
+            </div>
+            <% } %>
+
             <table class="basic-table" style="">
 
                 <tbody>
                 <tr>
                     <td> Email Addresses</td>
-                    <td> kjtdimuthu@gmail.com <a href="#" style="color:#2db2ea;">(Remove)</a><br>
-                        kjtdimuthu.13@cse.mrt.ac.lk <a href="#" style="color:#2db2ea;">(Remove)</a>
+                    <% var emails = userContactInformation.Emails %>
+                    <td>
+                        <% for(var emailIndex = 0; emailIndex < emails.length; emailIndex++) {%>
+                            <%if(emailIndex < emails.length - 1) { %>
+                                <%= emails[emailIndex].email %>
+                                <a href="#" style="color:#2db2ea;" class="emailremove">(Remove)</a><br>
+                                <form action="/api/user/email/delete" method="post">
+                                    <input type="hidden" value="<%= emails[emailIndex].id %>" name="emailId"/>
+                                </form>
+                            <% } else { %>
+                                <%= emails[emailIndex].email %>
+                                <a href="#" style="color:#2db2ea;" class="emailremove">(Remove)</a><br>
+                                <form action="/api/user/email/delete" method="post">
+                                    <input type="hidden" value="<%= emails[emailIndex].id %>" name="emailId"/>
+                                </form>
+                            <% }  %>
+                        <% } %>
                     </td>
                     <td>
                         <a class="popup-with-zoom-anim" href="#email-add-dialog" style="color:#2db2ea;">Add</a><br/>
 
                         <div id="email-add-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
                             <h2 class="margin-bottom-10">Add Email Address</h2>
-                            <form method="post" name="editform">
+                            <form method="post" name="editform" action="/api/user/email/add">
 
                                 <fieldset>
+
+                                    <input name="id" type="hidden" value="<%= user.id %>"/>
 
                                     <div class="twelve alpha columns editform">
                                         <input name="newemail" type="email" id="newemail" placeholder="New Email Address"/>
@@ -116,17 +140,26 @@
                 </tr>
                 <tr>
                     <td> Phone Number</td>
-                    <td> +94 71666654646 <a href="#" style="color:#2db2ea;">(Remove)</a><br>
-                        +91 456546655 <a href="#" style="color:#2db2ea;">(Remove)</a>
+                    <% var phonenumbers = userContactInformation.PhoneNumbers %>
+                    <td>
+                        <% for(var phoneIndex = 0; phoneIndex < phonenumbers.length; phoneIndex++) {%>
+                            <%= phonenumbers[phoneIndex].number %>
+                            <a href="#" style="color:#2db2ea;" class="phoneremove">(Remove)</a><br>
+                            <form action="/api/user/phone/delete" method="post">
+                                <input type="hidden" value="<%= phonenumbers[phoneIndex].id %>" name="phoneId"/>
+                            </form>
+                        <% } %>
                     </td>
                     <td>
                         <a class="popup-with-zoom-anim" href="#phone-add-dialog" style="color:#2db2ea;">Add</a><br/>
 
                         <div id="phone-add-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
                             <h2 class="margin-bottom-10">Add Phone Number</h2>
-                            <form method="post" name="editform">
+                            <form method="post" name="editform" action="/api/user/phone/add">
 
                                 <fieldset>
+
+                                    <input name="id" type="hidden" value="<%= user.id %>"/>
 
                                     <div class="twelve alpha columns editform">
                                         <input name="newphone" type="text" id="newphone" placeholder="New Phone Number"/>
@@ -145,15 +178,21 @@
                 </tr>
                 <tr>
                     <td> Website</td>
-                    <td> www.sellerbnb.com</td>
+                    <td> <%= userContactInformation.website %></td>
                     <td>
-                        <a class="popup-with-zoom-anim" href="#website-edit-dialog" style="color:#2db2ea;">Edit</a><br/>
+                        <% if(userContactInformation.website != '' && userContactInformation.website != undefined) { %>
+                            <a class="popup-with-zoom-anim" href="#website-edit-dialog" style="color:#2db2ea;">Edit</a><br/>
+                        <% } else { %>
+                            <a class="popup-with-zoom-anim" href="#website-edit-dialog" style="color:#2db2ea;">Add</a><br/>
+                        <% } %>
 
                         <div id="website-edit-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
                             <h2 class="margin-bottom-10">Edit Website</h2>
-                            <form method="post" name="editform">
+                            <form method="post" name="editform" action="/api/user/website">
 
                                 <fieldset>
+
+                                    <input name="id" type="hidden" value="<%= user.id %>"/>
 
                                     <div class="twelve alpha columns editform">
                                         <input name="newwebsite" type="text" id="newwebsite" placeholder="New Website"/>
@@ -172,15 +211,37 @@
                 </tr>
                 <tr>
                     <td> Mailing Address</td>
-                    <td> Galle, Sri Lanka</td>
+                    <% if(user.mailingddress1 != null) {
+                        var address = user.mailingddress1;
+                        if(user.mailingddress2 != '') {
+                            address += ', ' + user.mailingddress2;
+                        }
+                        if(user.mailingCity != '') {
+                            address += ', ' + user.mailingCity;
+                        }
+                    %>
+                    <td> <%= address %></td>
+                    <% } else { %>
+                    <td></td>
+                    <% } %>
                     <td>
-                        <a class="popup-with-zoom-anim" href="#mailingaddress-edit-dialog" style="color:#2db2ea;">Edit</a><br/>
+                        <% if(user.mailingddress1 != null) { %>
+                        <a class="popup-with-zoom-anim" href="#location-edit-dialog" style="color:#2db2ea;">Edit</a><br/>
+                        <% } else { %>
+                        <a class="popup-with-zoom-anim" href="#location-edit-dialog" style="color:#2db2ea;">Add</a><br/>
+                        <% } %>
 
-                        <div id="mailingaddress-edit-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
-                            <h2 class="margin-bottom-10">Edit Mailing Address</h2>
-                            <form method="post" name="editform">
+                        <div id="location-edit-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
+                            <h2 class="margin-bottom-10">Edit Location</h2>
+                            <form method="post" name="editform" action="/api/user/location" id="locationChangeForm">
 
                                 <fieldset>
+                                    <div class="notification error closeable" style="display: none" id="locationErrorMessage">
+                                        <p><span>Error!</span> Please enter valid Address</p>
+                                        <a class="close" href="#"></a>
+                                    </div>
+
+                                    <input name="id" type="hidden" id="location_userid" value="<%= user.id %>"/>
 
                                     <div class="twelve alpha columns editform">
                                         <input name="newaddress1" type="text" id="newaddress1" placeholder="New Address Line 1"/>
@@ -195,7 +256,7 @@
                                     </div>
 
                                     <div class="twelve columns editform">
-                                        <input type="submit" class="submit" id="submitaddress" value="Save"/>
+                                        <input type="submit" class="submit" id="submitlocation" value="Save"/>
                                     </div>
 
                                 </fieldset>
@@ -207,17 +268,33 @@
                 </tr>
                 <tr>
                     <td> Warehouse Address</td>
-                    <td> Baddegama, Galle, Sri Lanka <a href="#" style="color:#2db2ea;">(Remove)</a><br>
-                        Labuduwa, Galle, Sri Lanka <a href="#" style="color:#2db2ea;">(Remove)</a><br>
+                    <% var warehouses = userContactInformation.WareHouses %>
+                    <td>
+                        <% for(var warehouseIndex = 0; warehouseIndex < warehouses.length; warehouseIndex++) {
+                            var address = warehouses[warehouseIndex].warehouseAddress1;
+                            if(warehouses[warehouseIndex].warehouseAddress2 != '' && warehouses[warehouseIndex].warehouseAddress2 != null) {
+                                address += ', ' + warehouses[warehouseIndex].warehouseAddress2;
+                            }
+                            if(warehouses[warehouseIndex].warehouseCity != '' && warehouses[warehouseIndex].warehouseCity != null) {
+                                address += ', ' + warehouses[warehouseIndex].warehouseCity;
+                            }
+                        %>
+                            <%= address %> <a href="#" style="color:#2db2ea;" class="warehouseremove">(Remove)</a><br>
+                            <form action="/api/user/warehouse/delete" method="post">
+                                <input type="hidden" value="<%= warehouses[warehouseIndex].id %>" name="warehouseId"/>
+                            </form>
+                        <% } %>
                     </td>
                     <td>
                         <a class="popup-with-zoom-anim" href="#warehouse-add-dialog" style="color:#2db2ea;">Add</a><br/>
 
                         <div id="warehouse-add-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
                             <h2 class="margin-bottom-10">Add Warehouse Address</h2>
-                            <form method="post" name="editform">
+                            <form method="post" name="editform" action="/api/user/warehouse/add">
 
                                 <fieldset>
+
+                                    <input name="id" type="hidden" id="location_userid" value="<%= user.id %>"/>
 
                                     <div class="twelve alpha columns editform">
                                         <input name="newwarehouseaddress1" type="text" id="newwarehouseaddress1" placeholder="New Address Line 1"/>
@@ -371,6 +448,7 @@
 <script src="scripts/puregrid.js"></script>
 <script src="scripts/stacktable.js"></script>
 <script src="scripts/custom.js"></script>
+<script src="scripts/views/useraccountcontactinformation.js"></script>
 
 </body>
 </html>
