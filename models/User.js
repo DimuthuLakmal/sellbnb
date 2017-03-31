@@ -12,6 +12,18 @@ module.exports = function (sequelize, DataTypes) {
         mailingCity: DataTypes.STRING,
         website: DataTypes.STRING,
         status: DataTypes.INTEGER,
+        rate_quality: DataTypes.DOUBLE,
+        rate_delivery: DataTypes.DOUBLE,
+        rate_reliablity_seller: DataTypes.DOUBLE,
+        payment: DataTypes.DOUBLE,
+        efficiency: DataTypes.DOUBLE,
+        rate_reliablity_buyer: DataTypes.DOUBLE,
+        no_of_ratings_quality: DataTypes.INTEGER,
+        no_of_ratings_delivery: DataTypes.INTEGER,
+        no_of_ratings_reliablity_seller: DataTypes.INTEGER,
+        no_of_ratings_payment: DataTypes.INTEGER,
+        no_of_ratings_efficiency: DataTypes.INTEGER,
+        no_of_ratings_reliablity_buyer: DataTypes.INTEGER,
     },{
         //Define Association for User
         classMethods: {

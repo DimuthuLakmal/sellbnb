@@ -80,6 +80,7 @@ app.use('/user/sell/bids/start', express.static(path.join(__dirname, 'public')))
 app.use('/user/buy/list/start', express.static(path.join(__dirname, 'public')));
 app.use('/user/buy/contract/id/', express.static(path.join(__dirname, 'public')));
 app.use('/user/sell/contract/bidId/', express.static(path.join(__dirname, 'public')));
+app.use('/user/public/userId/', express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/user', users);

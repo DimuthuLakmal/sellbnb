@@ -14,8 +14,10 @@ var async = require('async');
 /* Usage: Bidding Page */
 router.post('/add', function (req, res) {
     //retrive data from reqeust header
-    var bid = req.body.bid;
-    var quantity = req.body.quantity;
+    var priceUnit = req.body.priceUnit;
+    var bid = priceUnit + " " + req.body.bid;
+    var measureUnit = req.body.measureUnit;
+    var quantity = req.body.quantity + " " + measureUnit;
     var deliveryBy = req.body.delivery_by;
     var WareHouseId = req.body.warehouse;
     var packingType = req.body.packing_type;
@@ -34,11 +36,13 @@ router.post('/add', function (req, res) {
                 bid: bid,
                 quantity: quantity,
                 deliveryBy: deliveryBy,
+                deliveryCost: deliveryCost,
+                deliveryDate: deliveryDate,
                 WareHouseId: WareHouseId,
                 packageType: packingType,
                 paymentTerms: paymentTerms,
                 note: buyerNote,
-                status: 0,
+                status: 'open',
                 ItemId: itemId,
                 UserId: UserId,
             }).then(function (insertedBidding) {
@@ -255,6 +259,33 @@ router.get('/start/:start/userId/:userId', function (req, res) {
                 });
 
 
+            });
+        }
+    );
+});
+
+
+/* Retrieve acceped bids counts of a user */
+/* Usage: userprofile.ejs Page */
+router.get('/userId/:userId/itemUserId/:itemUserId', function (req, res) {
+    //retrieve data from req object
+    var userId = req.params.userId;
+    var itemUserId = req.params.itemUserId;
+
+    sequelize.sync().then(
+        function () {
+            var Item = models.Item;
+            var Bidding = models.Bidding;
+            Bidding.findAndCountAll({
+                where: {
+                    UserId: userId,
+                    '$Item.UserId$': itemUserId,
+                    status: 'accepted',
+                },
+                include: [Item],
+            }).then(function (Biddings) {
+                req.session.biddingCountUserProfile = Biddings.count;
+                res.redirect('/user/public/userId/'+itemUserId);
             });
         }
     );

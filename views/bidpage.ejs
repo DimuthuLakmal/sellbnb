@@ -222,14 +222,32 @@
                             <fieldset>
                                 <input type="hidden" name="id" value="<%= item.item.id %>"/>
                                 <input type="hidden" name="userId" value="<%= user.id %>"/>
-                                <div class="twelve alpha columns bidform">
+                                <div class="thirteen alpha columns bidform">
                                     <label>Your Bid : </label>
-                                    <input name="bid" type="text" id="your_bid"/>
+                                    <div class="ten columns" style="margin-left: 0px;">
+                                        <input name="bid" type="text" id="your_bid"/>
+                                    </div>
+                                    <div class="two columns">
+                                        <select name="priceUnit" id="priceUnit">
+                                            <% for(var priceIndex = 0; priceIndex < item.priceUnits.length; priceIndex++) { %>
+                                            <option value="<%= item.priceUnits[priceIndex].unitName %>"><%= item.priceUnits[priceIndex].unitName %></option>
+                                            <% } %>
+                                        </select>
+                                    </div>
                                 </div>
 
-                                <div class="twelve alpha columns bidform">
+                                <div class="thirteen alpha columns bidform">
                                     <label>Quantity : </label>
-                                    <input name="quantity" type="text" id="quantity"/>
+                                    <div class="ten columns" style="margin-left: 0px;">
+                                        <input name="quantity" type="text" id="quantity"/>
+                                    </div>
+                                    <div class="two columns">
+                                        <select name="measureUnit" id="measureUnit">
+                                            <% for(var measureIndex = 0; measureIndex < item.measureUnits.length; measureIndex++) { %>
+                                            <option value="<%= item.measureUnits[measureIndex].unitName %>"><%= item.measureUnits[measureIndex].unitName %></option>
+                                            <% } %>
+                                        </select>
+                                    </div>
                                 </div>
 
                                 <div class="twelve alpha columns bidform">

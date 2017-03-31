@@ -71,6 +71,7 @@ router.get('/', function(req, res) {
   delete req.session.bestsellers;
   delete req.session.toprated;
   delete req.session.neartocloseItems;
+  delete req.session.notifications;
   res.render('index', {
     notifications: notifications,
     commodityNames: commodityNames,
@@ -152,6 +153,7 @@ router.get('/news', function(req, res) {
   req.session.newsOffset = null;
   req.session.newsCount = null;
   delete req.session.returnToCommodityName;
+  delete req.session.notifications;
   res.render('viewnewsall', {
     News: newsAll,
     currentPageNumber: currentPageNumber,
@@ -202,6 +204,7 @@ router.get('/news/start/:start', function(req, res) {
   req.session.newsOffset = null;
   req.session.newsCount = null;
   delete req.session.returnToCommodityName;
+  delete req.session.notifications;
   res.render('viewnewsall', {
     News: newsAll,
     currentPageNumber: currentPageNumber,
@@ -241,6 +244,7 @@ router.get('/news/id/:id', function(req, res) {
 
   req.session.specificNews = null;
   delete req.session.returnToCommodityName;
+  delete req.session.notifications;
   res.render('viewnews', {
         News: news,
         commodityNames: commodityNames,
@@ -276,6 +280,7 @@ router.get('/user/basic', function(req, res) {
 
     delete req.session.returnTo;
     delete req.session.returnToCommodityName;
+    delete req.session.notifications;
     res.render('useraccountbasics', {
       isAuthenticated : req.isAuthenticated(),
       user: req.user,
@@ -319,6 +324,7 @@ router.get('/user/contact', function(req, res) {
     var userContactInformation = req.session.userContactInformation;
     //retreive user contact information
     if(req.isAuthenticated()) {
+        req.session.redirectContactInforPath = req.path;
       if (userContactInformation === null || userContactInformation === undefined) {
         res.redirect('/api/user/contactinfo/userId/'+req.user.id);
       }
@@ -328,6 +334,8 @@ router.get('/user/contact', function(req, res) {
     delete req.session.returnToCommodityName;
     delete req.session.errorMessage;
     delete req.session.userContactInformation;
+    delete req.session.notifications;
+    delete req.session.redirectContactInforPath;
     res.render('useraccountcontactinformation', {
       isAuthenticated : req.isAuthenticated(),
       user: req.user,
@@ -388,6 +396,7 @@ router.get('/user/business', function(req, res) {
         delete req.session.returnToCommodityName;
         delete req.session.userCertificateInformation;
         delete req.session.userTradingBusinessInformation;
+        delete req.session.notifications;
         res.render('userbusinessinformation', {
             isAuthenticated : req.isAuthenticated(),
             user: req.user,
@@ -417,7 +426,6 @@ router.get('/user/payment', function(req, res) {
         var commodityNames = req.session.commodityNames
         //check whether commodityNames session is set
         req.session.returnToCommodityName = req.path;
-        console.log(req.session.returnToCommodityName+ 'AAAA');
         if (commodityNames === null || commodityNames === undefined) {
             res.redirect('/api/commodity/names');
         }
@@ -441,6 +449,7 @@ router.get('/user/payment', function(req, res) {
         delete req.session.returnTo;
         delete req.session.returnToCommodityName;
         delete req.session.userPaymentInformation;
+        delete req.session.notifications;
         res.render('userpaymentinformation', {
             isAuthenticated : req.isAuthenticated(),
             user: req.user,
@@ -484,12 +493,92 @@ router.get('/user/notification', function(req, res) {
 
         delete req.session.returnTo;
         delete req.session.returnToCommodityName;
+        delete req.session.notifications;
         res.render('usernotificationpreference', {
             isAuthenticated : req.isAuthenticated(),
             user: req.user,
             errorMessage: errorMessage,
             commodityNames: commodityNames,
             notifications: notifications,
+        });
+    } else {
+        //set visited path to session. It uses to rediect to again to that page when login success.
+        req.session.returnTo = req.path;
+        res.redirect('/user/login');
+    }
+});
+
+//view user payment details
+router.get('/user/public/userId/:userId', function(req, res) {
+    removeSessionParameters(req);
+    removeSessionParameterSellingPage(req);
+
+    //check whether use logged or not
+    var errorMessage = req.session.errorMessage || '';
+    delete req.session.errorMessage;
+    if(req.isAuthenticated()) {
+        //this will be needed to populate commodity names in top menu
+        var commodityNames = req.session.commodityNames
+        //check whether commodityNames session is set
+        req.session.returnToCommodityName = req.path;
+        if (commodityNames === null || commodityNames === undefined) {
+            res.redirect('/api/commodity/names');
+        }
+
+        var notifications = req.session.notifications;
+        //check whether notification session is set.
+        if(req.isAuthenticated()) {
+            if (notifications === null || notifications === undefined) {
+                res.redirect('/api/notification/userId/'+req.user.id);
+            }
+        }
+
+        //retrieve user's public details
+        var userPublicInformation = req.session.userPublicInformation;
+        var userPublicComments = req.session.userPublicComments;
+        var userPublicCurrentListing = req.session.userPublicCurrentListing;
+        if (userPublicInformation === null || userPublicInformation === undefined) {
+            res.redirect('/api/user/public/userId/'+req.params.userId);
+        }
+
+
+        var userContactInformation = req.session.userContactInformation;
+        //retreive user contact information
+        if(req.isAuthenticated()) {
+            req.session.redirectContactInforPath = req.path;
+            if (userContactInformation === null || userContactInformation === undefined) {
+                res.redirect('/api/user/contactinfo/userId/'+req.user.id);
+            }
+        }
+
+        var biddingCountUserProfile = req.session.biddingCountUserProfile;
+        //retreive user contact information
+        if(req.isAuthenticated()) {
+            if (biddingCountUserProfile === null || biddingCountUserProfile === undefined) {
+                res.redirect('/api/bid/userId/'+req.user.id+'/itemUserId/'+req.params.userId);
+            }
+        }
+
+        delete req.session.returnTo;
+        delete req.session.returnToCommodityName;
+        delete req.session.userPublicInformation;
+        delete req.session.notifications;
+        delete req.session.redirectContactInforPath;
+        delete req.session.userContactInformation;
+        delete req.session.biddingCountUserProfile;
+        delete req.session.userPublicComments;
+        delete req.session.userPublicCurrentListing;
+        res.render('userprofile', {
+            isAuthenticated : req.isAuthenticated(),
+            user: req.user,
+            errorMessage: errorMessage,
+            commodityNames: commodityNames,
+            notifications: notifications,
+            userPublicInformation: userPublicInformation,
+            userContactInformation: userContactInformation,
+            biddingCountUserProfile: biddingCountUserProfile,
+            userPublicComments: userPublicComments,
+            userPublicCurrentListing: userPublicCurrentListing,
         });
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
@@ -520,6 +609,7 @@ router.get('/commodity/add', function(req, res) {
   }
 
   delete req.session.returnToCommodityName;
+  delete req.session.notifications;
   res.render('addcommodity', {
     commodityNames: commodityNames,
     notifications: notifications,
@@ -574,6 +664,7 @@ router.get('/items/search', function(req, res) {
     req.session.commodities = null;
     delete req.session.returnTo;
     delete req.session.returnToCommodityName;
+    delete req.session.notifications;
     res.render('searchcommodityadd', {
       isAuthenticated : req.isAuthenticated(),
       user: {id: 1},
@@ -628,6 +719,7 @@ router.get('/items', function(req, res) {
   var pageMultipationFactor = Math.floor((parseInt(itemsOffset)/30));
 
   delete req.session.returnToCommodityName;
+  delete req.session.notifications;
   res.render('searchresults', {
     items: searchResult,
     remainingTimes: searchResultRemainingTime,
@@ -673,6 +765,7 @@ router.get('/items/add/commoditydetails', function(req, res) {
 
     delete req.session.returnTo;
     delete req.session.returnToCommodityName;
+    delete req.session.notifications;
     res.render('commoditydetailsadd', {
       isAuthenticated : req.isAuthenticated(),
       user: {id: 1},
@@ -736,6 +829,7 @@ router.get('/items/add', function(req, res) {
     delete req.session.priceUnits;
     delete req.session.measureUnits;
     delete req.session.warehouses;
+    delete req.session.notifications;
     res.render('additem', {
       isAuthenticated : req.isAuthenticated(),
       user: req.user,
@@ -797,6 +891,7 @@ router.get('/items/add', function(req, res) {
     delete req.session.priceUnits;
     delete req.session.measureUnits;
     delete req.session.warehouses;
+    delete req.session.notifications;
     res.render('additem', {
       isAuthenticated : req.isAuthenticated(),
       user: req.user,
@@ -862,6 +957,7 @@ router.get('/items/id/:id', function(req, res) {
 
     delete req.session.returnTo;
     delete req.session.returnToCommodityName;
+    delete req.session.notifications;
     res.render('bidpage', {
       isAuthenticated : req.isAuthenticated(),
       user: req.user,
@@ -927,6 +1023,7 @@ router.get('/user/sell/list/start/:start', function(req, res) {
       delete req.session.itemsSellingAccountCount;
       delete req.session.returnTo;
       delete req.session.returnToCommodityName;
+      delete req.session.notifications;
       res.render('useraccountselling', {
         isAuthenticated : req.isAuthenticated(),
         user: req.user,
@@ -993,6 +1090,7 @@ router.get('/user/buy/list/start/:start', function(req, res) {
     delete req.session.itemsBuyingAccountOffset;
     delete req.session.itemsBuyingAccountCount;
     delete req.session.returnTo;
+    delete req.session.notifications;
     res.render('useraccountbuying', {
       //isAuthenticated : req.isAuthenticated(),
       user: user,
@@ -1087,6 +1185,7 @@ router.get('/user/sell/bids/start/:start', function(req, res) {
       delete req.session.returnToCommodityName;
       delete req.session.specificBiddingItemSellMeasureUnits;
       delete req.session.specificBiddingItemSellPriceUnits;
+      delete req.session.notifications;
       res.render('viewbiddingdetailsseller', {
         isAuthenticated : req.isAuthenticated(),
         user: req.user,
@@ -1152,6 +1251,7 @@ router.get('/user/buy/contract/id/:id', function(req, res) {
     req.session.buyContractBid = null;
     req.session.contractDate = null;
     delete req.session.returnTo;
+    delete req.session.notifications;
     res.render('buyercontract', {
       isAuthenticated : req.isAuthenticated(),
       user: user,
@@ -1211,6 +1311,7 @@ router.get('/user/sell/contract/bidId/:bidId', function(req, res) {
     req.session.contractDate = null;
     delete req.session.returnTo;
     delete req.session.returnToCommodityName;
+    delete req.session.notifications;
     res.render('sellercontract', {
       isAuthenticated : req.isAuthenticated(),
       user: user,

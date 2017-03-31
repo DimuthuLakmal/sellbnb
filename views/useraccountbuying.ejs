@@ -167,8 +167,8 @@
                     </div>
                     <div class="four columns">
                         <h3><%= item.title %></h3>
-                        <p>Last Bid: LKR.<%= maxBid.bid %><br>
-                            Your Last Bid: LKR.<%= bid.bid %><br>
+                        <p>Last Bid: <%= maxBid.bid %><br>
+                            Your Last Bid: <%= bid.bid %><br>
                             <% if(remainingTimes[itemIndex][0] != 0) {
                                 var remainingTime = remainingTimes[itemIndex][0];
                                 var numdays = Math.floor(remainingTime / 86400);
@@ -193,7 +193,7 @@
                             <fieldset>
                                 <input type="hidden" name="id" value="<%= bid.id %>"/>
                                 <div class="two columns editform">
-                                    <input style="width: 80%" name="newbid" type="text" id="newbid" placeholder="Your New Bid"/>
+                                    <input style="width: 80%" name="newbid" type="text" id="newbid" placeholder="Your New Bid" value="<%= bid.bid.split(" ")[0]+" " %>"/>
                                 </div>
 
                                 <div class="two columns editform">

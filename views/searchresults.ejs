@@ -151,7 +151,7 @@
                         <div class="five columns">
                             <h3><%= item.title %></h3>
                             <p>Time Remaining: <%= formattedAddress %><br>
-                                Seller: <%= item.User.username %><br>
+                                Seller: <a href="/user/public/userId/<%= item.User.id %>"> <%= item.User.username %></a><br>
                                 Suggested Price: <%= item.suggestedPrice %></p><br>
                         </div>
                         <div class="four columns" style="float:right">

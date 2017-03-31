@@ -16,11 +16,11 @@ router.get('/add/mutual/type/:type/bidId/:bidId/itemName/:itemName/itemId/:itemI
     var redirection = '';
     var url = ''
     if (req.params.requestFrom == 'seller') {
-        redirection = '/user/sell/contract/bidId/'+req.params.itemId;
+        redirection = '/user/sell/contract/bidId/'+req.params.bidId;
         url = '/user/buy/contract/id/'+req.params.itemId;
     } else {
         redirection = '/user/buy/contract/id/'+req.params.itemId;
-        url = '/user/sell/contract/bidId/'+req.params.itemId;
+        url = '/user/sell/contract/bidId/'+req.params.bidId;
     }
     var description = 'Mutual Cancellation Request for item '+req.params.itemName;
     addNotification(res, req, url , description, redirection);
@@ -92,7 +92,42 @@ function addNotification(res, req, url, description, redirection) {
                 //sending email & SMS
                 var subject = 'Mutual Cancellation Request';
                 var message = 'You have a request to cancel the contract on item ' + req.params.itemName;
-                sendEmail(req.params.userId, subject, message, redirection, res);
+                //sendEmail(req.params.userId, subject, message, redirection, res);
+
+                var User = models.User;
+                var Email = models.Email;
+                var PhoneNumber = models.PhoneNumber;
+                User.findAll({
+                    where: {id: req.params.userId},
+                    include: [Email, PhoneNumber],
+                }).then(function (Users) {
+                    //send SMS
+                    var SMSPhoneNumber = Users[0].dataValues.PhoneNumbers[0].dataValues;
+                    console.log(SMSPhoneNumber);
+
+                    // Twilio Credentials
+                    var accountSid = 'ACb1c6f0ccb34ac2d7aaee85cc8a9d5a34';
+                    var authToken = '8bef9138453179638cc15b3fd197a0ae';
+
+                    //require the Twilio module and create a REST client
+                    var client = require('twilio')(accountSid, authToken);
+
+                    client.sendMessage({
+                        to: SMSPhoneNumber.number,
+                        from: "+12569987739 ",
+                        body: "You have received Mutual Cancellation Request",
+                    }, function(err, message) {
+                        if(err) {
+                            console.log(err);
+                        } else {
+                            console.log(redirection);
+                            res.redirect(redirection);
+                            console.log(message);
+                        }
+                    });
+
+                    //res.redirect(redirection);
+                });
             });
         }
     ).catch(function (error) {

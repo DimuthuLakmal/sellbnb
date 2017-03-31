@@ -326,6 +326,8 @@ router.get('/id/:id', function (req, res) {
             var ItemComment = models.ItemComment;
             var Commodity = models.Commodity;
             var WareHouse = models.WareHouse;
+            var CommodityMeasureUnit = models.CommodityMeasureUnit;
+            var CommodityPriceUnit = models.CommodityPriceUnit;
 
             var itemId = req.params.id;
             Item.findAll({
@@ -365,15 +367,41 @@ router.get('/id/:id', function (req, res) {
                         },
                         include: [User],
                     }).then(function (Comments) {
-                        req.session.specificBiddingItem = {'item': item, 'commodity': commodity, 'itemImages': itemImages,
-                            'user': user, 'itemComments': Comments, 'warehouse': warehouse, 'remainingTime': difference,
-                            'similarItems': similarItems};
 
-                        Item.update(
-                            { hits: (hits+1) },
-                            { where: { id: id } }
-                        ).then(function (results) {
-                            res.redirect('/items/id/'+itemId);
+                        //retrieve similar items
+                        Item.findAll({
+                            where: {
+                                CommodityId: item.CommodityId,
+                                duration: {
+                                    gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
+                                },
+                                id: {
+                                    $ne: id,
+                                }
+                            },
+                            include: [ItemImage, User],
+                        }).then(function (Items) {
+
+                            //retreive measure units
+                            CommodityMeasureUnit.findAll({
+                                where: {CommodityId: commodity.id}
+                            }).then(function (MeasuerUnits) {
+                                //retrieve price units
+                                CommodityPriceUnit.findAll({
+                                    where: {CommodityId: commodity.id}
+                                }).then(function (PriceUnits) {
+                                    req.session.specificBiddingItem = {'item': item, 'commodity': commodity, 'itemImages': itemImages,
+                                        'user': user, 'itemComments': Comments, 'warehouse': warehouse, 'remainingTime': difference,
+                                        'similarItems': similarItems, 'measureUnits': MeasuerUnits, 'priceUnits': PriceUnits};
+
+                                    Item.update(
+                                        { hits: (hits+1) },
+                                        { where: { id: id } }
+                                    ).then(function (results) {
+                                        res.redirect('/items/id/'+itemId);
+                                    });
+                                });
+                            });
                         });
                     });
                 });

@@ -710,7 +710,7 @@ router.get('/contactinfo/userId/:userId', function (req, res) {
                 var user  = Users[0];
                 console.log(Users);
                 req.session.userContactInformation = user;
-                res.redirect('/user/contact');
+                res.redirect(req.session.redirectContactInforPath);
             });
         }
     );
@@ -779,6 +779,148 @@ router.get('/certificateinfo/userId/:userId', function (req, res) {
             });
         }
     );
+});
+
+
+/* Retrieve User Information to show public*/
+/* Usage: userprofile page*/
+router.get('/public/userId/:userId', function (req, res) {
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var User = models.User;
+            var UserComment = models.UserComment;
+            var Item = models.Item;
+            var ItemImage = models.ItemImage;
+            var Commodity = models.Commodity;
+            User.findAll({
+                where: {id: req.params.userId},
+            }).then(function (Users) {
+                //saving informations to sessions
+                var user  = Users[0];
+
+                UserComment.findAll({
+                    where: {receivedUserIdFk: req.params.userId},
+                    include: [{
+                        model: User,
+                        as: 'feedbackUserId'
+                    }]
+                }).then(function (UserComments) {
+                    Item.findAll({
+                        where: {
+                            UserId: req.params.userId,
+                            status: 'active',
+                        },
+                        include:[ItemImage, Commodity]
+                    }).then(function (Items) {
+                        req.session.userPublicInformation = user;
+                        req.session.userPublicComments = UserComments;
+                        req.session.userPublicCurrentListing = Items;
+                        res.redirect('/user/public/userId/'+req.params.userId);
+                    });
+                });
+
+            });
+        }
+    );
+});
+
+/* Add feedback to database. */
+/* Usage: userprofile.ejs page */
+router.post('/feedback', function (req, res) {
+    //retrieve data from req object
+    var userId = req.body.id;
+    var rate_quality = req.body.rating_quality;
+    var rate_delivery = req.body.rating_delivery;
+    var rate_reliability_seller = req.body.rating_reliability_seller;
+    var rate_payment = req.body.rating_payment;
+    var rate_efficiency = req.body.rating_efficiency;
+    var rate_reliability_buyer = req.body.reliability_buyer;
+    var feedback = req.body.feedback;
+    var feedbackUserId = req.body.userId;
+
+    var rate_quality_new = 0;
+    var rate_delivery_new = 0;
+    var rate_reliability_seller_new = 0;
+    var rate_payment_new = 0;
+    var rate_efficiency_new = 0;
+    var rate_reliability_buyer_new = 0;
+
+    //store news in database
+    sequelize.sync().then(
+        function () {
+            var UserComment = models.UserComment;
+            var User = models.User;
+            UserComment.create({
+                comment: feedback,
+                receivedUserIdFk: userId,
+                feedbackUserIdFk: feedbackUserId,
+            }).then(function (insertedComment) {
+                User.findAll({
+                    where: {id: userId},
+                }).then(function (Users) {
+                    //saving informations to sessions
+                    var user  = Users[0].dataValues;
+
+                    var rate_quality_old = user.rate_quality;
+                    var rate_delivery_old = user.rate_delivery;
+                    var rate_reliability_buyer_old = user.rate_reliablity_buyer;
+                    var rate_payment_old = user.payment;
+                    var rate_efficiency_old = user.efficiency;
+                    var rate_reliablity_seller_old = user.rate_reliablity_seller;
+                    var no_of_ratings_quality_old = user.no_of_ratings_quality;
+                    var no_of_ratings_delivery_old = user.no_of_ratings_delivery;
+                    var no_of_ratings_reliablity_seller_old = user.no_of_ratings_reliablity_seller;
+                    var no_of_ratings_payment_old = user.no_of_ratings_payment;
+                    var no_of_ratings_efficiency_old = user.no_of_ratings_efficiency;
+                    var no_of_ratings_reliablity_buyer_old = user.no_of_ratings_reliablity_buyer;
+
+
+                    if(no_of_ratings_quality_old > 0) {
+                        var sum = ((rate_quality_old * no_of_ratings_quality_old) + parseInt(rate_quality));
+                        rate_quality_new = (sum) / (parseInt(no_of_ratings_quality_old) + 1);
+                    }
+                    if(no_of_ratings_delivery_old > 0) {
+                        rate_delivery_new = (rate_delivery_old * no_of_ratings_delivery_old + parseInt(rate_delivery)) / (no_of_ratings_delivery_old + 1);
+                    }
+                    if(no_of_ratings_reliablity_seller_old > 0) {
+                        rate_reliability_seller_new = (rate_reliablity_seller_old * no_of_ratings_reliablity_seller_old + parseInt(rate_reliability_seller)) / (no_of_ratings_reliablity_seller_old + 1);
+                    }
+                    if(no_of_ratings_payment_old > 0) {
+                        rate_payment_new = (rate_payment_old * no_of_ratings_payment_old + parseInt(rate_payment)) / (no_of_ratings_payment_old + 1);
+                    }
+                    if(no_of_ratings_efficiency_old > 0) {
+                        rate_efficiency_new = (rate_efficiency_old * no_of_ratings_efficiency_old + parseInt(rate_efficiency)) / (no_of_ratings_efficiency_old + 1);
+                    }
+                    if(no_of_ratings_reliablity_buyer_old > 0) {
+                        rate_reliability_buyer_new = (rate_reliability_buyer_old * no_of_ratings_reliablity_buyer_old + parseInt(rate_reliability_buyer)) / (no_of_ratings_reliablity_buyer_old + 1);
+                    }
+
+                    res.redirect('/user/public/userId/'+userId);
+                    User.update({
+                            rate_quality: rate_quality_new,
+                            rate_delivery: rate_delivery_new,
+                            rate_reliablity_seller: rate_reliability_seller_new,
+                            payment: rate_payment_new,
+                            efficiency: rate_efficiency_new,
+                            rate_reliablity_buyer: rate_reliability_buyer_new,
+                            no_of_ratings_quality: (no_of_ratings_quality_old+1),
+                            no_of_ratings_delivery: (no_of_ratings_delivery_old+1),
+                            no_of_ratings_reliablity_seller: (no_of_ratings_reliablity_seller_old+1),
+                            no_of_ratings_payment: (no_of_ratings_payment_old+1),
+                            no_of_ratings_efficiency: (no_of_ratings_efficiency_old+1),
+                            no_of_ratings_reliablity_buyer: (no_of_ratings_reliablity_buyer_old+1),
+                        },
+                        {where: {id: userId}}
+                    ).then(function (results) {
+                        res.redirect('/user/public/userId/'+userId);
+                    });
+                });
+            });
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
 });
 
 router.get('/delall', function () {
