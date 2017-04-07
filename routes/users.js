@@ -66,7 +66,7 @@ function verifyCredentials(username, password, done) {
 router.get('/login', function (req, res, next) {
 
     //this will be needed to populate commodity names in top menu
-    var commodityNames = req.session.commodityNames
+    var commodityNames = req.session.commodityNames;
     //check whether commodityNames session is set
     if (commodityNames === null || commodityNames === undefined) {
         res.redirect('/api/commodity/names');
@@ -81,12 +81,47 @@ router.get('/login', function (req, res, next) {
         }
     }
 
-    res.render('login', {message: req.flash("error"), commodityNames: commodityNames,
-        notifications: notifications});
+    delete req.session.notifications;
+    res.render('login', {
+        message: req.flash("error"),
+        commodityNames: commodityNames,
+        notifications: notifications,
+        loginOrRegister: 'Login',
+        user: req.user,
+    });
+});
+
+/* GET users listing. */
+router.get('/logout', function (req, res, next) {
+    req.logout();
+    res.redirect('/');
 });
 
 router.get('/signup', function (req, res, next) {
-    res.render('login', {message: req.flash("error")});
+    //this will be needed to populate commodity names in top menu
+    var commodityNames = req.session.commodityNames;
+    //check whether commodityNames session is set
+    if (commodityNames === null || commodityNames === undefined) {
+        res.redirect('/api/commodity/names');
+    }
+
+    //populate notification
+    var notifications = req.session.notifications;
+    //check whether notification session is set.
+    if(req.isAuthenticated()) {
+        if (notifications === null || notifications === undefined) {
+            res.redirect('/api/notification/userId/'+req.user.id);
+        }
+    }
+
+    delete req.session.notifications;
+    res.render('signup', {
+        message: req.flash("error"),
+        notifications: notifications,
+        commodityNames: commodityNames,
+        loginOrRegister: 'Register',
+        user: req.user,
+    });
 });
 
 /* POST request from login form. User passport local method for authentication */
@@ -662,7 +697,7 @@ router.get('/sell/warehouses/userId/:userId/itemId/:itemId', function (req, res)
 });
 
 router.post('/adduser', function (req, res) {
-    if (typeof(req.body.username) != "undefined" && typeof req.body.password != "undefined") {
+    if (typeof(req.body.username) != "undefined" && typeof(req.body.password) != "undefined" && typeof(req.body.email) != "undefined") {
 
         models.User.findAll({
             where: {
@@ -675,7 +710,20 @@ router.post('/adduser', function (req, res) {
                 //set error message to flash
                 //done(null, false, { message: 'Wrong username or password!' } );
                 var hash = bcrypt.hashSync(req.body.password[0], salt);
-                models.User.create({username: req.body.username, password: hash}).then(function () {
+                models.User.create(
+                    {
+                        username: req.body.username,
+                        password: hash,
+                    }
+                ).then(function (createUser) {
+                    models.Email.create(
+                        {
+                            email: req.body.email,
+                            UserId: createUser.id,
+                        }
+                    ).then(function () {
+                        res.redirect('/user/basic');
+                    });
                     res.redirect('/user/basic');
                 });
             }

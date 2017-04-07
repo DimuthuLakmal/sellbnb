@@ -82,6 +82,7 @@ router.get('/', function(req, res) {
     toprated: toprated,
     neartocloseItems: neartocloseItems,
     latestNews: latestNews,
+    user: req.user,
   });
 
 });
@@ -161,6 +162,7 @@ router.get('/news', function(req, res) {
     pageMultipationFactor: pageMultipationFactor,
     commodityNames: commodityNames,
     notifications: notifications,
+    user: req.user,
   });
 });
 
@@ -211,7 +213,8 @@ router.get('/news/start/:start', function(req, res) {
     maxPageCount: maxPageCount,
     pageMultipationFactor: pageMultipationFactor,
     commodityNames: commodityNames,
-    notifications: notifications
+    notifications: notifications,
+    user: req.user,
   });
 });
 
@@ -249,6 +252,7 @@ router.get('/news/id/:id', function(req, res) {
         News: news,
         commodityNames: commodityNames,
         notifications: notifications,
+        user: req.user,
       });
 });
 
@@ -613,6 +617,7 @@ router.get('/commodity/add', function(req, res) {
   res.render('addcommodity', {
     commodityNames: commodityNames,
     notifications: notifications,
+    user: req.user,
   });
 
   // //check whether use logged or not
@@ -667,7 +672,7 @@ router.get('/items/search', function(req, res) {
     delete req.session.notifications;
     res.render('searchcommodityadd', {
       isAuthenticated : req.isAuthenticated(),
-      user: {id: 1},
+      user: req.user,
       Commodities: commodities.rows,
       commodityNames: commodityNames,
       notifications: notifications,
@@ -735,6 +740,7 @@ router.get('/items', function(req, res) {
     endPrice: endPrice,
     commodityNames: commodityNames,
     notifications: notifications,
+    user: req.user,
   });
 
 });
@@ -768,7 +774,7 @@ router.get('/items/add/commoditydetails', function(req, res) {
     delete req.session.notifications;
     res.render('commoditydetailsadd', {
       isAuthenticated : req.isAuthenticated(),
-      user: {id: 1},
+      user: req.user,
       Commodity: commodity,
       CommodityAlterNames: commodity.CommodityAlterNames,
       CommodityImages: commodity.CommodityImages,

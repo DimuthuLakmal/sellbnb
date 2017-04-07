@@ -17,8 +17,12 @@
     <div class="twelve columns">
         <div id="additional-menu">
             <ul>
-                <li><a href="checkout-billing-details.html">English</a></li>
-                <li><a href="my-account.html">Sinhala</a></li>
+                <% if(user != null && user != undefined) {%>
+                    <li><a href="/user/logout">Sign Out</a></li>
+                <%} else {%>
+                    <li><a href="/user/login">Sign In</a></li>
+                    <li><a href="/user/signup">Register</a></li>
+                <%}%>
             </ul>
         </div>
     </div>
