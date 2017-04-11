@@ -211,7 +211,8 @@
                                 <input type="submit" style="float: right; width: 100%; padding-right:20px"
                                        class="item-selling-btn" value="View Details"/>
                             </form>
-                            <% if (bid.status == 'accepted' || bid.status == 'mutual-cancellation-buyer') {%>
+                            <%= bid.status %>
+                            <% if (bid.status == 'accepted' || bid.status == 'mutual-cancellation-seller') {%>
                             <form method="GET" action="/user/buy/contract/id/<%= item.id %>">
                                 <input type="submit" style="float: right; width: 100%; padding-right:20px"
                                        class="item-selling-btn" value="Contract" />

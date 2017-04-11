@@ -971,6 +971,115 @@ router.post('/feedback', function (req, res) {
     });
 });
 
+/* GET users listing. */
+router.get('/forgotpassword_code', function (req, res, next) {
+
+    var email = req.query['email'];
+
+    sequelize.sync().then(
+        function () {
+            var User = models.User;
+            var Email = models.Email;
+            Email.findAll({
+                where: {
+                    email: email,
+                },
+            }).then(function (Email) {
+                if (!_.isUndefined(Email[0])) {
+                    //var email = Email[0].dataValues;
+                    var random_numeber = Math.floor(Math.random() * (100000 - 10000 + 1)) + 10000;
+
+                    var helper = require('sendgrid').mail;
+
+                    from_email = new helper.Email("sellbnb@gmail.com");
+                    to_email = new helper.Email(email);
+                    subject = 'Password Recovery';
+                    content = new helper.Content("text/plain", "Your recovery code is "+random_numeber);
+                    mail = new helper.Mail(from_email, subject, to_email, content);
+
+                    var sg = require('sendgrid')('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');
+                    var request = sg.emptyRequest({
+                        method: 'POST',
+                        path: '/v3/mail/send',
+                        body: mail.toJSON()
+                    });
+
+                    sg.API(request, function(error, response) {
+                        console.log(response.statusCode);
+                        console.log(response.body);
+                        console.log(response.headers);
+                        req.session.recoveryCode = random_numeber;
+                        req.session.recoveryEmail = email;
+                        res.redirect('/user/forgotpassword/entercode');
+                    });
+                } else {
+                    req.session.recoveryEmailError = 'Invalid Email Address';
+                    res.redirect('/user/forgotpassword');
+                }
+            });
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+
+
+
+
+});
+
+/* GET users listing. */
+router.get('/forgotpassword_code_check', function (req, res, next) {
+
+    var code = req.query['code'];
+
+    if(code == req.session.recoveryCode) {
+        res.redirect('/user/resetpassword');
+    } else {
+        req.session.codeError  = 'Code is invalid';
+        res.redirect('/user/forgotpassword/entercode');
+    }
+
+
+});
+
+/* Change password */
+router.post('/forgotpassword/update', function (req, res) {
+    //retrieve data from req object
+    var newpassword = req.body.password;
+    var currentpassword = req.body.repassword;
+    var email = req.session.recoveryEmail;
+
+    var hash = bcrypt.hashSync(newpassword, salt);
+
+    //retrieve current password of userid and validate, then update password
+    sequelize.sync().then(
+        function () {
+            var User = models.User;
+            var Email = models.Email;
+            Email.findAll({
+                where: {
+                    email: email,
+                },
+            }).then(function (Email) {
+                if (!_.isUndefined(Email[0])) {
+                    var userId = Email[0].dataValues.UserId;
+                    User.update(
+                        {password: hash},
+                        {where: {id: userId}}
+                    ).then(function (results) {
+                        delete req.session.recoveryEmail;
+                        delete req.session.recoveryCode;
+                        delete req.session.codeError;
+                        res.redirect('/user/login');
+                    });
+                }
+            });
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+});
+
 router.get('/delall', function () {
     models.User.destroy({
         where: {}

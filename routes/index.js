@@ -1334,29 +1334,141 @@ router.get('/user/sell/contract/bidId/:bidId', function(req, res) {
   }
 });
 
+//view forgot password code page
+router.get('/user/forgotpassword', function(req, res) {
+    removeSessionParameters(req);
+
+    // check whether use logged or not
+
+        var user = req.user;
+
+        //this will be needed to populate commodity names in top menu
+        var commodityNames = req.session.commodityNames
+        //check whether commodityNames session is set
+        req.session.returnToCommodityName = req.path;
+        if (commodityNames === null || commodityNames === undefined) {
+            res.redirect('/api/commodity/names');
+        }
+
+        var notifications = req.session.notifications;
+        //check whether notification session is set.
+        if(req.isAuthenticated()) {
+            if (notifications === null || notifications === undefined) {
+                res.redirect('/api/notification/userId/'+req.user.id);
+            }
+        }
+
+        delete req.session.returnTo;
+        delete req.session.notifications;
+        res.render('forgotpassword_code', {
+            //isAuthenticated : req.isAuthenticated(),
+            user: user,
+            loginOrRegister: 'Recover Password',
+            commodityNames: commodityNames,
+            notifications: notifications,
+            emailError: req.session.recoveryEmailError,
+        });
+
+});
+
+//view forgot password code page
+router.get('/user/forgotpassword/entercode', function(req, res) {
+    removeSessionParameters(req);
+
+    // check whether use logged or not
+
+    var user = req.user;
+
+    //this will be needed to populate commodity names in top menu
+    var commodityNames = req.session.commodityNames
+    //check whether commodityNames session is set
+    req.session.returnToCommodityName = req.path;
+    if (commodityNames === null || commodityNames === undefined) {
+        res.redirect('/api/commodity/names');
+    }
+
+    var notifications = req.session.notifications;
+    //check whether notification session is set.
+    if(req.isAuthenticated()) {
+        if (notifications === null || notifications === undefined) {
+            res.redirect('/api/notification/userId/'+req.user.id);
+        }
+    }
+
+    delete req.session.returnTo;
+    delete req.session.notifications;
+    res.render('forgotpasswordcodeenter', {
+        user: user,
+        codeError: req.session.codeError,
+        recoveryEmail: req.session.recoveryEmail,
+        loginOrRegister: 'Enter Code',
+        commodityNames: commodityNames,
+        notifications: notifications,
+    });
+
+});
+
+
+//view forgot password code page
+router.get('/user/resetpassword', function(req, res) {
+    removeSessionParameters(req);
+
+    // check whether use logged or not
+
+    var user = req.user;
+
+    //this will be needed to populate commodity names in top menu
+    var commodityNames = req.session.commodityNames
+    //check whether commodityNames session is set
+    req.session.returnToCommodityName = req.path;
+    if (commodityNames === null || commodityNames === undefined) {
+        res.redirect('/api/commodity/names');
+    }
+
+    var notifications = req.session.notifications;
+    //check whether notification session is set.
+    if(req.isAuthenticated()) {
+        if (notifications === null || notifications === undefined) {
+            res.redirect('/api/notification/userId/'+req.user.id);
+        }
+    }
+
+    delete req.session.returnTo;
+    delete req.session.notifications;
+    res.render('resetpassword', {
+        user: user,
+        recoveryEmail: req.session.recoveryEmail,
+        loginOrRegister: 'Enter New Password',
+        commodityNames: commodityNames,
+        notifications: notifications,
+    });
+
+});
+
 router.get('/testtwilio', function(req, res) {
   // // Twilio Credentials
-  // var helper = require('sendgrid').mail
-  //
-  // from_email = new helper.Email("kjtdimuthu.13@cse.mrt.ac.lk")
-  // to_email = new helper.Email('kjtdimuthu@gmail.com');
-  // subject = "Ticket Booking"
-  // content = new helper.Content("text/plain", "Thank you for booking. If any inquiry call +94777323498")
-  // mail = new helper.Mail(from_email, subject, to_email, content)
-  //
-  // var sg = require('sendgrid')('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');
-  // var request = sg.emptyRequest({
-  //   method: 'POST',
-  //   path: '/v3/mail/send',
-  //   body: mail.toJSON()
-  // });
-  //
-  // sg.API(request, function(error, response) {
-  //   console.log(response.statusCode)
-  //   console.log(response.body)
-  //   console.log(response.headers);
-  //   res.json(['Yeeii']);
-  // });
+    var helper = require('sendgrid').mail;
+
+    from_email = new helper.Email("sellbnb@gmail.com");
+    to_email = new helper.Email("kjtdimuthu@gmail.com");
+    subject = "Sending with SendGrid is Fun";
+    content = new helper.Content("text/plain", "and easy to do anywhere, even with Node.js");
+    mail = new helper.Mail(from_email, subject, to_email, content);
+
+    var sg = require('sendgrid')('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');
+    var request = sg.emptyRequest({
+        method: 'POST',
+        path: '/v3/mail/send',
+        body: mail.toJSON()
+    });
+
+    sg.API(request, function(error, response) {
+        console.log(response.statusCode);
+        console.log(response.body);
+        console.log(response.headers);
+    });
+    
+    res.redirect('/');
 });
 
 //to remove unnecessary session parameters
