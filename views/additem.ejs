@@ -39,13 +39,15 @@
         <div class="parallax-overlay"></div>
 
         <div class="parallax-content">
-            <h2>User Account <span>Contact Details</span></h2>
+            <h2>Add Your Item</h2>
 
             <nav id="breadcrumbs">
                 <ul>
                     <li>Home</li>
-                    <li>Account</li>
-                    <li>Contact Details</li>
+                    <li>Sell</li>
+                    <li>Search Commodity</li>
+                    <li>Commodity Details</li>
+                    <li>Add Items</li>
                 </ul>
             </nav>
         </div>
@@ -53,34 +55,10 @@
 
     <div class="container">
 
-        <!-- Sidebar
-        ================================================== -->
-        <div class="four columns">
-
-            <!-- Categories -->
-            <div class="widget margin-top-0">
-
-                <ul id="categories">
-
-                    <li><a href="/user/basic">Basic Account</a></li>
-                    <li><a href="/user/contact">Contact Information</a></li>
-                    <li><a href="/user/payment">Payment Information</a></li>
-                    <li><a href="/user/business">Business Information</a></li>
-                    <li><a href="/user/notification">Notification Preferences</a></li>
-                    <li><a href="/items/search" class="active">Sell</a></li>
-
-                </ul>
-                <div class="clearfix"></div>
-
-            </div>
-
-        </div>
-
-
         <!-- Content
         ================================================== -->
 
-        <div class="twelve columns products">
+        <div class="twelve columns products centered">
 
             <section class="variables">
 
@@ -89,23 +67,17 @@
                     <fieldset>
                         <input type="hidden" id="userId" name="userId" value="<%= user.id %>"/>
                         <input type="hidden" id="commodityId" name="commodityId" value="<%= CommodityId %>"/>
-                        <div class="twelve alpha columns editform">
-                            <label>Images : </label>
-                            <div class="ten columns" id="imagepreview-div">
-                            </div>
-                            <button class="commodity-uploadimage" id="commodity-uploadimage">Upload Images</button>
-                            <input type="file" name="fileToUpload" id="fileToUpload" style="display: none">
-                        </div>
 
                         <div class="twelve alpha columns editform">
                             <label>Title : </label>
-                            <input name="title" type="text" id="title"/>
+                            <input name="title" type="text" id="title" placeholder="Write a descriptive title. [Use words people would search for when looking for your commodity]"/>
                         </div>
+
 
                         <div class="thirteen alpha columns editform">
                             <label>Quantity : </label>
                             <div class="ten columns" style="margin-left:0px">
-                                <input name="quantity" type="text" id="quantity"/>
+                                <input name="quantity" type="text" id="quantity" placeholder="Quantity you want to put"/>
                             </div>
                             <div class="two columns">
                                 <select name="measureUnit" id="measureUnit">
@@ -123,27 +95,33 @@
                                 <option>Seller</option>
                             </select>
                         </div>
-                        <div class="twelve alpha columns editform">
-                            <label for="warehouse">Warehouse : </label>
-                            <select id="warehouse" name="warehouse">
-                                <% for(var warehouseIndex = 0; warehouseIndex < WareHouses.length; warehouseIndex++) {
-                                    var address1 = WareHouses[warehouseIndex].warehouseAddress1;
-                                    var address2 = WareHouses[warehouseIndex].warehouseAddress2;
-                                    var city = WareHouses[warehouseIndex].warehouseCity;
-                                    var address = '';
-                                    if(address1 != null){
-                                        address += address1;
-                                    }
-                                    if(address2 != null){
-                                        address += ', '+address2;
-                                    }
-                                    if(city != null){
-                                        address += ', '+city;
-                                    }
-                                %>
+                        <div class="thirteen alpha columns editform">
+                            <div class="nine columns bidform" style="margin-left: 0px;">
+                                <label for="warehouse">Warehouse : </label>
+                                <select id="warehouse" name="warehouse">
+                                    <% for(var warehouseIndex = 0; warehouseIndex < WareHouses.length; warehouseIndex++) {
+                                        var address1 = WareHouses[warehouseIndex].warehouseAddress1;
+                                        var address2 = WareHouses[warehouseIndex].warehouseAddress2;
+                                        var city = WareHouses[warehouseIndex].warehouseCity;
+                                        var address = '';
+                                        if(address1 != null){
+                                            address += address1;
+                                        }
+                                        if(address2 != null){
+                                            address += ', '+address2;
+                                        }
+                                        if(city != null){
+                                            address += ', '+city;
+                                        }
+                                    %>
                                     <option value="<%= WareHouses[warehouseIndex].id %>"><%= address %></option>
-                                <% } %>
-                            </select>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <div class="three columns bidform">
+                                <input type="submit" value="Add Warehouse" id="add_warehouse" style="margin-top: 30px;"/>
+                            </div>
+
                         </div>
 
                         <div class="twelve alpha columns editform">
@@ -163,7 +141,7 @@
                         <div class="thirteen alpha columns editform">
                             <label>Suggested Price : </label>
                             <div class="ten columns" style="margin-left:0px">
-                                <input name="suggested_price" type="text" id="suggested_price"/>
+                                <input name="suggested_price" type="text" id="suggested_price" placeholder="Suggest a price for the item"/>
                             </div>
                             <div class="two columns">
                                 <select name="priceUnit" id="priceUnit">
@@ -177,22 +155,30 @@
                         <div class="twelve alpha columns bidform">
                             <label for="payment_terms">Duration : </label>
                             <div class="two columns bidform" style="margin-left: 0px;">
-                                <input name="days" type="number" id="days" placeholder="Days"/>
+                                <input name="days" type="number" id="days" placeholder="Days" value="0"/>
                             </div>
                             <div class="two columns bidform">
-                                <input name="hours" type="number" id="hours" placeholder="Hours"/>
+                                <input name="hours" type="number" id="hours" placeholder="Hours" value="0"/>
                             </div>
                             <div class="two columns bidform">
-                                <input name="mins" type="number" id="mins" placeholder="Mins"/>
+                                <input name="mins" type="number" id="mins" placeholder="Mins" value="0"/>
                             </div>
                         </div>
 
                         <div class="twelve alpha columns editform">
                             <label>Seller Note: <span>*</span></label>
-                            <textarea name="seller_note" cols="91" rows="3" id="seller_note" spellcheck="true" style="width: 97%"></textarea>
+                            <textarea name="seller_note" cols="91" rows="3" id="seller_note" spellcheck="true" style="width: 97%" placeholder="Describe Your Item"></textarea>
                         </div>
 
-                        <div class="twelve columns bidform">
+                        <div class="twelve alpha columns editform">
+                            <label>Images : </label>
+                            <div class="ten columns" id="imagepreview-div">
+                            </div>
+                            <button class="commodity-uploadimage" id="commodity-uploadimage">Upload Images</button>
+                            <input type="file" name="fileToUpload" id="fileToUpload" style="display: none">
+                        </div>
+                        <div class="twelve columns bidform" style="margin-top: 10px">
+                            <input type="submit" class="submit" id="preview" value="Preview"/>
                             <input type="submit" class="submit" id="submit" value="Add"/>
                         </div>
 

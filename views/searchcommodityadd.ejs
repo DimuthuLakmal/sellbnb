@@ -39,13 +39,12 @@
         <div class="parallax-overlay"></div>
 
         <div class="parallax-content">
-            <h2>User Account <span>Basic Details</span></h2>
+            <h2>Sell You Item</h2>
 
             <nav id="breadcrumbs">
                 <ul>
                     <li>Home</li>
-                    <li>Account</li>
-                    <li>Basic Details</li>
+                    <li>Sell</li>
                 </ul>
             </nav>
         </div>
@@ -53,75 +52,32 @@
 
     <div class="container">
 
-        <!-- Sidebar
-        ================================================== -->
-        <div class="four columns">
-
-            <!-- Categories -->
-            <div class="widget margin-top-0">
-
-                <ul id="categories">
-
-                    <li><a href="/user/basic">Basic Account</a></li>
-                    <li><a href="/user/contact">Contact Information</a></li>
-                    <li><a href="/user/payment">Payment Information</a></li>
-                    <li><a href="/user/business">Business Information</a></li>
-                    <li><a href="/user/notification">Notification Preferences</a></li>
-                    <li><a href="/items/search" class="active">Sell</a></li>
-
-                </ul>
-                <div class="clearfix"></div>
-
-            </div>
-
-        </div>
-
-
         <!-- Content
         ================================================== -->
-
-        <div class="twelve columns products">
-
-            <h3 class="headline">Search Your Commodity</h3><span class="line margin-bottom-30"></span><div class="clearfix"></div>
-            <!-- Search -->
-            <form action="http://localhost:3000/api/commodity/search" method="post">
-                <div class="commodity-search">
+        <div class="twelve columns products centered">
+                <h3 class="headline">What do you want to sell?</h3><span class="line margin-bottom-30"></span><div class="clearfix"></div>
+                <!-- Search -->
+                <form action="http://localhost:3000/api/commodity/search" method="post">
+                    <input type="hidden" value="<%= user.id%>" name="userId">
+                    <div class="commodity-search">
                         <button><i class="fa fa-search"></i></button>
-                        <input class="search-field" type="text" placeholder="Search" list="commodities" name="commodity"/>
+                        <input class="search-field" type="text" placeholder="Search Your Commodity" list="commodities" name="commodity"/>
                         <datalist id="commodities">
                             <% for(var commodityIndex = 0; commodityIndex < Commodities.length; commodityIndex++) {%>
-                                <option value="<%= Commodities[commodityIndex].name %>">
-                            <% } %>
+                            <option value="<%= Commodities[commodityIndex].name %>">
+                                <% } %>
                         </datalist>
-                </div>
-            <button class="commoditysearch-nextbtn">Next</button>
-            </form>
+                    </div>
+                    <button class="commoditysearch-nextbtn">Next</button>
+                </form>
 
-            <h3 class="headline" style="margin-top: 50px">Recent Searches</h3><span class="line margin-bottom-30"></span><div class="clearfix"></div>
-            <nav class="tags">
-                <a href="#">Motivation</a>
-                <a href="#">Travel</a>
-                <a href="#">Social</a>
-                <a href="#">Nature</a>
-                <a href="#">Weather</a>
-                <a href="#">Fashion</a>
-                <a href="#">Electronics</a>
-                <a href="#">Fitness</a>
-            </nav>
-
-            <h3 class="headline" style="margin-top: 30px">Trending Commodities</h3><span class="line margin-bottom-30"></span><div class="clearfix"></div>
-            <nav class="tags">
-                <a href="#">Motivation</a>
-                <a href="#">Travel</a>
-                <a href="#">Social</a>
-                <a href="#">Nature</a>
-                <a href="#">Weather</a>
-                <a href="#">Fashion</a>
-                <a href="#">Electronics</a>
-                <a href="#">Fitness</a>
-            </nav>
-
-        </div>
+                <h3 class="headline" style="margin-top: 50px">Recent Searches</h3><span class="line margin-bottom-30"></span><div class="clearfix"></div>
+                <nav class="tags">
+                    <% for(searchIndex = 0; searchIndex < recentSearches.length; searchIndex++) {%>
+                        <a href="/api/commodity/search/commodity/<%= recentSearches[searchIndex].DISTINCT %>/userId/<%= user.id%>"><%= recentSearches[searchIndex].DISTINCT %></a>
+                    <% } %>
+                </nav>
+            </div>
 
     </div>
 

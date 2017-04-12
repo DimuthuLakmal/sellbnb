@@ -93,25 +93,37 @@ router.get('/addnews', function(req, res) {
   removeSessionParameters(req);
   removeSessionParameterSellingPage(req);
 
-  // var notifications = req.session.notifications;
-  // //check whether notification session is set.
-  // if(req.isAuthenticated()) {
-  //   if (notifications === null || notifications === undefined) {
-  //     res.redirect('/api/notification/userId/'+req.user.id);
-  //   }
-  // }
+  if(req.isAuthenticated()) {
+      //this will be needed to populate commodity names in top menu
+      var commodityNames = req.session.commodityNames
+      //check whether commodityNames session is set
+      req.session.returnToCommodityName = req.path;
+      if (commodityNames === null || commodityNames === undefined) {
+          res.redirect('/api/commodity/names');
+      }
 
-  // //this will be needed to populate commodity names in top menu
-  // var commodityNames = req.session.commodityNames
-  // //check whether commodityNames session is set
-  // if (commodityNames === null || commodityNames === undefined) {
-  //   res.redirect('/api/commodity/names');
-  // }
+      var notifications = req.session.notifications;
+      //check whether notification session is set.
+      if(req.isAuthenticated()) {
+          if (notifications === null || notifications === undefined) {
+              res.redirect('/api/notification/userId/'+req.user.id);
+          }
+      }
 
-  res.render('addnews', {
-    // commodityNames: commodityNames,
-    // notifications: notifications,
-  });
+      delete req.session.returnTo;
+      delete req.session.returnToCommodityName;
+      delete req.session.notifications;
+      res.render('addnews', {
+          commodityNames: commodityNames,
+          notifications: notifications,
+          user: req.user,
+      });
+  } else {
+      //set visited path to session. It uses to rediect to again to that page when login success.
+      req.session.returnTo = req.path;
+      res.redirect('/user/login');
+  }
+
 });
 
 /* GET view first news page. */
@@ -644,6 +656,12 @@ router.get('/items/search', function(req, res) {
   removeSessionParameterSellingPage(req);
 
   if(req.isAuthenticated()) {
+
+    var recentSearches = req.session.recentSearches;
+    if (recentSearches === null || recentSearches === undefined) {
+        res.redirect('/api/commodity/recentsearch/userId/'+req.user.id);
+    }
+
     //this will be needed to populate commodity names in top menu
     var commodityNames = req.session.commodityNames
     //check whether commodityNames session is set
@@ -670,12 +688,14 @@ router.get('/items/search', function(req, res) {
     delete req.session.returnTo;
     delete req.session.returnToCommodityName;
     delete req.session.notifications;
+    delete req.session.recentSearches;
     res.render('searchcommodityadd', {
       isAuthenticated : req.isAuthenticated(),
       user: req.user,
       Commodities: commodities.rows,
       commodityNames: commodityNames,
       notifications: notifications,
+      recentSearches: recentSearches,
     });
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
@@ -836,6 +856,7 @@ router.get('/items/add', function(req, res) {
     delete req.session.measureUnits;
     delete req.session.warehouses;
     delete req.session.notifications;
+    delete req.session.previewImages;
     res.render('additem', {
       isAuthenticated : req.isAuthenticated(),
       user: req.user,
@@ -1408,6 +1429,50 @@ router.get('/user/forgotpassword/entercode', function(req, res) {
 
 });
 
+
+//view item preview
+router.get('/items/preview', function(req, res) {
+    removeSessionParameters(req);
+
+    // check whether use logged or not
+    if(req.isAuthenticated()) {
+        var user = req.user;
+
+        //this will be needed to populate commodity names in top menu
+        var commodityNames = req.session.commodityNames
+        //check whether commodityNames session is set
+        req.session.returnToCommodityName = req.path;
+        if (commodityNames === null || commodityNames === undefined) {
+            res.redirect('/api/commodity/names');
+        }
+
+        var notifications = req.session.notifications;
+        //check whether notification session is set.
+        if(req.isAuthenticated()) {
+            if (notifications === null || notifications === undefined) {
+                res.redirect('/api/notification/userId/'+req.user.id);
+            }
+        }
+
+        var previewImages = req.session.previewImages;
+
+        delete req.session.returnTo;
+        delete req.session.returnToCommodityName;
+        delete req.session.notifications;
+        res.render('itempreview', {
+            isAuthenticated : req.isAuthenticated(),
+            user: user,
+            commodityNames: commodityNames,
+            notifications: notifications,
+            previewImages: previewImages
+        });
+    } else {
+        //set visited path to session. It uses to rediect to again to that page when login success.
+        req.session.returnTo = req.path;
+        res.redirect('/user/login');
+    }
+
+});
 
 //view forgot password code page
 router.get('/user/resetpassword', function(req, res) {

@@ -39,13 +39,14 @@
         <div class="parallax-overlay"></div>
 
         <div class="parallax-content">
-            <h2>User Account <span>Contact Details</span></h2>
+            <h2>Commodity Details</h2>
 
             <nav id="breadcrumbs">
                 <ul>
                     <li>Home</li>
-                    <li>Account</li>
-                    <li>Contact Details</li>
+                    <li>Sell</li>
+                    <li>Search Commodity</li>
+                    <li>Commodity Details</li>
                 </ul>
             </nav>
         </div>
@@ -53,39 +54,15 @@
 
     <div class="container">
 
-        <!-- Sidebar
-        ================================================== -->
-        <div class="four columns">
-
-            <!-- Categories -->
-            <div class="widget margin-top-0">
-
-                <ul id="categories">
-
-                    <li><a href="/user/basic">Basic Account</a></li>
-                    <li><a href="/user/contact">Contact Information</a></li>
-                    <li><a href="/user/payment">Payment Information</a></li>
-                    <li><a href="/user/business">Business Information</a></li>
-                    <li><a href="/user/notification">Notification Preferences</a></li>
-                    <li><a href="/items/search" class="active">Sell</a></li>
-
-                </ul>
-                <div class="clearfix"></div>
-
-            </div>
-
-        </div>
-
-
         <!-- Content
         ================================================== -->
 
-        <div class="twelve columns products">
+        <div class="twelve columns products centered">
 
             <h3 class="headline"><%= Commodity.name %></h3><span class="line margin-bottom-30"></span><div class="clearfix"></div>
 
             <% if(CommodityImages.length > 0) {%>
-                <div class="eight columns" id="commodity-images-container">
+                <div class="eight columns centered" id="commodity-images-container">
                     <div class="slider-padding">
                         <div id="product-slider" class="royalSlider rsDefault">
                             <% for(var commodityImagesIndex = 0; commodityImagesIndex < CommodityImages.length; commodityImagesIndex++) {%>
@@ -166,6 +143,7 @@
             <form method="GET" action="/items/add" >
                 <input type="hidden" name="id" value="<%= Commodity.id %>"/>
                 <input type="submit" class="commoditysearch-nextbtn" value="Next" id="nextbuton">
+                <button class="commoditysearch-nextbtn" style="margin-right:10px" id="backbutton">Back</button>
             </form>
 
         </div>

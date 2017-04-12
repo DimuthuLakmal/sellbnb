@@ -214,6 +214,7 @@ router.get('/viewpopular', function (req, res) {
 router.post('/search', function (req, res) {
     //extract name of commodity
     var commodityName = req.body.commodity;
+    var userId = req.body.userId;
 
     //retrieve data from req object
     sequelize.sync().then(
@@ -223,15 +224,77 @@ router.post('/search', function (req, res) {
             var CommodityParameter = models.CommodityParameter;
             var CommodityImage = models.CommodityImage;
             var CommodityMeasureUnit = models.CommodityMeasureUnit;
+            var RecentSearch = models.RecentSearch;
 
-            Commodity.findAll({
-                where: {name: commodityName},
-                include: [CommodityAlterName,CommodityParameter,CommodityImage, CommodityMeasureUnit],
-            }).then(function (Commodity) {
-                var commodity = Commodity[0].dataValues;
-                req.session.commodity = commodity;
+            RecentSearch.create({
+                commodity: commodityName,
+                UserId: userId,
+            }).then(function (insertedRecentSearch) {
+                Commodity.findAll({
+                    where: {name: commodityName},
+                    include: [CommodityAlterName,CommodityParameter,CommodityImage, CommodityMeasureUnit],
+                }).then(function (Commodity) {
+                    var commodity = Commodity[0].dataValues;
+                    req.session.commodity = commodity;
 
-                res.redirect('/items/add/commoditydetails');
+                    res.redirect('/items/add/commoditydetails');
+                });
+            });
+        }
+    );
+});
+
+/* Retrieve specific commodity from database */
+/* Usage: searchcommodityadd page */
+router.get('/search/commodity/:commodity/userId/:userId', function (req, res) {
+    //extract name of commodity
+    var commodityName = req.params.commodity;
+    var userId = req.params.userId;
+
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var Commodity = models.Commodity;
+            var CommodityAlterName = models.CommodityAlterName;
+            var CommodityParameter = models.CommodityParameter;
+            var CommodityImage = models.CommodityImage;
+            var CommodityMeasureUnit = models.CommodityMeasureUnit;
+            var RecentSearch = models.RecentSearch;
+
+            RecentSearch.create({
+                commodity: commodityName,
+                UserId: userId,
+            }).then(function (insertedRecentSearch) {
+                Commodity.findAll({
+                    where: {name: commodityName},
+                    include: [CommodityAlterName,CommodityParameter,CommodityImage, CommodityMeasureUnit],
+                }).then(function (Commodity) {
+                    var commodity = Commodity[0].dataValues;
+                    req.session.commodity = commodity;
+
+                    res.redirect('/items/add/commoditydetails');
+                });
+            });
+        }
+    );
+});
+
+/* Retrieve specific commodity from database */
+/* Usage: searchcommodityadd page */
+router.get('/recentsearch/userId/:userId', function (req, res) {
+
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var RecentSearch = models.RecentSearch;
+
+            RecentSearch.aggregate('commodity', 'DISTINCT',{
+                plain: false,
+                where: {UserId: req.params.userId},
+                limit: 10,
+            }).then(function (RecentSearches) {
+                req.session.recentSearches = RecentSearches;
+                res.redirect('/items/search');
             });
         }
     );

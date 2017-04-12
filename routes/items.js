@@ -609,6 +609,14 @@ router.get('/sell/id/:id', function (req, res) {
     );
 });
 
+//set preview image to session
+router.post('/preview', function (req, res) {
+    //retrive data from reqeust header
+    req.session.previewImages = req.body.images;
+
+    res.json({message: "Success"});
+});
+
 
 //function to decode base64 image
 function decodeBase64Image(dataString) {
