@@ -7,6 +7,9 @@ $(document).ready(function () {
     //retrieve item from local Storage to show details
     var item = JSON.parse(localStorage.getItem("previewItem"));
 
+    //set flag to indicate preview is watched
+    localStorage.setItem("visitedPreview", true);
+
     var days = item.days;
     var hours = item.hours;
     var mins = item.mins;

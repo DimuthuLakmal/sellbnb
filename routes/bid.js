@@ -15,6 +15,7 @@ var async = require('async');
 router.post('/add', function (req, res) {
     //retrive data from reqeust header
     var priceUnit = req.body.priceUnit;
+    var priceUnitDelivery = req.body.priceUnitDelivery;
     var bid = priceUnit + " " + req.body.bid;
     var measureUnit = req.body.measureUnit;
     var quantity = req.body.quantity + " " + measureUnit;
@@ -23,7 +24,11 @@ router.post('/add', function (req, res) {
     var packingType = req.body.packing_type;
     var paymentTerms = req.body.payment_terms;
     var deliveryDate = req.body.delivery_date;
-    var deliveryCost = req.body.delivery_cost;
+    var deliveryCostTemp = req.body.delivery_cost;
+    var deliveryCost = "";
+    if(deliveryCostTemp != null && deliveryCostTemp != undefined && deliveryCostTemp != "") {
+        deliveryCost = priceUnitDelivery + " " + deliveryCostTemp;
+    }
     var buyerNote = req.body.buyer_note;
     var itemId = req.body.id;
     var UserId = req.body.userId;
@@ -47,7 +52,41 @@ router.post('/add', function (req, res) {
                 UserId: UserId,
             }).then(function (insertedBidding) {
                 var insertedItemId = insertedBidding.dataValues.id;
-                res.redirect('/items/id/'+itemId);
+                req.session.bidAddMessage = 'Bid added successfully!';
+
+                var User = models.User;
+                var Email = models.Email;
+                var PhoneNumber = models.PhoneNumber;
+                User.findAll({
+                    where: {id: UserId},
+                    include: [Email, PhoneNumber],
+                }).then(function (Users) {
+
+                    var EmailAddress = Users[0].dataValues.Emails[0].dataValues.email;
+
+                    var helper = require('sendgrid').mail;
+
+                    from_email = new helper.Email("sellbnb@gmail.com");
+                    to_email = new helper.Email(EmailAddress);
+                    subject = "Seller BnB Notification";
+                    content = new helper.Content("text/plain", "You have successfully added your bid!");
+                    mail = new helper.Mail(from_email, subject, to_email, content);
+
+                    var sg = require('sendgrid')('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');
+                    var request = sg.emptyRequest({
+                        method: 'POST',
+                        path: '/v3/mail/send',
+                        body: mail.toJSON()
+                    });
+
+                    sg.API(request, function(error, response) {
+                        console.log(response.statusCode);
+                        console.log(response.body);
+                        console.log(response.headers);
+                        res.redirect('/items/id/'+itemId);
+                    });
+
+                });
             });
         }
     ).catch(function (error) {

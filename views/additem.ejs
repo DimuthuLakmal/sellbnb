@@ -39,7 +39,7 @@
         <div class="parallax-overlay"></div>
 
         <div class="parallax-content">
-            <h2>Add Your Item</h2>
+            <h2>Add Your Item <span>Your commodity : <%= commodityName %></span></h2>
 
             <nav id="breadcrumbs">
                 <ul>
@@ -67,6 +67,7 @@
                     <fieldset>
                         <input type="hidden" id="userId" name="userId" value="<%= user.id %>"/>
                         <input type="hidden" id="commodityId" name="commodityId" value="<%= CommodityId %>"/>
+                        <input type="hidden" id="commodityName" name="commodityName" value="<%= commodityName %>"/>
 
                         <div class="twelve alpha columns editform">
                             <label>Title : </label>

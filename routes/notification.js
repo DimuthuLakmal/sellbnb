@@ -152,14 +152,14 @@ function sendEmailSMS(userId, subject, message, redirection, res) {
                 async.waterfall([
 
                     function(callback){
-                        EmailAddress = Users[0].dataValues.Emails[0].dataValues;
+                        EmailAddress = Users[0].dataValues.Emails[0].dataValues.email;
 
                         var helper = require('sendgrid').mail;
 
                         from_email = new helper.Email("sellbnb@gmail.com");
                         to_email = new helper.Email(EmailAddress);
-                        subject = message;
-                        content = new helper.Content("text/plain", "and easy to do anywhere, even with Node.js");
+                        subject = "Seller BnB Notification";
+                        content = new helper.Content("text/plain", message);
                         mail = new helper.Mail(from_email, subject, to_email, content);
 
                         var sg = require('sendgrid')('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');

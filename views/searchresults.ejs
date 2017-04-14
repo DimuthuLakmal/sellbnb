@@ -54,23 +54,23 @@
         <div class="four columns">
 
             <!-- Widget -->
-            <div class="widget">
-                <h3 class="headline">Filter By Price</h3><span class="line"></span><div class="clearfix"></div>
+            <!--<div class="widget">-->
+                <!--<h3 class="headline">Filter By Price</h3><span class="line"></span><div class="clearfix"></div>-->
 
-                <form action="/api/items/search/start/0" method="get" id="priceFilterForm">
-                    <div id="price-range">
-                        <div class="padding-range"><div id="slider-range"></div></div>
-                        <label for="amount">Price:</label>
-                        <input type="hidden" id="maxPrice" value="<%= maxPrice %>"/>
-                        <input type="hidden" name="keyword" value="<%= keyword %>"/>
-                        <input type="hidden" id="startPrice" name="startPrice" value=<%= startPrice %>/>
-                        <input type="hidden" id="endPrice" name="endPrice" value=<%= endPrice %>/>
-                        <input type="text" id="amount"/>
-                        <a class="button color" id="priceFilterButton">Filter</a>
-                    </div>
-                </form>
-                <div class="clearfix"></div>
-            </div>
+                <!--<form action="/api/items/search/start/0" method="get" id="priceFilterForm">-->
+                    <!--<div id="price-range">-->
+                        <!--<div class="padding-range"><div id="slider-range"></div></div>-->
+                        <!--<label for="amount">Price:</label>-->
+                        <!--<input type="hidden" id="maxPrice" value=""/>-->
+                        <!--<input type="hidden" name="keyword" value=""/>-->
+                        <!--<input type="hidden" id="startPrice" name="startPrice" value=/>-->
+                        <!--<input type="hidden" id="endPrice" name="endPrice" value=/>-->
+                        <!--<input type="text" id="amount"/>-->
+                        <!--<a class="button color" id="priceFilterButton">Filter</a>-->
+                    <!--</div>-->
+                <!--</form>-->
+                <!--<div class="clearfix"></div>-->
+            <!--</div>-->
 
             <% if(distinctCharacteristics[1].length > 0) {%>
                 <!-- Classes -->
@@ -117,6 +117,30 @@
             </div>
             <% } %>
 
+            <!-- Location filter -->
+            <% if(distinctCharacteristics[2].length > 0) {%>
+            <!-- Segments -->
+            <div class="widget">
+                <h3 class="headline" style="z-index: 0 !important;">Locations</h3><span class="line"></span><div class="clearfix"></div>
+                <% for(var locationIndex = 0; locationIndex < distinctCharacteristics[2].length; locationIndex++) {%>
+                <form action="/api/items/search/start/0" method="get">
+                    <input type="hidden" value="0" name="start"/>
+                    <input type="hidden" value="<%= keyword %>" name="keyword"/>
+                    <input type="hidden" value="<%= distinctCharacteristics[2][locationIndex] %>" name="location"/>
+                    <% if(selectedLocation == distinctCharacteristics[2][locationIndex]) {%>
+                    <input type="checkbox" value="<%= distinctCharacteristics[2][locationIndex] %>"
+                           class="class_check_box" checked/> <%= distinctCharacteristics[2][locationIndex] %><br>
+                    <% } else {%>
+                    <input type="checkbox" value="<%= distinctCharacteristics[2][locationIndex] %>"
+                           class="class_check_box" /> <%= distinctCharacteristics[2][locationIndex] %><br>
+                    <% } %>
+
+                </form>
+                <% } %>
+                <div class="clearfix"></div>
+            </div>
+            <% } %>
+
         </div>
 
 
@@ -150,9 +174,10 @@
                         </div>
                         <div class="five columns">
                             <h3><%= item.title %></h3>
-                            <p>Time Remaining: <%= formattedAddress %><br>
-                                Seller: <a href="/user/public/userId/<%= item.User.id %>"> <%= item.User.username %></a><br>
-                                Suggested Price: <%= item.suggestedPrice %></p><br>
+                            <p>Seller: <a href="/user/public/userId/<%= item.User.id %>"> <%= item.User.username %></a><br>
+                                Quantity: <%= item.quantity %><br>
+                                Suggested Price: <%= item.suggestedPrice %><br>
+                                Time Remaining: <%= formattedAddress %></p><br>
                         </div>
                         <div class="four columns" style="float:right">
                             <form action="/items/id/<%= item.id %>" method="get">

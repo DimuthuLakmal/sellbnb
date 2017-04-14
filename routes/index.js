@@ -709,10 +709,11 @@ router.get('/items', function(req, res) {
   removeSessionParameterSellingPage(req);
   var searchResult = req.session.searchResult;
   var searchResultRemainingTime = req.session.searchResultRemainingTime;
-  var maxPrice = req.session.maxPrice;
+  var maxPrice = (req.session.maxPrice != undefined && req.session.maxPrice != null) ?  req.session.maxPrice.split(" ")[1]: 10000;
   var distinctCharacteristics = req.session.distinctCharacteristics;
   var selectedClass = req.session.selectedClass;
   var selectedSegment = req.session.selectedSegment;
+  var selectedLocation = req.session.selectedLocation;
   var keyword = req.session.keyword;
   var startPrice = req.session.startPrice ? req.session.startPrice: 0;
   var endPrice = req.session.endPrice ? req.session.endPrice: maxPrice;
@@ -745,6 +746,7 @@ router.get('/items', function(req, res) {
 
   delete req.session.returnToCommodityName;
   delete req.session.notifications;
+  //ToDO remove unncessary session parameters
   res.render('searchresults', {
     items: searchResult,
     remainingTimes: searchResultRemainingTime,
@@ -752,6 +754,7 @@ router.get('/items', function(req, res) {
     maxPrice: maxPrice,
     selectedClass: selectedClass,
     selectedSegment: selectedSegment,
+    selectedLocation: selectedLocation,
     keyword: keyword,
     currentPageNumber: currentPageNumber,
     maxPageCount: maxPageCount,
@@ -824,6 +827,7 @@ router.get('/items/add', function(req, res) {
     var warehouses = req.session.warehouses;
     var measureUnits = req.session.measureUnits;
     var priceUnits = req.session.priceUnits;
+    var commodityName = req.session.commodityName;
 
     //check whether warehouses session is set
     if (warehouses === null || warehouses === undefined) {
@@ -833,6 +837,11 @@ router.get('/items/add', function(req, res) {
     //check whether commodityMeasurements session is set
     if (measureUnits === null || measureUnits === undefined) {
       res.redirect('/api/commodity/measureUnits/id/'+req.session.commodityId);
+    }
+
+    //check whether commodityName session is set
+    if (commodityName === null || commodityName === undefined) {
+        res.redirect('/api/commodity/commodityName/id/'+req.session.commodityId);
     }
 
     //this will be needed to populate commodity names in top menu
@@ -864,6 +873,7 @@ router.get('/items/add', function(req, res) {
       WareHouses: warehouses,
       measureUnits: measureUnits,
       priceUnits: priceUnits,
+      commodityName: commodityName,
       commodityNames: commodityNames,
       notifications: notifications,
     });
@@ -978,6 +988,8 @@ router.get('/items/id/:id', function(req, res) {
       }
     }
 
+    var message = req.session.bidAddMessage;
+
     req.session.lastBid = null;
     req.session.lastUserBid = null;
     req.session.specificBiddingItem = null;
@@ -985,6 +997,7 @@ router.get('/items/id/:id', function(req, res) {
     delete req.session.returnTo;
     delete req.session.returnToCommodityName;
     delete req.session.notifications;
+    delete req.session.bidAddMessage;
     res.render('bidpage', {
       isAuthenticated : req.isAuthenticated(),
       user: req.user,
@@ -995,6 +1008,7 @@ router.get('/items/id/:id', function(req, res) {
       lastUserBid: lastUserBid[0],
       commodityNames: commodityNames,
       notifications: notifications,
+      message: message,
     });
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
@@ -1540,6 +1554,7 @@ router.get('/testtwilio', function(req, res) {
 function removeSessionParameters(req) {
   delete req.session.selectedClass;
   delete req.session.selectedSegment;
+  delete req.session.selectedLocation;
   delete req.session.keyword;
   delete req.session.startPrice;
   delete req.session.endPrice;

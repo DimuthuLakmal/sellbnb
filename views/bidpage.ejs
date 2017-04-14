@@ -40,6 +40,12 @@
             <h2><%= item.item.title %></h2>
         </div>
     </section>
+    <% if(message != null && message != undefined && message != "") {%>
+        <div class="notification success closeable" id="message_success" style="margin-top: -38px;">
+            <p><span><%= message %></span></p>
+            <a class="close" href="#"></a>
+        </div>
+    <% } %>
 
     <div class="container">
 
@@ -112,7 +118,7 @@
 
                             <tr>
                                 <th>Delivery By</th>
-                                <td><%= item.item.deliveryBy %></td>
+                                <td id="item_delivery_by"><%= item.item.deliveryBy %></td>
                             </tr>
 
                             <tr>
@@ -253,15 +259,31 @@
                                 <div class="twelve alpha columns bidform">
                                     <label for="delivery_by">Delivery By : </label>
                                     <select id="delivery_by" name="delivery_by">
-                                        <option>Buyer</option>
-                                        <option>Seller</option>
+                                        <option value="Buyer">Buyer</option>
+                                        <% if(item.item.deliveryBy == 'Seller') {%>
+                                            <option selected value="Seller">Seller</option>
+                                        <% } else {%>
+                                            <option value="Seller">Seller</option>
+                                        <% } %>
                                     </select>
                                 </div>
 
-                                <div class="twelve alpha columns bidform">
+
+                                <div class="thirteen alpha columns bidform" id="buyer_delivery_cost" style="display: none;">
                                     <label>Delivery Cost : </label>
-                                    <input name="delivery_cost" type="text" id="delivery_cost"/>
+
+                                    <div class="ten columns" style="margin-left: 0px;">
+                                        <input name="delivery_cost" type="text" id="delivery_cost"/>
+                                    </div>
+                                    <div class="two columns">
+                                        <select name="priceUnitDelivery" id="priceUnitDelivery">
+                                            <% for(var priceIndex = 0; priceIndex < item.priceUnits.length; priceIndex++) { %>
+                                            <option value="<%= item.priceUnits[priceIndex].unitName %>"><%= item.priceUnits[priceIndex].unitName %></option>
+                                            <% } %>
+                                        </select>
+                                    </div>
                                 </div>
+
 
                                 <div class="twelve alpha columns bidform">
                                     <label for="warehouse">Warehouse : </label>
@@ -295,10 +317,12 @@
                                     </select>
                                 </div>
 
-                                <div class="twelve alpha columns bidform">
-                                    <label>Delivery Date : </label>
-                                    <input name="delivery_date" type="text" id="delivery_date"/>
+
+                                <div class="twelve alpha columns bidform" id="buyer_delivery_date" style="display: none;">
+                                        <label>Delivery Date : </label>
+                                        <input name="delivery_date" type="text" id="delivery_date"/>
                                 </div>
+
 
                                 <div class="twelve alpha columns bidform">
                                     <label>Buyer Note: <span>*</span></label>
@@ -306,7 +330,7 @@
                                 </div>
 
                                 <div class="twelve columns bidform">
-                                    <input type="submit" class="submit" id="submit" value="Submit"/>
+                                    <input type="submit" class="submit" id="submit" value="Place Your Bid"/>
                                 </div>
 
                             </fieldset>
@@ -322,6 +346,9 @@
 
                     <!-- Reviews -->
                     <section class="comments">
+                        <% if(itemComments.length == 0) {%>
+                            <p>No Reviews Yet! </p>
+                        <%} %>
                         <ul>
                             <% for(commentIndex = 0; commentIndex < itemComments.length; commentIndex++) {
                                 var comment = itemComments[commentIndex];
@@ -538,7 +565,7 @@
 
 <!-- Java Script
 ================================================== -->
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="scripts/jquery.jpanelmenu.js"></script>
 <script src="scripts/jquery.themepunch.plugins.min.js"></script>

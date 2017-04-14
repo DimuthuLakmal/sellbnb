@@ -50,8 +50,8 @@
                 <div id="product-slider" class="royalSlider rsDefault">
                     <% if(previewImages!= undefined && previewImages != null && previewImages.length > 0) {%>
                         <% for(imageIndex = 0; imageIndex < previewImages.length; imageIndex++) {;%>
-                            <img class="rsImg" src="<%= previewImages[imageIndex]%>"
-                                 data-rsTmb="<%= previewImages[imageIndex] %>"
+                            <img class="rsImg" src="<%= previewImages[imageIndex].data%>"
+                                 data-rsTmb="<%= previewImages[imageIndex].data %>"
                                  alt=""/>
                         <% } %>
                     <% } else {  %>

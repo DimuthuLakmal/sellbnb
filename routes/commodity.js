@@ -180,6 +180,24 @@ router.get('/measureUnits/id/:id', function (req, res) {
     );
 });
 
+/* Retrieve Commodity Name from database*/
+/* Usage: Item Add Page*/
+router.get('/commodityName/id/:id', function (req, res) {
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var Commodity = models.Commodity;
+            Commodity.findAll({
+                where: {id: req.params.id},
+            }).then(function (Commodities) {
+                //saving commodity name
+                req.session.commodityName = Commodities[0].dataValues.name;
+                res.redirect('/items/add');
+            });
+        }
+    );
+});
+
 
 /* Retrieve popluar commodities from database */
 router.get('/viewpopular', function (req, res) {

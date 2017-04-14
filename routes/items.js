@@ -638,6 +638,7 @@ function retrieveItems(req, res, keyword) {
     var start = req.params.start;
     var class_ = req.query['class'] ? req.query['class'] : req.session.selectedClass;
     var segment = req.query['segment'] ? req.query['segment'] : req.session.selectedSegment;
+    var location = req.query['location'] ? req.query['location'] : req.session.selectedLocation;
     var startPrice = req.query['startPrice'] ? req.query['startPrice'] : req.session.startPrice;
 
     //check whether checkbox is already ticked or not
@@ -652,6 +653,12 @@ function retrieveItems(req, res, keyword) {
         delete req.session.selectedSegment;
     }
 
+    //check whether location is already ticked or not
+    if(req.query['location'] == req.session.selectedLocation) {
+        location = null;
+        delete req.session.selectedLocation;
+    }
+
     //define where object of sequelize object according to parameter selected in search results page
     var whereObject = {
         duration: {
@@ -663,18 +670,28 @@ function retrieveItems(req, res, keyword) {
         ],
     };
     if(class_ != null && class_ != undefined) {
-        whereObject["$Commodity.class$"] = {$like: '%'+class_+'%'};
+        if(class_ != "All") {
+            whereObject["$Commodity.class$"] = {$like: '%'+class_+'%'};
+        }
         req.session.selectedClass = class_;
     }
     if (segment != null && segment != undefined) {
-        whereObject["$Commodity.segment$"] = {$like: '%'+segment+'%'};
+        if(segment != "All") {
+            whereObject["$Commodity.segment$"] = {$like: '%'+segment+'%'};
+        }
         req.session.selectedSegment = segment;
+    }
+    if (location != null && location != undefined) {
+        if(location != "All") {
+            whereObject["$User.mailingCity$"] = {$like: '%'+location+'%'};
+        }
+        req.session.selectedLocation = location;
     }
 
     //Filter by price range
     if(startPrice != null && startPrice != undefined) {
         var endPrice = req.query['endPrice'] ? req.query['endPrice'] : req.session.endPrice;
-        whereObject['suggestedPrice'] = {$between: [parseFloat(startPrice), parseFloat(endPrice)]};
+        //whereObject['suggestedPrice'] = {$between: ["LKR "+startPrice, "LKR "+endPrice]};
         req.session.startPrice = startPrice;
         req.session.endPrice = endPrice;
     }
@@ -701,8 +718,9 @@ function retrieveItems(req, res, keyword) {
                             function (callback) {
                                 //Identify distinct characteristics of commodities according to keyword search
                                 /*Usage: sidebar of search result page */
-                                var segments = [];
-                                var classes = [];
+                                var segments = ["All"];
+                                var classes = ["All"];
+                                var locations = ["All"];
                                 sequelize.sync().then(
                                     function () {
                                         var Item = models.Item;
@@ -741,11 +759,35 @@ function retrieveItems(req, res, keyword) {
                                                 include: [Commodity],
                                                 group: ['class'],
                                             }).then(function (Classes) {
+
                                                 _.forEach(Classes, function(class_, index) {
                                                     classes.push(class_.DISTINCT);
                                                 });
-                                                req.session.distinctCharacteristics = [segments, classes];
-                                                callback(null, keyword, req);
+
+                                                Item.aggregate('User.mailingCity', 'DISTINCT',{
+                                                    plain: false,
+                                                    where: {
+                                                        duration: {
+                                                            gte: sequelize.fn("TIME_TO_SEC",
+                                                                sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
+                                                        },
+                                                        $or: [
+                                                            {'$Commodity.name$': {$like: '%'+keyword+'%'}},
+                                                            {title: {$like: '%'+keyword+'%'}}
+                                                        ],
+                                                    },
+                                                    include: [User, Commodity],
+                                                    group: ['User.mailingCity'],
+                                                }).then(function (Locations) {
+                                                    console.log(Locations);
+                                                    _.forEach(Locations, function(location, index) {
+                                                        locations.push(location.DISTINCT);
+                                                    });
+
+                                                    req.session.distinctCharacteristics = [segments, classes, locations];
+                                                    callback(null, keyword, req);
+                                                });
+
                                             });
                                         });
                                     }
