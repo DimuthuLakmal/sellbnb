@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]>
+<html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en"> <!--<![endif]-->
+<head>
+    <%
+    if (typeof(message)== undefined)
+        var message = "";
+    %>
+    <!-- Basic Page Needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>Seller BnB</title>
+
+    <!-- Mobile Specific Metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/colors/blue.css" id="colors">
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+</head>
+
+<body class="boxed">
+<div id="wrapper">
+
+    <% include header.ejs %>
+
+    <!-- Titlebar
+    ================================================== -->
+    <section class="parallax-titlebar fullwidth-element" data-background="#000" data-opacity="0.45" data-height="160">
+
+        <img src="images/titlebar_bg_02.jpg" alt=""/>
+        <div class="parallax-overlay"></div>
+
+        <div class="parallax-content">
+            <h2>Account <span>Bidding Items</span></h2>
+
+            <nav id="breadcrumbs">
+                <ul>
+                    <li>Home</li>
+                    <li>News</li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <div class="container">
+
+        <!-- Sidebar
+        ================================================== -->
+        <div class="four columns">
+
+
+            <!--&lt;!&ndash; Widget &ndash;&gt;-->
+            <!--<div class="widget">-->
+            <!--<h3 class="headline">Filter By Price</h3><span class="line"></span><div class="clearfix"></div>-->
+
+            <!--<div id="price-range">-->
+            <!--<div class="padding-range"><div id="slider-range"></div></div>-->
+            <!--<label for="amount">Price:</label>-->
+            <!--<input type="text" id="amount"/>-->
+            <!--<a href="#" class="button color">Filter</a>-->
+            <!--</div>-->
+            <!--<div class="clearfix"></div>-->
+            <!--</div>-->
+
+            <!--&lt;!&ndash; Sorting &ndash;&gt;-->
+            <form action="/api/bid/start/0/userId/<%= user.id %>" method = "GET" id="filter_form">
+                <div class="widget">
+                    <h3 class="headline" style="z-index: 0 !important;">Filter By</h3><span class="line"></span><div class="clearfix"></div>
+
+                    <select class="orderby" name="buyingpageItemOption" id="filter_options">
+                        <% if(filterParamer == 'All') {%>
+                        <option selected>All</option>
+                        <option>Pending</option>
+                        <option>Closed</option>
+                        <option>Hold</option>
+                        <% } %>
+                        <% if(filterParamer == 'Pending') {%>
+                        <option>All</option>
+                        <option selected>Pending</option>
+                        <option>Closed</option>
+                        <option>Hold</option>
+                        <% } %>
+                        <% if(filterParamer == 'Closed') {%>
+                        <option>All</option>
+                        <option>Pending</option>
+                        <option selected>Closed</option>
+                        <option>Hold</option>
+                        <% } %>
+                        <% if(filterParamer == 'Hold') {%>
+                        <option>All</option>
+                        <option>Pending</option>
+                        <option>Closed</option>
+                        <option selected>Hold</option>
+                        <% } %>
+                    </select>
+                    <div class="clearfix"></div>
+                </div>
+            </form>
+
+            <!-- Sorting -->
+            <div class="widget">
+                <h3 class="headline" style="z-index: 0 !important;">Date</h3><span class="line"></span><div class="clearfix"></div>
+
+
+                <div class="four alpha columns">
+                    <label>From : </label>
+                    <input type="text" id="from" style="width: 91%; z-index: 100"/>
+                </div>
+                <br><br><br>
+                <div class="four alpha columns">
+                    <label>To : </label>
+                    <input type="text" id="to" style="width: 91%; z-index: 100"/>
+                </div>
+                <div class="four alpha columns" style="margin-top:10px">
+                    <input type="submit" class="button color" style="float: right; z-index: 0" value="Filter"/>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+        </div>
+
+
+        <!-- Content
+        ================================================== -->
+        <!--<div class="twelve columns">-->
+
+        <!--&lt;!&ndash; Search &ndash;&gt;-->
+        <!--<div class="item-search">-->
+        <!--<form action="#" method="get">-->
+        <!--<button><i class="fa fa-search"></i></button>-->
+        <!--<input class="search-field" type="text" placeholder="Search" value="" size="5" maxlength="4"/>-->
+        <!--</form>-->
+        <!--</div>-->
+
+        <!--</div>-->
+
+        <div class="twelve columns products">
+
+            <% for(var itemIndex = 0; itemIndex < buyingList.rows.length; itemIndex++) {
+                var bid = buyingList.rows[itemIndex];
+                var item = buyingList.rows[itemIndex].Item;
+                var itemImage = itemImages[itemIndex];
+                var maxBid = lastBid[itemIndex];
+
+            %>
+            <!-- Selling Items -->
+            <div class="item-selling-div twelve columns">
+                <div class="item-selling-div">
+                    <div class="two columns">
+                        <% if(itemImage != null) {%>
+                        <img src="uploads/items/<%= itemImage.url %>"/>
+                        <% } else {%>
+                        <img src="images/blog-widget-01.png"/>
+                        <% } %>
+                    </div>
+                    <div class="four columns">
+                        <h3><%= item.title %></h3>
+                        <p>Last Bid: <%= maxBid.bid %><br>
+                            Your Last Bid: <%= bid.bid %><br>
+                            <% if(remainingTimes[itemIndex][0] != 0) {
+                                var remainingTime = remainingTimes[itemIndex][0];
+                                var numdays = Math.floor(remainingTime / 86400);
+                                var numhours = Math.floor((remainingTime % 86400) / 3600);
+                                var numminutes = Math.floor(((remainingTime % 86400) % 3600) / 60);
+                                var numseconds = Math.floor(((remainingTime % 86400) % 3600) % 60);
+
+                                var formattedTime = "";
+                                formattedTime = numdays != 0 ? (formattedTime += numdays + " days ") : formattedTime;
+                                formattedTime = numhours != 0 ? (formattedTime += numhours + " hrs ") : formattedTime;
+                                formattedTime = numminutes != 0 ? (formattedTime += numminutes + " mins ") : formattedTime;
+                                formattedTime = numseconds != 0 ? (formattedTime += numseconds + " secs ") : formattedTime;
+                            %>
+                            <%= 'Time Left: '+formattedTime %>
+                            <% } else {%>
+                            <%= 'Bidding Closed At: ' + remainingTimes[itemIndex][2] %>
+                            <% } %></p>
+                    </div>
+                    <div class="two columns">
+                        <form method="post" action="/api/bid/update/bid">
+
+                            <fieldset>
+                                <input type="hidden" name="id" value="<%= bid.id %>"/>
+                                <div class="two columns editform">
+                                    <input style="width: 80%" name="newbid" type="text" id="newbid" placeholder="Your New Bid" value="<%= bid.bid.split(" ")[0]+" " %>"/>
+                                </div>
+
+                                <div class="two columns editform">
+                                    <input type="submit" class="submit" id="submitbid" value="Place Bid"/>
+                                </div>
+
+                            </fieldset>
+
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                    <div class="three columns">
+                        <div class="two columns" style="float:right">
+                            <form action="/items/id/<%= item.id %>" method="GET">
+                                <input type="submit" style="float: right; width: 100%; padding-right:20px"
+                                       class="item-selling-btn" value="View Details"/>
+                            </form>
+                            <% if (bid.status == 'accepted' || bid.status == 'mutual-cancellation-seller') {%>
+                            <form method="GET" action="/user/buy/contract/id/<%= item.id %>">
+                                <input type="submit" style="float: right; width: 100%; padding-right:20px"
+                                       class="item-selling-btn" value="Contract" />
+                            </form>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <span class="line" style="margin-top:10px;margin-bottom: 0px"></span><div class="clearfix"></div>
+            <% } %>
+
+
+            <div class="clearfix"></div>
+
+            <!-- Pagination -->
+            <div class="pagination-container">
+                <nav class="pagination">
+                    <ul>
+                        <%
+                        var pageOne = (pageMultipationFactor * 10) + 1;
+                        var pageTwo = (pageMultipationFactor * 10) + 2;
+                        var pageThree = (pageMultipationFactor * 10) + 3;
+                        %>
+                        <% if(maxPageCount >= pageOne) {%>
+                        <li>
+                            <a href="http://localhost:3000/user/sell/list/start/<%= (pageOne-1) * 10 %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
+                                <%= pageOne %>
+                            </a>
+                        </li>
+                        <% } %>
+                        <% if(maxPageCount >= pageTwo) {%>
+                        <li>
+                            <a href="http://localhost:3000/user/sell/list/start/<%= (pageTwo-1) * 10 %>" <% if(pageTwo === currentPageNumber) { %>class="current-page"<% } %>>
+                                <%= pageTwo %>
+                            </a>
+                        </li>
+                        <% } %>
+                        <% if(maxPageCount >= pageThree) {%>
+                        <li>
+                            <a href="http://localhost:3000/user/sell/list/start/<%= (pageThree-1) * 10 %>" <% if(pageThree === currentPageNumber) { %>class="current-page"<% } %>>
+                                <%= pageThree %>
+                            </a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </nav>
+
+                <nav class="pagination-next-prev">
+                    <ul>
+                        <% if(0 < pageMultipationFactor) {%>
+                        <li><a href="http://localhost:3000/user/sell/list/start/<%= (pageMultipationFactor - 1) * 30 %>" class="prev"></a></li>
+                        <% } %>
+                        <% if(maxPageCount >= (pageMultipationFactor * 10) + 4) {%>
+                        <li><a href="http://localhost:3000/user/sell/list/start/<%= (pageMultipationFactor + 1) * 30 %>" class="next"></a></li>
+                        <% } %>
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="margin-top-50"></div>
+
+    <!-- Footer
+    ================================================== -->
+    <div id="footer">
+
+        <!-- Container -->
+        <div class="container">
+
+            <div class="four columns">
+                <img src="images/logo-footer.png" alt="" class="margin-top-10"/>
+                <p class="margin-top-15">Nulla facilisis feugiat magna, ut molestie metus hendrerit vitae. Vivamus
+                    tristique lectus at varius rutrum. Integer lobortis mauris non consectetur eleifend.</p>
+            </div>
+
+            <div class="four columns">
+
+                <!-- Headline -->
+                <h3 class="headline footer">Customer Service</h3>
+                <span class="line"></span>
+                <div class="clearfix"></div>
+
+                <ul class="footer-links">
+                    <li><a href="#">Order Status</a></li>
+                    <li><a href="#">Payment Methods</a></li>
+                    <li><a href="#">Delivery & Returns</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                </ul>
+
+            </div>
+
+            <div class="four columns">
+
+                <!-- Headline -->
+                <h3 class="headline footer">My Account</h3>
+                <span class="line"></span>
+                <div class="clearfix"></div>
+
+                <ul class="footer-links">
+                    <li><a href="#">My Account</a></li>
+                    <li><a href="#">Order History</a></li>
+                    <li><a href="#">Wish List</a></li>
+                </ul>
+
+            </div>
+
+            <div class="four columns">
+
+                <!-- Headline -->
+                <h3 class="headline footer">Newsletter</h3>
+                <span class="line"></span>
+                <div class="clearfix"></div>
+                <p>Sign up to receive email updates on new product announcements, gift ideas, special promotions, sales
+                    and more.</p>
+
+                <form action="#" method="get">
+                    <button class="newsletter-btn" type="submit">Join</button>
+                    <input class="newsletter" type="text" placeholder="mail@example.com" value=""/>
+                </form>
+            </div>
+
+        </div>
+        <!-- Container / End -->
+
+    </div>
+    <!-- Footer / End -->
+
+    <!-- Footer Bottom / Start -->
+    <div id="footer-bottom">
+
+        <!-- Container -->
+        <div class="container">
+
+            <div class="eight columns">© Copyright 2014 by <a href="#">trizzy</a>. All Rights Reserved.</div>
+            <div class="eight columns">
+                <ul class="payment-icons">
+                    <li><img src="images/visa.png" alt=""/></li>
+                    <li><img src="images/mastercard.png" alt=""/></li>
+                    <li><img src="images/skrill.png" alt=""/></li>
+                    <li><img src="images/moneybookers.png" alt=""/></li>
+                    <li><img src="images/paypal.png" alt=""/></li>
+                </ul>
+            </div>
+
+        </div>
+        <!-- Container / End -->
+
+    </div>
+    <!-- Footer Bottom / End -->
+
+    <!-- Back To Top Button -->
+    <div id="backtotop"><a href="#"></a></div>
+
+</div>
+
+
+<!-- Java Script
+================================================== -->
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="scripts/jquery.jpanelmenu.js"></script>
+<script src="scripts/jquery.themepunch.plugins.min.js"></script>
+<script src="scripts/jquery.themepunch.revolution.min.js"></script>
+<script src="scripts/jquery.themepunch.showbizpro.min.js"></script>
+<script src="scripts/jquery.magnific-popup.min.js"></script>
+<script src="scripts/hoverIntent.js"></script>
+<script src="scripts/superfish.js"></script>
+<script src="scripts/jquery.pureparallax.js"></script>
+<script src="scripts/jquery.pricefilter.js"></script>
+<script src="scripts/jquery.selectric.min.js"></script>
+<script src="scripts/jquery.royalslider.min.js"></script>
+<script src="scripts/SelectBox.js"></script>
+<script src="scripts/modernizr.custom.js"></script>
+<script src="scripts/waypoints.min.js"></script>
+<script src="scripts/jquery.flexslider-min.js"></script>
+<script src="scripts/jquery.counterup.min.js"></script>
+<script src="scripts/jquery.tooltips.min.js"></script>
+<script src="scripts/jquery.isotope.min.js"></script>
+<script src="scripts/puregrid.js"></script>
+<script src="scripts/stacktable.js"></script>
+<script src="scripts/custom.js"></script>
+<script src="scripts/views/useraccountselling.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $("#from").datepicker();
+        $("#to").datepicker();
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]>
+<html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en"> <!--<![endif]-->
+<head>
+    <%
+    if (typeof(message)== undefined)
+        var message = "";
+    %>
+    <!-- Basic Page Needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>Seller BnB</title>
+
+    <!-- Mobile Specific Metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/colors/blue.css" id="colors">
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+</head>
+
+<body class="boxed">
+<div id="wrapper">
+
+    <% include header.ejs %>
+
+    <!-- Titlebar
+    ================================================== -->
+    <section class="parallax-titlebar fullwidth-element" data-background="#000" data-opacity="0.45" data-height="160">
+
+        <img src="images/titlebar_bg_02.jpg" alt=""/>
+        <div class="parallax-overlay"></div>
+
+        <div class="parallax-content">
+            <h2><%= item.title %> <span>Bidding Details</span></h2>
+
+            <nav id="breadcrumbs">
+                <ul>
+                    <li>Home</li>
+                    <li>Sell Account</li>
+                    <li>Bidding Details</li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <div class="container">
+
+
+        <!-- Content
+        ================================================== -->
+        <!--<div class="twelve columns">-->
+
+        <!--&lt;!&ndash; Search &ndash;&gt;-->
+        <!--<div class="item-search">-->
+        <!--<form action="#" method="get">-->
+        <!--<button><i class="fa fa-search"></i></button>-->
+        <!--<input class="search-field" type="text" placeholder="Search" value="" size="5" maxlength="4"/>-->
+        <!--</form>-->
+        <!--</div>-->
+
+        <!--</div>-->
+
+        <div class="fourteen columns centered">
+
+            <form name="bidform">
+
+                <fieldset>
+
+                    <input type="hidden" id="itemId" name="itemId" value="<%= item.id %>"/>
+
+                    <div class="twelve alpha columns bidform">
+                        <label>Images : </label>
+                        <div class="ten columns" id="imagepreview-div">
+                            <% for(imageIndex = 0; imageIndex < item.ItemImages.length; imageIndex++) {%>
+                            <div class="two columns">
+                                <img src="uploads/items/<%= item.ItemImages[imageIndex].url %>"
+                                     alt="" style="width: 120px; height: 120px"/>
+                                <a href="#">(Remove)</a>
+                            </div>
+                            <% } %>
+                        </div>
+                        <button class="commodity-uploadimage" id="commodity-uploadimage">Upload Images</button>
+                        <input type="file" name="fileToUpload" id="fileToUpload" style="display: none">
+                    </div>
+
+                    <div class="twelve alpha columns bidform">
+                        <label>Title : </label>
+                        <input name="title" type="text" id="title" value="<%= item.title %>"/>
+                    </div>
+
+                    <div class="thirteen alpha columns editform">
+                        <label>Quantity : </label>
+                        <div class="ten columns" style="margin-left:0px">
+                            <input name="quantity" type="text" id="quantity" value="<%= item.quantity.split(" ")[0] %>"/>
+                        </div>
+                        <div class="two columns">
+                            <select name="measureUnit" id="measureUnit">
+                                <% for(var measureIndex = 0; measureIndex < specificBiddingItemSellMeasureUnits.length; measureIndex++) { %>
+                                <option value="<%= specificBiddingItemSellMeasureUnits[measureIndex].unitName %>"><%= specificBiddingItemSellMeasureUnits[measureIndex].unitName %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="twelve alpha columns bidform">
+                        <label for="delivery_by">Delivery By : </label>
+                        <select id="delivery_by" name="delivery_by">
+                            <% if(item.deliveryBy == 'Buyer') { %>
+                            <option selected>Buyer</option>
+                            <% } else {%>
+                            <option>Buyer</option>
+                            <%} %>
+                            <% if(item.deliveryBy == 'Seller') { %>
+                            <option selected>Buyer</option>
+                            <% } else {%>
+                            <option>Seller</option>
+                            <%} %>
+                        </select>
+                    </div>
+
+                    <div class="twelve alpha columns bidform">
+                        <label for="warehouse">Warehouse : </label>
+                        <select id="warehouse" name="warehouse">
+                            <% for(var warehouseIndex = 0; warehouseIndex < userWareHousesSell.length; warehouseIndex++) {
+                                var warehouse = userWareHousesSell[warehouseIndex];
+                                var formattedAddress = "";
+                                formattedAddress = (warehouse.warehouseAddress1 != null && warehouse.warehouseAddress1 != undefined) ?
+                                        warehouse.warehouseAddress1 : formattedAddress;
+                                formattedAddress = (warehouse.warehouseAddress2 != null && warehouse.warehouseAddress2 != undefined) ?
+                                formattedAddress + ", " + warehouse.warehouseAddress2 : formattedAddress;
+                                formattedAddress = (warehouse.warehouseCity != null && warehouse.warehouseCity != undefined) ?
+                                formattedAddress + ", " + warehouse.warehouseCity : formattedAddress;
+
+                            %>
+                            <option value="<%= warehouse.id %>"><%= formattedAddress %></option>
+                            <% } %>
+                        </select>
+                    </div>
+
+                    <div class="twelve alpha columns bidform">
+                        <label>Packing Type : </label>
+                        <input name="packing_type" type="text" id="packing_type" value="<%= item.packageType %>"/>
+                    </div>
+
+                    <div class="twelve alpha columns bidform">
+                        <label for="payment_terms">Payment Terms : </label>
+                        <select id="payment_terms" name="payment_terms" value="<%= item.paymentTerms %>">
+                            <% if(item.paymentTerms == '1 month credit') { %>
+                            <option selected>1 month credit</option>
+                            <% } else {%>
+                            <option>1 month credit</option>
+                            <%} %>
+                            <% if(item.paymentTerms == '1 week credit') { %>
+                            <option selected>1 week credit</option>
+                            <% } else {%>
+                            <option>1 week credit</option>
+                            <%} %>
+                            <% if(item.paymentTerms == 'Cash On Delivery') { %>
+                            <option selected>Cash On Delivery</option>
+                            <% } else {%>
+                            <option>Cash On Delivery</option>
+                            <%} %>
+                        </select>
+                    </div>
+
+                    <div class="thirteen alpha columns editform">
+                        <label>Suggested Price : </label>
+                        <div class="ten columns" style="margin-left:0px">
+                            <input name="suggested_price" type="text" id="suggested_price" value="<%= item.suggestedPrice.split(" ")[1] %>"/>
+                        </div>
+                        <div class="two columns">
+                            <select name="priceUnit" id="priceUnit">
+                                <% for(var priceIndex = 0; priceIndex < specificBiddingItemSellPriceUnits.length; priceIndex++) { %>
+                                <option value="<%= specificBiddingItemSellPriceUnits[priceIndex].unitName %>"><%= specificBiddingItemSellPriceUnits[priceIndex].unitName %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+
+                    <%
+                    var duration = item.duration;
+                    var days = Math.floor(duration / (24 * 3600));
+                    var hours = Math.floor((duration % (24 * 3600)) / 3600);
+                    var mins = Math.floor(((duration % (24 * 3600)) % 3600) / 60);
+                    %>
+                    <div class="twelve alpha columns bidform">
+                        <label for="payment_terms">Duration : </label>
+                        <div class="two columns bidform" style="margin-left: 0px;">
+                            <input name="days" type="number" id="days" value="<%= days %>"/>
+                        </div>
+                        <div class="two columns bidform">
+                            <input name="hours" type="number" id="hours" value="<%= hours %>"/>
+                        </div>
+                        <div class="two columns bidform">
+                            <input name="mins" type="number" id="mins" value="<%= mins %>"/>
+                        </div>
+                    </div>
+
+                    <div class="twelve alpha columns bidform">
+                        <label>Seller Note: <span>*</span></label>
+                        <textarea name="seller_note" cols="91" rows="3" id="seller_note" spellcheck="true" style="width: 97%">
+                                        <%= item.note %>
+                                    </textarea>
+                    </div>
+
+                    <div class="twelve columns bidform">
+                        <input type="submit" class="submit" id="submit" value="Update"/>
+                    </div>
+
+                </fieldset>
+                <br>
+                <div class="notification success closeable" style="display: none" id="message_success">
+                    <p><span>Success! </span>Item details were updated successfully!</p>
+                    <a class="close" href="#"></a>
+                </div>
+                <div class="clearfix"></div>
+            </form>
+
+
+        </div>
+
+    </div>
+
+    <div class="margin-top-50"></div>
+
+    <!-- Footer
+    ================================================== -->
+    <% include footer.ejs %>
+
+</div>
+
+
+<!-- Java Script
+================================================== -->
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="scripts/jquery.jpanelmenu.js"></script>
+<script src="scripts/jquery.themepunch.plugins.min.js"></script>
+<script src="scripts/jquery.themepunch.revolution.min.js"></script>
+<script src="scripts/jquery.themepunch.showbizpro.min.js"></script>
+<script src="scripts/jquery.magnific-popup.min.js"></script>
+<script src="scripts/hoverIntent.js"></script>
+<script src="scripts/superfish.js"></script>
+<script src="scripts/jquery.pureparallax.js"></script>
+<script src="scripts/jquery.pricefilter.js"></script>
+<script src="scripts/jquery.selectric.min.js"></script>
+<script src="scripts/jquery.royalslider.min.js"></script>
+<script src="scripts/SelectBox.js"></script>
+<script src="scripts/modernizr.custom.js"></script>
+<script src="scripts/waypoints.min.js"></script>
+<script src="scripts/jquery.flexslider-min.js"></script>
+<script src="scripts/jquery.counterup.min.js"></script>
+<script src="scripts/jquery.tooltips.min.js"></script>
+<script src="scripts/jquery.isotope.min.js"></script>
+<script src="scripts/puregrid.js"></script>
+<script src="scripts/stacktable.js"></script>
+<script src="scripts/custom.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+<script src="scripts/views/viewbiddingdetailsseller.js"></script>
+
+</body>
+</html>

@@ -73,6 +73,7 @@ router.post('/add', function (req, res) {
                 duration: duration,
                 CommodityId: CommodityId,
                 UserId: UserId,
+                status: 'pending',
             }).then(function (insertedItem) {
                 var insertedItemId = insertedItem.dataValues.id;
                 //store item images
@@ -163,9 +164,10 @@ router.get('/viewlatest', function (req, res) {
             var ItemImage = models.ItemImage;
             var Commodity = models.Commodity;
             Item.findAndCountAll({
-                where: {duration: {
-                    gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
-                }},
+                where: {
+                    duration: {gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))},
+                    status:'pending',
+                },
                 limit: 10,
                 include: [ItemImage, Commodity],
                 order: '`id` DESC'
@@ -444,47 +446,66 @@ router.get('/start/:start/userId/:userId', function (req, res) {
     //retrieve data from req object
     var userId = req.params.userId;
     var start = req.params.start;
-    var sellpageItemOption = req.query['sellpageItemOption'] ? req.query['sellpageItemOption'] : req.session.sellpageItemOption;
-    var from = req.query['from'] ? req.query['from'] : req.session.sellpageFrom;
-    var to = req.query['to'] ? req.query['to'] : req.session.sellpagTo;
+    var sellingpageItemOption = req.query['sellingpageItemOption'];
+    var openDurationOption = req.query['openDurationOption'];
+    var pendingDurationOption = req.query['pendingDurationOption'];
+    var cancelledDurationOption = req.query['cancelledDurationOption'];
+    var nextSellingpageItemOption = '';
 
     //define where object of sequelize object according to filtering parameters selected in User Account Selling page
-    var whereObject = {
-        UserId: userId
-    };
+    var whereObject = {};
 
-    if(sellpageItemOption == 'All') {
-        whereObject = {
-            UserId: userId
-        };
-        req.session.sellpageItemOption = 'All'
-    } else if(sellpageItemOption == 'Open') {
-        whereObject["duration"] =
-            {gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))}
-
-        req.session.sellpageItemOption = 'Open';
-    } else if(sellpageItemOption == 'Closed') {
-        whereObject["duration"] =
-            {lt: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))}
-        req.session.sellpageItemOption = 'Closed';
-    } else if(sellpageItemOption == 'Pending') {
-        whereObject["status"] = 'active';
-        req.session.sellpageItemOption = 'Pending';
-    } else if(sellpageItemOption == 'Cancelled') {
-        whereObject = {
-            $or: [{status: {$eq: "cancelled"}},{status: {$eq: "mutual-cancellation-buyer"}},
-                {status: {$eq: "mutual-cancellation-seller"}},{status: {$eq: "mutual-cancellation-all"}}],
-            UserId: userId,
+    if(sellingpageItemOption == 'Open') {
+        if(openDurationOption == "0"){
+            whereObject = {
+                UserId: userId,
+                status: 'open',
+            };
+        } else {
+            whereObject = {
+                UserId: userId,
+                status: 'open',
+                createdAt: {gte: sequelize.fn('date_sub',moment().format(),sequelize.literal('interval '+openDurationOption+' month'))}
+            };
         }
-        req.session.sellpageItemOption = 'Cancelled';
-    } else {
-        req.session.sellpageItemOption = 'All';
-    }
+        start = start.split(",")[0];
+        nextSellingpageItemOption = 'Open';
+    } else if(sellingpageItemOption == 'Pending') {
+        if(pendingDurationOption == "0"){
+            whereObject = {
+                UserId: userId,
+                status: 'pending',
+                //duration: {gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))},
+            };
+        } else {
+            whereObject = {
+                UserId: userId,
+                status: 'pending',
+                //duration: {gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))},
+                createdAt: {gte: sequelize.fn('date_sub',moment().format(),sequelize.literal('interval '+openDurationOption+' month'))}
+            };
+        }
 
-    //check the whether filter by date
-    if(from != '' && to != '' && from != undefined && to != undefined) {
-        whereObject["createdAt"] = {$gte: from}
-        whereObject["$and"] = {createdAt: {lte: to}}
+        start = start.split(",")[1];
+        nextSellingpageItemOption = 'Pending';
+    } else if(sellingpageItemOption == 'Cancelled') {
+        if(cancelledDurationOption == "0"){
+            whereObject = {
+                UserId: userId,
+                $or: [{status: 'cancelled'}, {status: 'mutual-cancellation-all'}, {status:'mutual-cancellation-buyer'}, {status: 'mutual-cancellation-seller'}],
+                duration: {lt: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))},
+            };
+        } else {
+            whereObject = {
+                UserId: userId,
+                $or: [{status: 'cancelled'}, {status: 'mutual-cancellation-all'}, {status:'mutual-cancellation-buyer'}, {status: 'mutual-cancellation-seller'}],
+                duration: {lt: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))},
+                createdAt: {gte: sequelize.fn('date_sub',moment().format(),sequelize.literal('interval '+openDurationOption+' month'))}
+            };
+        }
+
+        start = start.split(",")[2];
+        nextSellingpageItemOption = 'Cancelled';
     }
 
     sequelize.sync().then(
@@ -539,7 +560,7 @@ router.get('/start/:start/userId/:userId', function (req, res) {
                     req.session.itemsSellingAccountCount = Items.count;
                     req.session.itemsSellingAccountOffset = parseInt(req.params.start);
                     req.session.searchResultRemainingTimeSelling = remainingTimes;
-                    res.redirect('/user/sell/list/start/'+start);
+                    res.redirect('/user/sell/list/start/'+req.params.start+'?sellingpageItemOption='+nextSellingpageItemOption+'&openDurationOption='+req.query['openDurationOption']+'&pendingDurationOption='+req.query['pendingDurationOption']+'&cancelledDurationOption='+req.query['cancelledDurationOption']);
                 });
 
             });
@@ -601,7 +622,7 @@ router.get('/sell/id/:id', function (req, res) {
                         where: {CommodityId: Items[0].CommodityId}
                     }).then(function (PriceUnits) {
                         req.session.specificBiddingItemSellPriceUnits = PriceUnits;
-                        res.redirect('/user/sell/bids/start/0?itemId='+itemId);
+                        res.redirect('/user/sell/edit?itemId='+itemId);
                     });
                 });
             });

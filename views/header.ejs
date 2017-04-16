@@ -1,6 +1,25 @@
 <script type="text/javascript">
     document.body.style.zoom="90%"
 </script>
+<script>
+    if(window.location.href.indexOf("user/sell/list/start") == -1) {
+        localStorage.removeItem("prevDurationOptionOpen");
+        localStorage.removeItem("prevPaginationOptionOpen");
+        localStorage.removeItem("prevDurationOptionPending");
+        localStorage.removeItem("prevPaginationOptionPending");
+        localStorage.removeItem("prevDurationOptionCancelled");
+        localStorage.removeItem("prevPaginationOptionCancelled");
+    }
+
+    if(window.location.href.indexOf("user/buy/list/start") == -1) {
+        localStorage.removeItem("prevDurationOptionOpenBuy");
+        localStorage.removeItem("prevPaginationOptionOpenBuy");
+        localStorage.removeItem("prevDurationOptionPendingBuy");
+        localStorage.removeItem("prevPaginationOptionPendingBuy");
+        localStorage.removeItem("prevDurationOptionCancelledBuy");
+        localStorage.removeItem("prevPaginationOptionCancelledBuy");
+    }
+</script>
 <!-- Header
       ================================================== -->
 <div class="container">
@@ -115,11 +134,11 @@
                 </li>
 
                 <li class="demo-button">
-                    <a href="/user/sell/list/start/0">Sell Account</a>
+                    <a href="/user/sell/list/start/0,0,0?sellingpageItemOption=Open&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=1">Sell Account</a>
                 </li>
 
                 <li class="demo-button">
-                    <a href="/user/buy/list/start/0">Buy Account</a>
+                    <a href="/user/buy/list/start/0,0,0?buyingpageItemOption=Open&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=1">Buy Account</a>
                 </li>
 
                 <li class="demo-button">

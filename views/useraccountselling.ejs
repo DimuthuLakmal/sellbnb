@@ -42,12 +42,12 @@
         <div class="parallax-overlay"></div>
 
         <div class="parallax-content">
-            <h2>Account <span>Bidding Items</span></h2>
+            <h2>Sell Account <span>Selling Items</span></h2>
 
             <nav id="breadcrumbs">
                 <ul>
                     <li>Home</li>
-                    <li>News</li>
+                    <li>Sell Account</li>
                 </ul>
             </nav>
         </div>
@@ -55,92 +55,514 @@
 
     <div class="container">
 
-        <!-- Sidebar
-        ================================================== -->
-        <div class="four columns">
 
-            <!--&lt;!&ndash; Widget &ndash;&gt;-->
-            <!--<div class="widget">-->
-                <!--<h3 class="headline">Filter By Price</h3><span class="line"></span><div class="clearfix"></div>-->
+        <div class="container">
+            <div class="fourteen columns centered">
+                <!-- Tabs Navigation -->
+                <ul class="tabs-nav">
+                    <li id="tab_1"><a href="#tab1">Open</a></li>
+                    <li id="tab_2"><a href="#tab2">Pending</a></li>
+                    <li id="tab_3"><a href="#tab3">Cancelled</a></li>
+                </ul>
 
-                <!--<div id="price-range">-->
-                    <!--<div class="padding-range"><div id="slider-range"></div></div>-->
-                    <!--<label for="amount">Price:</label>-->
-                    <!--<input type="text" id="amount"/>-->
-                    <!--<a href="#" class="button color">Filter</a>-->
-                <!--</div>-->
-                <!--<div class="clearfix"></div>-->
-            <!--</div>-->
+                <!-- Tabs Content -->
+                <div class="tabs-container">
 
-            <!--&lt;!&ndash; Sorting &ndash;&gt;-->
-            <form action="/api/items/start/0/userId/<%= user.id %>" method = "GET" id="filter_form">
-                <div class="widget">
-                    <h3 class="headline" style="z-index: 0 !important;">Filter By</h3><span class="line"></span><div class="clearfix"></div>
+                    <div class="tab-content" id="tab1">
+                        <div>
+                            <form action="/user/sell/list/start/0,0,0" method = "GET" id="open_duration_form">
+                                <input type="hidden" name="sellingpageItemOption" value="Open"/>
+                                <input type="hidden" name="pendingDurationOption" value="1"/>
+                                <input type="hidden" name="cancelledDurationOption" value="1"/>
+                                Your have <%= sellingListOpen.length %> items in
+                                <select class="orderby" name="openDurationOption" id="filter_options_open">
+                                    <% if(filterParamerOpen == '1') {%>
+                                    <option selected value="1">Last Month</option>
+                                    <option value="6">Last Six Months</option>
+                                    <option value="12">Last Year</option>
+                                    <option value="0">From Beginning</option>
+                                    <% } %>
+                                    <% if(filterParamerOpen == '6') {%>
+                                    <option value="1">Last Month</option>
+                                    <option selected value="6">Last Six Months</option>
+                                    <option value="12">Last Year</option>
+                                    <option value="0">From Beginning</option>
+                                    <% } %>
+                                    <% if(filterParamerOpen == '12') {%>
+                                    <option value="1">Last Month</option>
+                                    <option value="6">Last Six Months</option>
+                                    <option selected value="12">Last Year</option>
+                                    <option value="0">From Beginning</option>
+                                    <% } %>
+                                    <% if(filterParamerOpen == '0') {%>
+                                    <option value="1">Last Month</option>
+                                    <option value="6">Last Six Months</option>
+                                    <option value="12">Last Year</option>
+                                    <option selected value="0">From Beginning</option>
+                                    <% } %>
+                                </select>
+                            </form>
+                        </div>
+                        <div class="fourteen columns products centered">
+                            <% if(sellingListOpen.length == 0) {%>
+                                <br><br>
+                                <div align="center"><h3>No Items to display. Check other sections.</h3></div>
+                            <% } %>
+                            <% for(var itemIndex = 0; itemIndex < sellingListOpen.length; itemIndex++) {
+                                var item = sellingListOpen[itemIndex];
+                                var biddingDetails = biddingDetailListOpen[itemIndex];
+                                var lastBidding = {};
+                                if((biddingDetails != undefined && biddingDetails != null) && biddingDetails.length > 0) {
+                                    lastBidding = biddingDetails[biddingDetails.length-1];
+                                }
+                            %>
+                            <!-- Selling Items -->
+                            <div class="item-selling-div fourteen columns">
+                                <div class="item-selling-div">
+                                    <div class="three columns">
+                                        <% if(item.ItemImages.length > 0) {%>
+                                        <img src="uploads/items/<%= item.ItemImages[0].url %>"/>
+                                        <% } %>
+                                    </div>
+                                    <div class="six columns">
+                                        <h3><%= item.title %></h3>
+                                        <p>
+                                            <% if((biddingDetails != undefined && biddingDetails != null) && biddingDetails.length > 0) {%>
+                                            Last Bid: <%= lastBidding.bid+' by '+lastBidding.username %><br>
+                                            <% } else { %>
+                                            No Bids <br>
+                                            <% } %>
+                                            <% if(remainingTimesOpen[itemIndex][0] != 0) {
+                                                var remainingTime = remainingTimesOpen[itemIndex][0];
+                                                var numdays = Math.floor(remainingTime / 86400);
+                                                var numhours = Math.floor((remainingTime % 86400) / 3600);
+                                                var numminutes = Math.floor(((remainingTime % 86400) % 3600) / 60);
+                                                var numseconds = Math.floor(((remainingTime % 86400) % 3600) % 60);
 
-                    <select class="orderby" name="sellpageItemOption" id="filter_options">
-                        <% if(filterParamer == 'All') {%>
-                            <option selected>All</option>
-                            <option>Open Contract</option>
-                            <option>Closed Contract</option>
-                            <option>Pending</option>
-                            <option>Cancelled</option>
-                        <% } %>
-                        <% if(filterParamer == 'Open') {%>
-                            <option>All</option>
-                            <option selected>Open Contract</option>
-                            <option>Closed Contract</option>
-                            <option>Pending</option>
-                            <option>Cancelled</option>
-                        <% } %>
-                        <% if(filterParamer == 'Closed') {%>
-                            <option>All</option>
-                            <option>Open Contract</option>
-                            <option selected>Closed Contract</option>
-                            <option>Pending</option>
-                            <option>Cancelled</option>
-                        <% } %>
-                        <% if(filterParamer == 'Pending') {%>
-                            <option>All</option>
-                            <option>Open Contract</option>
-                            <option>Closed Contract</option>
-                            <option selected>Pending</option>
-                            <option>Cancelled</option>
-                        <% } %>
-                        <% if(filterParamer == 'Cancelled') {%>
-                            <option>All</option>
-                            <option>Open Contract</option>
-                            <option>Closed Contract</option>
-                            <option>Pending</option>
-                            <option selected>Cancelled</option>
-                        <% } %>
-                    </select>
-                    <div class="clearfix"></div>
+                                                var formattedTime = "";
+                                                formattedTime = numdays != 0 ? (formattedTime += numdays + " days ") : formattedTime;
+                                                formattedTime = numhours != 0 ? (formattedTime += numhours + " hrs ") : formattedTime;
+                                                formattedTime = numminutes != 0 ? (formattedTime += numminutes + " mins ") : formattedTime;
+                                                formattedTime = numseconds != 0 ? (formattedTime += numseconds + " secs ") : formattedTime;
+                                            %>
+                                            <%= 'Time Left: '+formattedTime %>
+                                            <% } else {%>
+                                            <%= 'Bidding Closed At: ' + remainingTimes[itemIndex][2] %>
+                                            <% } %>
+                                        </p>
+                                    </div>
+                                    <a class="popup-with-zoom-anim" href="#fullname-edit-dialog" id="action-modal"
+                                       style="color:#2db2ea; display: none">Action Modal</a><br/>
+                                    <div id="fullname-edit-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
+                                        <h2 class="margin-bottom-10" id="action-heading"></h2>
+                                        <form method="POST" name="editform" action="/api/items/update/status">
+                                            <p id="action-description"></p>
+                                            <fieldset>
+                                                <div class="twelve columns editform">
+                                                    <input type="hidden" name="action" id="actionToSubmit" />
+                                                    <input type="hidden" name="itemId" value="<%= item.id %>" />
+                                                    <input type="submit" class="submit" value="Yes"/>
+                                                </div>
+                                            </fieldset>
+                                            <div class="clearfix"></div>
+                                        </form>
+                                    </div>
+                                    <div class="four columns" style="float:right">
+                                        <form action="/user/sell/bids/start/0" method="get">
+                                            <input type="hidden" name="itemId" value="<%= item.id %>"/>
+                                            <input type="submit" class="item-selling-btn" value="View Bidding Details"/>
+                                        </form>
+                                        <!--<form action="/user/sell/edit" method="get">-->
+                                            <!--<input type="hidden" name="itemId" value=""/>-->
+                                            <!--<input type="submit" class="item-selling-btn" value="     Edit Item Details    "/>-->
+                                        <!--</form>-->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <span class="line" style="margin-top:10px;margin-bottom: 0px"></span><div class="clearfix"></div>
+                            <% } %>
+
+
+                            <div class="clearfix"></div>
+
+                            <!-- Pagination -->
+                            <div class="pagination-container">
+                                <nav class="pagination">
+                                    <ul>
+                                        <%
+                                        var pageOne = (pageMultipationFactorOpen * 10) + 1;
+                                        var pageTwo = (pageMultipationFactorOpen * 10) + 2;
+                                        var pageThree = (pageMultipationFactorOpen * 10) + 3;
+                                        %>
+                                        <% if(maxPageCountOpen >= pageOne) {%>
+                                        <li>
+                                            <a href="/user/sell/list/start/<%= (pageOne-1) * 10 %>,0,0?sellingpageItemOption=Open&openDurationOption=<%= filterParamerOpen %>&pendingDurationOption=1&cancelledDurationOption=1" <% if(pageOne === currentPageNumberOpen) { %>class="current-page"<% } %>>
+                                                <%= pageOne %>
+                                            </a>
+                                        </li>
+                                        <% } %>
+                                        <% if(maxPageCountOpen >= pageTwo) {%>
+                                        <li>
+                                            <a href="/user/sell/list/start/<%= (pageTwo-1) * 10 %>,0,0?sellingpageItemOption=Open&openDurationOption=<%= filterParamerOpen %>&pendingDurationOption=1&cancelledDurationOption=1" <% if(pageTwo === currentPageNumberOpen) { %>class="current-page"<% } %>>
+                                                <%= pageTwo %>
+                                            </a>
+                                        </li>
+                                        <% } %>
+                                        <% if(maxPageCountOpen >= pageThree) {%>
+                                        <li>
+                                            <a href="/user/sell/list/start/<%= (pageThree-1) * 10 %>,0,0?sellingpageItemOption=Open&openDurationOption=<%= filterParamerOpen %>&pendingDurationOption=1&cancelledDurationOption=1" <% if(pageThree === currentPageNumberOpen) { %>class="current-page"<% } %>>
+                                                <%= pageThree %>
+                                            </a>
+                                        </li>
+                                        <% } %>
+                                    </ul>
+                                </nav>
+
+                                <nav class="pagination-next-prev">
+                                    <ul>
+                                        <% if(0 < pageMultipationFactorOpen) {%>
+                                        <li><a href="/user/sell/list/start/<%= (pageMultipationFactorOpen - 1) * 30 %>,0,0?sellingpageItemOption=Open&openDurationOption=<%= filterParamerOpen %>&pendingDurationOption=1&cancelledDurationOption=1" class="prev"></a></li>
+                                        <% } %>
+                                        <% if(maxPageCountOpen >= (pageMultipationFactorOpen * 10) + 4) {%>
+                                        <li><a href="/user/sell/list/start/<%= (pageMultipationFactorOpen + 1) * 30 %>,0,0?sellingpageItemOption=Open&openDurationOption=<%= filterParamerOpen %>&pendingDurationOption=1&cancelledDurationOption=1" class="next"></a></li>
+                                        <% } %>
+                                    </ul>
+                                </nav>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="tab2">
+                        <div>
+                            <form action="/user/sell/list/start/0,0,0" method = "GET" id="pending_duration_form">
+                                <input type="hidden" name="sellingpageItemOption" value="Pending"/>
+                                <input type="hidden" name="openDurationOption" value="1"/>
+                                <input type="hidden" name="cancelledDurationOption" value="1"/>
+                                Your have <%= sellingListPending.length %> items in
+                                <select class="orderby" name="pendingDurationOption" id="filter_options_pending">
+                                    <% if(filterParamerPending == '1') {%>
+                                    <option selected value="1">Last Month</option>
+                                    <option value="6">Last Six Months</option>
+                                    <option value="12">Last Year</option>
+                                    <option value="0">From Beginning</option>
+                                    <% } %>
+                                    <% if(filterParamerPending == '6') {%>
+                                    <option value="1">Last Month</option>
+                                    <option selected value="6">Last Six Months</option>
+                                    <option value="12">Last Year</option>
+                                    <option value="0">From Beginning</option>
+                                    <% } %>
+                                    <% if(filterParamerPending == '12') {%>
+                                    <option value="1">Last Month</option>
+                                    <option value="6">Last Six Months</option>
+                                    <option selected value="12">Last Year</option>
+                                    <option value="0">From Beginning</option>
+                                    <% } %>
+                                    <% if(filterParamerPending == '0') {%>
+                                    <option value="1">Last Month</option>
+                                    <option value="6">Last Six Months</option>
+                                    <option value="12">Last Year</option>
+                                    <option selected value="0">From Beginning</option>
+                                    <% } %>
+                                </select>
+                            </form>
+                        </div>
+
+                        <div class="fourteen columns products centered">
+                            <% if(sellingListPending.length == 0) {%>
+                            <br><br>
+                            <div align="center"><h3>No Items to display. Check other sections.</h3></div>
+                            <% } %>
+                            <% for(var itemIndex = 0; itemIndex < sellingListPending.length; itemIndex++) {
+                                var item = sellingListPending[itemIndex];
+                                var biddingDetails = biddingDetailListPending[itemIndex];
+                                var lastBidding = {};
+                                if((biddingDetails != undefined && biddingDetails != null) && biddingDetails.length > 0) {
+                                    lastBidding = biddingDetails[biddingDetails.length-1];
+                                }
+                            %>
+                            <!-- Selling Items -->
+                            <div class="item-selling-div fourteen columns">
+                                <div class="item-selling-div">
+                                    <div class="three columns">
+                                        <% if(item.ItemImages.length > 0) {%>
+                                        <img src="uploads/items/<%= item.ItemImages[0].url %>"/>
+                                        <% } %>
+                                    </div>
+                                    <div class="six columns">
+                                        <h3><%= item.title %></h3>
+                                        <p>
+                                            <% if((biddingDetails != undefined && biddingDetails != null) && biddingDetails.length > 0) {%>
+                                            Last Bid: <%= lastBidding.bid+' by '+lastBidding.username %><br>
+                                            <% } else { %>
+                                            No Bids <br>
+                                            <% } %>
+                                            <% if(remainingTimesPending[itemIndex][0] != 0) {
+                                                var remainingTime = remainingTimesPending[itemIndex][0];
+                                                var numdays = Math.floor(remainingTime / 86400);
+                                                var numhours = Math.floor((remainingTime % 86400) / 3600);
+                                                var numminutes = Math.floor(((remainingTime % 86400) % 3600) / 60);
+                                                var numseconds = Math.floor(((remainingTime % 86400) % 3600) % 60);
+
+                                                var formattedTime = "";
+                                                formattedTime = numdays != 0 ? (formattedTime += numdays + " days ") : formattedTime;
+                                                formattedTime = numhours != 0 ? (formattedTime += numhours + " hrs ") : formattedTime;
+                                                formattedTime = numminutes != 0 ? (formattedTime += numminutes + " mins ") : formattedTime;
+                                                formattedTime = numseconds != 0 ? (formattedTime += numseconds + " secs ") : formattedTime;
+                                            %>
+                                            <%= 'Time Left: '+formattedTime %>
+                                            <% } else {%>
+                                            <%= 'Bidding Closed At: ' + remainingTimes[itemIndex][2] %>
+                                            <% } %>
+                                        </p>
+                                    </div>
+                                    <a class="popup-with-zoom-anim" href="#fullname-edit-dialog" id="action-modal"
+                                       style="color:#2db2ea; display: none">Action Modal</a><br/>
+                                    <div id="fullname-edit-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
+                                        <h2 class="margin-bottom-10" id="action-heading"></h2>
+                                        <form method="POST" name="editform" action="/api/items/update/status">
+                                            <p id="action-description"></p>
+                                            <fieldset>
+                                                <div class="twelve columns editform">
+                                                    <input type="hidden" name="action" id="actionToSubmit" />
+                                                    <input type="hidden" name="itemId" value="<%= item.id %>" />
+                                                    <input type="submit" class="submit" value="Yes"/>
+                                                </div>
+                                            </fieldset>
+                                            <div class="clearfix"></div>
+                                        </form>
+                                    </div>
+                                    <div class="four columns" style="float:right">
+                                        <form action="/user/sell/bids/start/0" method="get">
+                                            <input type="hidden" name="itemId" value="<%= item.id %>"/>
+                                            <input type="submit" class="item-selling-btn" value="View Details/ Bids"/>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <span class="line" style="margin-top:10px;margin-bottom: 0px"></span><div class="clearfix"></div>
+                            <% } %>
+
+
+                            <div class="clearfix"></div>
+
+                            <!-- Pagination -->
+                            <div class="pagination-container">
+                                <nav class="pagination">
+                                    <ul>
+                                        <%
+                                        var pageOne = (pageMultipationFactorPending * 10) + 1;
+                                        var pageTwo = (pageMultipationFactorPending * 10) + 2;
+                                        var pageThree = (pageMultipationFactorPending * 10) + 3;
+                                        %>
+                                        <% if(maxPageCountPending >= pageOne) {%>
+                                        <li>
+                                            <a href="/user/sell/list/start/0,<%= (pageOne-1) * 10 %>,0?sellingpageItemOption=Pending&openDurationOption=1&pendingDurationOption=<%= filterParamerPending %>&cancelledDurationOption=1" <% if(pageOne === currentPageNumberPending) { %>class="current-page"<% } %>>
+                                                <%= pageOne %>
+                                            </a>
+                                        </li>
+                                        <% } %>
+                                        <% if(maxPageCountPending >= pageTwo) {%>
+                                        <li>
+                                            <a href="/user/sell/list/start/0,<%= (pageTwo-1) * 10 %>,0?sellingpageItemOption=Pending&openDurationOption=1&pendingDurationOption=<%= filterParamerPending %>&cancelledDurationOption=1" <% if(pageTwo === currentPageNumberPending) { %>class="current-page"<% } %>>
+                                                <%= pageTwo %>
+                                            </a>
+                                        </li>
+                                        <% } %>
+                                        <% if(maxPageCountPending >= pageThree) {%>
+                                        <li>
+                                            <a href="/user/sell/list/start/0,<%= (pageThree-1) * 10 %>,0?sellingpageItemOption=Pending&openDurationOption=1&pendingDurationOption=<%= filterParamerPending %>&cancelledDurationOption=1" <% if(pageThree === currentPageNumberPending) { %>class="current-page"<% } %>>
+                                                <%= pageThree %>
+                                            </a>
+                                        </li>
+                                        <% } %>
+                                    </ul>
+                                </nav>
+
+                                <nav class="pagination-next-prev">
+                                    <ul>
+                                        <% if(0 < pageMultipationFactorPending) {%>
+                                        <li><a href="/user/sell/list/start/0,<%= (pageThree-1) * 10 %>,0?sellingpageItemOption=Pending&openDurationOption=1&pendingDurationOption=<%= filterParamerPending %>&cancelledDurationOption=1" class="prev"></a></li>
+                                        <% } %>
+                                        <% if(maxPageCountPending >= (pageMultipationFactorPending * 10) + 4) {%>
+                                        <li><a href="/user/sell/list/start/0,<%= (pageThree-1) * 10 %>,0?sellingpageItemOption=Pending&openDurationOption=1&pendingDurationOption=<%= filterParamerPending %>&cancelledDurationOption=1" class="next"></a></li>
+                                        <% } %>
+                                    </ul>
+                                </nav>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="tab-content" id="tab3">
+                        <div>
+                            <form action="/user/sell/list/start/0,0,0" method = "GET" id="pending_duration_form">
+                                <input type="hidden" name="sellingpageItemOption" value="Cancelled"/>
+                                <input type="hidden" name="openDurationOption" value="1"/>
+                                <input type="hidden" name="cancelledDurationOption" value="1"/>
+                                Your have <%= sellingListCancelled.length %> items in
+                                <select class="orderby" name="pendingDurationOption" id="filter_options_pending">
+                                    <% if(filterParamerCancelled == '1') {%>
+                                    <option selected value="1">Last Month</option>
+                                    <option value="6">Last Six Months</option>
+                                    <option value="12">Last Year</option>
+                                    <option value="0">From Beginning</option>
+                                    <% } %>
+                                    <% if(filterParamerCancelled == '6') {%>
+                                    <option value="1">Last Month</option>
+                                    <option selected value="6">Last Six Months</option>
+                                    <option value="12">Last Year</option>
+                                    <option value="0">From Beginning</option>
+                                    <% } %>
+                                    <% if(filterParamerCancelled == '12') {%>
+                                    <option value="1">Last Month</option>
+                                    <option value="6">Last Six Months</option>
+                                    <option selected value="12">Last Year</option>
+                                    <option value="0">From Beginning</option>
+                                    <% } %>
+                                    <% if(filterParamerCancelled == '0') {%>
+                                    <option value="1">Last Month</option>
+                                    <option value="6">Last Six Months</option>
+                                    <option value="12">Last Year</option>
+                                    <option selected value="0">From Beginning</option>
+                                    <% } %>
+                                </select>
+                            </form>
+                        </div>
+
+                        <div class="fourteen columns products centered">
+                            <% if(sellingListCancelled.length == 0) {%>
+                            <br><br>
+                            <div align="center"><h3>No Items to display. Check other sections.</h3></div>
+                            <% } %>
+                            <% for(var itemIndex = 0; itemIndex < sellingListCancelled.length; itemIndex++) {
+                                var item = sellingListCancelled[itemIndex];
+                                var biddingDetails = biddingDetailListCancelled[itemIndex];
+                                var lastBidding = {};
+                                if((biddingDetails != undefined && biddingDetails != null) && biddingDetails.length > 0) {
+                                    lastBidding = biddingDetails[biddingDetails.length-1];
+                                }
+                            %>
+                            <!-- Selling Items -->
+                            <div class="item-selling-div fourteen columns">
+                                <div class="item-selling-div">
+                                    <div class="three columns">
+                                        <% if(item.ItemImages.length > 0) {%>
+                                        <img src="uploads/items/<%= item.ItemImages[0].url %>"/>
+                                        <% } %>
+                                    </div>
+                                    <div class="six columns">
+                                        <h3><%= item.title %></h3>
+                                        <p>
+                                            <% if((biddingDetails != undefined && biddingDetails != null) && biddingDetails.length > 0) {%>
+                                            Last Bid: <%= lastBidding.bid+' by '+lastBidding.username %><br>
+                                            <% } else { %>
+                                            No Bids <br>
+                                            <% } %>
+                                            <% if(remainingTimesCancelled[itemIndex][0] != 0) {
+                                                var remainingTime = remainingTimesCancelled[itemIndex][0];
+                                                var numdays = Math.floor(remainingTime / 86400);
+                                                var numhours = Math.floor((remainingTime % 86400) / 3600);
+                                                var numminutes = Math.floor(((remainingTime % 86400) % 3600) / 60);
+                                                var numseconds = Math.floor(((remainingTime % 86400) % 3600) % 60);
+
+                                                var formattedTime = "";
+                                                formattedTime = numdays != 0 ? (formattedTime += numdays + " days ") : formattedTime;
+                                                formattedTime = numhours != 0 ? (formattedTime += numhours + " hrs ") : formattedTime;
+                                                formattedTime = numminutes != 0 ? (formattedTime += numminutes + " mins ") : formattedTime;
+                                                formattedTime = numseconds != 0 ? (formattedTime += numseconds + " secs ") : formattedTime;
+                                            %>
+                                            <%= 'Time Left: '+formattedTime %>
+                                            <% } else {%>
+                                            <%= 'Bidding Closed At: ' + remainingTimes[itemIndex][2] %>
+                                            <% } %>
+                                        </p>
+                                    </div>
+                                    <a class="popup-with-zoom-anim" href="#fullname-edit-dialog" id="action-modal"
+                                       style="color:#2db2ea; display: none">Action Modal</a><br/>
+                                    <div id="fullname-edit-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
+                                        <h2 class="margin-bottom-10" id="action-heading"></h2>
+                                        <form method="POST" name="editform" action="/api/items/update/status">
+                                            <p id="action-description"></p>
+                                            <fieldset>
+                                                <div class="twelve columns editform">
+                                                    <input type="hidden" name="action" id="actionToSubmit" />
+                                                    <input type="hidden" name="itemId" value="<%= item.id %>" />
+                                                    <input type="submit" class="submit" value="Yes"/>
+                                                </div>
+                                            </fieldset>
+                                            <div class="clearfix"></div>
+                                        </form>
+                                    </div>
+                                    <div class="four columns" style="float:right">
+                                        <form action="/user/sell/bids/start/0" method="get">
+                                            <input type="hidden" name="itemId" value="<%= item.id %>"/>
+                                            <input type="submit" class="item-selling-btn" value="View Details/ Bids"/>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <span class="line" style="margin-top:10px;margin-bottom: 0px"></span><div class="clearfix"></div>
+                            <% } %>
+
+
+                            <div class="clearfix"></div>
+
+                            <!-- Pagination -->
+                            <div class="pagination-container">
+                                <nav class="pagination">
+                                    <ul>
+                                        <%
+                                        var pageOne = (pageMultipationFactorCancelled * 10) + 1;
+                                        var pageTwo = (pageMultipationFactorCancelled * 10) + 2;
+                                        var pageThree = (pageMultipationFactorCancelled * 10) + 3;
+                                        %>
+                                        <% if(maxPageCountCancelled >= pageOne) {%>
+                                        <li>
+                                            <a href="/user/sell/list/start/0,0,<%= (pageOne-1) * 10 %>?sellingpageItemOption=Cancelled&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=<%= filterParamerCancelled %>" <% if(pageOne === currentPageNumberCancelled) { %>class="current-page"<% } %>>
+                                                <%= pageOne %>
+                                            </a>
+                                        </li>
+                                        <% } %>
+                                        <% if(maxPageCountCancelled >= pageTwo) {%>
+                                        <li>
+                                            <a href="/user/sell/list/start/0,0,<%= (pageTwo-1) * 10 %>?sellingpageItemOption=Cancelled&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=<%= filterParamerCancelled %>" <% if(pageTwo === currentPageNumberCancelled) { %>class="current-page"<% } %>>
+                                                <%= pageTwo %>
+                                            </a>
+                                        </li>
+                                        <% } %>
+                                        <% if(maxPageCountCancelled >= pageThree) {%>
+                                        <li>
+                                            <a href="/user/sell/list/start/0,0,<%= (pageThree-1) * 10 %>?sellingpageItemOption=Cancelled&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=<%= filterParamerCancelled %>" <% if(pageThree === currentPageNumberCancelled) { %>class="current-page"<% } %>>
+                                                <%= pageThree %>
+                                            </a>
+                                        </li>
+                                        <% } %>
+                                    </ul>
+                                </nav>
+
+                                <nav class="pagination-next-prev">
+                                    <ul>
+                                        <% if(0 < pageMultipationFactorCancelled) {%>
+                                        <li><a href="/user/sell/list/start/0,0,<%= (pageThree-1) * 10 %>?sellingpageItemOption=Cancelled&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=<%= filterParamerCancelled %>" class="prev"></a></li>
+                                        <% } %>
+                                        <% if(maxPageCountCancelled >= (pageMultipationFactorCancelled * 10) + 4) {%>
+                                        <li><a href="/user/sell/list/start/0,0,<%= (pageThree-1) * 10 %>?sellingpageItemOption=Cancelled&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=<%= filterParamerCancelled %>" class="next"></a></li>
+                                        <% } %>
+                                    </ul>
+                                </nav>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
-
-                <!-- Sorting -->
-                <div class="widget">
-                    <h3 class="headline" style="z-index: 0 !important;">Date</h3><span class="line"></span><div class="clearfix"></div>
-
-
-                    <div class="four alpha columns">
-                        <label>From : </label>
-                        <input type="text" name="from" id="from" style="width: 91%; z-index: 100" value=""/>
-                    </div>
-                    <br><br><br>
-                    <div class="four alpha columns">
-                        <label>To : </label>
-                        <input type="text" name="to" id="to" style="width: 91%; z-index: 100" value=""/>
-                    </div>
-                    <div class="four alpha columns" style="margin-top:10px">
-                        <input type="submit" class="button color" style="float: right; z-index: 0" value="Filter"/>
-                    </div>
-
-                    <div class="clearfix"></div>
-                </div>
-            </form>
-
+            </div>
         </div>
-
 
         <!-- Content
         ================================================== -->
@@ -156,135 +578,7 @@
 
         <!--</div>-->
 
-        <div class="twelve columns products">
 
-            <% for(var itemIndex = 0; itemIndex < sellingList.length; itemIndex++) {
-                var item = sellingList[itemIndex];
-                var biddingDetails = biddingDetailList[itemIndex];
-                var lastBidding = {};
-                if((biddingDetails != undefined && biddingDetails != null) && biddingDetails.length > 0) {
-                    lastBidding = biddingDetails[biddingDetails.length-1];
-                }
-            %>
-                <!-- Selling Items -->
-                <div class="item-selling-div twelve columns">
-                    <div class="item-selling-div">
-                        <div class="two columns">
-                            <% if(item.ItemImages.length > 0) {%>
-                            <img src="uploads/items/<%= item.ItemImages[0].url %>"/>
-                            <% } %>
-                        </div>
-                        <div class="five columns">
-                            <h3><%= item.title %></h3>
-                            <p>
-                                <% if((biddingDetails != undefined && biddingDetails != null) && biddingDetails.length > 0) {%>
-                                    Last Bid: <%= lastBidding.bid+' by '+lastBidding.username %><br>
-                                <% } else { %>
-                                    No Bids <br>
-                                <% } %>
-                                <% if(remainingTimes[itemIndex][0] != 0) {
-                                    var remainingTime = remainingTimes[itemIndex][0];
-                                    var numdays = Math.floor(remainingTime / 86400);
-                                    var numhours = Math.floor((remainingTime % 86400) / 3600);
-                                    var numminutes = Math.floor(((remainingTime % 86400) % 3600) / 60);
-                                    var numseconds = Math.floor(((remainingTime % 86400) % 3600) % 60);
-
-                                    var formattedTime = "";
-                                    formattedTime = numdays != 0 ? (formattedTime += numdays + " days ") : formattedTime;
-                                    formattedTime = numhours != 0 ? (formattedTime += numhours + " hrs ") : formattedTime;
-                                    formattedTime = numminutes != 0 ? (formattedTime += numminutes + " mins ") : formattedTime;
-                                    formattedTime = numseconds != 0 ? (formattedTime += numseconds + " secs ") : formattedTime;
-                                %>
-                                    <%= 'Time Left: '+formattedTime %>
-                                <% } else {%>
-                                    <%= 'Bidding Closed At: ' + remainingTimes[itemIndex][2] %>
-                                <% } %>
-                            </p>
-                        </div>
-                        <a class="popup-with-zoom-anim" href="#fullname-edit-dialog" id="action-modal"
-                           style="color:#2db2ea; display: none">Action Modal</a><br/>
-                        <div id="fullname-edit-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
-                            <h2 class="margin-bottom-10" id="action-heading"></h2>
-                            <form method="POST" name="editform" action="http://localhost:3000/api/items/update/status">
-                                <p id="action-description"></p>
-                                <fieldset>
-                                    <div class="twelve columns editform">
-                                        <input type="hidden" name="action" id="actionToSubmit" />
-                                        <input type="hidden" name="itemId" value="<%= item.id %>" />
-                                        <input type="submit" class="submit" value="Yes"/>
-                                    </div>
-                                </fieldset>
-                                <div class="clearfix"></div>
-                            </form>
-                        </div>
-                        <div class="four columns" style="float:right">
-                            <form action="http://localhost:3000/user/sell/bids/start/0" method="get">
-                                <input type="hidden" name="itemId" value="<%= item.id %>"/>
-                                <input type="submit" class="item-selling-btn" value="View Details/ Bids"/>
-                            </form>
-                            <select class="orderby actions">More Actions
-                                <option>More Actions</option>
-                                <option>Stop Bidding</option>
-                                <option>Delete</option>
-                                <option>Hold</option>
-                                <option>Cancel</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <span class="line" style="margin-top:10px;margin-bottom: 0px"></span><div class="clearfix"></div>
-            <% } %>
-
-
-            <div class="clearfix"></div>
-
-            <!-- Pagination -->
-            <div class="pagination-container">
-                <nav class="pagination">
-                    <ul>
-                        <%
-                        var pageOne = (pageMultipationFactor * 10) + 1;
-                        var pageTwo = (pageMultipationFactor * 10) + 2;
-                        var pageThree = (pageMultipationFactor * 10) + 3;
-                        %>
-                        <% if(maxPageCount >= pageOne) {%>
-                        <li>
-                            <a href="http://localhost:3000/user/sell/list/start/<%= (pageOne-1) * 10 %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
-                                <%= pageOne %>
-                            </a>
-                        </li>
-                        <% } %>
-                        <% if(maxPageCount >= pageTwo) {%>
-                        <li>
-                            <a href="http://localhost:3000/user/sell/list/start/<%= (pageTwo-1) * 10 %>" <% if(pageTwo === currentPageNumber) { %>class="current-page"<% } %>>
-                                <%= pageTwo %>
-                            </a>
-                        </li>
-                        <% } %>
-                        <% if(maxPageCount >= pageThree) {%>
-                        <li>
-                            <a href="http://localhost:3000/user/sell/list/start/<%= (pageThree-1) * 10 %>" <% if(pageThree === currentPageNumber) { %>class="current-page"<% } %>>
-                                <%= pageThree %>
-                            </a>
-                        </li>
-                        <% } %>
-                    </ul>
-                </nav>
-
-                <nav class="pagination-next-prev">
-                    <ul>
-                        <% if(0 < pageMultipationFactor) {%>
-                        <li><a href="http://localhost:3000/user/sell/list/start/<%= (pageMultipationFactor - 1) * 30 %>" class="prev"></a></li>
-                        <% } %>
-                        <% if(maxPageCount >= (pageMultipationFactor * 10) + 4) {%>
-                        <li><a href="http://localhost:3000/user/sell/list/start/<%= (pageMultipationFactor + 1) * 30 %>" class="next"></a></li>
-                        <% } %>
-                    </ul>
-                </nav>
-            </div>
-
-        </div>
 
     </div>
 
@@ -292,95 +586,7 @@
 
     <!-- Footer
     ================================================== -->
-    <div id="footer">
-
-        <!-- Container -->
-        <div class="container">
-
-            <div class="four columns">
-                <img src="images/logo-footer.png" alt="" class="margin-top-10"/>
-                <p class="margin-top-15">Nulla facilisis feugiat magna, ut molestie metus hendrerit vitae. Vivamus
-                    tristique lectus at varius rutrum. Integer lobortis mauris non consectetur eleifend.</p>
-            </div>
-
-            <div class="four columns">
-
-                <!-- Headline -->
-                <h3 class="headline footer">Customer Service</h3>
-                <span class="line"></span>
-                <div class="clearfix"></div>
-
-                <ul class="footer-links">
-                    <li><a href="#">Order Status</a></li>
-                    <li><a href="#">Payment Methods</a></li>
-                    <li><a href="#">Delivery & Returns</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
-                </ul>
-
-            </div>
-
-            <div class="four columns">
-
-                <!-- Headline -->
-                <h3 class="headline footer">My Account</h3>
-                <span class="line"></span>
-                <div class="clearfix"></div>
-
-                <ul class="footer-links">
-                    <li><a href="#">My Account</a></li>
-                    <li><a href="#">Order History</a></li>
-                    <li><a href="#">Wish List</a></li>
-                </ul>
-
-            </div>
-
-            <div class="four columns">
-
-                <!-- Headline -->
-                <h3 class="headline footer">Newsletter</h3>
-                <span class="line"></span>
-                <div class="clearfix"></div>
-                <p>Sign up to receive email updates on new product announcements, gift ideas, special promotions, sales
-                    and more.</p>
-
-                <form action="#" method="get">
-                    <button class="newsletter-btn" type="submit">Join</button>
-                    <input class="newsletter" type="text" placeholder="mail@example.com" value=""/>
-                </form>
-            </div>
-
-        </div>
-        <!-- Container / End -->
-
-    </div>
-    <!-- Footer / End -->
-
-    <!-- Footer Bottom / Start -->
-    <div id="footer-bottom">
-
-        <!-- Container -->
-        <div class="container">
-
-            <div class="eight columns">© Copyright 2014 by <a href="#">trizzy</a>. All Rights Reserved.</div>
-            <div class="eight columns">
-                <ul class="payment-icons">
-                    <li><img src="images/visa.png" alt=""/></li>
-                    <li><img src="images/mastercard.png" alt=""/></li>
-                    <li><img src="images/skrill.png" alt=""/></li>
-                    <li><img src="images/moneybookers.png" alt=""/></li>
-                    <li><img src="images/paypal.png" alt=""/></li>
-                </ul>
-            </div>
-
-        </div>
-        <!-- Container / End -->
-
-    </div>
-    <!-- Footer Bottom / End -->
-
-    <!-- Back To Top Button -->
-    <div id="backtotop"><a href="#"></a></div>
+    <% include footer.ejs%>
 
 </div>
 
@@ -388,6 +594,7 @@
 <!-- Java Script
 ================================================== -->
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="scripts/views/useraccountselling.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="scripts/jquery.jpanelmenu.js"></script>
 <script src="scripts/jquery.themepunch.plugins.min.js"></script>
@@ -410,7 +617,6 @@
 <script src="scripts/puregrid.js"></script>
 <script src="scripts/stacktable.js"></script>
 <script src="scripts/custom.js"></script>
-<script src="scripts/views/useraccountselling.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
 
 <script>
