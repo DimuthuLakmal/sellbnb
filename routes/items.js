@@ -493,13 +493,11 @@ router.get('/start/:start/userId/:userId', function (req, res) {
             whereObject = {
                 UserId: userId,
                 $or: [{status: 'cancelled'}, {status: 'mutual-cancellation-all'}, {status:'mutual-cancellation-buyer'}, {status: 'mutual-cancellation-seller'}],
-                duration: {lt: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))},
             };
         } else {
             whereObject = {
                 UserId: userId,
                 $or: [{status: 'cancelled'}, {status: 'mutual-cancellation-all'}, {status:'mutual-cancellation-buyer'}, {status: 'mutual-cancellation-seller'}],
-                duration: {lt: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))},
                 createdAt: {gte: sequelize.fn('date_sub',moment().format(),sequelize.literal('interval '+openDurationOption+' month'))}
             };
         }
@@ -514,11 +512,12 @@ router.get('/start/:start/userId/:userId', function (req, res) {
             var ItemImage = models.ItemImage;
             var Bidding = models.Bidding;
             var User = models.User;
+            var Commodity = models.Commodity;
             Item.findAndCountAll({
                 where: whereObject,
                 offset: parseInt(start),
                 limit: 10,
-                include: [ItemImage, Bidding],
+                include: [ItemImage, Bidding, Commodity, User],
                 order: '`createdAt` DESC'
             }).then(function (Items) {
                 //calculate remaining times for bidding items & bidding details of each item
@@ -873,7 +872,7 @@ function retrieveItems(req, res, keyword) {
 /* Retrieve specific item from database */
 /* Usage: View Contract Details Seller/Buyer Page */
 router.get('/contract/id/:id', function (req, res) {
-    getItemForContract(req, res, '/user/buy/contract/id/'+req.params.id);
+    getItemForContract(req, res, '/user/buy/contract/id/'+req.params.id+'?bidId='+req.session.bidIdContract);
 });
 
 

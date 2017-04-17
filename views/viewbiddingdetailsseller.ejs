@@ -88,9 +88,9 @@
             <div class="item-selling-div eleven columns centered" style="margin-top: -20px;">
                 <div class="item-selling-div centered">
                     <div class="eight columns" style="padding-top: 20px;">
-                        <h3><%= bidding.bid %></h3>
+                        <h3>Bid: <%= bidding.bid %></h3>
                         <p>Quantity: <%= bidding.quantity %><br>
-                            Buyer: <%= bidding.User.username %><br>
+                            Buyer: <a href="/user/public/userId/<%= bidding.User.id %>"> <%= bidding.User.username %></a><br>
                             Status: <%= bidding.status %>
                         </p>
                     </div>

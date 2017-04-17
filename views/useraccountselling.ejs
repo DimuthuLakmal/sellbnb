@@ -111,10 +111,20 @@
                             <% for(var itemIndex = 0; itemIndex < sellingListOpen.length; itemIndex++) {
                                 var item = sellingListOpen[itemIndex];
                                 var biddingDetails = biddingDetailListOpen[itemIndex];
-                                var lastBidding = {};
+                                var maxBid = 0;
+                                var currency = '';
+                                var maxBidIndex = -1;
                                 if((biddingDetails != undefined && biddingDetails != null) && biddingDetails.length > 0) {
-                                    lastBidding = biddingDetails[biddingDetails.length-1];
+                                    for(var bidIndex = 0; bidIndex < biddingDetails.length; bidIndex++) {
+                                        var bid = biddingDetails[bidIndex].bid.split(" ")[1];
+                                        if(parseFloat(bid) > maxBid) {
+                                            maxBid = parseFloat(bid);
+                                            currency = biddingDetails[bidIndex].bid.split(" ")[0];
+                                            maxBidIndex = bidIndex;
+                                        }
+                                    }
                                 }
+                                var formattedCreatedTime = item.createdAt.split('T')[1].split(".");
                             %>
                             <!-- Selling Items -->
                             <div class="item-selling-div fourteen columns">
@@ -126,12 +136,11 @@
                                     </div>
                                     <div class="six columns">
                                         <h3><%= item.title %></h3>
-                                        <p>
-                                            <% if((biddingDetails != undefined && biddingDetails != null) && biddingDetails.length > 0) {%>
-                                            Last Bid: <%= lastBidding.bid+' by '+lastBidding.username %><br>
-                                            <% } else { %>
-                                            No Bids <br>
+                                        <p> Commodity Name: <%= item.Commodity.name %><br>
+                                            <%if(maxBidIndex != -1) {%>
+                                                Max Bid: <%= currency+" "+maxBid %> by <a href="/user/public/userId/<%= biddingDetails[maxBidIndex].UserId %>"> <%= biddingDetails[maxBidIndex].username %></a><br>
                                             <% } %>
+                                            Status: Contract Created <br>
                                             <% if(remainingTimesOpen[itemIndex][0] != 0) {
                                                 var remainingTime = remainingTimesOpen[itemIndex][0];
                                                 var numdays = Math.floor(remainingTime / 86400);
@@ -145,10 +154,11 @@
                                                 formattedTime = numminutes != 0 ? (formattedTime += numminutes + " mins ") : formattedTime;
                                                 formattedTime = numseconds != 0 ? (formattedTime += numseconds + " secs ") : formattedTime;
                                             %>
-                                            <%= 'Time Left: '+formattedTime %>
+                                            <%= 'Time Left: '+formattedTime %><br>
                                             <% } else {%>
-                                            <%= 'Bidding Closed At: ' + remainingTimes[itemIndex][2] %>
+                                            <%= 'Bidding Closed At: ' + remainingTimes[itemIndex][2] %><br>
                                             <% } %>
+                                            Listed Date: <%= item.createdAt.split('T')[0]+" "+formattedCreatedTime[0] %><br>
                                         </p>
                                     </div>
                                     <a class="popup-with-zoom-anim" href="#fullname-edit-dialog" id="action-modal"
@@ -278,10 +288,20 @@
                             <% for(var itemIndex = 0; itemIndex < sellingListPending.length; itemIndex++) {
                                 var item = sellingListPending[itemIndex];
                                 var biddingDetails = biddingDetailListPending[itemIndex];
-                                var lastBidding = {};
+                                var maxBid = 0;
+                                var currency = '';
+                                var maxBidIndex = -1;
                                 if((biddingDetails != undefined && biddingDetails != null) && biddingDetails.length > 0) {
-                                    lastBidding = biddingDetails[biddingDetails.length-1];
+                                    for(var bidIndex = 0; bidIndex < biddingDetails.length; bidIndex++) {
+                                        var bid = biddingDetails[bidIndex].bid.split(" ")[1];
+                                        if(parseFloat(bid) > maxBid) {
+                                            maxBid = parseFloat(bid);
+                                            currency = biddingDetails[bidIndex].bid.split(" ")[0];
+                                            maxBidIndex = bidIndex;
+                                        }
+                                    }
                                 }
+                                var formattedCreatedTime = item.createdAt.split('T')[1].split(".");
                             %>
                             <!-- Selling Items -->
                             <div class="item-selling-div fourteen columns">
@@ -293,11 +313,9 @@
                                     </div>
                                     <div class="six columns">
                                         <h3><%= item.title %></h3>
-                                        <p>
-                                            <% if((biddingDetails != undefined && biddingDetails != null) && biddingDetails.length > 0) {%>
-                                            Last Bid: <%= lastBidding.bid+' by '+lastBidding.username %><br>
-                                            <% } else { %>
-                                            No Bids <br>
+                                        <p>Commodity Name: <%= item.Commodity.name %><br>
+                                            <%if(maxBidIndex != -1) {%>
+                                                Max Bid: <%= currency+" "+maxBid %> by <a href="/user/public/userId/<%= biddingDetails[maxBidIndex].UserId %>"> <%= biddingDetails[maxBidIndex].username %></a><br>
                                             <% } %>
                                             <% if(remainingTimesPending[itemIndex][0] != 0) {
                                                 var remainingTime = remainingTimesPending[itemIndex][0];
@@ -312,10 +330,13 @@
                                                 formattedTime = numminutes != 0 ? (formattedTime += numminutes + " mins ") : formattedTime;
                                                 formattedTime = numseconds != 0 ? (formattedTime += numseconds + " secs ") : formattedTime;
                                             %>
-                                            <%= 'Time Left: '+formattedTime %>
+                                            <%= 'Time Left: '+formattedTime %><br>
+                                            Status:  Active Bidding <br>
                                             <% } else {%>
-                                            <%= 'Bidding Closed At: ' + remainingTimes[itemIndex][2] %>
+                                            <%= 'Bidding Closed At: ' + remainingTimes[itemIndex][2] %><br>
+                                            Status:  Select the winning bid<br>
                                             <% } %>
+                                            Listed Date: <%= item.createdAt.split('T')[0]+" "+formattedCreatedTime[0] %><br>
                                         </p>
                                     </div>
                                     <a class="popup-with-zoom-anim" href="#fullname-edit-dialog" id="action-modal"
@@ -337,7 +358,7 @@
                                     <div class="four columns" style="float:right">
                                         <form action="/user/sell/bids/start/0" method="get">
                                             <input type="hidden" name="itemId" value="<%= item.id %>"/>
-                                            <input type="submit" class="item-selling-btn" value="View Details/ Bids"/>
+                                            <input type="submit" class="item-selling-btn" value="View Bidding Details"/>
                                         </form>
                                     </div>
                                 </div>
@@ -442,10 +463,20 @@
                             <% for(var itemIndex = 0; itemIndex < sellingListCancelled.length; itemIndex++) {
                                 var item = sellingListCancelled[itemIndex];
                                 var biddingDetails = biddingDetailListCancelled[itemIndex];
-                                var lastBidding = {};
+                                var maxBid = 0;
+                                var currency = '';
+                                var maxBidIndex = -1;
                                 if((biddingDetails != undefined && biddingDetails != null) && biddingDetails.length > 0) {
-                                    lastBidding = biddingDetails[biddingDetails.length-1];
+                                    for(var bidIndex = 0; bidIndex < biddingDetails.length; bidIndex++) {
+                                        var bid = biddingDetails[bidIndex].bid.split(" ")[1];
+                                        if(parseFloat(bid) > maxBid) {
+                                            maxBid = parseFloat(bid);
+                                            currency = biddingDetails[bidIndex].bid.split(" ")[0];
+                                            maxBidIndex = bidIndex;
+                                        }
+                                    }
                                 }
+                                var formattedCreatedTime = item.createdAt.split('T')[1].split(".");
                             %>
                             <!-- Selling Items -->
                             <div class="item-selling-div fourteen columns">
@@ -457,12 +488,11 @@
                                     </div>
                                     <div class="six columns">
                                         <h3><%= item.title %></h3>
-                                        <p>
-                                            <% if((biddingDetails != undefined && biddingDetails != null) && biddingDetails.length > 0) {%>
-                                            Last Bid: <%= lastBidding.bid+' by '+lastBidding.username %><br>
-                                            <% } else { %>
-                                            No Bids <br>
+                                        <p>Commodity Name: <%= item.Commodity.name %><br>
+                                            <%if(maxBidIndex != -1) {%>
+                                                Max Bid: <%= currency+" "+maxBid %> by <a href="/user/public/userId/<%= biddingDetails[maxBidIndex].UserId %>"> <%= biddingDetails[maxBidIndex].username %></a><br>
                                             <% } %>
+                                            Status: Mutual Cancellation <br>
                                             <% if(remainingTimesCancelled[itemIndex][0] != 0) {
                                                 var remainingTime = remainingTimesCancelled[itemIndex][0];
                                                 var numdays = Math.floor(remainingTime / 86400);
@@ -476,10 +506,11 @@
                                                 formattedTime = numminutes != 0 ? (formattedTime += numminutes + " mins ") : formattedTime;
                                                 formattedTime = numseconds != 0 ? (formattedTime += numseconds + " secs ") : formattedTime;
                                             %>
-                                            <%= 'Time Left: '+formattedTime %>
+                                            <%= 'Time Left: '+formattedTime %><br>
                                             <% } else {%>
-                                            <%= 'Bidding Closed At: ' + remainingTimes[itemIndex][2] %>
+                                            <%= 'Bidding Closed At: ' + remainingTimes[itemIndex][2] %><br>
                                             <% } %>
+                                            Listed Date: <%= item.createdAt.split('T')[0]+" "+formattedCreatedTime[0] %><br>
                                         </p>
                                     </div>
                                     <a class="popup-with-zoom-anim" href="#fullname-edit-dialog" id="action-modal"
@@ -501,7 +532,7 @@
                                     <div class="four columns" style="float:right">
                                         <form action="/user/sell/bids/start/0" method="get">
                                             <input type="hidden" name="itemId" value="<%= item.id %>"/>
-                                            <input type="submit" class="item-selling-btn" value="View Details/ Bids"/>
+                                            <input type="submit" class="item-selling-btn" value="View Bidding Details"/>
                                         </form>
                                     </div>
                                 </div>

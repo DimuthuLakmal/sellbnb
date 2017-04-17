@@ -84,7 +84,7 @@
                     <tbody>
                     <tr>
                         <td> Contract ID</td>
-                        <td> 222225155</td>
+                        <td> <%= 'CI'+buyContractBid.id%></td>
                     </tr>
                     <tr>
                         <td> Contract Date</td>
@@ -92,7 +92,12 @@
                     </tr>
                     <tr>
                         <td> Status</td>
-                        <td> <%= buyContractBid.status %></td>
+                        <% if(buyContractBid.status == 'open') {%>
+                            <td> Contract Created </td>
+                        <%} else {%>
+                            <td> Mutual Cancellation </td>
+                        <% } %>
+
                     </tr>
                     <tr>
                         <td> Commodity Name</td>

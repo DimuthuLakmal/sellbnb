@@ -373,6 +373,7 @@ router.get('/start/:start/userId/:userId', function (req, res) {
     sequelize.sync().then(
         function () {
             var Item = models.Item;
+            var Commodity = models.Commodity;
             var ItemImage = models.ItemImage;
             var Bidding = models.Bidding;
             var User = models.User;
@@ -388,6 +389,7 @@ router.get('/start/:start/userId/:userId', function (req, res) {
                 var remainingTimes = [];
                 var itemImages = [];
                 var lastBid = [];
+                var itemDetails = [];
 
                 async.forEach(Biddings.rows, function(bidding, callback1) {
                     //calculate remaining time
@@ -430,12 +432,27 @@ router.get('/start/:start/userId/:userId', function (req, res) {
                             callback2(null);
                         });
                     }, function (err) {
-                        //pushing retrieved data to commodity array
-                        req.session.buyingList = [Biddings,itemImages,lastBid];
-                        req.session.itemsBuyingAccountCount = Biddings.count;
-                        req.session.itemsBuyingAccountOffset = parseInt(req.params.start);
-                        req.session.searchResultRemainingTimeBuying = remainingTimes;
-                        res.redirect('/user/buy/list/start/'+req.params.start+'?buyingpageItemOption='+nextBuyingpageItemOption+'&openDurationOption='+req.query['openDurationOption']+'&pendingDurationOption='+req.query['pendingDurationOption']+'&cancelledDurationOption='+req.query['cancelledDurationOption']);
+
+                        async.forEach(Biddings.rows, function(bidding, callback3) {
+                            //calculate remaining time
+                            var itemId = bidding.Item.id;
+                            Item.findAll({
+                                where: {
+                                    id: itemId,
+                                },
+                                include: [Commodity, User]
+                            }).then(function (items) {
+                                itemDetails.push({item: items[0].Commodity, user:items[0].User});
+                                callback3(null);
+                            });
+                        }, function (err) {
+                            //pushing retrieved data to commodity array
+                            req.session.buyingList = [Biddings,itemImages,lastBid, itemDetails];
+                            req.session.itemsBuyingAccountCount = Biddings.count;
+                            req.session.itemsBuyingAccountOffset = parseInt(req.params.start);
+                            req.session.searchResultRemainingTimeBuying = remainingTimes;
+                            res.redirect('/user/buy/list/start/'+req.params.start+'?buyingpageItemOption='+nextBuyingpageItemOption+'&openDurationOption='+req.query['openDurationOption']+'&pendingDurationOption='+req.query['pendingDurationOption']+'&cancelledDurationOption='+req.query['cancelledDurationOption']);
+                        });
                     });
                 });
 
@@ -486,7 +503,9 @@ router.post('/update/bid', function (req, res) {
                 { bid: bid },
                 { where: { id: id } }
             ).then(function (results) {
-                res.redirect('http://localhost:3000/user/buy/list/start/0');
+                console.log(results);
+                req.session.updateBidMessage = 'Successfully updated the bid';
+                res.redirect('/user/buy/list/start/0,0,0?buyingpageItemOption=Open&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=1');
             });
         }
     );
@@ -494,9 +513,11 @@ router.post('/update/bid', function (req, res) {
 
 /* Retrieve specific bid from database */
 /* Usage: View Contract Details Seller/Buyer Page */
-router.get('/contract/userId/:userId/itemId/:itemId', function (req, res) {
+router.get('/contract/userId/:userId/bidId/:bidId/itemId/:itemId', function (req, res) {
     var userId = req.params.userId;
+    var bidId = req.params.bidId;
     var itemId = req.params.itemId;
+    console.log(bidId);
 
     //retrieve data from req object
     sequelize.sync().then(
@@ -504,7 +525,7 @@ router.get('/contract/userId/:userId/itemId/:itemId', function (req, res) {
             var Bidding = models.Bidding;
             var User = models.User;
             Bidding.findAll({
-                where: {ItemId: itemId, UserId: userId},
+                where: {id: bidId, UserId: userId},
                 include: [User],
             }).then(function (Biddings) {
                 req.session.buyContractBid = Biddings[0];

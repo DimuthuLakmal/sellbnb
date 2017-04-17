@@ -88,3 +88,24 @@ $(document).ready(function () {
         $('#pending_duration_form').submit();
     });
 });
+
+$('.updatebid').click(function (e) {
+    e.preventDefault();
+    var enteredBid = $(this).parent().prev().children().val().split(" ")[1];
+    var maxBid = $(this).prev().val().split(" ")[1];
+    console.log(maxBid);
+    console.log(enteredBid);
+    if(parseFloat(enteredBid) > parseFloat(maxBid)) {
+        $(this).parent().parent().parent().submit();
+    }else {
+        alert('Please enter a bid more than '+maxBid);
+    }
+});
+
+$(document).on('keydown',function(e){
+    var $target = $(e.target||e.srcElement);
+    if(e.keyCode == 8 && $target.is('input') && $target.val().length <= 4)
+    {
+        e.preventDefault();
+    }
+})

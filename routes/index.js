@@ -1077,6 +1077,7 @@ router.get('/user/sell/list/start/:start', function (req, res) {
                 res.redirect('/api/items/start/' + req.params.start + '/userId/' + user.id + '?sellingpageItemOption=Pending&openDurationOption=' + req.query['openDurationOption'] + '&pendingDurationOption=' + req.query['pendingDurationOption'] + '&cancelledDurationOption=' + req.query['cancelledDurationOption']);
             }
 
+
             var itemsOffsetPending = req.session.itemsSellingAccountOffset;
             var itemsCountPending = req.session.itemsSellingAccountCount;
             req.session.currentPageNumberPending = (parseInt(itemsOffsetPending) / 10) + 1;
@@ -1318,6 +1319,8 @@ router.get('/user/buy/list/start/:start', function (req, res) {
         var maxPageCountCancelled = req.session.maxPageCountCancelled;
         var pageMultipationFactorCancelled = req.session.pageMultipationFactorCancelled;
 
+        var updateBidMessage = req.session.updateBidMessage;
+
         req.session.buyingList = null;
         delete req.session.itemsBuyingAccountOffset;
         delete req.session.itemsBuyingAccountCount;
@@ -1340,12 +1343,14 @@ router.get('/user/buy/list/start/:start', function (req, res) {
         delete req.session.currentPageNumberCancelled;
         delete req.session.maxPageCountCancelled;
         delete req.session.pageMultipationFactorCancelled;
+        delete req.session.updateBidMessage;
         res.render('useraccountbuying', {
             //isAuthenticated : req.isAuthenticated(),
             user: user,
             buyingListOpen: buyingListOpen[0],
             itemImagesOpen: buyingListOpen[1],
             lastBidOpen: buyingListOpen[2],
+            itemDetailsOpen: buyingListOpen[3],
             remainingTimesOpen: remainingTimesOpen,
             currentPageNumberOpen: currentPageNumberOpen,
             maxPageCountOpen: maxPageCountOpen,
@@ -1354,6 +1359,7 @@ router.get('/user/buy/list/start/:start', function (req, res) {
             buyingListPending: buyingListPending[0],
             itemImagesPending: buyingListPending[1],
             lastBidPending: buyingListPending[2],
+            itemDetailsPending: buyingListPending[3],
             remainingTimesPending: remainingTimesPending,
             currentPageNumberPending: currentPageNumberPending,
             maxPageCountPending: maxPageCountPending,
@@ -1362,6 +1368,7 @@ router.get('/user/buy/list/start/:start', function (req, res) {
             buyingListCancelled: buyingListCancelled[0],
             itemImagesCancelled: buyingListCancelled[1],
             lastBidCancelled: buyingListCancelled[2],
+            itemDetailsCancelled: buyingListCancelled[3],
             remainingTimesCancelled: remainingTimesCancelled,
             currentPageNumberCancelled: currentPageNumberCancelled,
             maxPageCountCancelled: maxPageCountCancelled,
@@ -1369,6 +1376,7 @@ router.get('/user/buy/list/start/:start', function (req, res) {
             filterParamerCancelled: req.query['cancelledDurationOption'],
             commodityNames: commodityNames,
             notifications: notifications,
+            updateBidMessage: updateBidMessage,
         });
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
@@ -1552,6 +1560,7 @@ router.get('/user/buy/contract/id/:id', function (req, res) {
         var buyContractItem = req.session.buyContractItem;
         var buyContractBid = req.session.buyContractBid;
         var contractDate = req.session.contractDate;
+        req.session.bidIdContract = req.query['bidId'];
 
         //check whether contractedItem session is set
         if (buyContractItem === null || buyContractItem === undefined) {
@@ -1560,13 +1569,13 @@ router.get('/user/buy/contract/id/:id', function (req, res) {
 
         //check whether contractBid session is set
         if (buyContractBid === null || buyContractBid === undefined) {
-            res.redirect('/api/bid/contract/userId/' + user.id + '/itemId/' + itemId);
+            res.redirect('/api/bid/contract/userId/' + user.id + '/bidId/' + req.session.bidIdContract+'/itemId/'+itemId);
         }
 
         //this will be needed to populate commodity names in top menu
         var commodityNames = req.session.commodityNames
         //check whether commodityNames session is set
-        req.session.returnToCommodityName = req.path;
+        req.session.returnToCommodityName = req.path+'?bidId='+req.session.bidIdContract;
         if (commodityNames === null || commodityNames === undefined) {
             res.redirect('/api/commodity/names');
         }
@@ -1584,6 +1593,7 @@ router.get('/user/buy/contract/id/:id', function (req, res) {
         req.session.contractDate = null;
         delete req.session.returnTo;
         delete req.session.notifications;
+        delete req.session.bidIdContract;
         res.render('buyercontract', {
             isAuthenticated: req.isAuthenticated(),
             user: user,

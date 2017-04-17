@@ -52,6 +52,12 @@
             </nav>
         </div>
     </section>
+    <% if(updateBidMessage != null && updateBidMessage != undefined && updateBidMessage != "") {%>
+    <div class="notification success closeable" id="message_success" style="margin-top: -38px;">
+        <p><span><%= updateBidMessage %></span></p>
+        <a class="close" href="#"></a>
+    </div>
+    <% } %>
 
     <div class="container">
 
@@ -127,7 +133,12 @@
                                 var item = buyingListOpen.rows[itemIndex].Item;
                                 var itemImage = itemImagesOpen[itemIndex];
                                 var maxBid = lastBidOpen[itemIndex];
-
+                                var commodityName = itemDetailsOpen[itemIndex].item.name;
+                                var seller = itemDetailsOpen[itemIndex].user.username;
+                                var sellerId = itemDetailsOpen[itemIndex].user.id;
+                                var formattedStatus = '';
+                                var id = 'Contract Id: CI'+bid.id;
+                                var formattedTime = bid.updatedAt.split('T')[1].split(".");
                             %>
                             <!-- Selling Items -->
                             <div class="item-selling-div fourteen columns">
@@ -141,45 +152,14 @@
                                     </div>
                                     <div class="five columns">
                                         <h3><%= item.title %></h3>
-                                        <p>Last Bid: <%= maxBid.bid %><br>
-                                            Your Last Bid: <%= bid.bid %><br>
-                                            <% if(remainingTimesOpen[itemIndex][0] != 0) {
-                                                var remainingTime = remainingTimesOpen[itemIndex][0];
-                                                var numdays = Math.floor(remainingTime / 86400);
-                                                var numhours = Math.floor((remainingTime % 86400) / 3600);
-                                                var numminutes = Math.floor(((remainingTime % 86400) % 3600) / 60);
-                                                var numseconds = Math.floor(((remainingTime % 86400) % 3600) % 60);
-
-                                                var formattedTime = "";
-                                                formattedTime = numdays != 0 ? (formattedTime += numdays + " days ") : formattedTime;
-                                                formattedTime = numhours != 0 ? (formattedTime += numhours + " hrs ") : formattedTime;
-                                                formattedTime = numminutes != 0 ? (formattedTime += numminutes + " mins ") : formattedTime;
-                                                formattedTime = numseconds != 0 ? (formattedTime += numseconds + " secs ") : formattedTime;
-                                            %>
-                                            <%= 'Time Left: '+formattedTime %>
-                                            <% } else {%>
-                                            <%= 'Bidding Closed At: ' + remainingTimesOpen[itemIndex][2] %>
-                                            <% } %></p>
+                                        <p><%= id %><br>
+                                            Commodity Name: <%= commodityName %><br>
+                                            Seller: <a href="/user/public/userId/<%= sellerId %>"> <%= seller %></a><br>
+                                            Status: Contract Created<br>
+                                            Contract Date: <%= bid.updatedAt.split('T')[0]+" "+formattedTime[0] %><br>
+                                        </p>
                                     </div>
-                                    <div class="two columns">
-                                        <form method="post" action="/api/bid/update/bid">
-
-                                            <fieldset>
-                                                <input type="hidden" name="id" value="<%= bid.id %>"/>
-                                                <div class="two columns editform">
-                                                    <input style="width: 80%" name="newbid" type="text" id="newbid" placeholder="Your New Bid" value="<%= bid.bid.split(" ")[0]+" " %>"/>
-                                                </div>
-
-                                                <div class="two columns editform">
-                                                    <input type="submit" class="submit" id="submitbid" value="Place Bid"/>
-                                                </div>
-
-                                            </fieldset>
-
-                                            <div class="clearfix"></div>
-                                        </form>
-                                    </div>
-                                    <div class="three columns">
+                                    <div class="five columns">
                                         <div class="two columns" style="float:right">
                                             <form action="/items/id/<%= item.id %>" method="GET">
                                                 <input type="submit" style="float: right; width: 100%; padding-right:20px"
@@ -187,6 +167,7 @@
                                             </form>
                                             <% if (bid.status == 'open' || bid.status == 'mutual-cancellation-seller') {%>
                                             <form method="GET" action="/user/buy/contract/id/<%= item.id %>">
+                                                <input type="hidden" value="<%= bid.id %>" name="bidId"/>
                                                 <input type="submit" style="float: right; width: 100%; padding-right:20px"
                                                        class="item-selling-btn" value="Contract" />
                                             </form>
@@ -294,6 +275,12 @@
                                 var item = buyingListPending.rows[itemIndex].Item;
                                 var itemImage = itemImagesPending[itemIndex];
                                 var maxBid = lastBidPending[itemIndex];
+                                var commodityName = itemDetailsPending[itemIndex].item.name;
+                                var seller = itemDetailsPending[itemIndex].user.username;
+                                var sellerId = itemDetailsPending[itemIndex].user.id;
+                                var formattedStatus = '';
+                                var id = 'Bid Id: '+bid.id;
+                                var formattedTime = bid.updatedAt.split('T')[1].split(".");
 
                             %>
                             <!-- Selling Items -->
@@ -308,58 +295,90 @@
                                     </div>
                                     <div class="five columns">
                                         <h3><%= item.title %></h3>
-                                        <p>Last Bid: <%= maxBid.bid %><br>
-                                            Your Last Bid: <%= bid.bid %><br>
+                                        <p><%= id %><br>
+                                            Commodity Name: <%= commodityName %><br>
+                                            Seller: <a href="/user/public/userId/<%= sellerId %>"> <%= seller %></a><br>
                                             <% if(remainingTimesPending[itemIndex][0] != 0) {
                                                 var remainingTime = remainingTimesPending[itemIndex][0];
                                                 var numdays = Math.floor(remainingTime / 86400);
                                                 var numhours = Math.floor((remainingTime % 86400) / 3600);
                                                 var numminutes = Math.floor(((remainingTime % 86400) % 3600) / 60);
                                                 var numseconds = Math.floor(((remainingTime % 86400) % 3600) % 60);
+                                                var isAlligibleToBid = true;
 
                                                 var formattedTime = "";
                                                 formattedTime = numdays != 0 ? (formattedTime += numdays + " days ") : formattedTime;
                                                 formattedTime = numhours != 0 ? (formattedTime += numhours + " hrs ") : formattedTime;
                                                 formattedTime = numminutes != 0 ? (formattedTime += numminutes + " mins ") : formattedTime;
                                                 formattedTime = numseconds != 0 ? (formattedTime += numseconds + " secs ") : formattedTime;
+
+                                                if(numdays == 0 && numhours == 0 && numminutes == 0 && numseconds == 0) {
+                                                    isAlligibleToBid = false;
+                                                }
                                             %>
-                                            <%= 'Time Left: '+formattedTime %>
+                                            <%= 'Time Left: '+formattedTime %> <br>
+                                            Status:  Active Bidding <br>
                                             <% } else {%>
-                                            <%= 'Bidding Closed At: ' + remainingTimesPending[itemIndex][2] %>
-                                            <% } %></p>
-                                    </div>
-                                    <div class="two columns">
-                                        <form method="post" action="/api/bid/update/bid">
-
-                                            <fieldset>
-                                                <input type="hidden" name="id" value="<%= bid.id %>"/>
-                                                <div class="two columns editform">
-                                                    <input style="width: 80%" name="newbid" type="text" id="newbid" placeholder="Your New Bid" value="<%= bid.bid.split(" ")[0]+" " %>"/>
-                                                </div>
-
-                                                <div class="two columns editform">
-                                                    <input type="submit" class="submit" id="submitbid" value="Place Bid"/>
-                                                </div>
-
-                                            </fieldset>
-
-                                            <div class="clearfix"></div>
-                                        </form>
-                                    </div>
-                                    <div class="three columns">
-                                        <div class="two columns" style="float:right">
-                                            <form action="/items/id/<%= item.id %>" method="GET">
-                                                <input type="submit" style="float: right; width: 100%; padding-right:20px"
-                                                       class="item-selling-btn" value="View Details"/>
-                                            </form>
-                                            <% if (bid.status == 'open' || bid.status == 'mutual-cancellation-seller') {%>
-                                            <form method="GET" action="/user/buy/contract/id/<%= item.id %>">
-                                                <input type="submit" style="float: right; width: 100%; padding-right:20px"
-                                                       class="item-selling-btn" value="Contract" />
-                                            </form>
+                                            <%= 'Bidding Closed At: ' + remainingTimesPending[itemIndex][2] %> <br>
+                                            Status:  Wating for seller to select a bid <br>
                                             <% } %>
-                                        </div>
+                                            Last Bid: <%= maxBid.bid %><br>
+                                            Your Last Bid: <%= bid.bid %><br>
+                                        </p>
                                     </div>
+                                    <% if(remainingTimesPending[itemIndex][0] != 0) {%>
+                                        <div class="two columns">
+                                            <form method="post" action="/api/bid/update/bid">
+
+                                                <fieldset>
+                                                    <input type="hidden" name="id" value="<%= bid.id %>"/>
+                                                    <div class="two columns editform">
+                                                        <input style="width: 80%" name="newbid" type="text" id="newbid" placeholder="Your New Bid" value="<%= bid.bid.split(" ")[0]+" " %>"/>
+                                                    </div>
+
+                                                    <div class="two columns editform">
+                                                        <input type="hidden" value="<%= maxBid.bid %>">
+                                                        <input type="submit" class="submit updatebid" id="submitbid" value="Place Bid"/>
+                                                    </div>
+
+                                                </fieldset>
+
+                                                <div class="clearfix"></div>
+                                            </form>
+                                        </div>
+                                        <div class="three columns">
+                                            <div class="two columns" style="float:right">
+                                                <form action="/items/id/<%= item.id %>" method="GET">
+                                                    <input type="submit" style="float: right; width: 100%; padding-right:20px"
+                                                           class="item-selling-btn" value="View Details"/>
+                                                </form>
+                                                <% if (bid.status == 'open' || bid.status == 'mutual-cancellation-seller') {%>
+                                                <form method="GET" action="/user/buy/contract/id/<%= item.id %>">
+                                                    <input type="hidden" value="<%= bid.id %>" name="bidId"/>
+                                                    <input type="submit" style="float: right; width: 100%; padding-right:20px"
+                                                           class="item-selling-btn" value="Contract" />
+                                                </form>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    <% } else {%>
+                                        <div class="five columns">
+                                            <div class="two columns" style="float:right">
+                                                <form action="/items/id/<%= item.id %>" method="GET">
+                                                    <input type="submit" style="float: right; width: 100%; padding-right:20px"
+                                                           class="item-selling-btn" value="View Details"/>
+                                                </form>
+                                                <% if (bid.status == 'open' || bid.status == 'mutual-cancellation-seller') {%>
+                                                <form method="GET" action="/user/buy/contract/id/<%= item.id %>">
+                                                    <input type="hidden" value="<%= bid.id %>" name="bidId"/>
+                                                    <input type="submit" style="float: right; width: 100%; padding-right:20px"
+                                                           class="item-selling-btn" value="Contract" />
+                                                </form>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    <% } %>
+
                                 </div>
                             </div>
 
@@ -461,6 +480,15 @@
                                 var item = buyingListCancelled.rows[itemIndex].Item;
                                 var itemImage = itemImagesCancelled[itemIndex];
                                 var maxBid = lastBidCancelled[itemIndex];
+                                var commodityName = itemDetailsCancelled[itemIndex].item.name;
+                                var seller = itemDetailsCancelled[itemIndex].user.username;
+                                var sellerId = itemDetailsCancelled[itemIndex].user.id;
+                                var formattedStatus = '';
+                                var id = 'Bid Id: '+bid.id;
+                                if(bid.status == 'mutual-cancellation-seller' || bid.status == 'mutual-cancellation-buyer' || bid.status == 'mutual-cancellation-all') {
+                                    formattedStatus = 'Mutual Decision';
+                                    id = 'Contract Id: CI'+bid.id;
+                                }
 
                             %>
                             <!-- Selling Items -->
@@ -475,7 +503,10 @@
                                     </div>
                                     <div class="five columns">
                                         <h3><%= item.title %></h3>
-                                        <p>Last Bid: <%= maxBid.bid %><br>
+                                        <p><%= id %><br>
+                                            Commodity Name: <%= commodityName %><br>
+                                            Seller: <a href="/user/public/userId/<%= sellerId %>"> <%= seller %></a><br>
+                                            Status: <%= formattedStatus %><br>
                                             Your Last Bid: <%= bid.bid %><br>
                                             <% if(remainingTimesCancelled[itemIndex][0] != 0) {
                                                 var remainingTime = remainingTimesCancelled[itemIndex][0];
@@ -495,25 +526,8 @@
                                             <%= 'Bidding Closed At: ' + remainingTimesCancelled[itemIndex][2] %>
                                             <% } %></p>
                                     </div>
-                                    <div class="two columns">
-                                        <form method="post" action="/api/bid/update/bid">
 
-                                            <fieldset>
-                                                <input type="hidden" name="id" value="<%= bid.id %>"/>
-                                                <div class="two columns editform">
-                                                    <input style="width: 80%" name="newbid" type="text" id="newbid" placeholder="Your New Bid" value="<%= bid.bid.split(" ")[0]+" " %>"/>
-                                                </div>
-
-                                                <div class="two columns editform">
-                                                    <input type="submit" class="submit" id="submitbid" value="Place Bid"/>
-                                                </div>
-
-                                            </fieldset>
-
-                                            <div class="clearfix"></div>
-                                        </form>
-                                    </div>
-                                    <div class="three columns">
+                                    <div class="five columns">
                                         <div class="two columns" style="float:right">
                                             <form action="/items/id/<%= item.id %>" method="GET">
                                                 <input type="submit" style="float: right; width: 100%; padding-right:20px"
@@ -521,6 +535,7 @@
                                             </form>
                                             <% if (bid.status == 'open' || bid.status == 'mutual-cancellation-seller') {%>
                                             <form method="GET" action="/user/buy/contract/id/<%= item.id %>">
+                                                <input type="hidden" value="<%= bid.id %>" name="bidId"/>
                                                 <input type="submit" style="float: right; width: 100%; padding-right:20px"
                                                        class="item-selling-btn" value="Contract" />
                                             </form>

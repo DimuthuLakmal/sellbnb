@@ -857,7 +857,7 @@ router.get('/public/userId/:userId', function (req, res) {
                     Item.findAll({
                         where: {
                             UserId: req.params.userId,
-                            status: 'active',
+                            status: 'pending',
                         },
                         include:[ItemImage, Commodity]
                     }).then(function (Items) {
