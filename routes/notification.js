@@ -23,7 +23,20 @@ router.get('/add/mutual/type/:type/bidId/:bidId/itemName/:itemName/itemId/:itemI
         url = '/user/sell/contract/bidId/'+req.params.bidId;
     }
     var description = 'Mutual Cancellation Request for item '+req.params.itemName;
-    addNotification(res, req, url , description, redirection);
+    var emailDescription = 'Mutual Cancellation Request for item '+req.params.itemName;
+    var subject = 'Mutual Cancellation Request';
+    addNotification(res, req, url , description, emailDescription, subject, redirection);
+});
+
+//store notification details in database
+/* Usage: User Accout Seller Page (Accept Bid) */
+router.get('/add/accept/itemId/:itemId/bidId/:bidId/userId/:userId/itemName/:itemName', function (req, res) {
+    var redirection = '/user/sell/bids/start/0?itemId='+req.params.itemId;
+    var url = '/user/buy/list/start/0,0,0?buyingpageItemOption=Cancelled&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=1';
+    var description = 'Your Bid is accepted for '+req.params.itemName;
+    var emailDescription = 'Your Bid is accepted for '+req.params.itemName;
+    var subject = 'Your Bid has accepted!';
+    addNotification(res, req, url , description, emailDescription, subject, redirection);
 });
 
 //retreive notification details from database
@@ -77,7 +90,7 @@ router.get('/update/id/:id', function (req, res) {
     );
 });
 
-function addNotification(res, req, url, description, redirection) {
+function addNotification(res, req, url, description, emailDescription, subject_, redirection) {
     //store notification in database
     sequelize.sync().then(
         function () {
@@ -90,8 +103,8 @@ function addNotification(res, req, url, description, redirection) {
                 UserId: req.params.userId,
             }).then(function (insertedNotificaion) {
                 //sending email & SMS
-                var subject = 'Mutual Cancellation Request';
-                var message = 'You have a request to cancel the contract on item ' + req.params.itemName;
+                var subject = subject_;
+                var message = emailDescription;
                 sendEmailSMS(req.params.userId, subject, message, redirection, res);
 
                 // var User = models.User;
@@ -136,7 +149,7 @@ function addNotification(res, req, url, description, redirection) {
 }
 
 //sending email using sendgrid
-function sendEmailSMS(userId, subject, message, redirection, res) {
+function sendEmailSMS(userId, subject_, message, redirection, res) {
 
     //retrive user's email address
     sequelize.sync().then(
@@ -152,13 +165,16 @@ function sendEmailSMS(userId, subject, message, redirection, res) {
                 async.waterfall([
 
                     function(callback){
+                        console.log(Users[0].dataValues.Emails[0].dataValues.email);
+                        console.log(subject_);
+                        console.log(message);
                         EmailAddress = Users[0].dataValues.Emails[0].dataValues.email;
 
                         var helper = require('sendgrid').mail;
 
                         from_email = new helper.Email("sellbnb@gmail.com");
                         to_email = new helper.Email(EmailAddress);
-                        subject = "Seller BnB Notification";
+                        subject = subject_;
                         content = new helper.Content("text/plain", message);
                         mail = new helper.Mail(from_email, subject, to_email, content);
 

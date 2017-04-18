@@ -170,6 +170,8 @@
                                 <fieldset>
                                     <input type="hidden" name="itemId" value="<%= bidding.ItemId %>" />
                                     <input type="hidden" name="bidId" value="<%= bidding.id %>" />
+                                    <input type="hidden" name="itemName" value="<%= item.title  %>" />
+                                    <input type="hidden" name="userId" value="<%= user.id  %>" />
                                     <input type="hidden" name="status" value="open" />
                                     <div class="twelve columns editform">
                                         <% if (bidding.status == 'pending' || bidding.status == 'cancelled' || bidding.status == 'mutual-cancellation-all') { %>
@@ -190,6 +192,8 @@
                                 <fieldset>
                                     <input type="hidden" name="itemId" value="<%= bidding.ItemId %>" />
                                     <input type="hidden" name="bidId" value="<%= bidding.id %>" />
+                                    <input type="hidden" name="itemName" value="<%= item.title  %>" />
+                                    <input type="hidden" name="userId" value="<%= user.id  %>" />
                                     <input type="hidden" name="status" value="open" />
                                     <input type="submit" class="submit" value="Accept" style="width: 100%" />
                                 </fieldset>

@@ -477,7 +477,7 @@ router.get('/userId/:userId/itemUserId/:itemUserId', function (req, res) {
                 where: {
                     UserId: userId,
                     '$Item.UserId$': itemUserId,
-                    status: 'accepted',
+                    status: 'open',
                 },
                 include: [Item],
             }).then(function (Biddings) {
@@ -603,16 +603,9 @@ function updateStatus(req, res, redirectRoute) {
                             { status: 'open' },
                             { where: { id: itemId } }
                         ).then(function () {
-                            if(req.body.requestFrom == 'Seller') {
-                                res.redirect('/api/notification/add/mutual/type/mutual-cancellation-seller/bidId/'+req.body.bidId+'/itemName/'+
-                                    req.body.itemName+'/itemId/'+req.body.itemId+'/userId/'+req.body.userId+'/requestFrom/seller');
-                            } else if(req.body.requestFrom == 'Buyer') {
-                                res.redirect('/api/notification/add/mutual/type/mutual-cancellation-buyer/bidId/'+req.body.bidId+'/itemName/'+
-                                    req.body.itemName+'/itemId/'+req.body.itemId+'/userId/'+req.body.userId+'/requestFrom/buyer');
-                            } else {
-                                res.redirect(redirectRoute);
-                            }
+                            res.redirect('/api/notification/add/accept/itemId/'+req.body.itemId+'/bidId/'+req.body.bidId+'/userId/'+req.body.userId+'/itemName/'+req.body.itemName);
                         });
+
                     });
                 } else {
 
