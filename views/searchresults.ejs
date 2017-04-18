@@ -203,7 +203,7 @@
                         %>
                         <% if(maxPageCount >= pageOne) {%>
                         <li>
-                            <a href="http://localhost:3000/api/items/search/start/<%= (pageOne-1) * 10 %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
+                            <a href="/api/items/search/start/<%= (pageOne-1) * 10 %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
                                 <%= pageOne %>
                             </a>
                         </li>

@@ -79,7 +79,7 @@ $('#submit').click(function (e) {
     var mins = $('#mins').val();
     var duration = parseInt(days) * 24 * 3600 + parseInt(hours) * 3600 + parseInt(mins) * 60;
 
-    $.ajax({url: "http://localhost:3000/api/items/update",
+    $.ajax({url: "/api/items/update",
         type: 'POST',
         data: {title:title, quantity: quantity, deliveryBy: deliveryBy, warehouseId: warehouseId, itemId: itemId,
             images: images, duration: duration, packingType: packingType,paymentTerms: paymentTerms,

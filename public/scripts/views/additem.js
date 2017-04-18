@@ -85,7 +85,7 @@ $('#submit').click(function (e) {
     //     title = $('#commodityName').val();
     // }
 
-    $.ajax({url: "http://localhost:3000/api/items/add",
+    $.ajax({url: "/api/items/add",
         type: 'POST',
         data: {title:title, quantity: quantity, deliveryBy: deliveryBy, warehouseId: warehouseId, commodityId: commodityId,
             userId: userId, images: images, duration: duration, packingType: packingType,paymentTerms: paymentTerms,
@@ -101,7 +101,7 @@ $('#submit').click(function (e) {
 // $(document).ready(function () {
 //     var userId = $('#userId').val();
 //
-//     $.ajax({url: "http://localhost:3000/api/user/view/warehouses",
+//     $.ajax({url: "/api/user/view/warehouses",
 //         type: 'POST',
 //         data: {userId: userId},
 //         success: function(data, status, xhr) {
@@ -163,7 +163,7 @@ $('#preview').click(function (e) {
     localStorage.setItem('previewItem', JSON.stringify(item));
 
     if(images.length > 0) {
-        $.ajax({url: "http://localhost:3000/api/items/preview",
+        $.ajax({url: "/api/items/preview",
             type: 'POST',
             data: {images: images},
             success: function(data, status, xhr) {

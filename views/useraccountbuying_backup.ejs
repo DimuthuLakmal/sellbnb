@@ -239,21 +239,21 @@
                         %>
                         <% if(maxPageCount >= pageOne) {%>
                         <li>
-                            <a href="http://localhost:3000/user/sell/list/start/<%= (pageOne-1) * 10 %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
+                            <a href="/user/sell/list/start/<%= (pageOne-1) * 10 %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
                                 <%= pageOne %>
                             </a>
                         </li>
                         <% } %>
                         <% if(maxPageCount >= pageTwo) {%>
                         <li>
-                            <a href="http://localhost:3000/user/sell/list/start/<%= (pageTwo-1) * 10 %>" <% if(pageTwo === currentPageNumber) { %>class="current-page"<% } %>>
+                            <a href="/user/sell/list/start/<%= (pageTwo-1) * 10 %>" <% if(pageTwo === currentPageNumber) { %>class="current-page"<% } %>>
                                 <%= pageTwo %>
                             </a>
                         </li>
                         <% } %>
                         <% if(maxPageCount >= pageThree) {%>
                         <li>
-                            <a href="http://localhost:3000/user/sell/list/start/<%= (pageThree-1) * 10 %>" <% if(pageThree === currentPageNumber) { %>class="current-page"<% } %>>
+                            <a href="/user/sell/list/start/<%= (pageThree-1) * 10 %>" <% if(pageThree === currentPageNumber) { %>class="current-page"<% } %>>
                                 <%= pageThree %>
                             </a>
                         </li>
@@ -264,10 +264,10 @@
                 <nav class="pagination-next-prev">
                     <ul>
                         <% if(0 < pageMultipationFactor) {%>
-                        <li><a href="http://localhost:3000/user/sell/list/start/<%= (pageMultipationFactor - 1) * 30 %>" class="prev"></a></li>
+                        <li><a href="/user/sell/list/start/<%= (pageMultipationFactor - 1) * 30 %>" class="prev"></a></li>
                         <% } %>
                         <% if(maxPageCount >= (pageMultipationFactor * 10) + 4) {%>
-                        <li><a href="http://localhost:3000/user/sell/list/start/<%= (pageMultipationFactor + 1) * 30 %>" class="next"></a></li>
+                        <li><a href="/user/sell/list/start/<%= (pageMultipationFactor + 1) * 30 %>" class="next"></a></li>
                         <% } %>
                     </ul>
                 </nav>

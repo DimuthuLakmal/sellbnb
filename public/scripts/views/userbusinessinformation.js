@@ -26,7 +26,7 @@ $("#fileToUpload").change(function(event){
                 object.data = event.target.result;
                 images.push(object);
 
-                $.ajax({url: "http://localhost:3000/api/user/logo",
+                $.ajax({url: "/api/user/logo",
                     type: 'POST',
                     data: {userId: userId, images: images},
                     success: function(data, status, xhr) {
@@ -51,7 +51,7 @@ $('#newbuyingcommodity').keyup(function () {
     jQuery.ajax({
         type: "POST",
         dataType: 'jsonp',
-        url: "http://localhost:3000/api/commodity/keyword",
+        url: "/api/commodity/keyword",
         data: {keyword: keyword},
         success: function (obj, textstatus) {
             $('#searchresults').empty();
@@ -70,7 +70,7 @@ $('#newsellingcommodity').keyup(function () {
     jQuery.ajax({
         type: "POST",
         dataType: 'jsonp',
-        url: "http://localhost:3000/api/commodity/keyword",
+        url: "/api/commodity/keyword",
         data: {keyword: keyword},
         success: function (obj, textstatus) {
             $('#searchresultsselling').empty();

@@ -205,7 +205,7 @@ if (typeof(message)== undefined)
     style="color:#2db2ea; display: none">Action Modal</a><br/>
     <div id="fullname-edit-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
         <h2 class="margin-bottom-10" id="action-heading"></h2>
-        <form method="POST" name="editform" action="http://localhost:3000/api/items/update/status">
+        <form method="POST" name="editform" action="/api/items/update/status">
         <p id="action-description"></p>
         <fieldset>
         <div class="twelve columns editform">
@@ -218,7 +218,7 @@ if (typeof(message)== undefined)
         </form>
         </div>
         <div class="four columns" style="float:right">
-        <form action="http://localhost:3000/user/sell/bids/start/0" method="get">
+        <form action="/user/sell/bids/start/0" method="get">
         <input type="hidden" name="itemId" value="<%= item.id %>"/>
         <input type="submit" class="item-selling-btn" value="View Details/ Bids"/>
         </form>
@@ -250,21 +250,21 @@ var pageThree = (pageMultipationFactor * 10) + 3;
 %>
 <% if(maxPageCount >= pageOne) {%>
 <li>
-    <a href="http://localhost:3000/user/sell/list/start/<%= (pageOne-1) * 10 %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
+    <a href="/user/sell/list/start/<%= (pageOne-1) * 10 %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
 <%= pageOne %>
         </a>
         </li>
         <% } %>
 <% if(maxPageCount >= pageTwo) {%>
 <li>
-    <a href="http://localhost:3000/user/sell/list/start/<%= (pageTwo-1) * 10 %>" <% if(pageTwo === currentPageNumber) { %>class="current-page"<% } %>>
+    <a href="/user/sell/list/start/<%= (pageTwo-1) * 10 %>" <% if(pageTwo === currentPageNumber) { %>class="current-page"<% } %>>
 <%= pageTwo %>
         </a>
         </li>
         <% } %>
 <% if(maxPageCount >= pageThree) {%>
 <li>
-    <a href="http://localhost:3000/user/sell/list/start/<%= (pageThree-1) * 10 %>" <% if(pageThree === currentPageNumber) { %>class="current-page"<% } %>>
+    <a href="/user/sell/list/start/<%= (pageThree-1) * 10 %>" <% if(pageThree === currentPageNumber) { %>class="current-page"<% } %>>
 <%= pageThree %>
         </a>
         </li>
@@ -275,10 +275,10 @@ var pageThree = (pageMultipationFactor * 10) + 3;
 <nav class="pagination-next-prev">
     <ul>
     <% if(0 < pageMultipationFactor) {%>
-<li><a href="http://localhost:3000/user/sell/list/start/<%= (pageMultipationFactor - 1) * 30 %>" class="prev"></a></li>
+<li><a href="/user/sell/list/start/<%= (pageMultipationFactor - 1) * 30 %>" class="prev"></a></li>
         <% } %>
 <% if(maxPageCount >= (pageMultipationFactor * 10) + 4) {%>
-<li><a href="http://localhost:3000/user/sell/list/start/<%= (pageMultipationFactor + 1) * 30 %>" class="next"></a></li>
+<li><a href="/user/sell/list/start/<%= (pageMultipationFactor + 1) * 30 %>" class="next"></a></li>
         <% } %>
 </ul>
 </nav>

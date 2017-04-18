@@ -54,7 +54,7 @@ $('#submit').click(function (e) {
     var priceUnits = priceUnit.split(',');
     var packingType = $('#packing_type').val().split(',');
 
-    $.ajax({url: "http://localhost:3000/api/commodity/add",
+    $.ajax({url: "/api/commodity/add",
         type: 'POST',
         data: {name: name, segment: segment, family: family, classOfCommodity: classOfCommodity,measureUnit: measureUnit,
             specification: specification, images: images, alternativeNames: alternativeNames, parameters: parameters,
