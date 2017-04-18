@@ -894,7 +894,7 @@ router.get('/sellcontract/id/:id/bidId/:bidId', function (req, res) {
 router.get('/bestsellers', function (req, res) {
     sequelize.sync().then(
         function () {
-            sequelize.query("SELECT avg(c.rate) as avg_seller, u.full_name, u.logo from items i, itemcomments c, users u WHERE i.id=c.ItemId AND u.id = i.UserId GROUP BY i.UserId ORDER BY avg_seller DESC limit 3", { type: sequelize.QueryTypes.SELECT})
+            sequelize.query("SELECT avg(c.rate) as avg_seller, u.full_name, u.logo from Items i, ItemComments c, Users u WHERE i.id=c.ItemId AND u.id = i.UserId GROUP BY i.UserId ORDER BY avg_seller DESC limit 3", { type: sequelize.QueryTypes.SELECT})
                 .then(function(users) {
                     req.session.bestsellers = users;
                     //res.jsonp(users);
@@ -909,7 +909,7 @@ router.get('/bestsellers', function (req, res) {
 router.get('/toprated', function (req, res) {
     sequelize.sync().then(
         function () {
-            sequelize.query("SELECT DISTINCT i.id,u.full_name,i.title,(SELECT im.url FROM itemimages im, items k WHERE im.ItemId = k.id AND i.id=k.id limit 1) as url, AVG(c.rate) as avg_rate FROM items i, itemcomments c, users u WHERE i.id = c.ItemId AND u.id = i.UserId GROUP BY c.ItemId ORDER BY avg_rate DESC limit 3;", { type: sequelize.QueryTypes.SELECT})
+            sequelize.query("SELECT DISTINCT i.id,u.full_name,i.title,(SELECT im.url FROM ItemImages im, Items k WHERE im.ItemId = k.id AND i.id=k.id limit 1) as url, AVG(c.rate) as avg_rate FROM Items i, ItemComments c, Users u WHERE i.id = c.ItemId AND u.id = i.UserId GROUP BY c.ItemId ORDER BY avg_rate DESC limit 3;", { type: sequelize.QueryTypes.SELECT})
                 .then(function(items) {
                     req.session.toprated = items;
                     res.redirect('/');
