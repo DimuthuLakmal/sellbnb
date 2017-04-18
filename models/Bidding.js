@@ -9,7 +9,7 @@ module.exports = function (sequelize, DataTypes) {
         packageType: DataTypes.STRING,
         deliveryBy: DataTypes.STRING,
         deliveryCost: DataTypes.STRING,
-        deliveryDate: DataTypes.DATE,
+        deliveryDate: DataTypes.STRING,
         paymentTerms: DataTypes.STRING,
         note: DataTypes.STRING,
         status: DataTypes.STRING,

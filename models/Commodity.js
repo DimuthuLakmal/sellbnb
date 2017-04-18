@@ -20,6 +20,7 @@ module.exports = function (sequelize, DataTypes) {
                 Commodity.hasMany(models.CommodityImage);
                 Commodity.hasMany(models.CommodityMeasureUnit);
                 Commodity.hasMany(models.CommodityPriceUnit);
+                Commodity.hasMany(models.CommodityPacking);
             }
         }
     });

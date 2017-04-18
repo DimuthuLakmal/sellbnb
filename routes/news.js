@@ -179,7 +179,7 @@ router.get('/viewlatest', function (req, res) {
             var News = models.News;
             var User = models.User;
             News.findAndCountAll({
-                limit: 3,
+                limit: 4,
                 include: [User],
                 order: '`createdAt` DESC'
             }).then(function (News) {

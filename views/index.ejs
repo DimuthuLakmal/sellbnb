@@ -40,32 +40,17 @@
         <ul>
           <!-- Slide 1  -->
           <li data-transition="fade" data-slotamount="7" data-masterspeed="1500" >
-            <img src="images/slider.jpg"  alt="slidebg1"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
-            <div class="caption sfb fadeout" data-x="145" data-y="170" data-speed="400" data-start="800"  data-easing="Power4.easeOut">
-              <h2>Dress Sharp</h2>
-              <h3>Learn from the classics</h3>
-              <a href="shop-with-sidebar.html" class="caption-btn">Shop The Collection</a>
-            </div>
+            <img src="images/slides/slide1.jpg"  alt="slidebg1"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
           </li>
 
           <!-- Slide 2  -->
           <li data-transition="zoomout" data-slotamount="7" data-masterspeed="1000">
-            <img src="images/slider2.jpg"  alt="darkblurbg"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
-            <div class="caption dark sfb fadeout" data-x="750" data-y="170" data-speed="400" data-start="800"  data-easing="Power4.easeOut">
-              <h2>Urban Style</h2>
-              <h3>Every cut and colour</h3>
-              <a href="shop-with-sidebar.html" class="caption-btn">Shop The Collection</a>
-            </div>
+            <img src="images/slides/slide2.jpg"  alt="darkblurbg"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
           </li>
 
           <!-- Slide 3  -->
           <li data-transition="fadetotopfadefrombottom" data-slotamount="7" data-masterspeed="1000">
-            <img src="images/slider3.jpg"  alt="darkblurbg"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
-            <div class="caption dark sfb fadeout" data-x="850" data-y="170" data-speed="400" data-start="800"  data-easing="Power4.easeOut">
-              <h2>New In</h2>
-              <h3>Pants and T-Shirts</h3>
-              <a href="shop-with-sidebar.html" class="caption-btn">Shop The Collection</a>
-            </div>
+            <img src="images/slides/slide3.jpg"  alt="darkblurbg"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
           </li>
 
         </ul>
@@ -163,7 +148,7 @@
                 <div class="mediaholder">
                   <a href="variable-product-page.html">
                     <% if(latestItems[itemIndex].images.length > 0) {%>
-                      <img alt="" src="uploads/items/<%= latestItems[itemIndex].images[0].url %>"/>
+                      <img alt="" src="uploads/items/<%= latestItems[itemIndex].images[0].url %>" style="width:280px; height: 210px;"/>
                     <% } else { %>
                       <img alt="" src="images/shop_item_01.jpg"/>
                     <% } %>
@@ -363,7 +348,7 @@
             <% if(news.img == null) { %>
               <a href="blog-single-post.html"><img src="images/from_the_blog_01.jpg" alt="" /></a>
             <% } else { %>
-              <a href="blog-single-post.html"><img src="<%= news.img %>" alt="" /></a>
+              <a href="blog-single-post.html"><img src="<%= news.img %>" alt="" style="height: 160px; width: 280px;"/></a>
             <% } %>
             <div class="hover-icon"></div>
           </figure>
@@ -385,93 +370,7 @@
 
   <!-- Footer
   ================================================== -->
-  <div id="footer">
-
-    <!-- Container -->
-    <div class="container">
-
-      <div class="four columns">
-        <img src="images/logo-footer.png" alt="" class="margin-top-10"/>
-        <p class="margin-top-15">Nulla facilisis feugiat magna, ut molestie metus hendrerit vitae. Vivamus tristique lectus at varius rutrum. Integer lobortis mauris non consectetur eleifend.</p>
-      </div>
-
-      <div class="four columns">
-
-        <!-- Headline -->
-        <h3 class="headline footer">Customer Service</h3>
-        <span class="line"></span>
-        <div class="clearfix"></div>
-
-        <ul class="footer-links">
-          <li><a href="#">Order Status</a></li>
-          <li><a href="#">Payment Methods</a></li>
-          <li><a href="#">Delivery & Returns</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms & Conditions</a></li>
-        </ul>
-
-      </div>
-
-      <div class="four columns">
-
-        <!-- Headline -->
-        <h3 class="headline footer">My Account</h3>
-        <span class="line"></span>
-        <div class="clearfix"></div>
-
-        <ul class="footer-links">
-          <li><a href="#">My Account</a></li>
-          <li><a href="#">Order History</a></li>
-          <li><a href="#">Wish List</a></li>
-        </ul>
-
-      </div>
-
-      <div class="four columns">
-
-        <!-- Headline -->
-        <h3 class="headline footer">Newsletter</h3>
-        <span class="line"></span>
-        <div class="clearfix"></div>
-        <p>Sign up to receive email updates on new product announcements, gift ideas, special promotions, sales and more.</p>
-
-        <form action="#" method="get">
-          <button class="newsletter-btn" type="submit">Join</button>
-          <input class="newsletter" type="text" placeholder="mail@example.com" value=""/>
-        </form>
-      </div>
-
-    </div>
-    <!-- Container / End -->
-
-  </div>
-  <!-- Footer / End -->
-
-  <!-- Footer Bottom / Start -->
-  <div id="footer-bottom">
-
-    <!-- Container -->
-    <div class="container">
-
-      <div class="eight columns">© Copyright 2014 by <a href="#">trizzy</a>. All Rights Reserved.</div>
-      <div class="eight columns">
-        <ul class="payment-icons">
-          <li><img src="images/visa.png" alt="" /></li>
-          <li><img src="images/mastercard.png" alt="" /></li>
-          <li><img src="images/skrill.png" alt="" /></li>
-          <li><img src="images/moneybookers.png" alt="" /></li>
-          <li><img src="images/paypal.png" alt="" /></li>
-        </ul>
-      </div>
-
-    </div>
-    <!-- Container / End -->
-
-  </div>
-  <!-- Footer Bottom / End -->
-
-  <!-- Back To Top Button -->
-  <div id="backtotop"><a href="#"></a></div>
+  <% include footer.ejs %>
 
 </div>
 

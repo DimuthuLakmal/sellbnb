@@ -40,6 +40,12 @@
             <h2><%= item.item.title %></h2>
         </div>
     </section>
+    <% if(message != null && message != undefined && message != "") {%>
+        <div class="notification success closeable" id="message_success" style="margin-top: -38px;">
+            <p><span><%= message %></span></p>
+            <a class="close" href="#"></a>
+        </div>
+    <% } %>
 
     <div class="container">
 
@@ -112,7 +118,7 @@
 
                             <tr>
                                 <th>Delivery By</th>
-                                <td><%= item.item.deliveryBy %></td>
+                                <td id="item_delivery_by"><%= item.item.deliveryBy %></td>
                             </tr>
 
                             <tr>
@@ -152,13 +158,19 @@
                         var numhours = Math.floor((item.remainingTime % 86400) / 3600);
                         var numminutes = Math.floor(((item.remainingTime % 86400) % 3600) / 60);
                         var numseconds = Math.floor(((item.remainingTime % 86400) % 3600) % 60);
+                        var isAlligibleToBid = true;
 
 
                         var formattedTime = "";
                         formattedTime = numdays != 0 ? (formattedTime += numdays + " days ") : formattedTime;
                         formattedTime = numhours != 0 ? (formattedTime += numhours + " hrs ") : formattedTime;
                         formattedTime = numminutes != 0 ? (formattedTime += numminutes + " mins ") : formattedTime;
-                        formattedTime = numseconds != 0 ? (formattedTime += numseconds + " secs ") : formattedTime; %>
+                        formattedTime = numseconds != 0 ? (formattedTime += numseconds + " secs ") : formattedTime;
+
+                        if(numdays == 0 && numhours == 0 && numminutes == 0 && numseconds == 0) {
+                            isAlligibleToBid = false;
+                        }
+                        %>
                         <p><span>Time left : </span> <%= formattedTime %></p>
                     </div>
 
@@ -253,15 +265,31 @@
                                 <div class="twelve alpha columns bidform">
                                     <label for="delivery_by">Delivery By : </label>
                                     <select id="delivery_by" name="delivery_by">
-                                        <option>Buyer</option>
-                                        <option>Seller</option>
+                                        <option value="Buyer">Buyer</option>
+                                        <% if(item.item.deliveryBy == 'Seller') {%>
+                                            <option selected value="Seller">Seller</option>
+                                        <% } else {%>
+                                            <option value="Seller">Seller</option>
+                                        <% } %>
                                     </select>
                                 </div>
 
-                                <div class="twelve alpha columns bidform">
+
+                                <div class="thirteen alpha columns bidform" id="buyer_delivery_cost" style="display: none;">
                                     <label>Delivery Cost : </label>
-                                    <input name="delivery_cost" type="text" id="delivery_cost"/>
+
+                                    <div class="ten columns" style="margin-left: 0px;">
+                                        <input name="delivery_cost" type="text" id="delivery_cost"/>
+                                    </div>
+                                    <div class="two columns">
+                                        <select name="priceUnitDelivery" id="priceUnitDelivery">
+                                            <% for(var priceIndex = 0; priceIndex < item.priceUnits.length; priceIndex++) { %>
+                                            <option value="<%= item.priceUnits[priceIndex].unitName %>"><%= item.priceUnits[priceIndex].unitName %></option>
+                                            <% } %>
+                                        </select>
+                                    </div>
                                 </div>
+
 
                                 <div class="twelve alpha columns bidform">
                                     <label for="warehouse">Warehouse : </label>
@@ -283,7 +311,11 @@
 
                                 <div class="twelve alpha columns bidform">
                                     <label>Packing Type : </label>
-                                    <input name="packing_type" type="text" id="packing_type"/>
+                                    <select name="packing_type" id="packing_type">
+                                        <% for(var packingIndex = 0; packingIndex < item.packingTypes.length; packingIndex++) { %>
+                                        <option value="<%= item.packingTypes[packingIndex].type %>"><%= item.packingTypes[packingIndex].type %></option>
+                                        <% } %>
+                                    </select>
                                 </div>
 
                                 <div class="twelve alpha columns bidform">
@@ -295,10 +327,12 @@
                                     </select>
                                 </div>
 
-                                <div class="twelve alpha columns bidform">
-                                    <label>Delivery Date : </label>
-                                    <input name="delivery_date" type="text" id="delivery_date"/>
+
+                                <div class="twelve alpha columns bidform" id="buyer_delivery_date" style="display: none;">
+                                        <label>Delivery Date : </label>
+                                        <input name="delivery_date" type="text" id="delivery_date"/>
                                 </div>
+
 
                                 <div class="twelve alpha columns bidform">
                                     <label>Buyer Note: <span>*</span></label>
@@ -306,7 +340,7 @@
                                 </div>
 
                                 <div class="twelve columns bidform">
-                                    <input type="submit" class="submit" id="submit" value="Submit"/>
+                                    <input type="submit" class="submit" id="submit" value="Place Your Bid"/>
                                 </div>
 
                             </fieldset>
@@ -322,6 +356,9 @@
 
                     <!-- Reviews -->
                     <section class="comments">
+                        <% if(itemComments.length == 0) {%>
+                            <p>No Reviews Yet! </p>
+                        <%} %>
                         <ul>
                             <% for(commentIndex = 0; commentIndex < itemComments.length; commentIndex++) {
                                 var comment = itemComments[commentIndex];
@@ -443,102 +480,14 @@
 
     <!-- Footer
     ================================================== -->
-    <div id="footer">
-
-        <!-- Container -->
-        <div class="container">
-
-            <div class="four columns">
-                <img src="images/logo-footer.png" alt="" class="margin-top-10"/>
-                <p class="margin-top-15">Nulla facilisis feugiat magna, ut molestie metus hendrerit vitae. Vivamus
-                    tristique lectus at varius rutrum. Integer lobortis mauris non consectetur eleifend.</p>
-            </div>
-
-            <div class="four columns">
-
-                <!-- Headline -->
-                <h3 class="headline footer">Customer Service</h3>
-                <span class="line"></span>
-                <div class="clearfix"></div>
-
-                <ul class="footer-links">
-                    <li><a href="#">Order Status</a></li>
-                    <li><a href="#">Payment Methods</a></li>
-                    <li><a href="#">Delivery & Returns</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
-                </ul>
-
-            </div>
-
-            <div class="four columns">
-
-                <!-- Headline -->
-                <h3 class="headline footer">My Account</h3>
-                <span class="line"></span>
-                <div class="clearfix"></div>
-
-                <ul class="footer-links">
-                    <li><a href="#">My Account</a></li>
-                    <li><a href="#">Order History</a></li>
-                    <li><a href="#">Wish List</a></li>
-                </ul>
-
-            </div>
-
-            <div class="four columns">
-
-                <!-- Headline -->
-                <h3 class="headline footer">Newsletter</h3>
-                <span class="line"></span>
-                <div class="clearfix"></div>
-                <p>Sign up to receive email updates on new product announcements, gift ideas, special promotions, sales
-                    and more.</p>
-
-                <form action="#" method="get">
-                    <button class="newsletter-btn" type="submit">Join</button>
-                    <input class="newsletter" type="text" placeholder="mail@example.com" value=""/>
-                </form>
-            </div>
-
-        </div>
-        <!-- Container / End -->
-
-    </div>
-    <!-- Footer / End -->
-
-    <!-- Footer Bottom / Start -->
-    <div id="footer-bottom">
-
-        <!-- Container -->
-        <div class="container">
-
-            <div class="eight columns">© Copyright 2014 by <a href="#">trizzy</a>. All Rights Reserved.</div>
-            <div class="eight columns">
-                <ul class="payment-icons">
-                    <li><img src="images/visa.png" alt=""/></li>
-                    <li><img src="images/mastercard.png" alt=""/></li>
-                    <li><img src="images/skrill.png" alt=""/></li>
-                    <li><img src="images/moneybookers.png" alt=""/></li>
-                    <li><img src="images/paypal.png" alt=""/></li>
-                </ul>
-            </div>
-
-        </div>
-        <!-- Container / End -->
-
-    </div>
-    <!-- Footer Bottom / End -->
-
-    <!-- Back To Top Button -->
-    <div id="backtotop"><a href="#"></a></div>
+    <% include footer.ejs %>
 
 </div>
 
 
 <!-- Java Script
 ================================================== -->
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="scripts/jquery.jpanelmenu.js"></script>
 <script src="scripts/jquery.themepunch.plugins.min.js"></script>

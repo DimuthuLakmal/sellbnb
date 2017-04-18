@@ -17,13 +17,26 @@ router.get('/add/mutual/type/:type/bidId/:bidId/itemName/:itemName/itemId/:itemI
     var url = ''
     if (req.params.requestFrom == 'seller') {
         redirection = '/user/sell/contract/bidId/'+req.params.bidId;
-        url = '/user/buy/contract/id/'+req.params.itemId;
+        url = '/user/buy/contract/id/'+req.params.itemId+'?bidId='+req.params.bidId;
     } else {
-        redirection = '/user/buy/contract/id/'+req.params.itemId;
+        redirection = '/user/buy/contract/id/'+req.params.itemId+'?bidId='+req.params.bidId;
         url = '/user/sell/contract/bidId/'+req.params.bidId;
     }
     var description = 'Mutual Cancellation Request for item '+req.params.itemName;
-    addNotification(res, req, url , description, redirection);
+    var emailDescription = 'Mutual Cancellation Request for item '+req.params.itemName;
+    var subject = 'Mutual Cancellation Request';
+    addNotification(res, req, url , description, emailDescription, subject, redirection);
+});
+
+//store notification details in database
+/* Usage: User Accout Seller Page (Accept Bid) */
+router.get('/add/accept/itemId/:itemId/bidId/:bidId/userId/:userId/itemName/:itemName', function (req, res) {
+    var redirection = '/user/sell/bids/start/0?itemId='+req.params.itemId;
+    var url = '/user/buy/list/start/0,0,0?buyingpageItemOption=Cancelled&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=1';
+    var description = 'Your Bid is accepted for '+req.params.itemName;
+    var emailDescription = 'Your Bid is accepted for '+req.params.itemName;
+    var subject = 'Your Bid has accepted!';
+    addNotification(res, req, url , description, emailDescription, subject, redirection);
 });
 
 //retreive notification details from database
@@ -77,7 +90,7 @@ router.get('/update/id/:id', function (req, res) {
     );
 });
 
-function addNotification(res, req, url, description, redirection) {
+function addNotification(res, req, url, description, emailDescription, subject_, redirection) {
     //store notification in database
     sequelize.sync().then(
         function () {
@@ -90,44 +103,44 @@ function addNotification(res, req, url, description, redirection) {
                 UserId: req.params.userId,
             }).then(function (insertedNotificaion) {
                 //sending email & SMS
-                var subject = 'Mutual Cancellation Request';
-                var message = 'You have a request to cancel the contract on item ' + req.params.itemName;
-                //sendEmail(req.params.userId, subject, message, redirection, res);
+                var subject = subject_;
+                var message = emailDescription;
+                sendEmailSMS(req.params.userId, subject, message, redirection, res);
 
-                var User = models.User;
-                var Email = models.Email;
-                var PhoneNumber = models.PhoneNumber;
-                User.findAll({
-                    where: {id: req.params.userId},
-                    include: [Email, PhoneNumber],
-                }).then(function (Users) {
-                    //send SMS
-                    var SMSPhoneNumber = Users[0].dataValues.PhoneNumbers[0].dataValues;
-                    console.log(SMSPhoneNumber);
-
-                    // Twilio Credentials
-                    var accountSid = 'ACb1c6f0ccb34ac2d7aaee85cc8a9d5a34';
-                    var authToken = '8bef9138453179638cc15b3fd197a0ae';
-
-                    //require the Twilio module and create a REST client
-                    var client = require('twilio')(accountSid, authToken);
-
-                    client.sendMessage({
-                        to: SMSPhoneNumber.number,
-                        from: "+12569987739 ",
-                        body: "You have received Mutual Cancellation Request",
-                    }, function(err, message) {
-                        if(err) {
-                            console.log(err);
-                        } else {
-                            console.log(redirection);
-                            res.redirect(redirection);
-                            console.log(message);
-                        }
-                    });
-
-                    //res.redirect(redirection);
-                });
+                // var User = models.User;
+                // var Email = models.Email;
+                // var PhoneNumber = models.PhoneNumber;
+                // User.findAll({
+                //     where: {id: req.params.userId},
+                //     include: [Email, PhoneNumber],
+                // }).then(function (Users) {
+                //     //send SMS
+                //     var SMSPhoneNumber = Users[0].dataValues.PhoneNumbers[0].dataValues;
+                //     console.log(SMSPhoneNumber);
+                //
+                //     // Twilio Credentials
+                //     var accountSid = 'ACb1c6f0ccb34ac2d7aaee85cc8a9d5a34';
+                //     var authToken = '8bef9138453179638cc15b3fd197a0ae';
+                //
+                //     //require the Twilio module and create a REST client
+                //     var client = require('twilio')(accountSid, authToken);
+                //
+                //     client.sendMessage({
+                //         to: SMSPhoneNumber.number,
+                //         from: "+12569987739 ",
+                //         body: "You have received Mutual Cancellation Request",
+                //     }, function(err, message) {
+                //         if(err) {
+                //             console.log(err);
+                //         } else {
+                //             console.log(redirection);
+                //             res.redirect(redirection);
+                //             console.log(message);
+                //         }
+                //     });
+                //
+                //     //res.redirect(redirection);
+                // });
             });
         }
     ).catch(function (error) {
@@ -136,7 +149,7 @@ function addNotification(res, req, url, description, redirection) {
 }
 
 //sending email using sendgrid
-function sendEmail(userId, subject, message, redirection, res) {
+function sendEmailSMS(userId, subject_, message, redirection, res) {
 
     //retrive user's email address
     sequelize.sync().then(
@@ -152,15 +165,20 @@ function sendEmail(userId, subject, message, redirection, res) {
                 async.waterfall([
 
                     function(callback){
-                        EmailAddress = Users[0].dataValues.Emails[0].dataValues;
+                        console.log(Users[0].dataValues.Emails[0].dataValues.email);
+                        console.log(subject_);
+                        console.log(message);
+                        EmailAddress = Users[0].dataValues.Emails[0].dataValues.email;
 
-                        //sending email using sendgrid. defining parameters
-                        from_email = new helper.Email("kjtdimuthu.13@cse.mrt.ac.lk");
-                        to_email = new helper.Email(EmailAddress.email);
+                        var helper = require('sendgrid').mail;
+
+                        from_email = new helper.Email("sellbnb@gmail.com");
+                        to_email = new helper.Email(EmailAddress);
+                        subject = subject_;
                         content = new helper.Content("text/plain", message);
                         mail = new helper.Mail(from_email, subject, to_email, content);
 
-                        var sg = require('sendgrid')('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');
+                        var sg = require('sendgrid')('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');
                         var request = sg.emptyRequest({
                             method: 'POST',
                             path: '/v3/mail/send',
@@ -178,7 +196,6 @@ function sendEmail(userId, subject, message, redirection, res) {
                     function (callback) {
                         //send SMS
                         var SMSPhoneNumber = Users[0].dataValues.PhoneNumbers[0].dataValues;
-                        console.log(SMSPhoneNumber);
 
                         // Twilio Credentials
                         var accountSid = 'ACb1c6f0ccb34ac2d7aaee85cc8a9d5a34';

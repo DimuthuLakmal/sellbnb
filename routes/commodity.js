@@ -20,6 +20,7 @@ router.post('/add', function (req, res, next) {
     var alternativeNames = req.body.alternativeNames;
     var measureUnits = req.body.measureUnits;
     var priceUnits = req.body.priceUnits;
+    var packingTypes = req.body.packingType;
 
     console.log(parameters);
 
@@ -87,6 +88,15 @@ router.post('/add', function (req, res, next) {
                 _.forEach(priceUnits, function(priceUnit, index) {
                     CommodityPriceUnit.create({
                         unitName : priceUnit,
+                        CommodityId: insertedCommodityId,
+                    });
+                });
+            }).then(function () {
+                //store commodity measureUnits
+                var CommodityPacking = models.CommodityPacking;
+                _.forEach(packingTypes, function(packingType, index) {
+                    CommodityPacking.create({
+                        type : packingType,
                         CommodityId: insertedCommodityId,
                     });
                 });
@@ -162,6 +172,7 @@ router.get('/measureUnits/id/:id', function (req, res) {
         function () {
             var CommodityMeasureUnit = models.CommodityMeasureUnit;
             var CommodityPriceUnit = models.CommodityPriceUnit;
+            var CommodityPacking = models.CommodityPacking;
             CommodityMeasureUnit.findAll({
                 where: {CommodityId: req.params.id},
             }).then(function (measureUnits) {
@@ -173,8 +184,33 @@ router.get('/measureUnits/id/:id', function (req, res) {
                 }).then(function (priceUnits) {
                     //saving commodity measure units
                     req.session.priceUnits = priceUnits;
-                    res.redirect('/items/add');
+
+                    CommodityPacking.findAll({
+                        where: {CommodityId: req.params.id},
+                    }).then(function (packingTypes) {
+                        req.session.packingTypes = packingTypes;
+                        res.redirect('/items/add');
+                    });
+
                 });
+            });
+        }
+    );
+});
+
+/* Retrieve Commodity Name from database*/
+/* Usage: Item Add Page*/
+router.get('/commodityName/id/:id', function (req, res) {
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var Commodity = models.Commodity;
+            Commodity.findAll({
+                where: {id: req.params.id},
+            }).then(function (Commodities) {
+                //saving commodity name
+                req.session.commodityName = Commodities[0].dataValues.name;
+                res.redirect('/items/add');
             });
         }
     );
@@ -214,6 +250,7 @@ router.get('/viewpopular', function (req, res) {
 router.post('/search', function (req, res) {
     //extract name of commodity
     var commodityName = req.body.commodity;
+    var userId = req.body.userId;
 
     //retrieve data from req object
     sequelize.sync().then(
@@ -223,15 +260,77 @@ router.post('/search', function (req, res) {
             var CommodityParameter = models.CommodityParameter;
             var CommodityImage = models.CommodityImage;
             var CommodityMeasureUnit = models.CommodityMeasureUnit;
+            var RecentSearch = models.RecentSearch;
 
-            Commodity.findAll({
-                where: {name: commodityName},
-                include: [CommodityAlterName,CommodityParameter,CommodityImage, CommodityMeasureUnit],
-            }).then(function (Commodity) {
-                var commodity = Commodity[0].dataValues;
-                req.session.commodity = commodity;
+            RecentSearch.create({
+                commodity: commodityName,
+                UserId: userId,
+            }).then(function (insertedRecentSearch) {
+                Commodity.findAll({
+                    where: {name: commodityName},
+                    include: [CommodityAlterName,CommodityParameter,CommodityImage, CommodityMeasureUnit],
+                }).then(function (Commodity) {
+                    var commodity = Commodity[0].dataValues;
+                    req.session.commodity = commodity;
 
-                res.redirect('/items/add/commoditydetails');
+                    res.redirect('/items/add/commoditydetails');
+                });
+            });
+        }
+    );
+});
+
+/* Retrieve specific commodity from database */
+/* Usage: searchcommodityadd page */
+router.get('/search/commodity/:commodity/userId/:userId', function (req, res) {
+    //extract name of commodity
+    var commodityName = req.params.commodity;
+    var userId = req.params.userId;
+
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var Commodity = models.Commodity;
+            var CommodityAlterName = models.CommodityAlterName;
+            var CommodityParameter = models.CommodityParameter;
+            var CommodityImage = models.CommodityImage;
+            var CommodityMeasureUnit = models.CommodityMeasureUnit;
+            var RecentSearch = models.RecentSearch;
+
+            RecentSearch.create({
+                commodity: commodityName,
+                UserId: userId,
+            }).then(function (insertedRecentSearch) {
+                Commodity.findAll({
+                    where: {name: commodityName},
+                    include: [CommodityAlterName,CommodityParameter,CommodityImage, CommodityMeasureUnit],
+                }).then(function (Commodity) {
+                    var commodity = Commodity[0].dataValues;
+                    req.session.commodity = commodity;
+
+                    res.redirect('/items/add/commoditydetails');
+                });
+            });
+        }
+    );
+});
+
+/* Retrieve specific commodity from database */
+/* Usage: searchcommodityadd page */
+router.get('/recentsearch/userId/:userId', function (req, res) {
+
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var RecentSearch = models.RecentSearch;
+
+            RecentSearch.aggregate('commodity', 'DISTINCT',{
+                plain: false,
+                where: {UserId: req.params.userId},
+                limit: 10,
+            }).then(function (RecentSearches) {
+                req.session.recentSearches = RecentSearches;
+                res.redirect('/items/search');
             });
         }
     );

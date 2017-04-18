@@ -73,6 +73,7 @@ router.post('/add', function (req, res) {
                 duration: duration,
                 CommodityId: CommodityId,
                 UserId: UserId,
+                status: 'pending',
             }).then(function (insertedItem) {
                 var insertedItemId = insertedItem.dataValues.id;
                 //store item images
@@ -163,9 +164,10 @@ router.get('/viewlatest', function (req, res) {
             var ItemImage = models.ItemImage;
             var Commodity = models.Commodity;
             Item.findAndCountAll({
-                where: {duration: {
-                    gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
-                }},
+                where: {
+                    duration: {gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))},
+                    status:'pending',
+                },
                 limit: 10,
                 include: [ItemImage, Commodity],
                 order: '`id` DESC'
@@ -328,6 +330,7 @@ router.get('/id/:id', function (req, res) {
             var WareHouse = models.WareHouse;
             var CommodityMeasureUnit = models.CommodityMeasureUnit;
             var CommodityPriceUnit = models.CommodityPriceUnit;
+            var CommodityPacking = models.CommodityPacking;
 
             var itemId = req.params.id;
             Item.findAll({
@@ -390,16 +393,22 @@ router.get('/id/:id', function (req, res) {
                                 CommodityPriceUnit.findAll({
                                     where: {CommodityId: commodity.id}
                                 }).then(function (PriceUnits) {
-                                    req.session.specificBiddingItem = {'item': item, 'commodity': commodity, 'itemImages': itemImages,
-                                        'user': user, 'itemComments': Comments, 'warehouse': warehouse, 'remainingTime': difference,
-                                        'similarItems': similarItems, 'measureUnits': MeasuerUnits, 'priceUnits': PriceUnits};
 
-                                    Item.update(
-                                        { hits: (hits+1) },
-                                        { where: { id: id } }
-                                    ).then(function (results) {
-                                        res.redirect('/items/id/'+itemId);
+                                    CommodityPacking.findAll({
+                                        where: {CommodityId: commodity.id}
+                                    }).then(function (PackingTypes) {
+                                        req.session.specificBiddingItem = {'item': item, 'commodity': commodity, 'itemImages': itemImages,
+                                            'user': user, 'itemComments': Comments, 'warehouse': warehouse, 'remainingTime': difference,
+                                            'similarItems': similarItems, 'measureUnits': MeasuerUnits, 'priceUnits': PriceUnits, 'packingTypes': PackingTypes};
+
+                                        Item.update(
+                                            { hits: (hits+1) },
+                                            { where: { id: id } }
+                                        ).then(function (results) {
+                                            res.redirect('/items/id/'+itemId);
+                                        });
                                     });
+
                                 });
                             });
                         });
@@ -444,47 +453,64 @@ router.get('/start/:start/userId/:userId', function (req, res) {
     //retrieve data from req object
     var userId = req.params.userId;
     var start = req.params.start;
-    var sellpageItemOption = req.query['sellpageItemOption'] ? req.query['sellpageItemOption'] : req.session.sellpageItemOption;
-    var from = req.query['from'] ? req.query['from'] : req.session.sellpageFrom;
-    var to = req.query['to'] ? req.query['to'] : req.session.sellpagTo;
+    var sellingpageItemOption = req.query['sellingpageItemOption'];
+    var openDurationOption = req.query['openDurationOption'];
+    var pendingDurationOption = req.query['pendingDurationOption'];
+    var cancelledDurationOption = req.query['cancelledDurationOption'];
+    var nextSellingpageItemOption = '';
 
     //define where object of sequelize object according to filtering parameters selected in User Account Selling page
-    var whereObject = {
-        UserId: userId
-    };
+    var whereObject = {};
 
-    if(sellpageItemOption == 'All') {
-        whereObject = {
-            UserId: userId
-        };
-        req.session.sellpageItemOption = 'All'
-    } else if(sellpageItemOption == 'Open') {
-        whereObject["duration"] =
-            {gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))}
-
-        req.session.sellpageItemOption = 'Open';
-    } else if(sellpageItemOption == 'Closed') {
-        whereObject["duration"] =
-            {lt: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))}
-        req.session.sellpageItemOption = 'Closed';
-    } else if(sellpageItemOption == 'Pending') {
-        whereObject["status"] = 'active';
-        req.session.sellpageItemOption = 'Pending';
-    } else if(sellpageItemOption == 'Cancelled') {
-        whereObject = {
-            $or: [{status: {$eq: "cancelled"}},{status: {$eq: "mutual-cancellation-buyer"}},
-                {status: {$eq: "mutual-cancellation-seller"}},{status: {$eq: "mutual-cancellation-all"}}],
-            UserId: userId,
+    if(sellingpageItemOption == 'Open') {
+        if(openDurationOption == "0"){
+            whereObject = {
+                UserId: userId,
+                status: 'open',
+            };
+        } else {
+            whereObject = {
+                UserId: userId,
+                status: 'open',
+                createdAt: {gte: sequelize.fn('date_sub',moment().format(),sequelize.literal('interval '+openDurationOption+' month'))}
+            };
         }
-        req.session.sellpageItemOption = 'Cancelled';
-    } else {
-        req.session.sellpageItemOption = 'All';
-    }
+        start = start.split(",")[0];
+        nextSellingpageItemOption = 'Open';
+    } else if(sellingpageItemOption == 'Pending') {
+        if(pendingDurationOption == "0"){
+            whereObject = {
+                UserId: userId,
+                status: 'pending',
+                //duration: {gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))},
+            };
+        } else {
+            whereObject = {
+                UserId: userId,
+                status: 'pending',
+                //duration: {gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))},
+                createdAt: {gte: sequelize.fn('date_sub',moment().format(),sequelize.literal('interval '+openDurationOption+' month'))}
+            };
+        }
 
-    //check the whether filter by date
-    if(from != '' && to != '' && from != undefined && to != undefined) {
-        whereObject["createdAt"] = {$gte: from}
-        whereObject["$and"] = {createdAt: {lte: to}}
+        start = start.split(",")[1];
+        nextSellingpageItemOption = 'Pending';
+    } else if(sellingpageItemOption == 'Cancelled') {
+        if(cancelledDurationOption == "0"){
+            whereObject = {
+                UserId: userId,
+                $or: [{status: 'cancelled'}, {status: 'mutual-cancellation-all'}, {status:'mutual-cancellation-buyer'}, {status: 'mutual-cancellation-seller'}],
+            };
+        } else {
+            whereObject = {
+                UserId: userId,
+                $or: [{status: 'cancelled'}, {status: 'mutual-cancellation-all'}, {status:'mutual-cancellation-buyer'}, {status: 'mutual-cancellation-seller'}],
+                createdAt: {gte: sequelize.fn('date_sub',moment().format(),sequelize.literal('interval '+openDurationOption+' month'))}
+            };
+        }
+
+        start = start.split(",")[2];
+        nextSellingpageItemOption = 'Cancelled';
     }
 
     sequelize.sync().then(
@@ -493,11 +519,12 @@ router.get('/start/:start/userId/:userId', function (req, res) {
             var ItemImage = models.ItemImage;
             var Bidding = models.Bidding;
             var User = models.User;
+            var Commodity = models.Commodity;
             Item.findAndCountAll({
                 where: whereObject,
                 offset: parseInt(start),
                 limit: 10,
-                include: [ItemImage, Bidding],
+                include: [ItemImage, Bidding, Commodity, User],
                 order: '`createdAt` DESC'
             }).then(function (Items) {
                 //calculate remaining times for bidding items & bidding details of each item
@@ -539,7 +566,7 @@ router.get('/start/:start/userId/:userId', function (req, res) {
                     req.session.itemsSellingAccountCount = Items.count;
                     req.session.itemsSellingAccountOffset = parseInt(req.params.start);
                     req.session.searchResultRemainingTimeSelling = remainingTimes;
-                    res.redirect('/user/sell/list/start/'+start);
+                    res.redirect('/user/sell/list/start/'+req.params.start+'?sellingpageItemOption='+nextSellingpageItemOption+'&openDurationOption='+req.query['openDurationOption']+'&pendingDurationOption='+req.query['pendingDurationOption']+'&cancelledDurationOption='+req.query['cancelledDurationOption']);
                 });
 
             });
@@ -601,12 +628,20 @@ router.get('/sell/id/:id', function (req, res) {
                         where: {CommodityId: Items[0].CommodityId}
                     }).then(function (PriceUnits) {
                         req.session.specificBiddingItemSellPriceUnits = PriceUnits;
-                        res.redirect('/user/sell/bids/start/0?itemId='+itemId);
+                        res.redirect('/user/sell/edit?itemId='+itemId);
                     });
                 });
             });
         }
     );
+});
+
+//set preview image to session
+router.post('/preview', function (req, res) {
+    //retrive data from reqeust header
+    req.session.previewImages = req.body.images;
+
+    res.json({message: "Success"});
 });
 
 
@@ -630,6 +665,7 @@ function retrieveItems(req, res, keyword) {
     var start = req.params.start;
     var class_ = req.query['class'] ? req.query['class'] : req.session.selectedClass;
     var segment = req.query['segment'] ? req.query['segment'] : req.session.selectedSegment;
+    var location = req.query['location'] ? req.query['location'] : req.session.selectedLocation;
     var startPrice = req.query['startPrice'] ? req.query['startPrice'] : req.session.startPrice;
 
     //check whether checkbox is already ticked or not
@@ -644,6 +680,12 @@ function retrieveItems(req, res, keyword) {
         delete req.session.selectedSegment;
     }
 
+    //check whether location is already ticked or not
+    if(req.query['location'] == req.session.selectedLocation) {
+        location = null;
+        delete req.session.selectedLocation;
+    }
+
     //define where object of sequelize object according to parameter selected in search results page
     var whereObject = {
         duration: {
@@ -655,18 +697,28 @@ function retrieveItems(req, res, keyword) {
         ],
     };
     if(class_ != null && class_ != undefined) {
-        whereObject["$Commodity.class$"] = {$like: '%'+class_+'%'};
+        if(class_ != "All") {
+            whereObject["$Commodity.class$"] = {$like: '%'+class_+'%'};
+        }
         req.session.selectedClass = class_;
     }
     if (segment != null && segment != undefined) {
-        whereObject["$Commodity.segment$"] = {$like: '%'+segment+'%'};
+        if(segment != "All") {
+            whereObject["$Commodity.segment$"] = {$like: '%'+segment+'%'};
+        }
         req.session.selectedSegment = segment;
+    }
+    if (location != null && location != undefined) {
+        if(location != "All") {
+            whereObject["$User.mailingCity$"] = {$like: '%'+location+'%'};
+        }
+        req.session.selectedLocation = location;
     }
 
     //Filter by price range
     if(startPrice != null && startPrice != undefined) {
         var endPrice = req.query['endPrice'] ? req.query['endPrice'] : req.session.endPrice;
-        whereObject['suggestedPrice'] = {$between: [parseFloat(startPrice), parseFloat(endPrice)]};
+        //whereObject['suggestedPrice'] = {$between: ["LKR "+startPrice, "LKR "+endPrice]};
         req.session.startPrice = startPrice;
         req.session.endPrice = endPrice;
     }
@@ -693,8 +745,9 @@ function retrieveItems(req, res, keyword) {
                             function (callback) {
                                 //Identify distinct characteristics of commodities according to keyword search
                                 /*Usage: sidebar of search result page */
-                                var segments = [];
-                                var classes = [];
+                                var segments = ["All"];
+                                var classes = ["All"];
+                                var locations = ["All"];
                                 sequelize.sync().then(
                                     function () {
                                         var Item = models.Item;
@@ -733,11 +786,35 @@ function retrieveItems(req, res, keyword) {
                                                 include: [Commodity],
                                                 group: ['class'],
                                             }).then(function (Classes) {
+
                                                 _.forEach(Classes, function(class_, index) {
                                                     classes.push(class_.DISTINCT);
                                                 });
-                                                req.session.distinctCharacteristics = [segments, classes];
-                                                callback(null, keyword, req);
+
+                                                Item.aggregate('User.mailingCity', 'DISTINCT',{
+                                                    plain: false,
+                                                    where: {
+                                                        duration: {
+                                                            gte: sequelize.fn("TIME_TO_SEC",
+                                                                sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
+                                                        },
+                                                        $or: [
+                                                            {'$Commodity.name$': {$like: '%'+keyword+'%'}},
+                                                            {title: {$like: '%'+keyword+'%'}}
+                                                        ],
+                                                    },
+                                                    include: [User, Commodity],
+                                                    group: ['User.mailingCity'],
+                                                }).then(function (Locations) {
+                                                    console.log(Locations);
+                                                    _.forEach(Locations, function(location, index) {
+                                                        locations.push(location.DISTINCT);
+                                                    });
+
+                                                    req.session.distinctCharacteristics = [segments, classes, locations];
+                                                    callback(null, keyword, req);
+                                                });
+
                                             });
                                         });
                                     }
@@ -802,7 +879,7 @@ function retrieveItems(req, res, keyword) {
 /* Retrieve specific item from database */
 /* Usage: View Contract Details Seller/Buyer Page */
 router.get('/contract/id/:id', function (req, res) {
-    getItemForContract(req, res, '/user/buy/contract/id/'+req.params.id);
+    getItemForContract(req, res, '/user/buy/contract/id/'+req.params.id+'?bidId='+req.session.bidIdContract);
 });
 
 

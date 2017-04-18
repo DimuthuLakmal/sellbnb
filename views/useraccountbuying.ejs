@@ -42,94 +42,24 @@
         <div class="parallax-overlay"></div>
 
         <div class="parallax-content">
-            <h2>Account <span>Bidding Items</span></h2>
+            <h2>Buy Account <span>Bidding Items</span></h2>
 
             <nav id="breadcrumbs">
                 <ul>
                     <li>Home</li>
-                    <li>News</li>
+                    <li>Buy Account</li>
                 </ul>
             </nav>
         </div>
     </section>
+    <% if(updateBidMessage != null && updateBidMessage != undefined && updateBidMessage != "") {%>
+    <div class="notification success closeable" id="message_success" style="margin-top: -38px;">
+        <p><span><%= updateBidMessage %></span></p>
+        <a class="close" href="#"></a>
+    </div>
+    <% } %>
 
     <div class="container">
-
-        <!-- Sidebar
-        ================================================== -->
-        <div class="four columns">
-
-
-            <!--&lt;!&ndash; Widget &ndash;&gt;-->
-            <!--<div class="widget">-->
-            <!--<h3 class="headline">Filter By Price</h3><span class="line"></span><div class="clearfix"></div>-->
-
-            <!--<div id="price-range">-->
-            <!--<div class="padding-range"><div id="slider-range"></div></div>-->
-            <!--<label for="amount">Price:</label>-->
-            <!--<input type="text" id="amount"/>-->
-            <!--<a href="#" class="button color">Filter</a>-->
-            <!--</div>-->
-            <!--<div class="clearfix"></div>-->
-            <!--</div>-->
-
-            <!--&lt;!&ndash; Sorting &ndash;&gt;-->
-            <form action="/api/bid/start/0/userId/<%= user.id %>" method = "GET" id="filter_form">
-                <div class="widget">
-                    <h3 class="headline" style="z-index: 0 !important;">Filter By</h3><span class="line"></span><div class="clearfix"></div>
-
-                    <select class="orderby" name="buyingpageItemOption" id="filter_options">
-                        <% if(filterParamer == 'All') {%>
-                        <option selected>All</option>
-                        <option>Pending</option>
-                        <option>Closed</option>
-                        <option>Hold</option>
-                        <% } %>
-                        <% if(filterParamer == 'Pending') {%>
-                        <option>All</option>
-                        <option selected>Pending</option>
-                        <option>Closed</option>
-                        <option>Hold</option>
-                        <% } %>
-                        <% if(filterParamer == 'Closed') {%>
-                        <option>All</option>
-                        <option>Pending</option>
-                        <option selected>Closed</option>
-                        <option>Hold</option>
-                        <% } %>
-                        <% if(filterParamer == 'Hold') {%>
-                        <option>All</option>
-                        <option>Pending</option>
-                        <option>Closed</option>
-                        <option selected>Hold</option>
-                        <% } %>
-                    </select>
-                    <div class="clearfix"></div>
-                </div>
-            </form>
-
-            <!-- Sorting -->
-            <div class="widget">
-                <h3 class="headline" style="z-index: 0 !important;">Date</h3><span class="line"></span><div class="clearfix"></div>
-
-
-                <div class="four alpha columns">
-                    <label>From : </label>
-                    <input type="text" id="from" style="width: 91%; z-index: 100"/>
-                </div>
-                <br><br><br>
-                <div class="four alpha columns">
-                    <label>To : </label>
-                    <input type="text" id="to" style="width: 91%; z-index: 100"/>
-                </div>
-                <div class="four alpha columns" style="margin-top:10px">
-                    <input type="submit" class="button color" style="float: right; z-index: 0" value="Filter"/>
-                </div>
-
-                <div class="clearfix"></div>
-            </div>
-
-        </div>
 
 
         <!-- Content
@@ -146,134 +76,533 @@
 
         <!--</div>-->
 
-        <div class="twelve columns products">
+        <div class="container">
+            <div class="fourteen columns centered">
+                <!-- Tabs Navigation -->
+                <ul class="tabs-nav">
+                    <li id="tab_1"><a href="#tab1">Open</a></li>
+                    <li id="tab_2"><a href="#tab2">Pending</a></li>
+                    <li id="tab_3"><a href="#tab3">Cancelled</a></li>
+                </ul>
 
-            <% for(var itemIndex = 0; itemIndex < buyingList.rows.length; itemIndex++) {
-                var bid = buyingList.rows[itemIndex];
-                var item = buyingList.rows[itemIndex].Item;
-                var itemImage = itemImages[itemIndex];
-                var maxBid = lastBid[itemIndex];
+                <!-- Tabs Content -->
+                <div class="tabs-container">
 
-            %>
-            <!-- Selling Items -->
-            <div class="item-selling-div twelve columns">
-                <div class="item-selling-div">
-                    <div class="two columns">
-                        <% if(itemImage != null) {%>
-                        <img src="uploads/items/<%= itemImage.url %>"/>
-                        <% } else {%>
-                        <img src="images/blog-widget-01.png"/>
-                        <% } %>
-                    </div>
-                    <div class="four columns">
-                        <h3><%= item.title %></h3>
-                        <p>Last Bid: <%= maxBid.bid %><br>
-                            Your Last Bid: <%= bid.bid %><br>
-                            <% if(remainingTimes[itemIndex][0] != 0) {
-                                var remainingTime = remainingTimes[itemIndex][0];
-                                var numdays = Math.floor(remainingTime / 86400);
-                                var numhours = Math.floor((remainingTime % 86400) / 3600);
-                                var numminutes = Math.floor(((remainingTime % 86400) % 3600) / 60);
-                                var numseconds = Math.floor(((remainingTime % 86400) % 3600) % 60);
+                    <div class="tab-content" id="tab1">
+                        <div>
+                            <form action="/user/buy/list/start/0,0,0" method="GET" id="open_duration_form">
+                                <input type="hidden" name="buyingpageItemOption" value="Open"/>
+                                <input type="hidden" name="pendingDurationOption" value="1"/>
+                                <input type="hidden" name="cancelledDurationOption" value="1"/>
+                                Your have <%= buyingListOpen.rows.length %> orders in
+                                <select class="orderby" name="openDurationOption" id="filter_options_open">
+                                    <% if(filterParamerOpen == '1') {%>
+                                    <option selected value="1">Last Month</option>
+                                    <option value="6">Last Six Months</option>
+                                    <option value="12">Last Year</option>
+                                    <option value="0">From Beginning</option>
+                                    <% } %>
+                                    <% if(filterParamerOpen == '6') {%>
+                                    <option value="1">Last Month</option>
+                                    <option selected value="6">Last Six Months</option>
+                                    <option value="12">Last Year</option>
+                                    <option value="0">From Beginning</option>
+                                    <% } %>
+                                    <% if(filterParamerOpen == '12') {%>
+                                    <option value="1">Last Month</option>
+                                    <option value="6">Last Six Months</option>
+                                    <option selected value="12">Last Year</option>
+                                    <option value="0">From Beginning</option>
+                                    <% } %>
+                                    <% if(filterParamerOpen == '0') {%>
+                                    <option value="1">Last Month</option>
+                                    <option value="6">Last Six Months</option>
+                                    <option value="12">Last Year</option>
+                                    <option selected value="0">From Beginning</option>
+                                    <% } %>
+                                </select>
+                                <div class="clearfix"></div>
+                            </form>
 
-                                var formattedTime = "";
-                                formattedTime = numdays != 0 ? (formattedTime += numdays + " days ") : formattedTime;
-                                formattedTime = numhours != 0 ? (formattedTime += numhours + " hrs ") : formattedTime;
-                                formattedTime = numminutes != 0 ? (formattedTime += numminutes + " mins ") : formattedTime;
-                                formattedTime = numseconds != 0 ? (formattedTime += numseconds + " secs ") : formattedTime;
+                        </div>
+
+                        <div class="fourteen columns products centered">
+
+                            <% for(var itemIndex = 0; itemIndex < buyingListOpen.rows.length; itemIndex++) {
+                                var bid = buyingListOpen.rows[itemIndex];
+                                var item = buyingListOpen.rows[itemIndex].Item;
+                                var itemImage = itemImagesOpen[itemIndex];
+                                var maxBid = lastBidOpen[itemIndex];
+                                var commodityName = itemDetailsOpen[itemIndex].item.name;
+                                var seller = itemDetailsOpen[itemIndex].user.username;
+                                var sellerId = itemDetailsOpen[itemIndex].user.id;
+                                var formattedStatus = '';
+                                var id = 'Contract Id: CI'+bid.id;
+                                var formattedTime = bid.updatedAt.split('T')[1].split(".");
                             %>
-                            <%= 'Time Left: '+formattedTime %>
-                            <% } else {%>
-                            <%= 'Bidding Closed At: ' + remainingTimes[itemIndex][2] %>
-                            <% } %></p>
-                    </div>
-                    <div class="two columns">
-                        <form method="post" action="/api/bid/update/bid">
-
-                            <fieldset>
-                                <input type="hidden" name="id" value="<%= bid.id %>"/>
-                                <div class="two columns editform">
-                                    <input style="width: 80%" name="newbid" type="text" id="newbid" placeholder="Your New Bid" value="<%= bid.bid.split(" ")[0]+" " %>"/>
+                            <!-- Selling Items -->
+                            <div class="item-selling-div fourteen columns">
+                                <div class="item-selling-div">
+                                    <div class="three columns">
+                                        <% if(itemImage != null) {%>
+                                        <img src="uploads/items/<%= itemImage.url %>"/>
+                                        <% } else {%>
+                                        <img src="images/blog-widget-01.png"/>
+                                        <% } %>
+                                    </div>
+                                    <div class="five columns">
+                                        <h3><%= item.title %></h3>
+                                        <p><%= id %><br>
+                                            Commodity Name: <%= commodityName %><br>
+                                            Seller: <a href="/user/public/userId/<%= sellerId %>"> <%= seller %></a><br>
+                                            Status: Contract Created<br>
+                                            Contract Date: <%= bid.updatedAt.split('T')[0]+" "+formattedTime[0] %><br>
+                                        </p>
+                                    </div>
+                                    <div class="five columns">
+                                        <div class="two columns" style="float:right">
+                                            <form action="/items/id/<%= item.id %>" method="GET">
+                                                <input type="submit" style="float: right; width: 100%; padding-right:20px"
+                                                       class="item-selling-btn" value="View Details"/>
+                                            </form>
+                                            <% if (bid.status == 'open' || bid.status == 'mutual-cancellation-seller') {%>
+                                            <form method="GET" action="/user/buy/contract/id/<%= item.id %>">
+                                                <input type="hidden" value="<%= bid.id %>" name="bidId"/>
+                                                <input type="submit" style="float: right; width: 100%; padding-right:20px"
+                                                       class="item-selling-btn" value="Contract" />
+                                            </form>
+                                            <% } %>
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
 
-                                <div class="two columns editform">
-                                    <input type="submit" class="submit" id="submitbid" value="Place Bid"/>
-                                </div>
+                            <span class="line" style="margin-top:10px;margin-bottom: 0px"></span><div class="clearfix"></div>
+                            <% } %>
 
-                            </fieldset>
 
                             <div class="clearfix"></div>
-                        </form>
+
+                            <!-- Pagination -->
+                            <div class="pagination-container">
+                                <nav class="pagination">
+                                    <ul>
+                                        <%
+                                        var pageOne = (pageMultipationFactorOpen * 10) + 1;
+                                        var pageTwo = (pageMultipationFactorOpen * 10) + 2;
+                                        var pageThree = (pageMultipationFactorOpen * 10) + 3;
+                                        %>
+                                        <% if(maxPageCountOpen >= pageOne) {%>
+                                        <li>
+                                            <a href="/user/buy/list/start/<%= (pageOne-1) * 10 %>,0,0?buyingpageItemOption=Open&openDurationOption=<%= filterParamerOpen %>&pendingDurationOption=1&cancelledDurationOption=1" <% if(pageOne === currentPageNumberOpen) { %>class="current-page"<% } %>>
+                                                <%= pageOne %>
+                                            </a>
+                                        </li>
+                                        <% } %>
+                                        <% if(maxPageCountOpen >= pageTwo) {%>
+                                        <li>
+                                            <a href="/user/buy/list/start/<%= (pageTwo-1) * 10 %>,0,0?buyingpageItemOption=Open&openDurationOption=<%= filterParamerOpen %>&pendingDurationOption=1&cancelledDurationOption=1" <% if(pageTwo === currentPageNumberOpen) { %>class="current-page"<% } %>>
+                                                <%= pageTwo %>
+                                            </a>
+                                        </li>
+                                        <% } %>
+                                        <% if(maxPageCountOpen >= pageThree) {%>
+                                        <li>
+                                            <a href="/user/buy/list/start/<%= (pageThree-1) * 10 %>,0,0?buyingpageItemOption=Open&openDurationOption=<%= filterParamerOpen %>&pendingDurationOption=1&cancelledDurationOption=1" <% if(pageThree === currentPageNumberOpen) { %>class="current-page"<% } %>>
+                                                <%= pageThree %>
+                                            </a>
+                                        </li>
+                                        <% } %>
+                                    </ul>
+                                </nav>
+
+                                <nav class="pagination-next-prev">
+                                    <ul>
+                                        <% if(0 < pageMultipationFactorOpen) {%>
+                                        <li><a href="/user/buy/list/start/<%= (pageMultipationFactorOpen - 1) * 30 %>,0,0?buyingpageItemOption=Open&openDurationOption=<%= filterParamerOpen %>&pendingDurationOption=1&cancelledDurationOption=1" class="prev"></a></li>
+                                        <% } %>
+                                        <% if(maxPageCountOpen >= (pageMultipationFactorOpen * 10) + 4) {%>
+                                        <li><a href="/user/buy/list/start/<%= (pageMultipationFactorOpen + 1) * 30 %>,0,0?buyingpageItemOption=Open&openDurationOption=<%= filterParamerOpen %>&pendingDurationOption=1&cancelledDurationOption=1" class="next"></a></li>
+                                        <% } %>
+                                    </ul>
+                                </nav>
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="three columns">
-                        <div class="two columns" style="float:right">
-                            <form action="/items/id/<%= item.id %>" method="GET">
-                                <input type="submit" style="float: right; width: 100%; padding-right:20px"
-                                       class="item-selling-btn" value="View Details"/>
+                    <div class="tab-content" id="tab2">
+                        <div>
+                            <form action="/user/buy/list/start/0,0,0" method="GET" id="pending_duration_form">
+                                <input type="hidden" name="buyingpageItemOption" value="Open"/>
+                                <input type="hidden" name="openDurationOption" value="1"/>
+                                <input type="hidden" name="cancelledDurationOption" value="1"/>
+                                Your have <%= buyingListPending.rows.length %> orders in
+                                <select class="orderby" name="pendingDurationOption" id="filter_options_pending">
+                                    <% if(filterParamerPending == '1') {%>
+                                    <option selected value="1">Last Month</option>
+                                    <option value="6">Last Six Months</option>
+                                    <option value="12">Last Year</option>
+                                    <option value="0">From Beginning</option>
+                                    <% } %>
+                                    <% if(filterParamerPending == '6') {%>
+                                    <option value="1">Last Month</option>
+                                    <option selected value="6">Last Six Months</option>
+                                    <option value="12">Last Year</option>
+                                    <option value="0">From Beginning</option>
+                                    <% } %>
+                                    <% if(filterParamerPending == '12') {%>
+                                    <option value="1">Last Month</option>
+                                    <option value="6">Last Six Months</option>
+                                    <option selected value="12">Last Year</option>
+                                    <option value="0">From Beginning</option>
+                                    <% } %>
+                                    <% if(filterParamerPending == '0') {%>
+                                    <option value="1">Last Month</option>
+                                    <option value="6">Last Six Months</option>
+                                    <option value="12">Last Year</option>
+                                    <option selected value="0">From Beginning</option>
+                                    <% } %>
+                                </select>
+                                <div class="clearfix"></div>
                             </form>
-                            <% if (bid.status == 'accepted' || bid.status == 'mutual-cancellation-buyer') {%>
-                            <form method="GET" action="/user/buy/contract/id/<%= item.id %>">
-                                <input type="submit" style="float: right; width: 100%; padding-right:20px"
-                                       class="item-selling-btn" value="Contract" />
-                            </form>
+
+                        </div>
+
+                        <div class="fourteen columns products centered">
+
+                            <% for(var itemIndex = 0; itemIndex < buyingListPending.rows.length; itemIndex++) {
+                                var bid = buyingListPending.rows[itemIndex];
+                                var item = buyingListPending.rows[itemIndex].Item;
+                                var itemImage = itemImagesPending[itemIndex];
+                                var maxBid = lastBidPending[itemIndex];
+                                var commodityName = itemDetailsPending[itemIndex].item.name;
+                                var seller = itemDetailsPending[itemIndex].user.username;
+                                var sellerId = itemDetailsPending[itemIndex].user.id;
+                                var formattedStatus = '';
+                                var id = 'Bid Id: '+bid.id;
+                                var formattedTime = bid.updatedAt.split('T')[1].split(".");
+
+                            %>
+                            <!-- Selling Items -->
+                            <div class="item-selling-div fourteen columns">
+                                <div class="item-selling-div">
+                                    <div class="three columns">
+                                        <% if(itemImage != null) {%>
+                                        <img src="uploads/items/<%= itemImage.url %>"/>
+                                        <% } else {%>
+                                        <img src="images/blog-widget-01.png"/>
+                                        <% } %>
+                                    </div>
+                                    <div class="five columns">
+                                        <h3><%= item.title %></h3>
+                                        <p><%= id %><br>
+                                            Commodity Name: <%= commodityName %><br>
+                                            Seller: <a href="/user/public/userId/<%= sellerId %>"> <%= seller %></a><br>
+                                            <% if(remainingTimesPending[itemIndex][0] != 0) {
+                                                var remainingTime = remainingTimesPending[itemIndex][0];
+                                                var numdays = Math.floor(remainingTime / 86400);
+                                                var numhours = Math.floor((remainingTime % 86400) / 3600);
+                                                var numminutes = Math.floor(((remainingTime % 86400) % 3600) / 60);
+                                                var numseconds = Math.floor(((remainingTime % 86400) % 3600) % 60);
+                                                var isAlligibleToBid = true;
+
+                                                var formattedTime = "";
+                                                formattedTime = numdays != 0 ? (formattedTime += numdays + " days ") : formattedTime;
+                                                formattedTime = numhours != 0 ? (formattedTime += numhours + " hrs ") : formattedTime;
+                                                formattedTime = numminutes != 0 ? (formattedTime += numminutes + " mins ") : formattedTime;
+                                                formattedTime = numseconds != 0 ? (formattedTime += numseconds + " secs ") : formattedTime;
+
+                                                if(numdays == 0 && numhours == 0 && numminutes == 0 && numseconds == 0) {
+                                                    isAlligibleToBid = false;
+                                                }
+                                            %>
+                                            <%= 'Time Left: '+formattedTime %> <br>
+                                            Status:  Active Bidding <br>
+                                            <% } else {%>
+                                            <%= 'Bidding Closed At: ' + remainingTimesPending[itemIndex][2] %> <br>
+                                            Status:  Wating for seller to select a bid <br>
+                                            <% } %>
+                                            Last Bid: <%= maxBid.bid %><br>
+                                            Your Last Bid: <%= bid.bid %><br>
+                                        </p>
+                                    </div>
+                                    <% if(remainingTimesPending[itemIndex][0] != 0) {%>
+                                        <div class="two columns">
+                                            <form method="post" action="/api/bid/update/bid">
+
+                                                <fieldset>
+                                                    <input type="hidden" name="id" value="<%= bid.id %>"/>
+                                                    <div class="two columns editform">
+                                                        <input style="width: 80%" name="newbid" type="text" id="newbid" placeholder="Your New Bid" value="<%= bid.bid.split(" ")[0]+" " %>"/>
+                                                    </div>
+
+                                                    <div class="two columns editform">
+                                                        <input type="hidden" value="<%= maxBid.bid %>">
+                                                        <input type="submit" class="submit updatebid" id="submitbid" value="Place Bid"/>
+                                                    </div>
+
+                                                </fieldset>
+
+                                                <div class="clearfix"></div>
+                                            </form>
+                                        </div>
+                                        <div class="three columns">
+                                            <div class="two columns" style="float:right">
+                                                <form action="/items/id/<%= item.id %>" method="GET">
+                                                    <input type="submit" style="float: right; width: 100%; padding-right:20px"
+                                                           class="item-selling-btn" value="View Details"/>
+                                                </form>
+                                                <% if (bid.status == 'open' || bid.status == 'mutual-cancellation-seller') {%>
+                                                <form method="GET" action="/user/buy/contract/id/<%= item.id %>">
+                                                    <input type="hidden" value="<%= bid.id %>" name="bidId"/>
+                                                    <input type="submit" style="float: right; width: 100%; padding-right:20px"
+                                                           class="item-selling-btn" value="Contract" />
+                                                </form>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    <% } else {%>
+                                        <div class="five columns">
+                                            <div class="two columns" style="float:right">
+                                                <form action="/items/id/<%= item.id %>" method="GET">
+                                                    <input type="submit" style="float: right; width: 100%; padding-right:20px"
+                                                           class="item-selling-btn" value="View Details"/>
+                                                </form>
+                                                <% if (bid.status == 'open' || bid.status == 'mutual-cancellation-seller') {%>
+                                                <form method="GET" action="/user/buy/contract/id/<%= item.id %>">
+                                                    <input type="hidden" value="<%= bid.id %>" name="bidId"/>
+                                                    <input type="submit" style="float: right; width: 100%; padding-right:20px"
+                                                           class="item-selling-btn" value="Contract" />
+                                                </form>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    <% } %>
+
+                                </div>
+                            </div>
+
+                            <span class="line" style="margin-top:10px;margin-bottom: 0px"></span><div class="clearfix"></div>
                             <% } %>
+
+
+                            <div class="clearfix"></div>
+
+                            <!-- Pagination -->
+                            <div class="pagination-container">
+                                <nav class="pagination">
+                                    <ul>
+                                        <%
+                                        var pageOne = (pageMultipationFactorPending * 10) + 1;
+                                        var pageTwo = (pageMultipationFactorPending * 10) + 2;
+                                        var pageThree = (pageMultipationFactorPending * 10) + 3;
+                                        %>
+                                        <% if(maxPageCountPending >= pageOne) {%>
+                                        <li>
+                                            <a href="/user/buy/list/start/0,<%= (pageOne-1) * 10 %>,0?buyingpageItemOption=Open&openDurationOption=1&pendingDurationOption=<%= filterParamerPending %>&cancelledDurationOption=1" <% if(pageOne === currentPageNumberPending) { %>class="current-page"<% } %>>
+                                                <%= pageOne %>
+                                            </a>
+                                        </li>
+                                        <% } %>
+                                        <% if(maxPageCountPending >= pageTwo) {%>
+                                        <li>
+                                            <a href="/user/buy/list/start/0,<%= (pageTwo-1) * 10 %>,0?buyingpageItemOption=Open&openDurationOption=1&pendingDurationOption=<%= filterParamerPending %>&cancelledDurationOption=1" <% if(pageTwo === currentPageNumberPending) { %>class="current-page"<% } %>>
+                                                <%= pageTwo %>
+                                            </a>
+                                        </li>
+                                        <% } %>
+                                        <% if(maxPageCountPending >= pageThree) {%>
+                                        <li>
+                                            <a href=user/buy/list/start/0,<%= (pageThree-1) * 10 %>,0?buyingpageItemOption=Open&openDurationOption=1&pendingDurationOption=<%= filterParamerPending %>&cancelledDurationOption=1" <% if(pageThree === currentPageNumberPending) { %>class="current-page"<% } %>>
+                                                <%= pageThree %>
+                                            </a>
+                                        </li>
+                                        <% } %>
+                                    </ul>
+                                </nav>
+
+                                <nav class="pagination-next-prev">
+                                    <ul>
+                                        <% if(0 < pageMultipationFactorPending) {%>
+                                        <li><a href="/user/buy/list/start/0,<%= (pageMultipationFactorPending - 1) * 30 %>,0?buyingpageItemOption=Open&openDurationOption=1&pendingDurationOption=<%= filterParamerPending %>&cancelledDurationOption=1" class="prev"></a></li>
+                                        <% } %>
+                                        <% if(maxPageCountPending >= (pageMultipationFactorPending * 10) + 4) {%>
+                                        <li><a href="/user/buy/list/start/0,<%= (pageMultipationFactorPending + 1) * 30 %>,0?buyingpageItemOption=Open&openDurationOption=1&pendingDurationOption=<%= filterParamerPending %>&cancelledDurationOption=1" class="next"></a></li>
+                                        <% } %>
+                                    </ul>
+                                </nav>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tab-content" id="tab3">
+                        <div>
+                            <form action="/user/buy/list/start/0,0,0" method="GET" id="cancelled_duration_form">
+                                <input type="hidden" name="buyingpageItemOption" value="Cancelled"/>
+                                <input type="hidden" name="openDurationOption" value="1"/>
+                                <input type="hidden" name="pendingDurationOption" value="1"/>
+                                Your have <%= buyingListCancelled.rows.length %> orders in
+                                <select class="orderby" name="pendingDurationOption" id="filter_options_cancelled">
+                                    <% if(filterParamerCancelled == '1') {%>
+                                    <option selected value="1">Last Month</option>
+                                    <option value="6">Last Six Months</option>
+                                    <option value="12">Last Year</option>
+                                    <option value="0">From Beginning</option>
+                                    <% } %>
+                                    <% if(filterParamerCancelled == '6') {%>
+                                    <option value="1">Last Month</option>
+                                    <option selected value="6">Last Six Months</option>
+                                    <option value="12">Last Year</option>
+                                    <option value="0">From Beginning</option>
+                                    <% } %>
+                                    <% if(filterParamerCancelled == '12') {%>
+                                    <option value="1">Last Month</option>
+                                    <option value="6">Last Six Months</option>
+                                    <option selected value="12">Last Year</option>
+                                    <option value="0">From Beginning</option>
+                                    <% } %>
+                                    <% if(filterParamerCancelled == '0') {%>
+                                    <option value="1">Last Month</option>
+                                    <option value="6">Last Six Months</option>
+                                    <option value="12">Last Year</option>
+                                    <option selected value="0">From Beginning</option>
+                                    <% } %>
+                                </select>
+                                <div class="clearfix"></div>
+                            </form>
+
+                        </div>
+
+                        <div class="fourteen columns products centered">
+
+                            <% for(var itemIndex = 0; itemIndex < buyingListCancelled.rows.length; itemIndex++) {
+                                var bid = buyingListCancelled.rows[itemIndex];
+                                var item = buyingListCancelled.rows[itemIndex].Item;
+                                var itemImage = itemImagesCancelled[itemIndex];
+                                var maxBid = lastBidCancelled[itemIndex];
+                                var commodityName = itemDetailsCancelled[itemIndex].item.name;
+                                var seller = itemDetailsCancelled[itemIndex].user.username;
+                                var sellerId = itemDetailsCancelled[itemIndex].user.id;
+                                var formattedStatus = '';
+                                var id = 'Bid Id: '+bid.id;
+                                if(bid.status == 'mutual-cancellation-seller' || bid.status == 'mutual-cancellation-buyer' || bid.status == 'mutual-cancellation-all') {
+                                    formattedStatus = 'Mutual Decision';
+                                    id = 'Contract Id: CI'+bid.id;
+                                }
+
+                            %>
+                            <!-- Selling Items -->
+                            <div class="item-selling-div fourteen columns">
+                                <div class="item-selling-div">
+                                    <div class="three columns">
+                                        <% if(itemImage != null) {%>
+                                        <img src="uploads/items/<%= itemImage.url %>"/>
+                                        <% } else {%>
+                                        <img src="images/blog-widget-01.png"/>
+                                        <% } %>
+                                    </div>
+                                    <div class="five columns">
+                                        <h3><%= item.title %></h3>
+                                        <p><%= id %><br>
+                                            Commodity Name: <%= commodityName %><br>
+                                            Seller: <a href="/user/public/userId/<%= sellerId %>"> <%= seller %></a><br>
+                                            Status: <%= formattedStatus %><br>
+                                            Your Last Bid: <%= bid.bid %><br>
+                                            <% if(remainingTimesCancelled[itemIndex][0] != 0) {
+                                                var remainingTime = remainingTimesCancelled[itemIndex][0];
+                                                var numdays = Math.floor(remainingTime / 86400);
+                                                var numhours = Math.floor((remainingTime % 86400) / 3600);
+                                                var numminutes = Math.floor(((remainingTime % 86400) % 3600) / 60);
+                                                var numseconds = Math.floor(((remainingTime % 86400) % 3600) % 60);
+
+                                                var formattedTime = "";
+                                                formattedTime = numdays != 0 ? (formattedTime += numdays + " days ") : formattedTime;
+                                                formattedTime = numhours != 0 ? (formattedTime += numhours + " hrs ") : formattedTime;
+                                                formattedTime = numminutes != 0 ? (formattedTime += numminutes + " mins ") : formattedTime;
+                                                formattedTime = numseconds != 0 ? (formattedTime += numseconds + " secs ") : formattedTime;
+                                            %>
+                                            <%= 'Time Left: '+formattedTime %>
+                                            <% } else {%>
+                                            <%= 'Bidding Closed At: ' + remainingTimesCancelled[itemIndex][2] %>
+                                            <% } %></p>
+                                    </div>
+
+                                    <div class="five columns">
+                                        <div class="two columns" style="float:right">
+                                            <form action="/items/id/<%= item.id %>" method="GET">
+                                                <input type="submit" style="float: right; width: 100%; padding-right:20px"
+                                                       class="item-selling-btn" value="View Details"/>
+                                            </form>
+                                            <% if (bid.status == 'open' || bid.status == 'mutual-cancellation-seller') {%>
+                                            <form method="GET" action="/user/buy/contract/id/<%= item.id %>">
+                                                <input type="hidden" value="<%= bid.id %>" name="bidId"/>
+                                                <input type="submit" style="float: right; width: 100%; padding-right:20px"
+                                                       class="item-selling-btn" value="Contract" />
+                                            </form>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <span class="line" style="margin-top:10px;margin-bottom: 0px"></span><div class="clearfix"></div>
+                            <% } %>
+
+
+                            <div class="clearfix"></div>
+
+                            <!-- Pagination -->
+                            <div class="pagination-container">
+                                <nav class="pagination">
+                                    <ul>
+                                        <%
+                                        var pageOne = (pageMultipationFactorCancelled * 10) + 1;
+                                        var pageTwo = (pageMultipationFactorCancelled * 10) + 2;
+                                        var pageThree = (pageMultipationFactorCancelled * 10) + 3;
+                                        %>
+                                        <% if(maxPageCountCancelled >= pageOne) {%>
+                                        <li>
+                                            <a href="/user/buy/list/start/0,0,<%= (pageOne-1) * 10 %>?buyingpageItemOption=Open&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=<%= filterParamerCancelled %>" <% if(pageOne === currentPageNumberCancelled) { %>class="current-page"<% } %>>
+                                                <%= pageOne %>
+                                            </a>
+                                        </li>
+                                        <% } %>
+                                        <% if(maxPageCountCancelled >= pageTwo) {%>
+                                        <li>
+                                            <a href="/user/buy/list/start/0,0,<%= (pageTwo-1) * 10 %>?buyingpageItemOption=Open&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=<%= filterParamerCancelled %>" <% if(pageTwo === currentPageNumberCancelled) { %>class="current-page"<% } %>>
+                                                <%= pageTwo %>
+                                            </a>
+                                        </li>
+                                        <% } %>
+                                        <% if(maxPageCountCancelled >= pageThree) {%>
+                                        <li>
+                                            <a href=user/buy/list/start/0,0,<%= (pageThree-1) * 10 %>?buyingpageItemOption=Open&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=<%= filterParamerCancelled %>" <% if(pageThree === currentPageNumberCancelled) { %>class="current-page"<% } %>>
+                                                <%= pageThree %>
+                                            </a>
+                                        </li>
+                                        <% } %>
+                                    </ul>
+                                </nav>
+
+                                <nav class="pagination-next-prev">
+                                    <ul>
+                                        <% if(0 < pageMultipationFactorCancelled) {%>
+                                        <li><a href="/user/buy/list/start/0,0,<%= (pageMultipationFactorCancelled - 1) * 30 %>?buyingpageItemOption=Open&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=<%= filterParamerCancelled %>" class="prev"></a></li>
+                                        <% } %>
+                                        <% if(maxPageCountCancelled >= (pageMultipationFactorCancelled * 10) + 4) {%>
+                                        <li><a href="/user/buy/list/start/0,0,<%= (pageMultipationFactorCancelled + 1) * 30 %>,0?buyingpageItemOption=Open&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=<%= filterParamerCancelled %>" class="next"></a></li>
+                                        <% } %>
+                                    </ul>
+                                </nav>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
-
-            <span class="line" style="margin-top:10px;margin-bottom: 0px"></span><div class="clearfix"></div>
-            <% } %>
-
-
-            <div class="clearfix"></div>
-
-            <!-- Pagination -->
-            <div class="pagination-container">
-                <nav class="pagination">
-                    <ul>
-                        <%
-                        var pageOne = (pageMultipationFactor * 10) + 1;
-                        var pageTwo = (pageMultipationFactor * 10) + 2;
-                        var pageThree = (pageMultipationFactor * 10) + 3;
-                        %>
-                        <% if(maxPageCount >= pageOne) {%>
-                        <li>
-                            <a href="http://localhost:3000/user/sell/list/start/<%= (pageOne-1) * 10 %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
-                                <%= pageOne %>
-                            </a>
-                        </li>
-                        <% } %>
-                        <% if(maxPageCount >= pageTwo) {%>
-                        <li>
-                            <a href="http://localhost:3000/user/sell/list/start/<%= (pageTwo-1) * 10 %>" <% if(pageTwo === currentPageNumber) { %>class="current-page"<% } %>>
-                                <%= pageTwo %>
-                            </a>
-                        </li>
-                        <% } %>
-                        <% if(maxPageCount >= pageThree) {%>
-                        <li>
-                            <a href="http://localhost:3000/user/sell/list/start/<%= (pageThree-1) * 10 %>" <% if(pageThree === currentPageNumber) { %>class="current-page"<% } %>>
-                                <%= pageThree %>
-                            </a>
-                        </li>
-                        <% } %>
-                    </ul>
-                </nav>
-
-                <nav class="pagination-next-prev">
-                    <ul>
-                        <% if(0 < pageMultipationFactor) {%>
-                        <li><a href="http://localhost:3000/user/sell/list/start/<%= (pageMultipationFactor - 1) * 30 %>" class="prev"></a></li>
-                        <% } %>
-                        <% if(maxPageCount >= (pageMultipationFactor * 10) + 4) {%>
-                        <li><a href="http://localhost:3000/user/sell/list/start/<%= (pageMultipationFactor + 1) * 30 %>" class="next"></a></li>
-                        <% } %>
-                    </ul>
-                </nav>
-            </div>
-
         </div>
+
+
 
     </div>
 
@@ -281,95 +610,7 @@
 
     <!-- Footer
     ================================================== -->
-    <div id="footer">
-
-        <!-- Container -->
-        <div class="container">
-
-            <div class="four columns">
-                <img src="images/logo-footer.png" alt="" class="margin-top-10"/>
-                <p class="margin-top-15">Nulla facilisis feugiat magna, ut molestie metus hendrerit vitae. Vivamus
-                    tristique lectus at varius rutrum. Integer lobortis mauris non consectetur eleifend.</p>
-            </div>
-
-            <div class="four columns">
-
-                <!-- Headline -->
-                <h3 class="headline footer">Customer Service</h3>
-                <span class="line"></span>
-                <div class="clearfix"></div>
-
-                <ul class="footer-links">
-                    <li><a href="#">Order Status</a></li>
-                    <li><a href="#">Payment Methods</a></li>
-                    <li><a href="#">Delivery & Returns</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
-                </ul>
-
-            </div>
-
-            <div class="four columns">
-
-                <!-- Headline -->
-                <h3 class="headline footer">My Account</h3>
-                <span class="line"></span>
-                <div class="clearfix"></div>
-
-                <ul class="footer-links">
-                    <li><a href="#">My Account</a></li>
-                    <li><a href="#">Order History</a></li>
-                    <li><a href="#">Wish List</a></li>
-                </ul>
-
-            </div>
-
-            <div class="four columns">
-
-                <!-- Headline -->
-                <h3 class="headline footer">Newsletter</h3>
-                <span class="line"></span>
-                <div class="clearfix"></div>
-                <p>Sign up to receive email updates on new product announcements, gift ideas, special promotions, sales
-                    and more.</p>
-
-                <form action="#" method="get">
-                    <button class="newsletter-btn" type="submit">Join</button>
-                    <input class="newsletter" type="text" placeholder="mail@example.com" value=""/>
-                </form>
-            </div>
-
-        </div>
-        <!-- Container / End -->
-
-    </div>
-    <!-- Footer / End -->
-
-    <!-- Footer Bottom / Start -->
-    <div id="footer-bottom">
-
-        <!-- Container -->
-        <div class="container">
-
-            <div class="eight columns">© Copyright 2014 by <a href="#">trizzy</a>. All Rights Reserved.</div>
-            <div class="eight columns">
-                <ul class="payment-icons">
-                    <li><img src="images/visa.png" alt=""/></li>
-                    <li><img src="images/mastercard.png" alt=""/></li>
-                    <li><img src="images/skrill.png" alt=""/></li>
-                    <li><img src="images/moneybookers.png" alt=""/></li>
-                    <li><img src="images/paypal.png" alt=""/></li>
-                </ul>
-            </div>
-
-        </div>
-        <!-- Container / End -->
-
-    </div>
-    <!-- Footer Bottom / End -->
-
-    <!-- Back To Top Button -->
-    <div id="backtotop"><a href="#"></a></div>
+    <% include footer.ejs %>
 
 </div>
 
@@ -377,6 +618,7 @@
 <!-- Java Script
 ================================================== -->
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="scripts/views/useraccountbuying.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="scripts/jquery.jpanelmenu.js"></script>
 <script src="scripts/jquery.themepunch.plugins.min.js"></script>
@@ -399,15 +641,6 @@
 <script src="scripts/puregrid.js"></script>
 <script src="scripts/stacktable.js"></script>
 <script src="scripts/custom.js"></script>
-<script src="scripts/views/useraccountselling.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
-
-<script>
-    $(document).ready(function() {
-        $("#from").datepicker();
-        $("#to").datepicker();
-    });
-</script>
 
 </body>
 </html>
