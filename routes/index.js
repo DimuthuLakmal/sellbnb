@@ -827,6 +827,7 @@ router.get('/items/add', function (req, res) {
         var warehouses = req.session.warehouses;
         var measureUnits = req.session.measureUnits;
         var priceUnits = req.session.priceUnits;
+        var packingTypes = req.session.packingTypes;
         var commodityName = req.session.commodityName;
 
         //check whether warehouses session is set
@@ -863,6 +864,7 @@ router.get('/items/add', function (req, res) {
         delete req.session.returnToCommodityName;
         delete req.session.priceUnits;
         delete req.session.measureUnits;
+        delete req.session.packingTypes;
         delete req.session.warehouses;
         delete req.session.notifications;
         delete req.session.previewImages;
@@ -873,6 +875,7 @@ router.get('/items/add', function (req, res) {
             WareHouses: warehouses,
             measureUnits: measureUnits,
             priceUnits: priceUnits,
+            packingTypes: packingTypes,
             commodityName: commodityName,
             commodityNames: commodityNames,
             notifications: notifications,

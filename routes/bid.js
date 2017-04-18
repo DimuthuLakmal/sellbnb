@@ -47,7 +47,7 @@ router.post('/add', function (req, res) {
                 packageType: packingType,
                 paymentTerms: paymentTerms,
                 note: buyerNote,
-                status: 'open',
+                status: 'pending',
                 ItemId: itemId,
                 UserId: UserId,
             }).then(function (insertedBidding) {

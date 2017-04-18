@@ -125,9 +125,15 @@
 
                         </div>
 
-                        <div class="twelve alpha columns editform">
-                            <label>Packing Type : </label>
-                            <input name="packing_type" type="text" id="packing_type"/>
+                        <div class="thirteen alpha columns editform">
+                            <div class="twelve columns bidform" style="margin-left: 0px;">
+                                <label for="packing_type">Packing Type : </label>
+                                <select id="packing_type" name="packing_type">
+                                    <% for(var packingIndex = 0; packingIndex < packingTypes.length; packingIndex++) { %>
+                                        <option value="<%= packingTypes[packingIndex].type %>"><%= packingTypes[packingIndex].type %></option>
+                                    <% } %>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="twelve alpha columns editform">

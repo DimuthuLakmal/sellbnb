@@ -311,7 +311,11 @@
 
                                 <div class="twelve alpha columns bidform">
                                     <label>Packing Type : </label>
-                                    <input name="packing_type" type="text" id="packing_type"/>
+                                    <select name="packing_type" id="packing_type">
+                                        <% for(var packingIndex = 0; packingIndex < item.packingTypes.length; packingIndex++) { %>
+                                        <option value="<%= item.packingTypes[packingIndex].type %>"><%= item.packingTypes[packingIndex].type %></option>
+                                        <% } %>
+                                    </select>
                                 </div>
 
                                 <div class="twelve alpha columns bidform">

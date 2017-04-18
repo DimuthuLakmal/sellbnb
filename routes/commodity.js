@@ -20,6 +20,7 @@ router.post('/add', function (req, res, next) {
     var alternativeNames = req.body.alternativeNames;
     var measureUnits = req.body.measureUnits;
     var priceUnits = req.body.priceUnits;
+    var packingTypes = req.body.packingType;
 
     console.log(parameters);
 
@@ -87,6 +88,15 @@ router.post('/add', function (req, res, next) {
                 _.forEach(priceUnits, function(priceUnit, index) {
                     CommodityPriceUnit.create({
                         unitName : priceUnit,
+                        CommodityId: insertedCommodityId,
+                    });
+                });
+            }).then(function () {
+                //store commodity measureUnits
+                var CommodityPacking = models.CommodityPacking;
+                _.forEach(packingTypes, function(packingType, index) {
+                    CommodityPacking.create({
+                        type : packingType,
                         CommodityId: insertedCommodityId,
                     });
                 });
@@ -162,6 +172,7 @@ router.get('/measureUnits/id/:id', function (req, res) {
         function () {
             var CommodityMeasureUnit = models.CommodityMeasureUnit;
             var CommodityPriceUnit = models.CommodityPriceUnit;
+            var CommodityPacking = models.CommodityPacking;
             CommodityMeasureUnit.findAll({
                 where: {CommodityId: req.params.id},
             }).then(function (measureUnits) {
@@ -173,7 +184,14 @@ router.get('/measureUnits/id/:id', function (req, res) {
                 }).then(function (priceUnits) {
                     //saving commodity measure units
                     req.session.priceUnits = priceUnits;
-                    res.redirect('/items/add');
+
+                    CommodityPacking.findAll({
+                        where: {CommodityId: req.params.id},
+                    }).then(function (packingTypes) {
+                        req.session.packingTypes = packingTypes;
+                        res.redirect('/items/add');
+                    });
+
                 });
             });
         }

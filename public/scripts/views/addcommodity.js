@@ -52,12 +52,13 @@ $('#submit').click(function (e) {
     var alternativeNames = $('#alternative_names').val().split(',');
     var measureUnits = $('#alternative_names').val().split(',');
     var priceUnits = priceUnit.split(',');
+    var packingType = $('#packing_type').val().split(',');
 
     $.ajax({url: "http://localhost:3000/api/commodity/add",
         type: 'POST',
         data: {name: name, segment: segment, family: family, classOfCommodity: classOfCommodity,measureUnit: measureUnit,
             specification: specification, images: images, alternativeNames: alternativeNames, parameters: parameters,
-            measureUnits: measureUnits, priceUnits: priceUnits},
+            measureUnits: measureUnits, priceUnits: priceUnits, packingType: packingType},
         success: function(data, status, xhr) {
             if(status == 'success') {
                 $('#message_success').show();
