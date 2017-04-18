@@ -178,20 +178,20 @@ router.get('/start/:start/itemId/:itemId', function (req, res) {
 /* Update bid status */
 /* Usage: View Bidding Details Page in Seller. */
 router.post('/update/status', function (req, res) {
-    updateStatus(req, res, 'http://localhost:3000/user/sell/bids/start/0?itemId='+req.body.itemId);
+    updateStatus(req, res, '/user/sell/bids/start/0?itemId='+req.body.itemId);
 });
 
 
 /* Update bid status */
 /* Usage: buyercontract page to mutual cancellation the bid */
 router.post('/updatecontract/status', function (req, res) {
-    updateStatus(req, res, 'http://localhost:3000/user/buy/contract/id/'+req.body.itemId);
+    updateStatus(req, res, '/user/buy/contract/id/'+req.body.itemId);
 });
 
 /* Update bid status */
 /* Usage: sellercontract page to mutual cancellation the bid */
 router.post('/updatesellcontract/status', function (req, res) {
-    updateStatus(req, res, 'http://localhost:3000/user/sell/contract/bidId/'+req.body.bidId);
+    updateStatus(req, res, '/user/sell/contract/bidId/'+req.body.bidId);
 });
 
 
@@ -517,12 +517,13 @@ router.get('/contract/userId/:userId/bidId/:bidId/itemId/:itemId', function (req
     var userId = req.params.userId;
     var bidId = req.params.bidId;
     var itemId = req.params.itemId;
-    console.log(bidId);
 
     //retrieve data from req object
     sequelize.sync().then(
         function () {
             var Bidding = models.Bidding;
+            var Item = models.Item;
+            var WareHouse = models.WareHouse;
             var User = models.User;
             Bidding.findAll({
                 where: {id: bidId, UserId: userId},
@@ -530,7 +531,14 @@ router.get('/contract/userId/:userId/bidId/:bidId/itemId/:itemId', function (req
             }).then(function (Biddings) {
                 req.session.buyContractBid = Biddings[0];
                 req.session.contractDate = moment(Biddings[0].updatedAt).format('YYYY-MM-DD HH:mm:ss');
-                res.redirect('/user/buy/contract/id/'+itemId);
+                Item.findAll({
+                    where: {id: itemId},
+                    include: [WareHouse],
+                }).then(function (Items) {
+                    req.session.buyContractWareHouse = Items[0].dataValues.WareHouse;
+                    res.redirect('/user/buy/contract/id/'+itemId+'?bidId='+bidId);
+                })
+
             });
         }
     );
@@ -546,13 +554,22 @@ router.get('/sellcontract/bidId/:bidId', function (req, res) {
         function () {
             var Bidding = models.Bidding;
             var User = models.User;
+            var WareHouse = models.WareHouse;
             Bidding.findAll({
                 where: {id: bidId},
                 include: [User],
             }).then(function (Biddings) {
-                req.session.sellContractBid = Biddings[0];
-                req.session.contractDate = moment(Biddings[0].updatedAt).format('YYYY-MM-DD HH:mm:ss');
-                res.redirect('/api/items/sellcontract/id/'+Biddings[0].ItemId+'/bidId/'+bidId);
+                var bidding = Biddings[0].dataValues;
+                WareHouse.findAll({
+                    where: {
+                        id: bidding.WareHouseId,
+                    }
+                }).then(function (WareHouses) {
+                    req.session.sellContractWareHouse = WareHouses[0];
+                    req.session.sellContractBid = Biddings[0];
+                    req.session.contractDate = moment(Biddings[0].updatedAt).format('YYYY-MM-DD HH:mm:ss');
+                    res.redirect('/api/items/sellcontract/id/'+Biddings[0].ItemId+'/bidId/'+bidId);
+                });
             });
         }
     );
@@ -563,7 +580,7 @@ function updateStatus(req, res, redirectRoute) {
     var bidId = req.body.bidId;
     var status = req.body.status;
     var itemId = req.body.itemId;
-
+    
     sequelize.sync().then(
         function () {
             var Bidding = models.Bidding;
@@ -578,6 +595,7 @@ function updateStatus(req, res, redirectRoute) {
                         { where: {
                                 ItemId: itemId,
                                 id: {$ne: bidId},
+                                status: 'pending',
                             }
                         }
                     ).then(function (results_2) {
@@ -597,15 +615,40 @@ function updateStatus(req, res, redirectRoute) {
                         });
                     });
                 } else {
-                    if(req.body.requestFrom == 'Seller') {
-                        res.redirect('/api/notification/add/mutual/type/mutual-cancellation-seller/bidId/'+req.body.bidId+'/itemName/'+
-                            req.body.itemName+'/itemId/'+req.body.itemId+'/userId/'+req.body.userId+'/requestFrom/seller');
-                    } else if(req.body.requestFrom == 'Buyer') {
-                        res.redirect('/api/notification/add/mutual/type/mutual-cancellation-buyer/bidId/'+req.body.bidId+'/itemName/'+
-                            req.body.itemName+'/itemId/'+req.body.itemId+'/userId/'+req.body.userId+'/requestFrom/buyer');
-                    } else {
-                        res.redirect(redirectRoute);
-                    }
+
+                    Bidding.findAll({
+                        where:{
+                            status:'open',
+                            ItemId: itemId,
+                        }
+                    }).then(function (Biddings) {
+                        if(Biddings.length == 0) {
+                            Item.update(
+                                {status: status},
+                                {where: {id: itemId}}
+                            ).then(function (results) {
+                                if(req.body.requestFrom == 'Seller') {
+                                    res.redirect('/api/notification/add/mutual/type/mutual-cancellation-seller/bidId/'+req.body.bidId+'/itemName/'+
+                                        req.body.itemName+'/itemId/'+req.body.itemId+'/userId/'+req.body.userId+'/requestFrom/seller');
+                                } else if(req.body.requestFrom == 'Buyer') {
+                                    res.redirect('/api/notification/add/mutual/type/mutual-cancellation-buyer/bidId/'+req.body.bidId+'/itemName/'+
+                                        req.body.itemName+'/itemId/'+req.body.itemId+'/userId/'+req.body.userId+'/requestFrom/buyer');
+                                } else {
+                                    res.redirect(redirectRoute);
+                                }
+                            });
+                        } else{
+                            if(req.body.requestFrom == 'Seller') {
+                                res.redirect('/api/notification/add/mutual/type/mutual-cancellation-seller/bidId/'+req.body.bidId+'/itemName/'+
+                                    req.body.itemName+'/itemId/'+req.body.itemId+'/userId/'+req.body.userId+'/requestFrom/seller');
+                            } else if(req.body.requestFrom == 'Buyer') {
+                                res.redirect('/api/notification/add/mutual/type/mutual-cancellation-buyer/bidId/'+req.body.bidId+'/itemName/'+
+                                    req.body.itemName+'/itemId/'+req.body.itemId+'/userId/'+req.body.userId+'/requestFrom/buyer');
+                            } else {
+                                res.redirect(redirectRoute);
+                            }
+                        }
+                    });
                 }
             });
         }

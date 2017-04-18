@@ -84,7 +84,7 @@
                     <tbody>
                     <tr>
                         <td> Contract ID</td>
-                        <td> 222225155</td>
+                        <td> CI<%= sellContractBid.id %></td>
                     </tr>
                     <tr>
                         <td> Contract Date</td>
@@ -92,7 +92,20 @@
                     </tr>
                     <tr>
                         <td> Status</td>
-                        <td> <%= sellContractBid.status %></td>
+                        <% if(sellContractBid.status == 'open') {%>
+                        <td> Contract Created </td>
+                        <%} else {
+                            var formattedStatus = '';
+                            if(sellContractBid.status == 'mutual-cancellation-seller') {
+                                formattedStatus = 'Mutual Cancellation By You';
+                            } else if(sellContractBid.status == 'mutual-cancellation-buyer') {
+                                formattedStatus = 'Mutual Cancellation By Buyer';
+                            } else {
+                                formattedStatus = 'Mutual Cancellation';
+                            }
+                        %>
+                        <td> <%= formattedStatus %> </td>
+                        <% } %>
                     </tr>
                     <tr>
                         <td> Commodity Name</td>
@@ -110,33 +123,38 @@
                         <td>Delivery By</td>
                         <td> <%= sellContractBid.deliveryBy %></td>
                     </tr>
-                    <tr>
-                        <td>Delivery Date</td>
-                        <td> 14th July 2016</td>
-                    </tr>
-                    <tr>
-                        <td>Buyer Address</td>
-                        <td> <%= sellContractBid.deliveryBy %></td>
-                    </tr>
+                    <% if(sellContractBid.deliveryBy == 'Buyer') {%>
+                        <tr>
+                            <td> Delivery Cost</td>
+                            <td> <%= sellContractBid.deliveryCost %></td>
+                        </tr>
+                        <tr>
+                            <td> Delivery Date</td>
+                            <td> <%= sellContractBid.deliveryDate %></td>
+                        </tr>
+                    <% } %>
+                    <% if(sellContractBid.deliveryBy == 'Seller') {%>
+                        <tr>
+                            <td>Buyer Address</td>
+                            <%
+                                var formattedAddress = "";
+                                formattedAddress = (warehouse.warehouseAddress1 != null && warehouse.warehouseAddress1 != undefined) ?
+                                        warehouse.warehouseAddress1 : formattedAddress;
+                                formattedAddress = (warehouse.warehouseAddress2 != null && warehouse.warehouseAddress2 != undefined) ?
+                                formattedAddress + ", " +warehouse.warehouseAddress2 : formattedAddress;
+                                formattedAddress = (warehouse.warehouseCity != null && warehouse.warehouseCity != undefined) ?
+                                formattedAddress + ", " +warehouse.warehouseCity : formattedAddress;
+                            %>
+                            <td> <%= formattedAddress %></td>
+                        </tr>
+                    <% } %>
                     <tr>
                         <td> Payment Terms</td>
                         <td><%= sellContractBid.paymentTerms %></td>
                     </tr>
                     <tr>
-                        <td> Delivery Cost</td>
-                        <td> <%= sellContractBid.deliveryCost %></td>
-                    </tr>
-                    <tr>
-                        <td> Delivery Date</td>
-                        <td> <%= sellContractBid.deliveryDate %></td>
-                    </tr>
-                    <tr>
                         <td> Agreed Price</td>
                         <td> <%= sellContractBid.bid %></td>
-                    </tr>
-                    <tr>
-                        <td>Grand Total</td>
-                        <td>LKR 217,000.00</td>
                     </tr>
                     <tr>
                         <td>Seller Note</td>
@@ -154,7 +172,7 @@
                    style="color:#2db2ea; display: none">Action Modal</a><br/>
                 <div id="fullname-edit-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
                     <h2 class="margin-bottom-10" id="action-heading">Mutual Cancellation Request</h2>
-                    <form method="POST" name="editform" action="http://localhost:3000/api/bid/updatesellcontract/status">
+                    <form method="POST" name="editform" action="/api/bid/updatesellcontract/status">
                         <p id="action-description">Are you sure to request to cancel the contract?</p>
                         <fieldset>
                             <div class="twelve columns editform">
@@ -176,10 +194,8 @@
                 </div>
                 <% if (sellContractBid.status == 'mutual-cancellation-buyer') { %>
                     <button id="mutual_cancellation_btn" style="width: 100%" class="item-selling-btn">Accept Mutual Cancellation Request</button>
-                <% } else if (sellContractBid.status == 'mutual-cancellation-seller' || sellContractBid.status == 'mutual-cancellation-all') { %>
-                    <button id="mutual_cancellation_btn" style="width: 100%" class="item-selling-btn" disabled>Request Mutual Cancellation Request</button>
-                <% } else { %>
-                    <button id="mutual_cancellation_btn" style="width: 100%" class="item-selling-btn">Request Mutual Cancellation Request</button>
+                <% } else if (sellContractBid.status == 'open') { %>
+                    <button id="mutual_cancellation_btn" style="width: 100%" class="item-selling-btn">Request Mutual Cancellation</button>
                 <% } %>
             </div>
         </div>

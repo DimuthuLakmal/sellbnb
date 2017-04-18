@@ -17,9 +17,9 @@ router.get('/add/mutual/type/:type/bidId/:bidId/itemName/:itemName/itemId/:itemI
     var url = ''
     if (req.params.requestFrom == 'seller') {
         redirection = '/user/sell/contract/bidId/'+req.params.bidId;
-        url = '/user/buy/contract/id/'+req.params.itemId;
+        url = '/user/buy/contract/id/'+req.params.itemId+'?bidId='+req.params.bidId;
     } else {
-        redirection = '/user/buy/contract/id/'+req.params.itemId;
+        redirection = '/user/buy/contract/id/'+req.params.itemId+'?bidId='+req.params.bidId;
         url = '/user/sell/contract/bidId/'+req.params.bidId;
     }
     var description = 'Mutual Cancellation Request for item '+req.params.itemName;

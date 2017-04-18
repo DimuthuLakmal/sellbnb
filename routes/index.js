@@ -1559,18 +1559,9 @@ router.get('/user/buy/contract/id/:id', function (req, res) {
         var itemId = req.params.id;
         var buyContractItem = req.session.buyContractItem;
         var buyContractBid = req.session.buyContractBid;
+        var warehouse = req.session.buyContractWareHouse;
         var contractDate = req.session.contractDate;
         req.session.bidIdContract = req.query['bidId'];
-
-        //check whether contractedItem session is set
-        if (buyContractItem === null || buyContractItem === undefined) {
-            res.redirect('/api/items/contract/id/' + itemId);
-        }
-
-        //check whether contractBid session is set
-        if (buyContractBid === null || buyContractBid === undefined) {
-            res.redirect('/api/bid/contract/userId/' + user.id + '/bidId/' + req.session.bidIdContract+'/itemId/'+itemId);
-        }
 
         //this will be needed to populate commodity names in top menu
         var commodityNames = req.session.commodityNames
@@ -1588,15 +1579,27 @@ router.get('/user/buy/contract/id/:id', function (req, res) {
             }
         }
 
+        //check whether contractedItem session is set
+        if (buyContractItem === null || buyContractItem === undefined) {
+            res.redirect('/api/items/contract/id/' + itemId);
+        }
+
+        //check whether contractBid session is set
+        if (buyContractBid === null || buyContractBid === undefined) {
+            res.redirect('/api/bid/contract/userId/' + user.id + '/bidId/' + req.session.bidIdContract+'/itemId/'+itemId);
+        }
+
         req.session.buyContractItem = null;
         req.session.buyContractBid = null;
         req.session.contractDate = null;
         delete req.session.returnTo;
         delete req.session.notifications;
         delete req.session.bidIdContract;
+        delete req.session.buyContractWareHouse;
         res.render('buyercontract', {
             isAuthenticated: req.isAuthenticated(),
             user: user,
+            warehouse: warehouse,
             buyContractItem: buyContractItem,
             buyContractBid: buyContractBid,
             commodityNames: commodityNames,
@@ -1620,6 +1623,7 @@ router.get('/user/sell/contract/bidId/:bidId', function (req, res) {
         var bidId = req.params.bidId;
         var sellContractItem = req.session.buyContractItem;
         var sellContractBid = req.session.sellContractBid;
+        var warehouse = req.session.sellContractWareHouse;
         var contractDate = req.session.contractDate;
 
         // //check whether contractedItem session is set
@@ -1662,6 +1666,7 @@ router.get('/user/sell/contract/bidId/:bidId', function (req, res) {
             commodityNames: commodityNames,
             notifications: notifications,
             contractDate: contractDate,
+            warehouse: warehouse,
         });
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
