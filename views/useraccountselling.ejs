@@ -156,7 +156,7 @@
                                             %>
                                             <%= 'Time Left: '+formattedTime %><br>
                                             <% } else {%>
-                                            <%= 'Bidding Closed At: ' + remainingTimes[itemIndex][2] %><br>
+                                            <%= 'Bidding Closed At: ' + remainingTimesOpen[itemIndex][2] %><br>
                                             <% } %>
                                             Listed Date: <%= item.createdAt.split('T')[0]+" "+formattedCreatedTime[0] %><br>
                                         </p>
@@ -333,7 +333,7 @@
                                             <%= 'Time Left: '+formattedTime %><br>
                                             Status:  Active Bidding <br>
                                             <% } else {%>
-                                            <%= 'Bidding Closed At: ' + remainingTimes[itemIndex][2] %><br>
+                                            <%= 'Bidding Closed At: ' + remainingTimesPending[itemIndex][2] %><br>
                                             Status:  Select the winning bid<br>
                                             <% } %>
                                             Listed Date: <%= item.createdAt.split('T')[0]+" "+formattedCreatedTime[0] %><br>
@@ -508,7 +508,7 @@
                                             %>
                                             <%= 'Time Left: '+formattedTime %><br>
                                             <% } else {%>
-                                            <%= 'Bidding Closed At: ' + remainingTimes[itemIndex][2] %><br>
+                                            <%= 'Bidding Closed At: ' + remainingTimesCancelled[itemIndex][2] %><br>
                                             <% } %>
                                             Listed Date: <%= item.createdAt.split('T')[0]+" "+formattedCreatedTime[0] %><br>
                                         </p>
