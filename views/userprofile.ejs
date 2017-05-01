@@ -150,6 +150,33 @@
                         </tr>
 
                     </table>
+                    <div class="row" align="right">
+                        <a href="#message-dialog" class="popup-with-zoom-anim button color margin-left-0">Send Message</a>
+                    </div>
+                    <div id="message-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
+                        <h3 class="headline">Send Message</h3><span class="line margin-bottom-25"></span>
+                        <div class="clearfix"></div>
+
+                        <!-- Form -->
+                        <form id="add-comment" class="add-comment" action="/api/messages/add" method="POST">
+                            <fieldset>
+                                <input type="hidden" name="receiverUserIdFk" value="<%= userPublicInformation.id %>"/>
+                                <input type="hidden" name="senderUserIdFk" value="<%= user.id %>"/>
+                                <div class="twelve alpha columns editform">
+                                    <label>Subject:</label>
+                                    <input type="text" name="subject" placeholder="Type message subject"/>
+                                </div>
+                                <div>
+                                    <label>Message:</label>
+                                    <textarea cols="20" rows="3" name="message" style="width: 97%"></textarea>
+                                </div>
+                            </fieldset>
+
+                            <input type="submit" class="button color" value="Send Message" style="width: 100%"/>
+                            <div class="clearfix"></div>
+
+                        </form>
+                    </div>
 
                 </div>
 
@@ -262,7 +289,7 @@
 
                         <div class="row">
                             <% if(biddingCountUserProfile > 0) {%>
-                                <a href="#small-dialog" class="popup-with-zoom-anim button color margin-left-0">Add Review</a>>
+                                <a href="#small-dialog" class="popup-with-zoom-anim button color margin-left-0">Add Review</a>
                             <% } %>
                         </div>
 

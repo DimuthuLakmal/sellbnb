@@ -16,6 +16,7 @@ var items = require('./routes/items');
 var signup = require('./routes/signup');
 var bid = require('./routes/bid');
 var notification = require('./routes/notification');
+var usermessage = require('./routes/message');
 
 var app = express();
 
@@ -83,6 +84,7 @@ app.use('/user/sell/contract/bidId/', express.static(path.join(__dirname, 'publi
 app.use('/user/public/userId/', express.static(path.join(__dirname, 'public')));
 app.use('/user/forgotpassword/', express.static(path.join(__dirname, 'public')));
 app.use('/user/sell/', express.static(path.join(__dirname, 'public')));
+app.use('/user/messages/id', express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/user', users);
@@ -91,6 +93,7 @@ app.use('/api/commodity', commodity);
 app.use('/api/items', items);
 app.use('/api/bid', bid);
 app.use('/api/notification', notification);
+app.use('/api/messages', usermessage);
 // app.use('/logout', function (req, res) {
 //   req.logout();
 //   res.redirect('/');

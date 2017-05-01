@@ -74,18 +74,24 @@ router.get('/login', function (req, res, next) {
 
     //populate notification
     var notifications = req.session.notifications;
+    var messages = req.session.messages;
     //check whether notification session is set.
     if(req.isAuthenticated()) {
         if (notifications === null || notifications === undefined) {
             res.redirect('/api/notification/userId/'+req.user.id);
         }
+        if (messages === null || messages === undefined) {
+            res.redirect('/api/messages/userId/' + req.user.id);
+        }
     }
 
     delete req.session.notifications;
+    delete req.session.messages;
     res.render('login', {
         message: req.flash("error"),
         commodityNames: commodityNames,
         notifications: notifications,
+        messages :messages,
         loginOrRegister: 'Login',
         user: req.user,
     });
@@ -107,17 +113,23 @@ router.get('/signup', function (req, res, next) {
 
     //populate notification
     var notifications = req.session.notifications;
+    var messages = req.session.messages;
     //check whether notification session is set.
     if(req.isAuthenticated()) {
         if (notifications === null || notifications === undefined) {
             res.redirect('/api/notification/userId/'+req.user.id);
         }
+        if (messages === null || messages === undefined) {
+            res.redirect('/api/messages/userId/'+req.user.id);
+        }
     }
 
     delete req.session.notifications;
+    delete req.session.messages;
     res.render('signup', {
         message: req.flash("error"),
         notifications: notifications,
+        messages: messages,
         commodityNames: commodityNames,
         loginOrRegister: 'Register',
         user: req.user,

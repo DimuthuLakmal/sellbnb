@@ -90,6 +90,26 @@ router.get('/update/id/:id', function (req, res) {
     );
 });
 
+//update notification unseen to seen for userId (clear notifications
+/* Usage: Header */
+router.get('/update/userId/:userId', function (req, res) {
+    var userId = req.params.userId;
+
+    //update database
+    sequelize.sync().then(
+        function () {
+            var Notification = models.Notification;
+            Notification.update(
+                { seen: true },
+                { where: { UserId: userId } }
+            ).then(function (results) {
+                //find url to notification and redirect
+                res.redirect('/');
+            });
+        }
+    );
+});
+
 function addNotification(res, req, url, description, emailDescription, subject_, redirection) {
     //store notification in database
     sequelize.sync().then(

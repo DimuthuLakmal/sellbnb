@@ -64,7 +64,10 @@
                 <div class="arrow"></div>
 
                 <div class="cart-amount">
-                    <span>You have <%= notifications.length %> notifications</span>
+                    <span>You have <%= notifications.length %> notifications</span><br>
+                    <% if(notifications.length > 0) {%>
+                        <span><a href="/api/notification/update/userId/<%= user.id %>" style="color:darkgray">Clear All</a> </span>
+                    <% } %>
                 </div>
 
                 <ul>
@@ -91,6 +94,40 @@
             <div class="icon-box">
                 <span><i class="fa fa-folder"></i></span>
             </div>
+
+            <% if(messages != undefined) { %>
+            <div class="cart-list">
+
+                <div class="arrow"></div>
+
+                <div class="cart-amount">
+                    <span>You have <%= messages.length %> messages</span><br>
+                    <% if(messages.length > 0) {%>
+                        <span><a href="/api/messages/update/userId/<%= user.id %>" style="color:darkgray">Clear All</a> </span>
+                    <% } %>
+                </div>
+
+                <ul>
+                    <% for (var messageIndex = 0; messageIndex < messages.length; messageIndex++) {
+                        var message = messages[messageIndex];
+                    %>
+                    <li>
+                        <%if(message.seen == 0) {%>
+                            <a href="/api/messages/update/id/<%= message.id %>"><%= message.subject.substring(0,20) %></a>
+                        <% } else {%>
+                            <a href="/api/messages/update/id/<%= message.id %>">Replied to: <%= message.subject.substring(0,20) %></a>
+                        <% } %>
+                        <div class="clearfix"></div>
+                    </li>
+                    <% } %>
+                </ul>
+
+                <div class="clearfix">
+
+                </div>
+            </div>
+            <% } %>
+
         </div>
 
         <div class="cart  dropdown-notification">
