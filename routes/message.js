@@ -45,6 +45,7 @@ router.post('/addreply', function (req, res) {
     sequelize.sync().then(
         function () {
             var MessageReply = models.MessageReply;
+            var Message = models.Message;
             MessageReply.create({
                 message: reply,
                 MessageId: messageId,
