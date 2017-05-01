@@ -80,9 +80,13 @@
 
             <ul>
                 <li style="border-bottom: thin solid lightgray">
-                    <div class="message_avatar"><img style="margin-top:20px; margin-left: 10px"
-                                             src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70"
-                                             alt=""/></div>
+                    <div class="message_avatar">
+                        <%if(messageDetails.senderUserId.profile_pic == null) { %>
+                            <img style="margin-top:20px; margin-left: 10px" src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt=""/>
+                        <% } else { %>
+                            <img src="/uploads/profile_pic/<%= messageDetails.senderUserId.profile_pic %>" alt="" style="width: 80px; height: 80px;margin-top:20px; margin-left: 10px"/>
+                        <% } %>
+                    </div>
                     <div class="comment-content" style="padding: 19px 22px 22px 100px;">
                         <div class="arrow-comment"></div>
                         <div class="comment-by"><strong><%= messageDetails.senderUserId.full_name+' ('+messageDetails.senderUserId.username+')' %></strong><span
@@ -97,9 +101,13 @@
                     var reply = messageReplies[replyIndex];
                 %>
                     <li style="border-bottom: thin solid lightgray">
-                        <div class="message_avatar"><img style="margin-top:20px; margin-left: 10px"
-                                                         src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70"
-                                                         alt=""/></div>
+                        <div class="message_avatar">
+                            <%if(reply.User.profile_pic == null) { %>
+                                <img style="margin-top:20px; margin-left: 10px" src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt=""/>
+                            <% } else { %>
+                                <img src="/uploads/profile_pic/<%= reply.User.profile_pic %>" alt="" style="width: 80px; height: 80px; margin-top:20px; margin-left: 10px"/>
+                            <% } %>
+                        </div>
                         <div class="comment-content" style="padding: 19px 22px 22px 100px;">
                             <div class="arrow-comment"></div>
                             <div class="comment-by"><strong><%= reply.User.full_name+' ('+reply.User.username+')' %></strong><span

@@ -45,3 +45,47 @@ $('#submitlocation').click(function (e) {
         $('#locationChangeForm').submit();
     }
 });
+
+$('#upload_image').click(function () {
+    $('#fileToUpload').click();
+});
+
+var images = [];
+
+//handle image upload button click
+$("#fileToUpload").change(function(event){
+    if (this.files && this.files[0]) {
+        var reader = new FileReader();
+        var userId = $('#userId').val();
+
+        //set image to preview
+        reader.onload = function (e) {
+            var imagelink = e.target.result
+            $('#profile_pic').attr("src",imagelink);
+        }
+
+        reader.readAsDataURL(this.files[0]);
+
+        //pushing images to image array to sent to the server
+        $.each(event.target.files, function(index, file) {
+            reader = new FileReader();
+            reader.onload = function(event) {
+                object = {};
+                object.filename = file.name;
+                object.data = event.target.result;
+                images.push(object);
+
+                $.ajax({url: "/api/user/profile_pic",
+                    type: 'POST',
+                    data: {userId: userId, images: images},
+                    success: function(data, status, xhr) {
+                        if(status == 'success') {
+
+                        }
+                    }
+                });
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+});

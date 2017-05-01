@@ -894,7 +894,7 @@ router.get('/sellcontract/id/:id/bidId/:bidId', function (req, res) {
 router.get('/bestsellers', function (req, res) {
     sequelize.sync().then(
         function () {
-            sequelize.query("SELECT avg(c.rate) as avg_seller, u.full_name, u.logo from Items i, ItemComments c, Users u WHERE i.id=c.ItemId AND u.id = i.UserId GROUP BY i.UserId ORDER BY avg_seller DESC limit 3", { type: sequelize.QueryTypes.SELECT})
+            sequelize.query("SELECT avg(c.rate) as avg_seller, u.id, u.full_name, u.profile_pic from Items i, ItemComments c, Users u WHERE i.id=c.ItemId AND u.id = i.UserId GROUP BY i.UserId ORDER BY avg_seller DESC limit 3", { type: sequelize.QueryTypes.SELECT})
                 .then(function(users) {
                     req.session.bestsellers = users;
                     //res.jsonp(users);
@@ -929,7 +929,7 @@ router.get('/neartoclose', function (req, res) {
             var ItemComment = models.ItemComment;
             var User = models.User;
             Item.findAll({
-                attributes: ['title',[sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")), 'left_time']],
+                attributes: ['id', 'title',[sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")), 'left_time']],
                 where: {
                     duration: {
                         gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))

@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="61a4aa39-20c5-4f13-9e78-9d855475e186" name="Default" comment="remainingHours Error solved in userselleraccount page">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/models/Message.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/models/MessageReply.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/scripts/views/viewmessagesinbox.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/routes/message.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/viewmessagedetails.ejs" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/viewmessagesinbox.ejs" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/viewmessagessent.ejs" />
+    <list default="true" id="61a4aa39-20c5-4f13-9e78-9d855475e186" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/style.css" afterPath="$PROJECT_DIR$/public/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/index.js" afterPath="$PROJECT_DIR$/routes/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/notification.js" afterPath="$PROJECT_DIR$/routes/notification.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/User.js" afterPath="$PROJECT_DIR$/models/User.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/views/useraccountbasic.js" afterPath="$PROJECT_DIR$/public/scripts/views/useraccountbasic.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/items.js" afterPath="$PROJECT_DIR$/routes/items.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/users.js" afterPath="$PROJECT_DIR$/routes/users.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/header.ejs" afterPath="$PROJECT_DIR$/views/header.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/bidpage.ejs" afterPath="$PROJECT_DIR$/views/bidpage.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/buyercontract.ejs" afterPath="$PROJECT_DIR$/views/buyercontract.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/index.ejs" afterPath="$PROJECT_DIR$/views/index.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/sellercontract.ejs" afterPath="$PROJECT_DIR$/views/sellercontract.ejs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/useraccountbasics.ejs" afterPath="$PROJECT_DIR$/views/useraccountbasics.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/userprofile.ejs" afterPath="$PROJECT_DIR$/views/userprofile.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/viewmessagedetails.ejs" afterPath="$PROJECT_DIR$/views/viewmessagedetails.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/viewnews.ejs" afterPath="$PROJECT_DIR$/views/viewnews.ejs" />
     </list>
     <ignored path="sellerbnbbackend.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -43,8 +39,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="172">
-              <caret line="2131" column="35" selection-start-line="2131" selection-start-column="35" selection-end-line="2131" selection-end-column="35" />
+            <state relative-caret-position="139">
+              <caret line="2051" column="12" selection-start-line="2051" selection-start-column="7" selection-end-line="2051" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -53,34 +49,20 @@
       <file leaf-file-name="header.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/header.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="117" column="37" selection-start-line="117" selection-start-column="37" selection-end-line="117" selection-end-column="78" />
+            <state relative-caret-position="233">
+              <caret line="145" column="61" selection-start-line="145" selection-start-column="54" selection-end-line="145" selection-end-column="61" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="viewmessagesinbox.ejs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/viewmessagesinbox.ejs">
+      <file leaf-file-name="index.ejs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/views/index.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="311">
-              <caret line="65" column="43" selection-start-line="65" selection-start-column="43" selection-end-line="65" selection-end-column="43" />
+            <state relative-caret-position="290">
+              <caret line="90" column="111" selection-start-line="90" selection-start-column="111" selection-end-line="90" selection-end-column="111" />
               <folding>
-                <element signature="n#style#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#1;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#2;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="viewmessagesinbox.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/scripts/views/viewmessagesinbox.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
-              <folding>
-                <element signature="e#0#40#0" expanded="false" />
+                <element signature="n#style#0;n#img#1;n#a#0;n#li#0;n#ul#0;n#div#0;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -89,47 +71,54 @@
       <file leaf-file-name="useraccountbasics.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/useraccountbasics.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="51" column="14" selection-start-line="0" selection-start-column="0" selection-end-line="51" selection-end-column="14" />
+            <state relative-caret-position="564">
+              <caret line="68" column="44" selection-start-line="68" selection-start-column="44" selection-end-line="68" selection-end-column="44" />
+              <folding>
+                <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="useraccountbasic.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/scripts/views/useraccountbasic.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-200">
+              <caret line="58" column="31" selection-start-line="58" selection-start-column="31" selection-end-line="58" selection-end-column="31" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="viewmessagessent.ejs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/viewmessagessent.ejs">
+      <file leaf-file-name="users.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/users.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
-              <caret line="93" column="87" selection-start-line="93" selection-start-column="87" selection-end-line="93" selection-end-column="87" />
+            <state relative-caret-position="-644">
+              <caret line="432" column="51" selection-start-line="432" selection-start-column="40" selection-end-line="432" selection-end-column="51" />
               <folding>
-                <element signature="n#style#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#1;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#2;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#12382#13394#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Message.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/Message.js">
+      <file leaf-file-name="userbusinessinformation.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/scripts/views/userbusinessinformation.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="31" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="31" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+            <state relative-caret-position="331">
+              <caret line="41" column="3" selection-start-line="3" selection-start-column="0" selection-end-line="41" selection-end-column="3" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="message.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/routes/message.js">
+      <file leaf-file-name="userbusinessinformation.ejs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/userbusinessinformation.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
-              <caret line="158" column="25" selection-start-line="158" selection-start-column="25" selection-end-line="158" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#41#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="173">
+              <caret line="89" column="19" selection-start-line="85" selection-start-column="12" selection-end-line="89" selection-end-column="19" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -137,8 +126,8 @@
       <file leaf-file-name="items.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/items.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="506" column="16" selection-start-line="506" selection-start-column="16" selection-end-line="506" selection-end-column="160" />
+            <state relative-caret-position="362">
+              <caret line="183" column="59" selection-start-line="183" selection-start-column="57" selection-end-line="183" selection-end-column="59" />
               <folding />
             </state>
           </provider>
@@ -147,9 +136,13 @@
       <file leaf-file-name="viewmessagedetails.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/viewmessagedetails.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1105">
-              <caret line="65" column="43" selection-start-line="65" selection-start-column="43" selection-end-line="65" selection-end-column="43" />
-              <folding />
+            <state relative-caret-position="1462">
+              <caret line="86" column="181" selection-start-line="86" selection-start-column="181" selection-end-line="86" selection-end-column="181" />
+              <folding>
+                <element signature="n#style#0;n#img#1;n#div#0;n#li#0;n#ul#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#div#0;n#li#1;n#ul#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#1;n#div#0;n#li#1;n#ul#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -174,17 +167,17 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/views/bidpage.ejs" />
+        <option value="$PROJECT_DIR$/views/sellercontract.ejs" />
+        <option value="$PROJECT_DIR$/views/buyercontract.ejs" />
+        <option value="$PROJECT_DIR$/views/viewnews.ejs" />
+        <option value="$PROJECT_DIR$/models/User.js" />
+        <option value="$PROJECT_DIR$/public/scripts/views/useraccountbasic.js" />
+        <option value="$PROJECT_DIR$/routes/users.js" />
         <option value="$PROJECT_DIR$/views/useraccountbasics.ejs" />
-        <option value="$PROJECT_DIR$/public/css/style.css" />
-        <option value="$PROJECT_DIR$/models/Message.js" />
-        <option value="$PROJECT_DIR$/views/header.ejs" />
-        <option value="$PROJECT_DIR$/public/scripts/views/viewmessagesinbox.js" />
-        <option value="$PROJECT_DIR$/views/viewmessagesinbox.ejs" />
         <option value="$PROJECT_DIR$/views/viewmessagedetails.ejs" />
-        <option value="$PROJECT_DIR$/routes/index.js" />
-        <option value="$PROJECT_DIR$/views/viewmessagessent.ejs" />
-        <option value="$PROJECT_DIR$/routes/message.js" />
+        <option value="$PROJECT_DIR$/routes/items.js" />
+        <option value="$PROJECT_DIR$/views/index.ejs" />
       </list>
     </option>
   </component>
@@ -230,6 +223,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -274,6 +268,68 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="routes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sellerbnbbackend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sellerbnbbackend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="uploads" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="profile_pic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sellerbnbbackend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sellerbnbbackend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="uploads" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sellerbnbbackend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sellerbnbbackend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="uploads" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -361,7 +417,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -371,14 +426,15 @@
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files (x86)\nodejs\node.exe" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\public\uploads\profile_pic" />
+      <recent name="C:\Projects\sellerbnbbackend2017-01-25\sellerbnbbackend\public\images\footer" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\public\images\mini-slides" />
       <recent name="C:\Projects\sellerbnbbackend2017-01-25\sellerbnbbackend\public\images\footer" />
       <recent name="C:\Projects\sellerbnbbackend2017-01-25\sellerbnbbackend\public\images" />
       <recent name="C:\Projects\sellerbnbbackend2017-01-25\sellerbnbbackend\public\images\slides" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Projects\sellerbnbbackend2017-01-25\sellerbnbbackend\public\images\footer" />
     </key>
   </component>
   <component name="RunManager" selected="Node.js.www">
@@ -482,6 +538,8 @@
       <workItem from="1493044190987" duration="5040000" />
       <workItem from="1493566784389" duration="3099000" />
       <workItem from="1493651648560" duration="15187000" />
+      <workItem from="1493668150706" duration="2078000" />
+      <workItem from="1493673169676" duration="6216000" />
     </task>
     <task id="LOCAL-00001" summary="Forgot Password Added">
       <created>1491872343489</created>
@@ -553,25 +611,31 @@
       <option name="project" value="LOCAL" />
       <updated>1493045108018</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Error of message replying resolved">
+      <created>1493670546557</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1493670546557</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="192992000" />
+    <option name="totallyTimeSpent" value="201286000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19791667" sideWeight="0.4948718" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19717261" sideWeight="0.4948718" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25822532" sideWeight="0.50185084" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20042531" sideWeight="0.5051282" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12401884" sideWeight="0.49814913" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17268446" sideWeight="0.49814913" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22919936" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20879121" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -579,6 +643,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -594,6 +659,7 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <MESSAGE value="Forgot Password Added" />
     <MESSAGE value="Preview Item added" />
     <MESSAGE value="Bid Page Modifications!" />
@@ -604,111 +670,111 @@
     <MESSAGE value="Merge branch 'user_profile_functions' of https://github.com/DimuthuLakmal/sellbnb into user_profile_functions&#10;&#10;Conflicts:&#10;&#9;.idea/workspace.xml&#10;" />
     <MESSAGE value="title images changed" />
     <MESSAGE value="remainingHours Error solved in userselleraccount page" />
-    <option name="LAST_COMMIT_MESSAGE" value="remainingHours Error solved in userselleraccount page" />
+    <MESSAGE value="Error of message replying resolved" />
+    <option name="LAST_COMMIT_MESSAGE" value="Error of message replying resolved" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/routes/items.js">
+    <entry file="file://$PROJECT_DIR$/views/userbusinessinformation.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="506" column="16" selection-start-line="506" selection-start-column="16" selection-end-line="506" selection-end-column="160" />
+        <state relative-caret-position="173">
+          <caret line="89" column="19" selection-start-line="85" selection-start-column="12" selection-end-line="89" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/bidpage.ejs">
+    <entry file="file://$PROJECT_DIR$/views/additem.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="373" column="100" selection-start-line="373" selection-start-column="65" selection-end-line="373" selection-end-column="103" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/useraccountbasics.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="51" column="14" selection-start-line="0" selection-start-column="0" selection-end-line="51" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/header.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="117" column="37" selection-start-line="117" selection-start-column="37" selection-end-line="117" selection-end-column="78" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/User.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="37" column="16" selection-start-line="37" selection-start-column="16" selection-end-line="37" selection-end-column="50" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/scripts/views/viewmessagesinbox.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
-          <folding>
-            <element signature="e#0#40#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/viewmessagedetails.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1105">
-          <caret line="65" column="43" selection-start-line="65" selection-start-column="43" selection-end-line="65" selection-end-column="43" />
+        <state relative-caret-position="202">
+          <caret line="179" column="24" selection-start-line="179" selection-start-column="24" selection-end-line="185" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="2131" column="35" selection-start-line="2131" selection-start-column="35" selection-end-line="2131" selection-end-column="35" />
+        <state relative-caret-position="139">
+          <caret line="2051" column="12" selection-start-line="2051" selection-start-column="7" selection-end-line="2051" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/viewmessagesinbox.ejs">
+    <entry file="file://$PROJECT_DIR$/public/scripts/views/useraccountbasic.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="65" column="43" selection-start-line="65" selection-start-column="43" selection-end-line="65" selection-end-column="43" />
+        <state relative-caret-position="-200">
+          <caret line="58" column="31" selection-start-line="58" selection-start-column="31" selection-end-line="58" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/useraccountbasics.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="564">
+          <caret line="68" column="44" selection-start-line="68" selection-start-column="44" selection-end-line="68" selection-end-column="44" />
           <folding>
-            <element signature="n#style#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#1;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#2;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/viewmessagessent.ejs">
+    <entry file="file://$PROJECT_DIR$/views/viewmessagedetails.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="93" column="87" selection-start-line="93" selection-start-column="87" selection-end-line="93" selection-end-column="87" />
+        <state relative-caret-position="1462">
+          <caret line="86" column="181" selection-start-line="86" selection-start-column="181" selection-end-line="86" selection-end-column="181" />
           <folding>
-            <element signature="n#style#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#1;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#2;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#1;n#div#0;n#li#0;n#ul#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#0;n#li#1;n#ul#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#1;n#div#0;n#li#1;n#ul#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/message.js">
+    <entry file="file://$PROJECT_DIR$/routes/users.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="158" column="25" selection-start-line="158" selection-start-column="25" selection-end-line="158" selection-end-column="25" />
+        <state relative-caret-position="-644">
+          <caret line="432" column="51" selection-start-line="432" selection-start-column="40" selection-end-line="432" selection-end-column="51" />
           <folding>
-            <element signature="e#0#41#0" expanded="false" />
+            <element signature="e#12382#13394#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/items.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="183" column="59" selection-start-line="183" selection-start-column="57" selection-end-line="183" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/User.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="19" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="19" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/header.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="233">
+          <caret line="145" column="61" selection-start-line="145" selection-start-column="54" selection-end-line="145" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/index.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="90" column="111" selection-start-line="90" selection-start-column="111" selection-end-line="90" selection-end-column="111" />
+          <folding>
+            <element signature="n#style#0;n#img#1;n#a#0;n#li#0;n#ul#0;n#div#0;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

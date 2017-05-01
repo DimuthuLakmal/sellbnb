@@ -94,17 +94,12 @@
                         <td> Status</td>
                         <% if(sellContractBid.status == 'open') {%>
                         <td> Contract Created </td>
-                        <%} else {
-                            var formattedStatus = '';
-                            if(sellContractBid.status == 'mutual-cancellation-seller') {
-                                formattedStatus = 'Mutual Cancellation By You';
-                            } else if(sellContractBid.status == 'mutual-cancellation-buyer') {
-                                formattedStatus = 'Mutual Cancellation By Buyer';
-                            } else {
-                                formattedStatus = 'Mutual Cancellation';
-                            }
-                        %>
-                        <td> <%= formattedStatus %> </td>
+                        <% } else if(sellContractBid.status == 'mutual-cancellation-buyer') {%>
+                        <td> Pending Mutual Cancellation by Seller </td>
+                        <% } else if(sellContractBid.status == 'mutual-cancellation-seller') {%>
+                        <td> Pending Mutual Cancellation by Buyer </td>
+                        <% } else if(sellContractBid.status == 'mutual-cancellation-all') { %>
+                        <td> Mutual Cancellation accepted by both parties </td>
                         <% } %>
                     </tr>
                     <tr>

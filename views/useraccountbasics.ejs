@@ -66,6 +66,7 @@
                     <li><a href="/user/contact">Contact Information</a></li>
                     <li><a href="/user/payment">Payment Information</a></li>
                     <li><a href="/user/business">Business Information</a></li>
+                    <li><a href="/user/inbox">Messages</a></li>
                     <!--<li><a href="/user/notification">Notification Preferences</a></li>-->
 
                 </ul>
@@ -88,6 +89,25 @@
                 </div>
             <% } %>
 
+            <div class="three columns products centered">
+                <div class="two columns" id="imagepreview-div">
+                    <input type="hidden" id="userId" value="<%= user.id %>"/>
+                    <% if(user.profile_pic != null && user.profile_pic != '' && user.profile_pic != undefined) {%>
+                    <img src="/uploads/profile_pic/<%= user.profile_pic %>" alt="" id="profile_pic"/>
+                    <% } else { %>
+                    <img src="images/small_product_list_01.jpg" alt="" id="profile_pic"/>
+                    <% } %>
+                    <a class="popup-with-zoom-anim" style="color:#2db2ea;" id="upload_image">
+                        <% if(user.profile_pic != null && user.profile_pic != '' && user.profile_pic != undefined) {%>
+                            Change Profile Pic.
+                        <% } else { %>
+                            Upload Profile Pic.
+                        <% } %>
+                    </a>
+                    <br><br>
+                </div>
+                <input type="file" name="fileToUpload" id="fileToUpload" style="display: none">
+            </div>
             <table class="basic-table" style="">
 
                 <tbody>

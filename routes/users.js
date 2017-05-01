@@ -394,8 +394,6 @@ router.post('/logo', function (req, res) {
     //retrieve data from req object
     var userId = req.body.userId;
 
-    console.log(req.body.images);
-
     //write images to image files
     _.forEach(req.body.images, function(image, index) {
         var imageBuffer = decodeBase64Image(image.data); //decoding base64 images
@@ -405,7 +403,6 @@ router.post('/logo', function (req, res) {
     });
 
     var imageURL = req.body.images[req.body.images.length-1].filename;
-    console.log(imageURL);
     //add logo to user table
     sequelize.sync().then(
         function () {
@@ -418,6 +415,39 @@ router.post('/logo', function (req, res) {
             }).catch(function (error) {
                 req.session.errorMessage = 'Invalid Image.';
                 res.redirect('/user/business');
+            });
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+});
+
+/* Add User Profile Picture Of user */
+router.post('/profile_pic', function (req, res) {
+    //retrieve data from req object
+    var userId = req.body.userId;
+
+    //write images to image files
+    _.forEach(req.body.images, function(image, index) {
+        var imageBuffer = decodeBase64Image(image.data); //decoding base64 images
+        fs.writeFile('../public/uploads/profile_pic/'+image.filename, imageBuffer.data, function(err) {
+            console.log(err);
+        });
+    });
+
+    var imageURL = req.body.images[req.body.images.length-1].filename;
+    //add profile_pic to user table
+    sequelize.sync().then(
+        function () {
+            var User = models.User;
+            User.update(
+                { profile_pic: imageURL },
+                { where: { id: userId } }
+            ).then(function (results) {
+                res.redirect('/user/basic');
+            }).catch(function (error) {
+                req.session.errorMessage = 'Invalid Image.';
+                res.redirect('/user/basic');
             });
         }
     ).catch(function (error) {

@@ -94,10 +94,13 @@
                         <td> Status</td>
                         <% if(buyContractBid.status == 'open') {%>
                             <td> Contract Created </td>
-                        <%} else {%>
-                            <td> Mutual Cancellation </td>
+                        <%} else if(buyContractBid.status == 'mutual-cancellation-buyer') {%>
+                            <td> Pending Mutual Cancellation by Seller </td>
+                        <% } else if(buyContractBid.status == 'mutual-cancellation-seller') {%>
+                            <td> Pending Mutual Cancellation by Buyer </td>
+                        <% } else if(buyContractBid.status == 'mutual-cancellation-all') { %>
+                            <td> Mutual Cancellation accepted by both parties </td>
                         <% } %>
-
                     </tr>
                     <tr>
                         <td> Commodity Name</td>

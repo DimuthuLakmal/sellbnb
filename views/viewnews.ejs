@@ -137,27 +137,29 @@
                 <h3 class="headline">Add Comment</h3><span class="line margin-bottom-35"></span><div class="clearfix"></div>
 
                 <!-- Add Comment Form -->
-                <form id="add-comment" class="add-comment" method="POST" action="/api/news/addcomment">
+                <form id="add-comment" class="add-comment editform" method="POST" action="/api/news/addcomment">
                     <fieldset>
                         <input type="hidden" name="NewsId" value="<%= News.id %>" />
-                        <div>
+                        <div class="editform">
                             <label>Name:</label>
                             <input type="text" value="" name="name"/>
                         </div>
 
-                        <div>
+                        <div class="editform">
                             <label>Email: <span>*</span></label>
                             <input type="email" value="" name="email"/>
                         </div>
 
-                        <div>
+                        <div class="editform">
                             <label>Comment: <span>*</span></label>
-                            <textarea cols="40" rows="3" name="comment"></textarea>
+                            <textarea cols="40" rows="3" name="comment" style="width: 97%"></textarea>
                         </div>
 
                     </fieldset>
 
-                    <input type="submit" class="button color" value="Add Comment"/>
+                    <div class="editform">
+                        <input type="submit" class="button color" value="Add Comment"/>
+                    </div>
                     <div class="clearfix"></div>
 
                 </form>

@@ -88,7 +88,7 @@
             <% for(var commodityIndex = 0; commodityIndex < commodityPopular.length; commodityIndex++) {%>
               <li>
                 <div class="one-third column">
-                  <a href="#" class="img-caption" >
+                  <a href="/api/items/search/start/0?start=0&keyword=<%= commodityPopular[commodityIndex].name %>" class="img-caption" >
                     <figure style="width: 280px">
                       <% if(commodityPopular[commodityIndex].images.length > 0) {%>
                         <img src="uploads/commodity/<%= commodityPopular[commodityIndex].images[0].url %>"
@@ -146,7 +146,7 @@
             <li>
               <figure class="product">
                 <div class="mediaholder">
-                  <a href="variable-product-page.html">
+                  <a href="/items/id/<%= latestItems[itemIndex].id %>">
                     <% if(latestItems[itemIndex].images.length > 0) {%>
                       <img alt="" src="uploads/items/<%= latestItems[itemIndex].images[0].url %>" style="width:280px; height: 210px;"/>
                     <% } else { %>
@@ -161,10 +161,10 @@
                   <a href="#" class="product-button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
                 </div>
 
-                <a href="variable-product-page.html">
+                <a href="/items/id/<%= latestItems[itemIndex].id %>">
                   <section>
                     <span class="product-category"><%= latestItems[itemIndex].commodity.name %></span>
-                    <h5>Brown Mini Skirt</h5>
+                    <h5><%= latestItems[itemIndex].title %></h5>
                     <span class="product-price"><%= latestItems[itemIndex].suggestedPrice %></span>
                   </section>
                 </a>
@@ -202,11 +202,11 @@
           var Seller = bestsellers[sellerIndex];
         %>
 
-        <li><a href="#">
-            <%if(Seller.logo == null) { %>
+        <li><a href="/user/public/userId/<%= Seller.id %>">
+            <%if(Seller.profile_pic == null) { %>
               <img src="images/small_product_list_01.jpg" alt="" />
             <% } else { %>
-              <img src="uploads/logo/<%= Seller.logo %>" alt="" />
+              <img src="/uploads/profile_pic/<%= Seller.profile_pic %>" alt="" style="width: 80px; height: 80px"/>
             <% } %>
 
             <div class="product-list-desc"><%= Seller.full_name %>
@@ -246,11 +246,11 @@
           var item = toprated[topratedIndex];
         %>
 
-        <li><a href="#">
+        <li><a href="/items/id/<%= item.id %>">
             <%if(item.url == null) { %>
             <img src="images/small_product_list_01.jpg" alt="" />
             <% } else { %>
-            <img src="uploads/items/<%= item.url %>" alt="" style="width: 80px; height: 80px"/>
+            <img src="/uploads/items/<%= item.url %>" alt="" style="width: 80px; height: 80px"/>
             <% } %>
 
             <div class="product-list-desc"><%= item.title %>
@@ -290,7 +290,7 @@
           var item = neartocloseItems[neartocloseItemsIndex];
         %>
 
-        <li><a href="#">
+        <li><a href="/items/id/<%= item.id %>">
             <%if(item.ItemImages.length <= 0) { %>
             <img src="images/small_product_list_01.jpg" alt="" />
             <% } else { %>
@@ -354,10 +354,10 @@
           </figure>
 
           <section class="from-the-blog-content">
-            <a href="blog-single-post.html"><h5><%= news.title %></h5></a>
+            <a href="/news/id/<%= news.id %>"><h5><%= news.title %></h5></a>
             <i>By <%= news.user %> on <%= news.date+', '+news.month+' '+news.year %></i>
             <span><%= news.content.substr(0,50)+' ...' %></span>
-            <a href="blog-single-post.html" class="button gray">Read More</a>
+            <a href="/news/id/<%= news.id %>" class="button gray">Read More</a>
           </section>
 
         </article>

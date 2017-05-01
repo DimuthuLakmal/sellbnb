@@ -167,11 +167,16 @@
                         formattedTime = numminutes != 0 ? (formattedTime += numminutes + " mins ") : formattedTime;
                         formattedTime = numseconds != 0 ? (formattedTime += numseconds + " secs ") : formattedTime;
 
-                        if(numdays == 0 && numhours == 0 && numminutes == 0 && numseconds == 0) {
+                        if(numdays <= 0 && numhours <= 0 && numminutes <= 0 && numseconds <= 0) {
                             isAlligibleToBid = false;
                         }
                         %>
-                        <p><span>Time left : </span> <%= formattedTime %></p>
+                        <% if(isAlligibleToBid) {%>
+                            <p><span>Time left : </span> <%= formattedTime %></p>
+                        <% } else { %>
+                            <p><span>Time left : </span> 0 days 0 hrs 0 mins 0 secs</p>
+                        <% } %>
+
                     </div>
 
                     <!-- Bid Table -->
@@ -198,7 +203,11 @@
                                     <strong>Status </strong>
                                 </td>
                                 <td>
-                                    Outbid
+                                    <% if(isAlligibleToBid){ %>
+                                        Open to bidding
+                                    <% } else { %>
+                                        Bidding Closed
+                                    <% } %>
                                 </td>
                             </tr>
                         </table>
