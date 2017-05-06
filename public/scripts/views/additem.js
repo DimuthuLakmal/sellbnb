@@ -4,6 +4,8 @@
 var images = [];
 var parameters = [];
 
+var $uploadCrop;
+
 $(document).ready(function () {
    var itemPreviewed = JSON.parse(localStorage.getItem("previewItem"));
    var visitedPreview = localStorage.getItem("visitedPreview");
@@ -11,10 +13,7 @@ $(document).ready(function () {
     if(visitedPreview == undefined || visitedPreview == null) {
         localStorage.setItem("visitedPreview", false);
     }
-    console.log(visitedPreview);
-    console.log(itemPreviewed);
    if(itemPreviewed != undefined && itemPreviewed != null && visitedPreview == "true") {
-       console.log('A');
        images = itemPreviewed.images;
        $.each(images, function(index, image) {
            $('#imagepreview-div').append('<div class="two columns">'+
@@ -25,6 +24,13 @@ $(document).ready(function () {
        });
        localStorage.setItem("visitedPreview", false);
    }
+
+    $uploadCrop = $('#upload-demo').croppie({
+        viewport: {
+            width: 400,
+            height: 400,
+        },
+    });
 });
 
 //handle image upload button click
@@ -34,12 +40,15 @@ $("#fileToUpload").change(function(event){
 
         //set image to preview
         reader.onload = function (e) {
-            $('#imagepreview-div').append('<div class="two columns">'+
-                '<img src="'+e.target.result+'"'+
-                'style="width: 120px; height: 120px" id="blah"/>'+
-                '<a href="#">(Remove)</a>'+
-                '</div>');
+            $uploadCrop.croppie('bind', {
+                url: e.target.result,
+                zoom: 5,
+            }).then(function(){
+                console.log('jQuery bind complete');
+            });
         }
+
+        $('#cropWindow').click();
 
         reader.readAsDataURL(this.files[0]);
 
@@ -55,6 +64,21 @@ $("#fileToUpload").change(function(event){
             reader.readAsDataURL(file);
         });
     }
+});
+
+$('#crop-btn').click(function () {
+    $uploadCrop.croppie('result', {
+        type: 'base64',
+        size: 'viewport'
+    }).then(function (resp) {
+        $('#imagepreview-div').append('<div class="two columns">'+
+            '<img src="'+resp+'"'+
+            'style="width: 120px; height: 120px" id="blah"/>'+
+            '<a href="#">(Remove)</a>'+
+            '</div>');
+        images[images.length-1].data = resp;
+        $('.mfp-close').click();
+    });
 });
 
 $('#commodity-uploadimage').click(function (e) {

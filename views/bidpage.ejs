@@ -23,17 +23,17 @@
 
 </head>
 
-<body class="boxed">
+<body class="fullwidth">
 <div id="wrapper">
 
-    <% include header.ejs %>
+    <% include header_bidpage.ejs %>
 
 
     <!-- Titlebar
     ================================================== -->
-    <section class="parallax-titlebar fullwidth-element"  data-background="#000" data-opacity="0.45" data-height="160">
+    <section class="parallax-titlebar fullwidth-element"  data-background="#000" data-opacity="0.3" data-height="160">
 
-        <img src="images/titlebar_bg_02.jpg" alt="" />
+        <img src="images/mini-slides/5.jpg" alt="" />
         <div class="parallax-overlay"></div>
 
         <div class="parallax-content">
@@ -47,16 +47,17 @@
         </div>
     <% } %>
 
-    <div class="container">
+    <div class="container fullscreen-container">
 
         <!-- Slider
         ================================================== -->
-        <div class="eight columns">
+        <div class="seven columns">
             <div class="slider-padding">
                 <div id="product-slider" class="royalSlider rsDefault">
                     <% if(item.itemImages.length > 0) {%>
                         <% for(imageIndex = 0; imageIndex < item.itemImages.length; imageIndex++) {;%>
-                            <img class="rsImg" src="uploads/items/<%= item.itemImages[imageIndex].url %>"
+                            <img style="width: 480px; height: 480px"
+                                 class="rsImg" src="uploads/items/<%= item.itemImages[imageIndex].url %>"
                                  data-rsTmb="uploads/items/<%= item.itemImages[imageIndex].url %>"
                                  alt=""/>
                         <% } %>
@@ -72,7 +73,7 @@
 
         <!-- Content
         ================================================== -->
-        <div class="eight columns">
+        <div class="seven columns">
             <div class="product-page">
 
                 <!-- Headline -->
@@ -220,221 +221,210 @@
             </div>
         </div>
 
-    </div>
+        <div class="eight products columns" style="margin-top:5px">
+            <br><br><br><br>
+            <section class="variables">
+                <form method="post" name="bidform" action="/api/bid/add">
 
-
-    <div class="container">
-        <div class="sixteen columns">
-            <!-- Tabs Navigation -->
-            <ul class="tabs-nav">
-                <li class="active"><a href="#tab1">Your Preferences</a></li>
-                <li><a href="#tab2">Reviews <span class="tab-reviews"><%= '(' + itemComments.length+ ')'%></span></a></li>
-            </ul>
-
-            <!-- Tabs Content -->
-            <div class="tabs-container">
-
-                <div class="tab-content" id="tab1">
-
-                    <section class="variables">
-
-                        <form method="post" name="bidform" action="/api/bid/add">
-
-                            <fieldset>
-                                <input type="hidden" name="id" value="<%= item.item.id %>"/>
-                                <input type="hidden" name="userId" value="<%= user.id %>"/>
-                                <div class="thirteen alpha columns bidform">
-                                    <label>Your Bid : </label>
-                                    <div class="ten columns" style="margin-left: 0px;">
-                                        <input name="bid" type="text" id="your_bid"/>
-                                    </div>
-                                    <div class="two columns">
-                                        <select name="priceUnit" id="priceUnit">
-                                            <% for(var priceIndex = 0; priceIndex < item.priceUnits.length; priceIndex++) { %>
-                                            <option value="<%= item.priceUnits[priceIndex].unitName %>"><%= item.priceUnits[priceIndex].unitName %></option>
-                                            <% } %>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="thirteen alpha columns bidform">
-                                    <label>Quantity : </label>
-                                    <div class="ten columns" style="margin-left: 0px;">
-                                        <input name="quantity" type="text" id="quantity"/>
-                                    </div>
-                                    <div class="two columns">
-                                        <select name="measureUnit" id="measureUnit">
-                                            <% for(var measureIndex = 0; measureIndex < item.measureUnits.length; measureIndex++) { %>
-                                            <option value="<%= item.measureUnits[measureIndex].unitName %>"><%= item.measureUnits[measureIndex].unitName %></option>
-                                            <% } %>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="twelve alpha columns bidform">
-                                    <label for="delivery_by">Delivery By : </label>
-                                    <select id="delivery_by" name="delivery_by">
-                                        <option value="Buyer">Buyer</option>
-                                        <% if(item.item.deliveryBy == 'Seller') {%>
-                                            <option selected value="Seller">Seller</option>
-                                        <% } else {%>
-                                            <option value="Seller">Seller</option>
-                                        <% } %>
-                                    </select>
-                                </div>
-
-
-                                <div class="thirteen alpha columns bidform" id="buyer_delivery_cost" style="display: none;">
-                                    <label>Delivery Cost : </label>
-
-                                    <div class="ten columns" style="margin-left: 0px;">
-                                        <input name="delivery_cost" type="text" id="delivery_cost"/>
-                                    </div>
-                                    <div class="two columns">
-                                        <select name="priceUnitDelivery" id="priceUnitDelivery">
-                                            <% for(var priceIndex = 0; priceIndex < item.priceUnits.length; priceIndex++) { %>
-                                            <option value="<%= item.priceUnits[priceIndex].unitName %>"><%= item.priceUnits[priceIndex].unitName %></option>
-                                            <% } %>
-                                        </select>
-                                    </div>
-                                </div>
-
-
-                                <div class="twelve alpha columns bidform">
-                                    <label for="warehouse">Warehouse : </label>
-                                    <select id="warehouse" name="warehouse">
-                                        <% for(var warehouseIndex = 0; warehouseIndex < userWareHouses.length; warehouseIndex++) {
-                                            var warehouse = userWareHouses[warehouseIndex];
-                                            var formattedAddress = "";
-                                            formattedAddress = (warehouse.warehouseAddress1 != null && warehouse.warehouseAddress1 != undefined) ?
-                                                    warehouse.warehouseAddress1 : formattedAddress;
-                                            formattedAddress = (warehouse.warehouseAddress2 != null && warehouse.warehouseAddress2 != undefined) ?
-                                            formattedAddress + ", " +warehouse.warehouseAddress2 : formattedAddress;
-                                            formattedAddress = (warehouse.warehouseCity != null && warehouse.warehouseCity != undefined) ?
-                                            formattedAddress + ", " +warehouse.warehouseCity : formattedAddress;
-                                        %>
-                                            <option value="<%= warehouse.id %>"><%= formattedAddress %></option>
-                                        <% } %>
-                                    </select>
-                                </div>
-
-                                <div class="twelve alpha columns bidform">
-                                    <label>Packing Type : </label>
-                                    <select name="packing_type" id="packing_type">
-                                        <% for(var packingIndex = 0; packingIndex < item.packingTypes.length; packingIndex++) { %>
-                                        <option value="<%= item.packingTypes[packingIndex].type %>"><%= item.packingTypes[packingIndex].type %></option>
-                                        <% } %>
-                                    </select>
-                                </div>
-
-                                <div class="twelve alpha columns bidform">
-                                    <label for="payment_terms">Payment Terms : </label>
-                                    <select id="payment_terms" name="payment_terms">
-                                        <option>1 month credit</option>
-                                        <option>1 week credit</option>
-                                        <option>Cash On Delivery</option>
-                                    </select>
-                                </div>
-
-
-                                <div class="twelve alpha columns bidform" id="buyer_delivery_date" style="display: none;">
-                                        <label>Delivery Date : </label>
-                                        <input name="delivery_date" type="text" id="delivery_date"/>
-                                </div>
-
-
-                                <div class="twelve alpha columns bidform">
-                                    <label>Buyer Note: <span>*</span></label>
-                                    <textarea name="buyer_note" cols="91" rows="3" id="comment" spellcheck="true" style="width: 100%"></textarea>
-                                </div>
-
-                                <div class="twelve columns bidform">
-                                    <input type="submit" class="submit" id="submit" value="Place Your Bid"/>
-                                </div>
-
-                            </fieldset>
-
-                            <div class="clearfix"></div>
-                        </form>
-
-                    </section>
-
-                </div>
-
-                <div class="tab-content" id="tab2">
-
-                    <!-- Reviews -->
-                    <section class="comments">
-                        <% if(itemComments.length == 0) {%>
-                            <p>No Reviews Yet! </p>
-                        <%} %>
-                        <ul>
-                            <% for(commentIndex = 0; commentIndex < itemComments.length; commentIndex++) {
-                                var comment = itemComments[commentIndex];
-                                var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
-                            %>
-                                <li>
-                                    <div class="avatar"><img
-                                                src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70"
-                                                alt=""/></div>
-                                    <div class="comment-content">
-                                        <div class="arrow-comment"></div>
-                                        <div class="comment-by"><strong><%= comment.User.full_name %></strong><span
-                                                    class="date"><%= comment.createdAt.split('T')[0] %></span>
-                                            <div class="rating <%= rateInString[comment.rate] %>-stars">
-                                                <div class="star-rating"></div>
-                                                <div class="star-bg"></div>
-                                            </div>
-                                        </div>
-                                        <p><%= comment.comment%></p>
-                                    </div>
-                                </li>
-                            <% } %>
-                        </ul>
-
-                        <a href="#small-dialog" class="popup-with-zoom-anim button color">Add Review</a>
-
-                        <div id="small-dialog" class="small-dialog zoom-anim-dialog mfp-hide" style="top:-500px">
-                            <h3 class="headline">Add Review</h3><span class="line margin-bottom-25"></span>
-                            <div class="clearfix"></div>
-
-                            <!-- Form -->
-                            <form id="add-comment" class="add-comment" action="/api/items/feedback" method="POST">
-                                <input type="hidden" name="rating" id="rating" value="0"/>
-                                <input type="hidden" name="id" value="<%= item.item.id %>"/>
-                                <input type="hidden" name="userId" value="<%= user.id %>"/>
-                                <fieldset>
-                                    <div class="feedback-rating">
-                                        <span style="float:left">Rating:</span>
-                                        <input type="radio" id="star5" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-                                        <input type="radio" id="star4" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-                                        <input type="radio" id="star3" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-                                        <input type="radio" id="star2" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-                                        <input type="radio" id="star1" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-                                    </div>
-
-                                    <br><br>
-                                    <div>
-                                        <label>Review:</label>
-                                        <textarea cols="40" rows="3" name="feedback"></textarea>
-                                    </div>
-
-                                </fieldset>
-
-                                <input type="submit" class="button color" value="Add Review" style="width: 100%"/>
-                                <div class="clearfix"></div>
-
-                            </form>
+                    <fieldset>
+                        <input type="hidden" name="id" value="<%= item.item.id %>"/>
+                        <input type="hidden" name="userId" value="<%= user.id %>"/>
+                        <div class="eight alpha columns bidform">
+                            <label>Your Bid : </label>
+                            <div class="six columns" style="margin-left: 0px;">
+                                <input name="bid" type="text" id="your_bid"/>
+                            </div>
+                            <div class="two columns" style="width:120px">
+                                <select name="priceUnit" id="priceUnit">
+                                    <% for(var priceIndex = 0; priceIndex < item.priceUnits.length; priceIndex++) { %>
+                                    <option value="<%= item.priceUnits[priceIndex].unitName %>"><%= item.priceUnits[priceIndex].unitName %></option>
+                                    <% } %>
+                                </select>
+                            </div>
                         </div>
 
-                    </section>
+                        <div class="eight alpha columns bidform">
+                            <label>Quantity : </label>
+                            <div class="six columns" style="margin-left: 0px;">
+                                <input name="quantity" type="text" id="quantity"/>
+                            </div>
+                            <div class="two columns" style="width:120px">
+                                <select name="measureUnit" id="measureUnit">
+                                    <% for(var measureIndex = 0; measureIndex < item.measureUnits.length; measureIndex++) { %>
+                                    <option value="<%= item.measureUnits[measureIndex].unitName %>"><%= item.measureUnits[measureIndex].unitName %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
 
-                </div>
+                        <div class="eight alpha columns bidform">
+                            <label for="delivery_by">Delivery By : </label>
+                            <select id="delivery_by" name="delivery_by">
+                                <option value="Buyer">Buyer</option>
+                                <% if(item.item.deliveryBy == 'Seller') {%>
+                                <option selected value="Seller">Seller</option>
+                                <% } else {%>
+                                <option value="Seller">Seller</option>
+                                <% } %>
+                            </select>
+                        </div>
 
-            </div>
+
+                        <div class="eight alpha columns bidform" id="buyer_delivery_cost" style="display: none;">
+                            <label>Delivery Cost : </label>
+
+                            <div class="six columns" style="margin-left: 0px;">
+                                <input name="delivery_cost" type="text" id="delivery_cost"/>
+                            </div>
+                            <div class="two columns" style="width:120px">
+                                <select name="priceUnitDelivery" id="priceUnitDelivery">
+                                    <% for(var priceIndex = 0; priceIndex < item.priceUnits.length; priceIndex++) { %>
+                                    <option value="<%= item.priceUnits[priceIndex].unitName %>"><%= item.priceUnits[priceIndex].unitName %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="eight alpha columns bidform">
+                            <label for="warehouse">Warehouse : </label>
+                            <select id="warehouse" name="warehouse">
+                                <% for(var warehouseIndex = 0; warehouseIndex < userWareHouses.length; warehouseIndex++) {
+                                    var warehouse = userWareHouses[warehouseIndex];
+                                    var formattedAddress = "";
+                                    formattedAddress = (warehouse.warehouseAddress1 != null && warehouse.warehouseAddress1 != undefined) ?
+                                            warehouse.warehouseAddress1 : formattedAddress;
+                                    formattedAddress = (warehouse.warehouseAddress2 != null && warehouse.warehouseAddress2 != undefined) ?
+                                    formattedAddress + ", " +warehouse.warehouseAddress2 : formattedAddress;
+                                    formattedAddress = (warehouse.warehouseCity != null && warehouse.warehouseCity != undefined) ?
+                                    formattedAddress + ", " +warehouse.warehouseCity : formattedAddress;
+                                %>
+                                <option value="<%= warehouse.id %>"><%= formattedAddress %></option>
+                                <% } %>
+                            </select>
+                        </div>
+
+                        <div class="eight alpha columns bidform">
+                            <label>Packing Type : </label>
+                            <select name="packing_type" id="packing_type">
+                                <% for(var packingIndex = 0; packingIndex < item.packingTypes.length; packingIndex++) { %>
+                                <option value="<%= item.packingTypes[packingIndex].type %>"><%= item.packingTypes[packingIndex].type %></option>
+                                <% } %>
+                            </select>
+                        </div>
+
+                        <div class="eight alpha columns bidform">
+                            <label for="payment_terms">Payment Terms : </label>
+                            <select id="payment_terms" name="payment_terms">
+                                <option>1 month credit</option>
+                                <option>1 week credit</option>
+                                <option>Cash On Delivery</option>
+                            </select>
+                        </div>
+
+
+                        <div class="eight alpha columns bidform" id="buyer_delivery_date" style="display: none;">
+                            <label>Delivery Date : </label>
+                            <input name="delivery_date" type="text" id="delivery_date"/>
+                        </div>
+
+
+                        <div class="eight alpha columns bidform">
+                            <label>Buyer Note: <span>*</span></label>
+                            <textarea name="buyer_note" cols="91" rows="3" id="comment" spellcheck="true" style="width: 100%"></textarea>
+                        </div>
+
+                        <div class="eight columns bidform">
+                            <input type="submit" class="submit" id="submit" value="Place Your Bid"/>
+                        </div>
+
+                    </fieldset>
+
+                    <div class="clearfix"></div>
+                </form>
+            </section>
         </div>
+
     </div>
 
+    <br><br>
+    <div class="container margin-top-5">
+
+        <!-- Headline -->
+        <div class="sixteen columns">
+            <h3 class="headline">Reviews</h3>
+            <span class="line margin-bottom-0"></span>
+        </div>
+        <br><br>
+        <!-- Products -->
+        <div class="products">
+
+            <% if(itemComments.length == 0) {%>
+            <p>No Reviews Yet! </p>
+            <%} %>
+            <ul>
+                <% for(commentIndex = 0; commentIndex < itemComments.length; commentIndex++) {
+                    var comment = itemComments[commentIndex];
+                    var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
+                %>
+                <li style="border-bottom: thin solid lightgray">
+                    <div class="avatar">
+                        <%if(comment.User.profile_pic == null) { %>
+                        <img style="margin-top:5px; margin-left: 100px" src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt=""/>
+                        <% } else { %>
+                        <img src="/uploads/profile_pic/<%= comment.User.profile_pic %>" alt="" style="width: 80px; height: 80px;margin-top:5px; margin-left: 100px"/>
+                        <% } %>
+                    </div>
+                    <div style="padding: 19px 22px 22px 100px;" class="comment-content">
+                        <div class="arrow-comment"></div>
+                        <div class="comment-by"><strong><%= comment.User.full_name %></strong><span
+                                    class="date"><%= comment.createdAt.split('T')[0] %></span>
+                            <div class="rating <%= rateInString[comment.rate] %>-stars">
+                                <div class="star-rating"></div>
+                                <div class="star-bg"></div>
+                            </div>
+                        </div>
+                        <p><%= comment.comment%></p>
+                    </div>
+                </li>
+                <% } %>
+            </ul>
+            <a style="margin-top:10px" href="#small-dialog" class="popup-with-zoom-anim button color">Add Review</a>
+            <div id="small-dialog" class="small-dialog zoom-anim-dialog mfp-hide" style="top:-800px">
+                <h3 class="headline">Add Review</h3><span class="line margin-bottom-25"></span>
+                <div class="clearfix"></div>
+
+                <!-- Form -->
+                <form id="add-comment" class="add-comment" action="/api/items/feedback" method="POST">
+                    <input type="hidden" name="rating" id="rating" value="0"/>
+                    <input type="hidden" name="id" value="<%= item.item.id %>"/>
+                    <input type="hidden" name="userId" value="<%= user.id %>"/>
+                    <fieldset>
+                        <div class="feedback-rating">
+                            <span style="float:left">Rating:</span>
+                            <input type="radio" id="star5" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+                            <input type="radio" id="star4" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+                            <input type="radio" id="star3" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+                            <input type="radio" id="star2" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+                            <input type="radio" id="star1" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+                        </div>
+
+                        <br><br>
+                        <div>
+                            <label>Review:</label>
+                            <textarea cols="40" rows="3" name="feedback"></textarea>
+                        </div>
+
+                    </fieldset>
+                    <input type="submit" class="button color" value="Add Review" style="width: 100%"/>
+                    <div class="clearfix"></div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <br><br>
     <% if(item.similarItems.length > 0) {%>
         <!-- Related Products -->
         <div class="container margin-top-5">
@@ -456,19 +446,19 @@
                         <figure class="product">
                             <div class="mediaholder">
                                 <% if(similarItem.ItemImages.length > 0) {%>
-                                    <img alt="" src="uploads/items/<%= similarItem.ItemImages[0].url %>"/>
+                                    <img alt="" src="uploads/items/<%= similarItem.ItemImages[0].url %>" style="width: 270px; height: 270px"/>
                                 <% } else { %>
                                     <img alt="" src="images/shop_item_01.jpg"/>
                                 <% } %>
                                 <% if(similarItem.ItemImages.length > 1) {%>
                                     <div class="cover">
-                                        <img alt="" src="uploads/items/<%= similarItem.ItemImages[1].url %>"/>
+                                        <img alt="" src="uploads/items/<%= similarItem.ItemImages[1].url %>" style="width: 270px; height: 270px"/>
                                     </div>
                                 <% } %>
                                 <a href="#" class="product-button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
                             </div>
 
-                            <a href="#">
+                            <a href="/items/id/<%= similarItem.id %>">
                                 <section>
                                     <span class="product-category"><%= similarItem.title %></span>
                                     <h5><%= similarItem.User.username %></h5>

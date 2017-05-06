@@ -100,11 +100,16 @@ router.get('/addnews', function (req, res) {
 
     if (req.isAuthenticated()) {
         //this will be needed to populate commodity names in top menu
-        var commodityNames = req.session.commodityNames
+        var commodityNames = req.session.commodityNames;
         //check whether commodityNames session is set
         req.session.returnToCommodityName = req.path;
         if (commodityNames === null || commodityNames === undefined) {
             res.redirect('/api/commodity/names');
+        }
+
+        var families = req.session.families;
+        if (families === null || families === undefined) {
+            res.redirect('/api/commodity/families?add=true');
         }
 
         var notifications = req.session.notifications;
@@ -123,11 +128,13 @@ router.get('/addnews', function (req, res) {
         delete req.session.returnToCommodityName;
         delete req.session.notifications;
         delete req.session.messages;
+        delete req.session.families;
         res.render('addnews', {
             commodityNames: commodityNames,
             notifications: notifications,
             messages: messages,
             user: req.user,
+            families: families,
         });
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
@@ -158,7 +165,7 @@ router.get('/news', function (req, res) {
     }
 
     //this will be needed to populate commodity names in top menu
-    var commodityNames = req.session.commodityNames
+    var commodityNames = req.session.commodityNames;
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {

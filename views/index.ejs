@@ -91,12 +91,12 @@
                   <a href="/api/items/search/start/0?start=0&keyword=<%= commodityPopular[commodityIndex].name %>" class="img-caption" >
                     <figure style="width: 280px">
                       <% if(commodityPopular[commodityIndex].images.length > 0) {%>
-                        <img src="uploads/commodity/<%= commodityPopular[commodityIndex].images[0].url %>"
+                        <img style="width: 280px; height: 280px" src="uploads/commodity/<%= commodityPopular[commodityIndex].images[0].url %>"
                              alt="" style="width: 280px; height: 185px"/>
                       <% } else { %>
-                        <img src="images/featured_img_3.jpg" alt="" style="width: 280px; height: 185px"/>
+                        <img src="images/featured_img_3.jpg" alt="" style="width: 280px; height: 280px"/>
                       <% } %>
-                      <figcaption>
+                      <figcaption style="width: 250px">
                         <h3><%= commodityPopular[commodityIndex].name %></h3>
                       </figcaption>
                     </figure>
@@ -148,7 +148,7 @@
                 <div class="mediaholder">
                   <a href="/items/id/<%= latestItems[itemIndex].id %>">
                     <% if(latestItems[itemIndex].images.length > 0) {%>
-                      <img alt="" src="uploads/items/<%= latestItems[itemIndex].images[0].url %>" style="width:280px; height: 210px;"/>
+                      <img alt="" src="uploads/items/<%= latestItems[itemIndex].images[0].url %>" style="width:280px; height: 280px;"/>
                     <% } else { %>
                       <img alt="" src="images/shop_item_01.jpg"/>
                     <% } %>

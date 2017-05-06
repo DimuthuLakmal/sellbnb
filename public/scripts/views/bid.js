@@ -31,7 +31,6 @@ $(document).ready(function () {
 });
 
 function checkSelect() {
-    console.log($('#delivery_by').val());
     if($('#delivery_by').val()=='Buyer') {
         $('#buyer_delivery_cost').show();
         $('#buyer_delivery_date').show();

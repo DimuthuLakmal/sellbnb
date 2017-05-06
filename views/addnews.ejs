@@ -109,12 +109,13 @@
 
                         <div class="twelve alpha columns">
                             <select
+                                id="category"
                                 class="orderby news-family"
                                 name="category">Family
                                 <option>Select Family</option>
-                                <option>Stop Bidding</option>
-                                <option>Delete</option>
-                                <option>Hold</option>
+                                <%for(var familyIndex = 0; familyIndex < families.length; familyIndex++) {%>
+                                    <option><%= families[familyIndex].DISTINCT %></option>
+                                <% } %>
                             </select>
                         </div>
 

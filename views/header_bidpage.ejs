@@ -1,0 +1,195 @@
+<script type="text/javascript">
+    document.body.style.zoom="90%"
+</script>
+<script>
+    if(window.location.href.indexOf("user/sell/list/start") == -1) {
+        localStorage.removeItem("prevDurationOptionOpen");
+        localStorage.removeItem("prevPaginationOptionOpen");
+        localStorage.removeItem("prevDurationOptionPending");
+        localStorage.removeItem("prevPaginationOptionPending");
+        localStorage.removeItem("prevDurationOptionCancelled");
+        localStorage.removeItem("prevPaginationOptionCancelled");
+    }
+
+    if(window.location.href.indexOf("user/buy/list/start") == -1) {
+        localStorage.removeItem("prevDurationOptionOpenBuy");
+        localStorage.removeItem("prevPaginationOptionOpenBuy");
+        localStorage.removeItem("prevDurationOptionPendingBuy");
+        localStorage.removeItem("prevPaginationOptionPendingBuy");
+        localStorage.removeItem("prevDurationOptionCancelledBuy");
+        localStorage.removeItem("prevPaginationOptionCancelledBuy");
+    }
+</script>
+<!-- Header
+      ================================================== -->
+<div class="container">
+
+    <!-- Logo -->
+    <div class="two columns">
+        <div id="logo">
+            <h1><a href="/"><img src="images/Sell_BnB_Logo.png" alt="Trizzy"/></a></h1>
+        </div>
+    </div>
+
+
+    <!-- Additional Menu -->
+    <div class="fourteen columns">
+        <div id="additional-menu">
+            <ul>
+                <% if(user != null && user != undefined) {%>
+                <li><a href="/user/logout">Sign Out</a></li>
+                <%} else {%>
+                <li><a href="/user/login">Sign In</a></li>
+                <li><a href="/user/signup">Register</a></li>
+                <%}%>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- Shopping Cart -->
+    <div class="fourteen columns">
+
+
+        <div class="cart dropdown-notification">
+
+            <!-- Button -->
+            <div class="icon-box">
+                <span><a href="#"><i class="fa fa-mail-forward"></i></a></span>
+            </div>
+
+            <% if(notifications != undefined) { %>
+            <div class="cart-list">
+
+                <div class="arrow"></div>
+
+                <div class="cart-amount">
+                    <span>You have <%= notifications.length %> notifications</span><br>
+                    <% if(notifications.length > 0) {%>
+                    <span><a href="/api/notification/update/userId/<%= user.id %>" style="color:darkgray">Clear All</a> </span>
+                    <% } %>
+                </div>
+
+                <ul>
+                    <% for (var notificationIndex = 0; notificationIndex < notifications.length; notificationIndex++) {
+                        var notification = notifications[notificationIndex];
+                    %>
+                    <li>
+                        <a href="/api/notification/update/id/<%= notification.id %>"><%= notification.description %></a>
+                        <div class="clearfix"></div>
+                    </li>
+                    <% } %>
+                </ul>
+
+                <div class="clearfix">
+
+                </div>
+            </div>
+            <% } %>
+
+        </div>
+
+        <div class="cart  dropdown-notification">
+            <!-- Button -->
+            <div class="icon-box">
+                <span><i class="fa fa-folder"></i></span>
+            </div>
+
+            <% if(messages != undefined) { %>
+            <div class="cart-list">
+
+                <div class="arrow"></div>
+
+                <div class="cart-amount">
+                    <span>You have <%= messages.length %> messages</span><br>
+                    <% if(messages.length > 0) {%>
+                    <span><a href="/api/messages/update/userId/<%= user.id %>" style="color:darkgray">Clear All</a> </span>
+                    <% } %>
+                </div>
+
+                <ul>
+                    <% for (var messageIndex = 0; messageIndex < messages.length; messageIndex++) {
+                        var message = messages[messageIndex];
+                    %>
+                    <li>
+                        <%if(message.seen == 0) {%>
+                        <a href="/api/messages/update/id/<%= message.id %>"><%= message.subject.substring(0,20) %></a>
+                        <% } else {%>
+                        <a href="/api/messages/update/id/<%= message.id %>">Replied to: <%= message.subject.substring(0,20) %></a>
+                        <% } %>
+                        <div class="clearfix"></div>
+                    </li>
+                    <% } %>
+                </ul>
+
+                <div class="clearfix">
+
+                </div>
+            </div>
+            <% } %>
+
+        </div>
+
+        <div class="cart  dropdown-notification">
+            <!-- Button -->
+            <div class="icon-box">
+                <span><a href="/user/basic"><i class="fa fa-user"></i></a></span>
+            </div>
+        </div>
+
+        <!-- Search -->
+        <div align="center">
+            <nav class="top-search">
+                <form action="/api/items/search/start/0" method="GET">
+                    <button><i class="fa fa-search"></i></button>
+                    <input type="hidden" value="0" name="start"/>
+                    <input class="search-field" name="keyword" type="text" placeholder="Search" id="top_search" list="searchresults"/>
+                    <datalist id="searchresults"></datalist>
+                </form>
+            </nav>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Navigation
+================================================== -->
+<div class="container">
+    <div class="sixteen columns" style="margin-left: -235px; width: 139%; margin-bottom: -25px">
+
+        <a href="#menu" class="menu-trigger"><i class="fa fa-bars"></i>Menu</a>
+
+        <nav id="navigation">
+            <ul class="menu" id="responsive">
+
+                <li><a href="/" class="homepage">Home</a></li>
+
+                <li class="demo-button">
+                    <a href="/news">Market News</a>
+                </li>
+
+                <li class="demo-button">
+                    <a href="/user/sell/list/start/0,0,0?sellingpageItemOption=Open&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=1">Sell Account</a>
+                </li>
+
+                <li class="demo-button">
+                    <a href="/user/buy/list/start/0,0,0?buyingpageItemOption=Open&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=1">Buy Account</a>
+                </li>
+
+                <li class="demo-button">
+                    <a href="/items/search">Sell</a>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#">Languages</a>
+                    <ul>
+                        <li><a href="#">Sinhala</a></li>
+                        <li><a href="#">English</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

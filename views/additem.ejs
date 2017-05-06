@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/colors/blue.css" id="colors">
+    <link rel="stylesheet" href="css/croppie.css" />
 
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -59,6 +60,18 @@
         ================================================== -->
 
         <div class="twelve columns products centered">
+            <a style="display: none" href="#small-dialog" class="popup-with-zoom-anim button color" id="cropWindow"></a>
+            <div id="small-dialog" class="small-dialog zoom-anim-dialog mfp-hide upload-demo">
+                <h3 class="headline">Crop Image</h3><span class="line margin-bottom-25"></span>
+                <div class="clearfix"></div>
+                <div align="center">
+                    <div id="upload-demo" class="croppie-container" style="width: 500px; height: 500px">
+                    </div>
+                    <br><br>
+                    <a class="button color" id="crop-btn">Crop Image</a>
+                </div>
+
+            </div>
 
             <section class="variables">
 
@@ -186,7 +199,7 @@
                         </div>
                         <div class="twelve columns bidform" style="margin-top: 10px">
                             <input type="submit" class="submit" id="preview" value="Preview"/>
-                            <input type="submit" class="submit" id="submit" value="Add"/>
+                            <input type="submit" class="submit" id="submit" value="Add" style="margin-top:5px"/>
                         </div>
 
                     </fieldset>
@@ -237,6 +250,7 @@
 <script src="scripts/puregrid.js"></script>
 <script src="scripts/stacktable.js"></script>
 <script src="scripts/custom.js"></script>
+<script src="scripts/croppie.js"></script>
 <script src="scripts/views/additem.js"></script>
 
 

@@ -245,6 +245,29 @@ router.get('/viewpopular', function (req, res) {
 });
 
 
+/* Retrieve families of commodities from database */
+/*Usage: viewnewsall, viewnews pages */
+router.get('/families', function (req, res) {
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var Commodity = models.Commodity;
+            var CommodityImage = models.CommodityImage;
+            Commodity.aggregate('family', 'DISTINCT',{
+                plain: false,
+            }).then(function (Commodities) {
+                if(req.query['add']=='true') {
+                    req.session.families = Commodities;
+                    res.redirect('/addnews');
+                } else {
+                    res.jsonp(Commodities);
+                }
+            });
+        }
+    );
+});
+
+
 /* Retrieve specific commodity from database */
 /* Usage: searchcommodityadd page */
 router.post('/search', function (req, res) {

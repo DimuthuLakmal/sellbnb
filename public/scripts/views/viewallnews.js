@@ -58,4 +58,17 @@ $(document).ready(function () {
             });
         }
     });
+
+    //ajax request for retrieve recent news for sidebar
+    jQuery.ajax({
+        type: "GET",
+        dataType: 'jsonp',
+        url: "/api/commodity/families",
+        success: function (obj, textstatus) {
+            //populating families in right side bar
+            $.each(obj, function (index, family) {
+                $('#family_list').append('<li><a href="/api/news/viewall/start/0/category/'+family.DISTINCT+'">'+family.DISTINCT+'</a></li>');
+            });
+        }
+    });
 });
