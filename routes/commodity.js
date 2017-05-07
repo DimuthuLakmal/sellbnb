@@ -26,7 +26,7 @@ router.post('/add', function (req, res, next) {
 
     _.forEach(req.body.images, function(image, index) {
         var imageBuffer = decodeBase64Image(image.data); //decoding base64 images
-        fs.writeFile('public/uploads/commodity/'+image.filename, imageBuffer.data, function(err) {
+        fs.writeFile('../public/uploads/commodity/'+image.filename, imageBuffer.data, function(err) {
             console.log(err);
         });
     });
