@@ -50,7 +50,7 @@ $('#submit').click(function (e) {
     var priceUnit = $('#price_unit').val();
     var specification = $('#specification').val();
     var alternativeNames = $('#alternative_names').val().split(',');
-    var measureUnits = $('#alternative_names').val().split(',');
+    var measureUnits = measureUnit.split(',');
     var priceUnits = priceUnit.split(',');
     var packingType = $('#packing_type').val().split(',');
 
