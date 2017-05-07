@@ -269,6 +269,8 @@ function newsArray (News, offset , req, res) {
         var removedImage = content.replace(imgToReplace, "");
         var removedParagraphStartTag = removedImage.split("<p>").join("");
         var removedParagraphEndTag = removedParagraphStartTag.split("</p>").join("");
+        var removedArticleTag = removedParagraphEndTag.split('<div class="article-text">').join("");
+        var removedArticleEndTag = removedArticleTag.split('</div>').join("");
 
         //mapping month
         var dateComponents = createdAt.toString().split(" ");
