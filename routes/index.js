@@ -139,7 +139,7 @@ router.get('/addnews', function (req, res) {
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
         req.session.returnTo = req.path;
-        res.redirect('/user/login');
+        res.redirect('/user/login?action=login');
     }
 
 });
@@ -349,7 +349,7 @@ router.get('/user/basic', function (req, res) {
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
         req.session.returnTo = req.path;
-        res.redirect('/user/login');
+        res.redirect('/user/login?action=login');
     }
 });
 
@@ -411,7 +411,7 @@ router.get('/user/contact', function (req, res) {
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
         req.session.returnTo = req.path;
-        res.redirect('/user/login');
+        res.redirect('/user/login?action=login');
     }
 });
 
@@ -479,7 +479,7 @@ router.get('/user/business', function (req, res) {
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
         req.session.returnTo = req.path;
-        res.redirect('/user/login');
+        res.redirect('/user/login?action=login');
     }
 });
 
@@ -537,7 +537,7 @@ router.get('/user/payment', function (req, res) {
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
         req.session.returnTo = req.path;
-        res.redirect('/user/login');
+        res.redirect('/user/login?action=login');
     }
 });
 
@@ -586,7 +586,7 @@ router.get('/user/notification', function (req, res) {
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
         req.session.returnTo = req.path;
-        res.redirect('/user/login');
+        res.redirect('/user/login?action=login');
     }
 });
 
@@ -671,7 +671,7 @@ router.get('/user/public/userId/:userId', function (req, res) {
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
         req.session.returnTo = req.path;
-        res.redirect('/user/login');
+        res.redirect('/user/login?action=login');
     }
 });
 
@@ -724,7 +724,7 @@ router.get('/commodity/add', function (req, res) {
     //   //set visited path to session. It uses to rediect to again to that page when login success.
     //   req.session.returnTo = req.path;
     //   console.log(req.session.returnTo);
-    //   res.redirect('/user/login');
+    //   res.redirect('/user/login?action=login');
     // }
 });
 
@@ -784,7 +784,7 @@ router.get('/items/search', function (req, res) {
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
         req.session.returnTo = req.path;
-        res.redirect('/user/login');
+        res.redirect('/user/login?action=login');
     }
 });
 
@@ -905,7 +905,7 @@ router.get('/items/add/commoditydetails', function (req, res) {
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
         req.session.returnTo = req.path;
-        res.redirect('/user/login');
+        res.redirect('/user/login?action=login');
     }
 
 });
@@ -985,7 +985,7 @@ router.get('/items/add', function (req, res) {
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
         req.session.returnTo = req.path;
-        res.redirect('/user/login');
+        res.redirect('/user/login?action=login');
     }
 });
 
@@ -1053,7 +1053,7 @@ router.get('/items/add', function (req, res) {
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
         req.session.returnTo = req.path;
-        res.redirect('/user/login');
+        res.redirect('/user/login?action=login');
     }
 });
 
@@ -1130,7 +1130,7 @@ router.get('/items/id/:id', function (req, res) {
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
         req.session.returnTo = req.path;
-        res.redirect('/user/login');
+        res.redirect('/user/login?action=login');
     }
 });
 
@@ -1326,7 +1326,7 @@ router.get('/user/sell/list/start/:start', function (req, res) {
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
         req.session.returnTo = req.path+"?sellingpageItemOption=Open&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=1";
-        res.redirect('/user/login');
+        res.redirect('/user/login?action=login');
     }
 });
 
@@ -1509,7 +1509,7 @@ router.get('/user/buy/list/start/:start', function (req, res) {
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
         req.session.returnTo = req.path + "?buyingpageItemOption=Open&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=1";
-        res.redirect('/user/login');
+        res.redirect('/user/login?action=login');
     }
 });
 
@@ -1610,7 +1610,7 @@ router.get('/user/sell/bids/start/:start', function (req, res) {
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
         req.session.returnTo = req.path;
-        res.redirect('/user/login');
+        res.redirect('/user/login?action=login');
     }
 });
 
@@ -1685,7 +1685,7 @@ router.get('/user/sell/edit', function (req, res) {
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
         req.session.returnTo = req.path;
-        res.redirect('/user/login');
+        res.redirect('/user/login?action=login');
     }
 });
 
@@ -1755,7 +1755,7 @@ router.get('/user/buy/contract/id/:id', function (req, res) {
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
         req.session.returnTo = req.path;
-        res.redirect('/user/login');
+        res.redirect('/user/login?action=login');
     }
 });
 
@@ -1823,7 +1823,7 @@ router.get('/user/sell/contract/bidId/:bidId', function (req, res) {
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
         req.session.returnTo = req.path;
-        res.redirect('/user/login');
+        res.redirect('/user/login?action=login');
     }
 });
 
@@ -1959,7 +1959,7 @@ router.get('/items/preview', function (req, res) {
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
         req.session.returnTo = req.path;
-        res.redirect('/user/login');
+        res.redirect('/user/login?action=login');
     }
 
 });

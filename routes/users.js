@@ -126,7 +126,7 @@ router.get('/signup', function (req, res, next) {
 
     delete req.session.notifications;
     delete req.session.messages;
-    res.render('signup', {
+    res.render('login', {
         message: req.flash("error"),
         notifications: notifications,
         messages: messages,
@@ -143,7 +143,7 @@ router.post('/login', function (req, res, next) {
 
     passport.authenticate('local', {
         successRedirect: redirectTo,
-        failureRedirect: 'login',
+        failureRedirect: 'login?action=login',
         failureFlash: true
     })(req, res, next);
 });
@@ -1112,7 +1112,7 @@ router.post('/forgotpassword/update', function (req, res) {
                         delete req.session.recoveryEmail;
                         delete req.session.recoveryCode;
                         delete req.session.codeError;
-                        res.redirect('/user/login');
+                        res.redirect('/user/login?action=login');
                     });
                 }
             });

@@ -39,8 +39,8 @@
                 <% if(user != null && user != undefined) {%>
                 <li><a href="/user/logout">Sign Out</a></li>
                 <%} else {%>
-                <li><a href="/user/login">Sign In</a></li>
-                <li><a href="/user/signup">Register</a></li>
+                <li><a href="/user/login?action=login">Sign In</a></li>
+                <li><a href="/user/signup?action=signup">Register</a></li>
                 <%}%>
             </ul>
         </div>
