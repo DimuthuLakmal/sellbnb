@@ -88,10 +88,12 @@ router.get('/login', function (req, res, next) {
     delete req.session.notifications;
     delete req.session.messages;
     res.render('login', {
+        signupError:null,
         message: req.flash("error"),
         commodityNames: commodityNames,
         notifications: notifications,
         messages :messages,
+
         loginOrRegister: 'Login',
         user: req.user,
     });
@@ -124,9 +126,13 @@ router.get('/signup', function (req, res, next) {
         }
     }
 
+    var signUpError = req.session.signupError;
+
+    delete req.session.signupError;
     delete req.session.notifications;
     delete req.session.messages;
     res.render('login', {
+        signupError: signUpError,
         message: req.flash("error"),
         notifications: notifications,
         messages: messages,
@@ -747,27 +753,73 @@ router.post('/adduser', function (req, res) {
             }
         }).then(function (User) {
             if (!_.isUndefined(User[0])) {
-                res.redirect('/signup');
+                req.session.signupError = 'Your username exists already. Please try again';
+                res.redirect('/user/signup?action=signup');
             } else {
-                //set error message to flash
-                //done(null, false, { message: 'Wrong username or password!' } );
-                var hash = bcrypt.hashSync(req.body.password[0], salt);
-                models.User.create(
-                    {
-                        username: req.body.username,
-                        password: hash,
+                models.Email.findAll({
+                    where: {
+                        email: req.body.email,
                     }
-                ).then(function (createUser) {
-                    models.Email.create(
-                        {
-                            email: req.body.email,
-                            UserId: createUser.id,
-                        }
-                    ).then(function () {
-                        res.redirect('/user/basic');
-                    });
-                    res.redirect('/user/basic');
+                }).then(function (Emails) {
+                    if (!_.isUndefined(Emails[0])) {
+                        req.session.signupError = 'Your email exists already. Please try again';
+                        res.redirect('/user/signup?action=signup');
+                    } else {
+                        //set error message to flash
+                        //done(null, false, { message: 'Wrong username or password!' } );
+                        var hash = bcrypt.hashSync(req.body.password[0], salt);
+                        models.User.create(
+                            {
+                                username: req.body.username,
+                                password: hash,
+                                status: 0,
+                            }
+                        ).then(function (createUser) {
+                            models.Email.create(
+                                {
+                                    email: req.body.email,
+                                    UserId: createUser.id,
+                                }
+                            ).then(function () {
+                                var EmailAddress = req.body.email;
+
+                                var helper = require('sendgrid').mail;
+
+                                message = 'Action Required: Confirm Your SellBnB Account/n'+
+                                    'Hey FirstName,/n'+
+                                    'You recently registered for SellBnB. To complete your SellBnB registration, please confirm your account./n'+
+                                    '<Confirm Your Account>/n'+
+                                    '<a href="#">Click Link</a>'+
+                                    'SellBnB offers everything you need to buy and sell commodities both locally and internationally.'+
+                                    'Follow us on Facebook: https://www.facebook.com/SellBnB'+
+                                    'SellBnB Inc, Indianapolis, IN USA 46202';
+                                subject = 'Just one more step to get started on SellBnB';
+                                from_email = new helper.Email("sellbnb@gmail.com");
+                                to_email = new helper.Email(EmailAddress);
+                                content = new helper.Content("text/plain", message);
+                                mail = new helper.Mail(from_email, subject, to_email, content);
+
+                                var sg = require('sendgrid')('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');
+                                var request = sg.emptyRequest({
+                                    method: 'POST',
+                                    path: '/v3/mail/send',
+                                    body: mail.toJSON()
+                                });
+
+                                sg.API(request, function(error, response) {
+                                    console.log(response.statusCode);
+                                    console.log(response.body);
+                                    console.log(response.headers);
+                                });
+
+                                res.redirect('/user/basic');
+                            });
+                            res.redirect('/user/basic');
+                        });
+                    }
                 });
+
+
             }
         });
 

@@ -106,7 +106,19 @@
                 </div>
 
                 <div class="tab-content" id="tab2">
-                    <form method="post" class="register" action="/user/adduser">
+                    <form method="post" class="register" action="/user/adduser" id="registerForm">
+
+                        <% if(signupError != '' && signupError != null) { %>
+                        <div class="notification error closeable">
+                            <p><span>Error!</span> <%= signupError %></p>
+                            <a class="close" href="#"></a>
+                        </div>
+                        <% } %>
+
+                        <div class="notification error closeable" id="passwordmatchError" style="display: none">
+                            <p><span>Error!</span></p>
+                            <a class="close" href="#"></a>
+                        </div>
 
                         <p class="form-row form-row-wide">
                             <label for="reg_username">User Name: <span class="required">*</span></label>
@@ -115,7 +127,7 @@
 
                         <p class="form-row form-row-wide">
                             <label for="reg_email">Email Address: <span class="required">*</span></label>
-                            <input type="email" class="input-text" name="email" id="reg_email" value=""/>
+                            <input type="email" class="input-text" name="email" id="reg_email"/>
                         </p>
 
 
@@ -130,7 +142,7 @@
                         </p>
 
                         <p class="form-row">
-                            <input type="submit" class="button" name="register" value="Register"/>
+                            <input type="submit" class="button" name="register" value="Register" id="registerButton"/>
                         </p>
 
                     </form>

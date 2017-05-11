@@ -11,9 +11,12 @@ var getUrlParameter = function getUrlParameter(sParam) {
             return sParameterName[1] === undefined ? true : sParameterName[1];
         }
     }
-};/**
- * Created by kjtdi on 5/9/2017.
- */
+};
+
+function isEmail(email) {
+    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return regex.test(email);
+}
 
 $(document).ready(function () {
 
@@ -26,4 +29,35 @@ $(document).ready(function () {
             isClicked = true;
         }, 500);
     }
+});
+
+$('#registerButton').click(function (e) {
+    e.preventDefault();
+    var isValidRegistration = true;
+    if($('#reg_password').val().length < 8) {
+        $('#passwordmatchError').text('Password should consists of atleast 8 characters');
+        $('#passwordmatchError').show();
+        isValidRegistration = false;
+    }
+    if($('#reg_password').val() != $('#reg_password2').val()) {
+        $('#passwordmatchError').text('Password & Re-password didn\'t match.');
+        $('#passwordmatchError').show();
+        isValidRegistration = false;
+    }
+    if(!isEmail($('#reg_email').val())){
+        $('#passwordmatchError').text('Email is not valid.');
+        $('#passwordmatchError').show();
+        isValidRegistration = false;
+    }
+    if(isValidRegistration) {
+        $('#registerForm').submit();
+    }
+});
+
+$('#reg_password').keypress(function (e) {
+    $('#passwordmatchError').hide();
+});
+
+$('#reg_email').keypress(function (e) {
+    $('#passwordmatchError').hide();
 });

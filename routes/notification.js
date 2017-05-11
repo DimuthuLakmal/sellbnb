@@ -185,9 +185,6 @@ function sendEmailSMS(userId, subject_, message, redirection, res) {
                 async.waterfall([
 
                     function(callback){
-                        console.log(Users[0].dataValues.Emails[0].dataValues.email);
-                        console.log(subject_);
-                        console.log(message);
                         EmailAddress = Users[0].dataValues.Emails[0].dataValues.email;
 
                         var helper = require('sendgrid').mail;
