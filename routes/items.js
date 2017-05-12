@@ -397,16 +397,26 @@ router.get('/id/:id', function (req, res) {
                                     CommodityPacking.findAll({
                                         where: {CommodityId: commodity.id}
                                     }).then(function (PackingTypes) {
-                                        req.session.specificBiddingItem = {'item': item, 'commodity': commodity, 'itemImages': itemImages,
-                                            'user': user, 'itemComments': Comments, 'warehouse': warehouse, 'remainingTime': difference,
-                                            'similarItems': similarItems, 'measureUnits': MeasuerUnits, 'priceUnits': PriceUnits, 'packingTypes': PackingTypes};
+                                        models.Email.findAll({
+                                            limit: 1,
+                                            where: {UserId: user.id},
+                                        }).then(function (Emails) {
+                                            models.PhoneNumber.findAll({
+                                                limit: 1,
+                                                where: {UserId: user.id},
+                                            }).then(function (PhoneNumbers) {
+                                                req.session.specificBiddingItem = {'item': item, 'commodity': commodity, 'itemImages': itemImages, 'emails': Emails,
+                                                    'user': user, 'itemComments': Comments, 'warehouse': warehouse, 'remainingTime': difference, 'phoneNumbers': PhoneNumbers,
+                                                    'similarItems': similarItems, 'measureUnits': MeasuerUnits, 'priceUnits': PriceUnits, 'packingTypes': PackingTypes};
 
-                                        Item.update(
-                                            { hits: (hits+1) },
-                                            { where: { id: id } }
-                                        ).then(function (results) {
-                                            res.redirect('/items/id/'+itemId);
-                                        });
+                                                Item.update(
+                                                    { hits: (hits+1) },
+                                                    { where: { id: id } }
+                                                ).then(function (results) {
+                                                    res.redirect('/items/id/'+itemId);
+                                                });
+                                            })
+                                        })
                                     });
 
                                 });

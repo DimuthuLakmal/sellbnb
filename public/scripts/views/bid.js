@@ -31,16 +31,40 @@ $(document).ready(function () {
 });
 
 function checkSelect() {
-    if($('#delivery_by').val()=='Buyer') {
+    if($('#delivery_by').val()=='Seller') {
         $('#buyer_delivery_cost').show();
-        $('#buyer_delivery_date').show();
+        $('#buyer_warehouse').show();
     }
-    if($('#delivery_by').val() == 'Seller') {
+    if($('#delivery_by').val() == 'Buyer') {
         $('#buyer_delivery_cost').hide();
-        $('#buyer_delivery_date').hide();
+        $('#buyer_warehouse').hide();
     };
     setTimeout(checkSelect, 500);
 }
+
+document.getElementById('delivery_by').onchange = function() {
+        var index = this.selectedIndex;
+        var inputText = this.children[index].value;
+        alert(inputText);
+}
+
+$('#submit').click(function (e) {
+    e.preventDefault();
+    var last_bid = $('#last-bid-value').text().trim().split(" ")[1];
+    var bidByUser = $('#your_bid').val();
+
+    if(parseFloat(last_bid) < parseFloat(bidByUser)) {
+        $('#error_message').hide();
+        $('#submitFormBtn').click();
+    } else {
+        $('#error_message').show();
+        $('#message_span').text('Your Bid Should higher than '+$('#last-bid-value').text());
+    }
+});
+
+$('#your_bid').keypress(function (e) {
+    $('#error_message').hide();
+});
 
 // start the cycle
 checkSelect();

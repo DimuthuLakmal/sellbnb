@@ -23,15 +23,15 @@
 
 </head>
 
-<body class="boxed">
+<body class="fullwidth">
 <div id="wrapper">
 
-    <% include header.ejs %>
+    <% include header_bidpage.ejs %>
 
 
     <!-- Titlebar
     ================================================== -->
-    <section class="parallax-titlebar"  data-background="#000" data-opacity="0.3" data-height="160">
+    <section class="parallax-titlebar fullwidth-element"  data-background="#000" data-opacity="0.3" data-height="160">
 
         <img src="images/mini-slides/5.jpg" alt="" />
         <div class="parallax-overlay"></div>
@@ -41,63 +41,68 @@
         </div>
     </section>
     <% if(message != null && message != undefined && message != "") {%>
-        <div class="notification success closeable" id="message_success" style="margin-top: -38px;">
-            <p><span><%= message %></span></p>
-            <a class="close" href="#"></a>
-        </div>
-    <% } %>
-    <div class="notification error closeable" id="error_message" style="margin-top: -38px; display: none">
-        <p><span id="message_span"></span></p>
+    <div class="notification success closeable" id="message_success" style="margin-top: -38px;">
+        <p><span><%= message %></span></p>
         <a class="close" href="#"></a>
     </div>
+    <% } %>
 
-    <div class="container container">
+    <div class="container fullscreen-container">
 
         <!-- Slider
         ================================================== -->
-        <div class="eight columns">
-            <!-- Headline -->
-            <section class="title">
-                <h2><%= item.item.title %></h2>
-                <h5><%= item.user.full_name%></h5>
-
-                <%
-                var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
-                var feedbackCount = itemComments.length;
-                var rateSum = 0;
-                for( var commentIndex = 0; commentIndex < itemComments.length; commentIndex++) {
-                    rateSum += parseInt(itemComments[commentIndex].rate);
-                }
-                var avgRate = feedbackCount != 0? Math.floor(rateSum/feedbackCount) : 0;
-                %>
-
-                <% if(feedbackCount != 0) {%>
-                <div class="reviews-counter-product">
-                    <div class="rating <%= rateInString[avgRate] %>-stars">
-                        <div class="star-rating"></div>
-                        <div class="star-bg"></div>
-                    </div>
-                    <span style="float: left"><%= rateSum/feedbackCount %> stars</span>
-                </div>
-                <% } %>
-            </section>
+        <div class="seven columns">
             <div class="slider-padding">
                 <div id="product-slider" class="royalSlider rsDefault">
                     <% if(item.itemImages.length > 0) {%>
-                        <% for(imageIndex = 0; imageIndex < item.itemImages.length; imageIndex++) {;%>
-                            <img style="width: 350px; height: 350px"
-                                 class="rsImg" src="uploads/items/<%= item.itemImages[imageIndex].url %>"
-                                 data-rsTmb="uploads/items/<%= item.itemImages[imageIndex].url %>"
-                                 alt=""/>
-                        <% } %>
+                    <% for(imageIndex = 0; imageIndex < item.itemImages.length; imageIndex++) {;%>
+                    <img style="width: 480px; height: 480px"
+                         class="rsImg" src="uploads/items/<%= item.itemImages[imageIndex].url %>"
+                         data-rsTmb="uploads/items/<%= item.itemImages[imageIndex].url %>"
+                         alt=""/>
+                    <% } %>
                     <% } else {  %>
-                        <img class="rsImg" src="images/product_item_01a.jpg" data-rsTmb="images/product_item_thumb_01a.png"
-                             alt=""/>
+                    <img class="rsImg" src="images/product_item_01a.jpg" data-rsTmb="images/product_item_thumb_01a.png"
+                         alt=""/>
                     <% } %>
                 </div>
                 <div class="clearfix"></div>
             </div>
+        </div>
+
+
+        <!-- Content
+        ================================================== -->
+        <div class="seven columns">
             <div class="product-page">
+
+                <!-- Headline -->
+                <section class="title">
+                    <h2><%= item.item.title %></h2>
+                    <h3><%= item.user.full_name%></h3>
+
+                    <%
+                    var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
+                    var feedbackCount = itemComments.length;
+                    var rateSum = 0;
+                    for( var commentIndex = 0; commentIndex < itemComments.length; commentIndex++) {
+                        rateSum += parseInt(itemComments[commentIndex].rate);
+                    }
+                    var avgRate = feedbackCount != 0? Math.floor(rateSum/feedbackCount) : 0;
+                    %>
+
+                    <% if(feedbackCount != 0) {%>
+                    <div class="reviews-counter-product">
+                        <div class="rating <%= rateInString[avgRate] %>-stars">
+                            <div class="star-rating"></div>
+                            <div class="star-bg"></div>
+                        </div>
+                        <span><%= rateSum/feedbackCount %> stars</span>
+                    </div>
+                    <% } %>
+                </section>
+
+                <section>
 
                     <!-- Product Details Table -->
                     <div class="product-div">
@@ -148,25 +153,85 @@
                         <p class="margin-reset"><strong>Seller Note : </strong><%= item.item.note%></p>
                     </div>
 
+                    <div class="notification notice" align="center">
+                        <%
+                        var numdays = Math.floor(item.remainingTime / 86400);
+                        var numhours = Math.floor((item.remainingTime % 86400) / 3600);
+                        var numminutes = Math.floor(((item.remainingTime % 86400) % 3600) / 60);
+                        var numseconds = Math.floor(((item.remainingTime % 86400) % 3600) % 60);
+                        var isAlligibleToBid = true;
+
+
+                        var formattedTime = "";
+                        formattedTime = numdays != 0 ? (formattedTime += numdays + " days ") : formattedTime;
+                        formattedTime = numhours != 0 ? (formattedTime += numhours + " hrs ") : formattedTime;
+                        formattedTime = numminutes != 0 ? (formattedTime += numminutes + " mins ") : formattedTime;
+                        formattedTime = numseconds != 0 ? (formattedTime += numseconds + " secs ") : formattedTime;
+
+                        if(numdays <= 0 && numhours <= 0 && numminutes <= 0 && numseconds <= 0) {
+                            isAlligibleToBid = false;
+                        }
+                        %>
+                        <% if(isAlligibleToBid) {%>
+                        <p><span>Time left : </span> <%= formattedTime %></p>
+                        <% } else { %>
+                        <p><span>Time left : </span> 0 days 0 hrs 0 mins 0 secs</p>
+                        <% } %>
+
+                    </div>
+
+                    <!-- Bid Table -->
+                    <div class="last-bid" align="center">
+                        <table border="0px">
+                            <tr>
+                                <td class="last-bid-label">
+                                    <strong>Last Bid </strong>
+                                </td>
+                                <td>
+                                    <%= lastBid != undefined ? lastBid.bid : 'No Bids' %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="last-bid-label">
+                                    <strong>Your Last Bid </strong>
+                                </td>
+                                <td>
+                                    <%= lastUserBid != undefined ? lastUserBid.bid : 'No Bids' %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="last-bid-label">
+                                    <strong>Status </strong>
+                                </td>
+                                <td>
+                                    <% if(isAlligibleToBid){ %>
+                                    Open to bidding
+                                    <% } else { %>
+                                    Bidding Closed
+                                    <% } %>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                </section>
+
             </div>
         </div>
 
-
-        <!-- Content
-        ================================================== -->
-        <div class="seven columns">
-
-        </div>
-
-        <div class="eight products columns">
+        <div class="eight products columns" style="margin-top:5px">
+            <br><br><br><br>
             <section class="variables">
-                <form method="POST" action="/api/bid/add" id="bidformToSubmit">
+                <form method="post" name="bidform" action="/api/bid/add">
 
+                    <fieldset>
                         <input type="hidden" name="id" value="<%= item.item.id %>"/>
                         <input type="hidden" name="userId" value="<%= user.id %>"/>
                         <div class="eight alpha columns bidform">
                             <label>Your Bid : </label>
-                            <div class="four columns" style="margin-left: 0px;">
+                            <div class="six columns" style="margin-left: 0px;">
                                 <input name="bid" type="text" id="your_bid"/>
                             </div>
                             <div class="two columns" style="width:120px">
@@ -176,11 +241,21 @@
                                     <% } %>
                                 </select>
                             </div>
-                            <div class="two columns bidform" style="margin-top: -10px">
-                                <input type="submit" class="submit" id="submit" value="Place Bid" style="margin-left: 0px"/>
-                            </div>
                         </div>
 
+                        <div class="eight alpha columns bidform">
+                            <label>Quantity : </label>
+                            <div class="six columns" style="margin-left: 0px;">
+                                <input name="quantity" type="text" id="quantity"/>
+                            </div>
+                            <div class="two columns" style="width:120px">
+                                <select name="measureUnit" id="measureUnit">
+                                    <% for(var measureIndex = 0; measureIndex < item.measureUnits.length; measureIndex++) { %>
+                                    <option value="<%= item.measureUnits[measureIndex].unitName %>"><%= item.measureUnits[measureIndex].unitName %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
 
                         <div class="eight alpha columns bidform">
                             <label for="delivery_by">Delivery By : </label>
@@ -193,6 +268,7 @@
                                 <% } %>
                             </select>
                         </div>
+
 
                         <div class="eight alpha columns bidform" id="buyer_delivery_cost" style="display: none;">
                             <label>Delivery Cost : </label>
@@ -209,7 +285,8 @@
                             </div>
                         </div>
 
-                        <div class="eight alpha columns bidform" id="buyer_warehouse">
+
+                        <div class="eight alpha columns bidform">
                             <label for="warehouse">Warehouse : </label>
                             <select id="warehouse" name="warehouse">
                                 <% for(var warehouseIndex = 0; warehouseIndex < userWareHouses.length; warehouseIndex++) {
@@ -226,122 +303,45 @@
                                 <% } %>
                             </select>
                         </div>
-                    <input type="submit" class="submit" id="submitFormBtn" value="Place Bid" style="display:none"/>
+
+                        <div class="eight alpha columns bidform">
+                            <label>Packing Type : </label>
+                            <select name="packing_type" id="packing_type">
+                                <% for(var packingIndex = 0; packingIndex < item.packingTypes.length; packingIndex++) { %>
+                                <option value="<%= item.packingTypes[packingIndex].type %>"><%= item.packingTypes[packingIndex].type %></option>
+                                <% } %>
+                            </select>
+                        </div>
+
+                        <div class="eight alpha columns bidform">
+                            <label for="payment_terms">Payment Terms : </label>
+                            <select id="payment_terms" name="payment_terms">
+                                <option>1 month credit</option>
+                                <option>1 week credit</option>
+                                <option>Cash On Delivery</option>
+                            </select>
+                        </div>
+
+
+                        <div class="eight alpha columns bidform" id="buyer_delivery_date" style="display: none;">
+                            <label>Delivery Date : </label>
+                            <input name="delivery_date" type="text" id="delivery_date"/>
+                        </div>
+
+
+                        <div class="eight alpha columns bidform">
+                            <label>Buyer Note: <span>*</span></label>
+                            <textarea name="buyer_note" cols="91" rows="3" id="comment" spellcheck="true" style="width: 100%"></textarea>
+                        </div>
+
+                        <div class="eight columns bidform">
+                            <input type="submit" class="submit" id="submit" value="Place Your Bid"/>
+                        </div>
+
+                    </fieldset>
+
                     <div class="clearfix"></div>
                 </form>
-                <br>
-                <div class="notification notice" align="center">
-                    <%
-                    var numdays = Math.floor(item.remainingTime / 86400);
-                    var numhours = Math.floor((item.remainingTime % 86400) / 3600);
-                    var numminutes = Math.floor(((item.remainingTime % 86400) % 3600) / 60);
-                    var numseconds = Math.floor(((item.remainingTime % 86400) % 3600) % 60);
-                    var isAlligibleToBid = true;
-
-
-                    var formattedTime = "";
-                    formattedTime = numdays != 0 ? (formattedTime += numdays + " days ") : formattedTime;
-                    formattedTime = numhours != 0 ? (formattedTime += numhours + " hrs ") : formattedTime;
-                    formattedTime = numminutes != 0 ? (formattedTime += numminutes + " mins ") : formattedTime;
-                    formattedTime = numseconds != 0 ? (formattedTime += numseconds + " secs ") : formattedTime;
-
-                    if(numdays <= 0 && numhours <= 0 && numminutes <= 0 && numseconds <= 0) {
-                        isAlligibleToBid = false;
-                    }
-                    %>
-                    <% if(isAlligibleToBid) {%>
-                    <h4><span>Time left : </span> <%= formattedTime %></h4>
-                    <% } else { %>
-                    <h4><span>Time left : </span> 0 days 0 hrs 0 mins 0 secs</h4>
-                    <% } %>
-
-                </div>
-
-                <!-- Bid Table -->
-                <div class="last-bid" align="center">
-                    <table border="0px">
-                        <tr>
-                            <td class="last-bid-label">
-                                <strong>Last Bid </strong>
-                            </td>
-                            <td id="last-bid-value">
-                                <%= lastBid != undefined ? lastBid.bid : 'No Bids' %>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="last-bid-label">
-                                <strong>Your Last Bid </strong>
-                            </td>
-                            <td>
-                                <%= lastUserBid != undefined ? lastUserBid.bid : 'No Bids' %>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="last-bid-label">
-                                <strong>Status </strong>
-                            </td>
-                            <td>
-                                <% if(isAlligibleToBid){ %>
-                                Open to bidding
-                                <% } else { %>
-                                Bidding Closed
-                                <% } %>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <br><br>
-                <!-- Headline -->
-                <div class="eight columns">
-                    <h3 class="headline">Contact Seller</h3>
-                    <span class="line margin-bottom-0"></span>
-                </div>
-                <br>
-                <div class="last-bid" align="center">
-                    <table border="0px">
-                        <tr>
-                            <td class="contact-label">
-                                <span><img src="icons/small-message-icon.png" style="width: 24px; height: 24px; margin-top: 8px; margin-left: 8px"/></span>
-                            </td>
-                            <td>
-                                <a href="#message-dialog" class="popup-with-zoom-anim margin-left-0" style="color: darkgray">Send Message</a>
-                                <div id="message-dialog" class="small-dialog zoom-anim-dialog mfp-hide" style="margin-top: -850px">
-                                    <h3 class="headline">Send Message</h3><span class="line margin-bottom-25"></span>
-                                    <div class="clearfix"></div>
-
-                                    <!-- Form -->
-                                    <form id="add-comment" class="add-comment" action="/api/messages/add" method="POST">
-                                        <fieldset>
-                                            <input type="hidden" name="returnTo" value="/items/id/<%= item.item.id %>" />
-                                            <input type="hidden" name="receiverUserIdFk" value="<%= item.user.id %>"/>
-                                            <input type="hidden" name="senderUserIdFk" value="<%= user.id %>"/>
-                                            <div class="twelve alpha columns editform">
-                                                <label>Subject:</label>
-                                                <input type="text" name="subject" placeholder="Type message subject"/>
-                                            </div>
-                                            <div>
-                                                <label>Message:</label>
-                                                <textarea cols="20" rows="3" name="message" style="width: 97%"></textarea>
-                                            </div>
-                                        </fieldset>
-
-                                        <input type="submit" class="button color" value="Send Message" style="width: 100%"/>
-                                        <div class="clearfix"></div>
-
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="contact-label">
-                                <span><img src="icons/mobile.png" style="width: 24px; height: 24px; margin-top: 8px; margin-left: 8px"/></span>
-                            </td>
-                            <td>
-                                <a href="#" style="color: darkgray"><%= item.phoneNumbers[0].number %></a>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
             </section>
         </div>
 
@@ -426,52 +426,52 @@
     </div>
     <br><br>
     <% if(item.similarItems.length > 0) {%>
-        <!-- Related Products -->
-        <div class="container margin-top-5">
+    <!-- Related Products -->
+    <div class="container margin-top-5">
 
-            <!-- Headline -->
-            <div class="sixteen columns">
-                <h3 class="headline">Related Products</h3>
-                <span class="line margin-bottom-0"></span>
-            </div>
-
-            <!-- Products -->
-            <div class="products">
-
-                <% for(var itemIndex = 0; itemIndex < item.similarItems.length; itemIndex++) {
-                    var similarItem = item.similarItems[itemIndex];
-                    if(similarItem.id != item.item.id) {
-                %>
-                    <div class="four columns">
-                        <figure class="product">
-                            <div class="mediaholder">
-                                <% if(similarItem.ItemImages.length > 0) {%>
-                                    <img alt="" src="uploads/items/<%= similarItem.ItemImages[0].url %>" style="width: 280px; height: 280px"/>
-                                <% } else { %>
-                                    <img alt="" src="images/shop_item_01.jpg" style="width: 280px; height: 280px"/>
-                                <% } %>
-                                <% if(similarItem.ItemImages.length > 1) {%>
-                                    <div class="cover">
-                                        <img alt="" src="uploads/items/<%= similarItem.ItemImages[1].url %>" style="width: 270px; height: 270px"/>
-                                    </div>
-                                <% } %>
-                                <a href="#" class="product-button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
-                            </div>
-
-                            <a href="/items/id/<%= similarItem.id %>">
-                                <section>
-                                    <span class="product-category"><%= similarItem.title %></span>
-                                    <h5><%= similarItem.User.username %></h5>
-                                </section>
-                            </a>
-                        </figure>
-                    </div>
-                <%  }
-                }
-                %>
-
-            </div>
+        <!-- Headline -->
+        <div class="sixteen columns">
+            <h3 class="headline">Related Products</h3>
+            <span class="line margin-bottom-0"></span>
         </div>
+
+        <!-- Products -->
+        <div class="products">
+
+            <% for(var itemIndex = 0; itemIndex < item.similarItems.length; itemIndex++) {
+                var similarItem = item.similarItems[itemIndex];
+            if(similarItem.id != item.item.id) {
+            %>
+            <div class="four columns">
+                <figure class="product">
+                    <div class="mediaholder">
+                        <% if(similarItem.ItemImages.length > 0) {%>
+                        <img alt="" src="uploads/items/<%= similarItem.ItemImages[0].url %>" style="width: 280px; height: 280px"/>
+                        <% } else { %>
+                        <img alt="" src="images/shop_item_01.jpg" style="width: 280px; height: 280px"/>
+                        <% } %>
+                        <% if(similarItem.ItemImages.length > 1) {%>
+                        <div class="cover">
+                            <img alt="" src="uploads/items/<%= similarItem.ItemImages[1].url %>" style="width: 270px; height: 270px"/>
+                        </div>
+                        <% } %>
+                        <a href="#" class="product-button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+                    </div>
+
+                    <a href="/items/id/<%= similarItem.id %>">
+                        <section>
+                            <span class="product-category"><%= similarItem.title %></span>
+                            <h5><%= similarItem.User.username %></h5>
+                        </section>
+                    </a>
+                </figure>
+            </div>
+            <%  }
+            }
+            %>
+
+        </div>
+    </div>
 
     <% } %>
 

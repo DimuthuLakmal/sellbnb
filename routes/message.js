@@ -14,6 +14,7 @@ router.post('/add', function (req, res) {
     var senderUserId = req.body.senderUserIdFk;
     var receiverUserId = req.body.receiverUserIdFk;
     var subject = req.body.subject;
+    var returnTo = req.body.returnTo;
 
     //store news in database
     sequelize.sync().then(
@@ -26,7 +27,11 @@ router.post('/add', function (req, res) {
                 senderUserIdFk: senderUserId,
                 receiverUserIdFk: receiverUserId,
             }).then(function (insertedMessage) {
-                res.redirect('/user/public/userId/'+senderUserId);
+                if(returnTo !== undefined && returnTo != null) {
+                    res.redirect(returnTo);
+                } else {
+                    res.redirect('/user/public/userId/'+senderUserId);
+                }
             });
         }
     ).catch(function (error) {

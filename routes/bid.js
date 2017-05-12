@@ -17,19 +17,21 @@ router.post('/add', function (req, res) {
     var priceUnit = req.body.priceUnit;
     var priceUnitDelivery = req.body.priceUnitDelivery;
     var bid = priceUnit + " " + req.body.bid;
-    var measureUnit = req.body.measureUnit;
-    var quantity = req.body.quantity + " " + measureUnit;
+    //var measureUnit = req.body.measureUnit;
+    //var quantity = req.body.quantity + " " + measureUnit;
     var deliveryBy = req.body.delivery_by;
     var WareHouseId = req.body.warehouse;
-    var packingType = req.body.packing_type;
-    var paymentTerms = req.body.payment_terms;
-    var deliveryDate = req.body.delivery_date;
+    //var packingType = req.body.packing_type;
+    //var paymentTerms = req.body.payment_terms;
+    //var deliveryDate = req.body.delivery_date;
     var deliveryCostTemp = req.body.delivery_cost;
     var deliveryCost = "";
     if(deliveryCostTemp != null && deliveryCostTemp != undefined && deliveryCostTemp != "") {
         deliveryCost = priceUnitDelivery + " " + deliveryCostTemp;
+    } else {
+        WareHouseId = null;
     }
-    var buyerNote = req.body.buyer_note;
+    //var buyerNote = req.body.buyer_note;
     var itemId = req.body.id;
     var UserId = req.body.userId;
 
@@ -39,14 +41,14 @@ router.post('/add', function (req, res) {
             var Bidding = models.Bidding;
             Bidding.create({
                 bid: bid,
-                quantity: quantity,
+                //quantity: quantity,
                 deliveryBy: deliveryBy,
                 deliveryCost: deliveryCost,
-                deliveryDate: deliveryDate,
+                //deliveryDate: deliveryDate,
                 WareHouseId: WareHouseId,
-                packageType: packingType,
-                paymentTerms: paymentTerms,
-                note: buyerNote,
+                //packageType: packingType,
+                //paymentTerms: paymentTerms,
+                //note: buyerNote,
                 status: 'pending',
                 ItemId: itemId,
                 UserId: UserId,

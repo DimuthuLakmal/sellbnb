@@ -107,6 +107,10 @@
                 <div class="arrow"></div>
 
                 <div class="cart-amount">
+                    <span><a href="/user/inbox" style="color:darkgray">View All Messages</a> </span>
+                </div>
+
+                <div class="cart-amount">
                     <span>You have <%= messages.length %> messages</span><br>
                     <% if(messages.length > 0) {%>
                     <span><a href="/api/messages/update/userId/<%= user.id %>" style="color:darkgray">Clear All</a> </span>

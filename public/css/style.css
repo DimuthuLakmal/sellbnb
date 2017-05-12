@@ -5481,7 +5481,6 @@ ul.footer-links { margin: 0 0 15px 0; }
 
 .slider-padding {
 	padding-right: 20px;
-	margin-bottom: 50px;
 }
 
 .royalSlider {
@@ -5749,8 +5748,8 @@ img.rsImg {
 	z-index: 21;
 }
 
-.rsDefault.rsHor .rsArrowLeft { bottom: 0; right: 37px; }
-.rsDefault.rsHor .rsArrowRight { bottom: 0; right: 0; }
+.rsDefault.rsHor .rsArrowLeft { bottom: 0; right: 37px; display: none!important;}
+.rsDefault.rsHor .rsArrowRight { bottom: 0; right: 0; display: none!important;}
 
 .rsDefault .rsArrowIcn {
 	width: 36px;
@@ -5976,7 +5975,6 @@ img.rsImg {
 }
 
 .reviews-counter-product {
-	float: right;
 	position: relative;
 	top: 2px;
 	right: 0;
@@ -5993,7 +5991,6 @@ img.rsImg {
 .reviews-counter-product .two-stars,
 .reviews-counter-product .one-stars { text-align: left; }
 
-.reviews-counter-product .rating { right: -14px; }
 .reviews-counter-product span {
 	position: relative;
 	display: block;
@@ -6151,6 +6148,10 @@ img.rsImg {
 
 .last-bid .last-bid-label {
 	width: 30%;
+}
+
+.last-bid .contact-label {
+	width: 10%;
 }
 
 .contract-details {
