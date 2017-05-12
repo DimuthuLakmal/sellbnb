@@ -354,10 +354,10 @@
           </figure>
 
           <section class="from-the-blog-content">
-            <a href="/news/id/<%= news.id %>"><h5><%= news.title %></h5></a>
+            <a href="/news/id/<%= news.id %>?lan=en"><h5><%= news.title %></h5></a>
             <i>By <%= news.user %> on <%= news.date+', '+news.month+' '+news.year %></i>
             <span><%= news.content.substr(0,50)+' ...' %></span>
-            <a href="/news/id/<%= news.id %>" class="button gray">Read More</a>
+            <a href="/news/id/<%= news.id %>?lan=en" class="button gray">Read More</a>
           </section>
 
         </article>
