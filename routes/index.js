@@ -10,6 +10,10 @@ router.get('/', function (req, res) {
     removeSessionParameterSellingPage(req);
     removeSessionParameters(req);
 
+    if(req.session.language == null || req.session.language == undefined) {
+        req.session.language = "english";
+    }
+
     //retreieve required data from session
     var commodityPopular = req.session.commodityPopular;
     var commodityNames = req.session.commodityNames;
@@ -112,6 +116,11 @@ router.get('/addnews', function (req, res) {
             res.redirect('/api/commodity/families?add=true');
         }
 
+        var newsTitles = req.session.newsTitles;
+        if (newsTitles === null || newsTitles === undefined) {
+            res.redirect('/api/news/titles');
+        }
+
         var notifications = req.session.notifications;
         var messages = req.session.messages;
         //check whether notification session is set.
@@ -129,12 +138,14 @@ router.get('/addnews', function (req, res) {
         delete req.session.notifications;
         delete req.session.messages;
         delete req.session.families;
+        delete req.session.newsTitles;
         res.render('addnews', {
             commodityNames: commodityNames,
             notifications: notifications,
             messages: messages,
             user: req.user,
             families: families,
+            newsTitles: newsTitles,
         });
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.
@@ -268,13 +279,13 @@ router.get('/news/id/:id', function (req, res) {
 
     //check whether newsAll session is set
     if (news === null || news === undefined) {
-        res.redirect('/api/news/id/' + req.params.id);
+        res.redirect('/api/news/id/' + req.params.id+'?lan='+req.query['lan']);
     }
 
     //this will be needed to populate commodity names in top menu
     var commodityNames = req.session.commodityNames
     //check whether commodityNames session is set
-    req.session.returnToCommodityName = req.path;
+    req.session.returnToCommodityName = req.path+'?lan='+req.query['lan'];
     if (commodityNames === null || commodityNames === undefined) {
         res.redirect('/api/commodity/names');
     }
@@ -2146,30 +2157,10 @@ router.get('/user/sent', function (req, res) {
     });
 });
 
-router.get('/testtwilio', function (req, res) {
-    // // Twilio Credentials
-    var helper = require('sendgrid').mail;
-
-    from_email = new helper.Email("sellbnb@gmail.com");
-    to_email = new helper.Email("kjtdimuthu@gmail.com");
-    subject = "Sending with SendGrid is Fun";
-    content = new helper.Content("text/plain", "and easy to do anywhere, even with Node.js");
-    mail = new helper.Mail(from_email, subject, to_email, content);
-
-    var sg = require('sendgrid')('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');
-    var request = sg.emptyRequest({
-        method: 'POST',
-        path: '/v3/mail/send',
-        body: mail.toJSON()
-    });
-
-    sg.API(request, function (error, response) {
-        console.log(response.statusCode);
-        console.log(response.body);
-        console.log(response.headers);
-    });
-
-    res.redirect('/');
+//change site's language
+router.get('/change_language/language/:language', function (req, res) {
+    req.session.language = req.params.language;
+    res.json("Language Changed");
 });
 
 //to remove unnecessary session parameters

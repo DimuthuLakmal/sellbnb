@@ -1,10 +1,15 @@
 /* News Model */
 module.exports = function (sequelize, DataTypes) {
     var News = sequelize.define('News', {
-        title: DataTypes.STRING,
+        english_title: DataTypes.STRING,
+        sinhala_title: DataTypes.STRING,
+        tamil_title: DataTypes.STRING,
         category: DataTypes.STRING,
-        content: DataTypes.TEXT,
+        english_content: DataTypes.TEXT,
+        sinhala_content: DataTypes.TEXT,
+        tamil_content: DataTypes.TEXT,
         hits: DataTypes.INTEGER,
+        thumbnail: DataTypes.STRING,
     }, {
         // Define Associations for News table here.
         classMethods: {

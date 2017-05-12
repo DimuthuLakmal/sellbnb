@@ -7,20 +7,16 @@ $(document).ready(function () {
         success: function (obj, textstatus) {
             //populating news by creating dynamic <li>'s
             $.each(obj, function (index, news) {
-                var imgSrc = '';
-                if(news.category == 'Delete') {
-                    imgSrc = 'images/categories/tea.png';
-                } else if (news.category == 'Stop Bidding') {
-                    imgSrc = 'images/categories/rubber.jpg';
-                } else {
-                    imgSrc = "images/categories/coconut.png";
+                var imgSrc = 'uploads/news/'+news.thumbnail;
+                if(news.thumbnail ==  null) {
+                    imgSrc = 'images/small_product_list_01.jpg';
                 }
                 $('#popular_news').append('<li>' +
                     '<div class="widget-thumb">' +
-                    '<a href="/news/id/'+news.id+'"><img src=\"'+imgSrc+'\" alt="" width="90"  height="90"/></a>' +
+                    '<a href="/news/id/'+news.id+'?lan=en"><img src=\"'+imgSrc+'\" alt="" width="90"  height="90"/></a>' +
                     '</div>' +
                     '<div class="widget-text">' +
-                    '<h4><a href="/news/id/'+news.id+'">'+news.title+'</a></h4>' +
+                    '<h4><a href="/news/id/'+news.id+'?lan=en">'+news.title+'</a></h4>' +
                     '<span>'+news.date+' '+news.month+' '+news.year+'</span>' +
                     '</div>' +
                     '<div class="clearfix"></div>' +
@@ -37,20 +33,16 @@ $(document).ready(function () {
         success: function (obj, textstatus) {
             //populating news by creating dynamic <li>'s
             $.each(obj, function (index, news) {
-                var imgSrc = '';
-                if(news.category == 'Delete') {
-                    imgSrc = 'images/categories/tea.png';
-                } else if (news.category == 'Stop Bidding') {
-                    imgSrc = 'images/categories/rubber.jpg';
-                } else {
-                    imgSrc = "images/categories/coconut.png";
+                var imgSrc = 'uploads/news/'+news.thumbnail;
+                if(news.thumbnail ==  null) {
+                    imgSrc = 'images/small_product_list_01.jpg';
                 }
                 $('#recent_news').append('<li>' +
                     '<div class="widget-thumb">' +
-                    '<a href="/news/id/'+news.id+'"><img src=\"'+imgSrc+'\" alt="" width="90"  height="90"/></a>' +
+                    '<a href="/news/id/'+news.id+'?lan=en"><img src=\"'+imgSrc+'\" alt="" width="90"  height="90"/></a>' +
                     '</div>' +
                     '<div class="widget-text">' +
-                    '<h4><a href="/news/id/'+news.id+'">'+news.title+'</a></h4>' +
+                    '<h4><a href="/news/id/'+news.id+'?lan=en">'+news.title+'</a></h4>' +
                     '<span>'+news.date+' '+news.month+' '+news.year+'</span>' +
                     '</div>' +
                     '<div class="clearfix"></div>' +

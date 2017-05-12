@@ -3,32 +3,132 @@ var _ = require('lodash');
 var router = express.Router();
 var models = require('./../models');
 var sequelize = models.sequelize;
+var fs = require('fs');
+var path = require('path');
 
 /* Add news to database. */
 router.post('/addnews', function (req, res) {
     //retrieve data from req object
+    var userId = req.body.userId;
     var title = req.body.title;
+    var old_title = req.body.old_title;
     var category = req.body.category;
+    var language = req.body.language;
     var news_content = req.body.news_content;
+
+    console.log(title);
+    console.log(old_title);
+    console.log(news_content);
+    console.log(category);
+    console.log(userId);
+    console.log(language);
+
+    if(old_title != "Select News Title") {
+        var newId = old_title;
+
+        var newsObject = {};
+        if(language == "English") {
+            newsObject = {
+                english_title: title,
+                english_content: news_content,
+                UserId: userId,
+            }
+        } else if(language == "Sinhala"){
+            newsObject = {
+                sinhala_title: title,
+                sinhala_content: news_content,
+                UserId: userId,
+            }
+        } else if(language == "Tamil") {
+            newsObject = {
+                tamil_title: title,
+                tamil_content: news_content,
+                UserId: userId,
+            }
+        }
+
+        models.News.update(
+            newsObject,
+            { where: { id: newId } }
+        ).then(function (results) {
+            res.sendStatus(200);
+        });
+    } else {
+
+        //write images to image files
+        _.forEach(req.body.images, function(image, index) {
+            var imageBuffer = decodeBase64Image(image.data); //decoding base64 images
+            fs.writeFile('../public/uploads/news/'+image.filename, imageBuffer.data, function(err) {
+                console.log(err);
+            });
+        });
+
+        var imageURL = req.body.images[req.body.images.length-1].filename;
+
+        var newsObject = {};
+        if(language == "English") {
+            newsObject = {
+                english_title: title,
+                category: category,
+                english_content: news_content,
+                hits: 0,
+                thumbnail: imageURL,
+                UserId: userId,
+            }
+        } else if(language == "Sinhala"){
+            newsObject = {
+                sinhala_title: title,
+                category: category,
+                sinhala_content: news_content,
+                hits: 0,
+                thumbnail: imageURL,
+                UserId: userId,
+            }
+        } else if(language == "Tamil") {
+            newsObject = {
+                tamil_title: title,
+                category: category,
+                tamil_content: news_content,
+                hits: 0,
+                thumbnail: imageURL,
+                UserId: userId,
+            }
+        }
+        console.log(newsObject);
+        //store news in database
+        sequelize.sync().then(
+            function () {
+                var News = models.News;
+                News.create(newsObject).then(
+                    function (insertedNews) {
+                        res.sendStatus(200);
+                    }
+                );
+            }
+        ).catch(function (error) {
+            console.log(error);
+        });
+    }
+});
+
+/* Add news to database. */
+router.get('/titles', function (req, res) {
 
     //store news in database
     sequelize.sync().then(
         function () {
             var News = models.News;
-            News.create({
-                title: title,
-                category: category,
-                content: news_content,
-                hits: 0,
-                UserId: 1,
-            }).then(function (insertedNews) {
+            var User = models.User;
+            News.findAll({
+                attributes: ['id','english_title'],
+            }).then(function (News) {
+                req.session.newsTitles = News;
+                res.redirect('/addnews');
             });
         }
-    ).catch(function (error) {
-        console.log(error);
-    });
+    );
 
-    res.redirect('/addnews');
+
 });
 
 /* Add news to database. */
@@ -115,9 +215,10 @@ router.get('/viewpopular', function (req, res) {
                 //pushing retrieved data to newsArr
                 _.forEach(News.rows, function(news, index) {
                     var id = news.id;
-                    var title = news.title;
+                    var title = news.english_title;
                     var category = news.category;
                     var createdAt = news.createdAt;
+                    var thumbnail = news.thumbnail;
 
                     //mapping month
                     var dateComponents = createdAt.toString().split(" ");
@@ -126,7 +227,7 @@ router.get('/viewpopular', function (req, res) {
                     var yearOfNews = dateComponents[3];
 
                     newsArr.push({'id': id, 'title': title, 'category': category,
-                        'date': dateOfNews, 'month': monthOfNews,'year': yearOfNews});
+                        'date': dateOfNews, 'month': monthOfNews,'year': yearOfNews,'thumbnail': thumbnail});
                 });
                 res.jsonp(newsArr);//encoding as jsonp response
             });
@@ -150,9 +251,10 @@ router.get('/viewrecent', function (req, res) {
                 //pushing retrieved data to newsArr
                 _.forEach(News.rows, function(news, index) {
                     var id = news.id;
-                    var title = news.title;
+                    var title = news.english_title;
                     var category = news.category;
                     var createdAt = news.createdAt;
+                    var thumbnail = news.thumbnail;
 
                     //mapping month
                     var dateComponents = createdAt.toString().split(" ");
@@ -161,7 +263,7 @@ router.get('/viewrecent', function (req, res) {
                     var yearOfNews = dateComponents[3];
 
                     newsArr.push({'id': id, 'title': title, 'category': category,
-                        'date': dateOfNews, 'month': monthOfNews,'year': yearOfNews});
+                        'date': dateOfNews, 'month': monthOfNews,'year': yearOfNews, thumbnail: thumbnail});
                 });
                 res.jsonp(newsArr);//encoding as jsonp response
             });
@@ -206,12 +308,24 @@ router.get('/id/:id', function (req, res) {
                 include: [User,Comment],
             }).then(function (News) {
                 var news = News[0].dataValues;
+
+                var title = '';
+                var content = '';
+                if(req.query['lan']=='en') {
+                    title = news.english_title;
+                    content = news.english_content;
+                } else if(req.query['lan']=='sn') {
+                    title = news.sinhala_title;
+                    content = news.sinhala_content;
+                } else if(req.query['lan']=='tm') {
+                    title = news.tamil_title;
+                    content = news.tamil_content;
+                }
                 var id = news.id;
-                var title = news.title;
                 var category = news.category;
                 var hits = news.hits;
                 var user = news.User.full_name;
-                var content = news.content;
+
                 var createdAt = news.createdAt;
                 var paragraphs = [];
 
@@ -241,7 +355,7 @@ router.get('/id/:id', function (req, res) {
                     { hits: (hits+1) },
                     { where: { id: id } }
                 ).then(function (results) {
-                    res.redirect('/news/id/'+newsId);
+                    res.redirect('/news/id/'+newsId+'?lan='+req.query['lan']);
                 });
             });
         }
@@ -251,36 +365,49 @@ router.get('/id/:id', function (req, res) {
 //Construct NewsArray from retrieved data from db and redirect
 function newsArray (News, offset , req, res) {
     var newsArr = [];
+    // var language = req.session.language;
 
     _.forEach(News.rows, function(news) {
-        var id = news.id;
-        var title = news.title;
-        var category = news.category;
-        var hits = news.hits;
-        var user = news.User.full_name;
-        var content = news.content;
-        var createdAt = news.createdAt;
+        // var content = '';
+        // var title = '';
+        var has_sinhala_content = false;
+        var has_tamil_content = false;
+        if(news.sinhala_content != "" && news.sinhala_content != null) {
+            has_sinhala_content = true;
+        } else if(news.tamil_content != "" && news.tamil_content != null) {
+            has_tamil_content = true;
+        }
 
-        //removing <p> tags and <img> tags and extract image
-        var img = content.substring(content.indexOf('src="',content.indexOf("<img"))+5
-            ,content.indexOf('"',content.indexOf('src=\"')+5));
-        var imgToReplace = content.substring(content.indexOf('<img')
-            ,content.indexOf('>',content.indexOf('<img'))+1);
-        var removedImage = content.replace(imgToReplace, "");
-        var removedParagraphStartTag = removedImage.split("<p>").join("");
-        var removedParagraphEndTag = removedParagraphStartTag.split("</p>").join("");
-        var removedArticleTag = removedParagraphEndTag.split('<div class="article-text">').join("");
-        var removedArticleEndTag = removedArticleTag.split('</div>').join("");
+        // if(content != null && content != '') {
+            var id = news.id;
+            var category = news.category;
+            var hits = news.hits;
+            var user = news.User.full_name;
+            var createdAt = news.createdAt;
+            var content = news.english_content;
+            var title = news.english_title;
 
-        //mapping month
-        var dateComponents = createdAt.toString().split(" ");
-        var dateOfNews = dateComponents[2];
-        var monthOfNews = dateComponents[1];
-        var yearOfNews = dateComponents[3];
+            //removing <p> tags and <img> tags and extract image
+            var img = content.substring(content.indexOf('src="',content.indexOf("<img"))+5
+                ,content.indexOf('"',content.indexOf('src=\"')+5));
+            var imgToReplace = content.substring(content.indexOf('<img')
+                ,content.indexOf('>',content.indexOf('<img'))+1);
+            var removedImage = content.replace(imgToReplace, "");
+            var removedParagraphStartTag = removedImage.split("<p>").join("");
+            var removedParagraphEndTag = removedParagraphStartTag.split("</p>").join("");
+            var removedArticleTag = removedParagraphEndTag.split('<div class="article-text">').join("");
+            var removedArticleEndTag = removedArticleTag.split('</div>').join("");
 
-        newsArr.push({'id': id, 'title': title, 'category': category, 'img': img,
-            'hits': hits, 'content': removedParagraphEndTag, 'user': user, 'date': dateOfNews,
-            'month': monthOfNews,'year': yearOfNews});
+            //mapping month
+            var dateComponents = createdAt.toString().split(" ");
+            var dateOfNews = dateComponents[2];
+            var monthOfNews = dateComponents[1];
+            var yearOfNews = dateComponents[3];
+
+            newsArr.push({'id': id, 'title': title, 'category': category, 'img': img,
+                'hits': hits, 'content': removedParagraphEndTag, 'user': user, 'date': dateOfNews,
+                'month': monthOfNews,'year': yearOfNews, 'has_sinhala_content': has_sinhala_content, 'has_tamil_content': has_tamil_content});
+        // }
     });
 
     if(offset != null) {
@@ -298,6 +425,21 @@ function newsArray (News, offset , req, res) {
         res.redirect('/');
     }
 
+}
+
+//function to decode base64 image
+function decodeBase64Image(dataString) {
+    var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+        response = {};
+
+    if (matches.length !== 3) {
+        return new Error('Invalid input string');
+    }
+
+    response.type = matches[1];
+    response.data = new Buffer(matches[2], 'base64');
+
+    return response;
 }
 
 module.exports = router;

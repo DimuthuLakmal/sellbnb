@@ -63,7 +63,7 @@
                 <article class="post">
 
                     <figure class="post-img">
-                        <a href="#"><img src="<%= News[i].img %>" width="860" height="405" alt=""/></a>
+                        <a href="/news/id/<%= News[i].id %>?lan=en"><img src="<%= News[i].img %>" width="860" height="405" alt=""/></a>
                     </figure>
 
                     <section class="date">
@@ -75,14 +75,20 @@
                     <section class="post-content">
 
                         <header class="meta">
-                            <h2><a href="blog-single-post.html"><%= News[i].title %></a></h2>
+                            <h2><a href="/news/id/<%= News[i].id %>?lan=en"><%= News[i].title %></a></h2>
                             <span><i class="fa fa-user"></i>By <a href="#"><%= News[i].user %></a></span>
                             <span><i class="fa fa-tag"></i><a href="#"><%= News[i].category %></a></span>
+                            <% if(News[i].has_sinhala_content) {%>
+                                <span><i class="fa fa-language"></i><a href="/news/id/<%= News[i].id %>?lan=sn">Sinhala</a></span>
+                            <% } %>
+                            <% if(News[i].has_tamil_content) {%>
+                                <span><i class="fa fa-language"></i><a href="/news/id/<%= News[i].id %>?lan=tm">Tamil</a></span>
+                            <% } %>
                         </header>
 
                         <p class="news-paragraph"><%= News[i].content.substr(0,350)+' ...' %></p>
 
-                        <a href="/news/id/<%= News[i].id %>" class="button color">Read More</a>
+                        <a href="/news/id/<%= News[i].id %>?lan=en" class="button color">Read More</a>
 
                     </section>
 
