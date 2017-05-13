@@ -34,9 +34,9 @@
 
     <!-- Titlebar
     ================================================== -->
-    <section class="parallax-titlebar fullwidth-element"  data-background="#000" data-opacity="0.45" data-height="160">
+    <section class="parallax-titlebar fullwidth-element"  data-background="#000" data-opacity="0.1" data-height="160">
 
-        <img src="images/titlebar_bg_02.jpg" alt="" />
+        <img src="images/mini-slides/3.jpg" alt=""/>
         <div class="parallax-overlay"></div>
 
         <div class="parallax-content">
@@ -46,7 +46,7 @@
                 <ul>
                     <li>Home</li>
                     <li>Buy Account</li>
-                    <li>Bidding Details</li>
+                    <li>Contract Details</li>
                 </ul>
             </nav>
         </div>
@@ -108,17 +108,25 @@
                     </tr>
                     <tr>
                         <td> Packing Type</td>
+                        <%if(buyContractBid.packageType !== null && buyContractBid.packageType != "") {%>
                         <td> <%= buyContractBid.packageType %></td>
+                        <% } else {%>
+                        <td> <%= buyContractItem.packageType %></td>
+                        <% } %>
                     </tr>
                     <tr>
                         <td> Agreed Quantity</td>
+                        <%if(buyContractBid.quantity !== null && buyContractBid.quantity != "") {%>
                         <td> <%= buyContractBid.quantity %></td>
+                        <% } else {%>
+                        <td> <%= buyContractItem.quantity %></td>
+                        <% } %>
                     </tr>
                     <tr>
                         <td>Delivery By</td>
                         <td> <%= buyContractBid.deliveryBy %></td>
                     </tr>
-                    <% if(buyContractBid.deliveryBy == 'Buyer') {%>
+                    <% if(buyContractBid.deliveryBy == 'Seller') {%>
                         <tr>
                             <td> Delivery Cost</td>
                             <td> <%= buyContractBid.deliveryCost %></td>
@@ -144,7 +152,11 @@
 
                     <tr>
                         <td> Payment Terms</td>
-                        <td><%= buyContractBid.paymentTerms %></td>
+                        <%if(buyContractBid.paymentTerms !== null && buyContractBid.paymentTerms != "") {%>
+                        <td> <%= buyContractBid.paymentTerms %></td>
+                        <% } else {%>
+                        <td> <%= buyContractItem.paymentTerms %></td>
+                        <% } %>
                     </tr>
                     <tr>
                         <td> Agreed Price</td>
@@ -154,11 +166,12 @@
                         <td>Seller Note</td>
                         <td><%= buyContractItem.note %></td>
                     </tr>
+                    <%if(buyContractBid.note !== null && buyContractBid.note != "") {%>
                     <tr>
                         <td>Buyer Note</td>
-                        <td><%= buyContractBid.note %>
-                        </td>
+                        <td><%= buyContractBid.note %></td>
                     </tr>
+                    <% } %>
 
                     </tbody>
                 </table>

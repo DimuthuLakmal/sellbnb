@@ -38,7 +38,7 @@
     ================================================== -->
     <section class="parallax-titlebar fullwidth-element" data-background="#000" data-opacity="0.1" data-height="160">
 
-        <img src="images/titlebar_bg_02.jpg" alt=""/>
+        <img src="images/mini-slides/3.jpg" alt=""/>
         <div class="parallax-overlay"></div>
 
         <div class="parallax-content">
@@ -78,12 +78,15 @@
 
                 var warehouse = bidding.WareHouse;
                 var formattedAddress = "";
-                formattedAddress = (warehouse.warehouseAddress1 != null && warehouse.warehouseAddress1 != undefined) ?
-                        warehouse.warehouseAddress1 : formattedAddress;
-                formattedAddress = (warehouse.warehouseAddress2 != null && warehouse.warehouseAddress2 != undefined) ?
-                formattedAddress + ", " +warehouse.warehouseAddress2 : formattedAddress;
-                formattedAddress = (warehouse.warehouseCity != null && warehouse.warehouseCity != undefined) ?
-                formattedAddress + ", " +warehouse.warehouseCity : formattedAddress;
+                if(warehouse != null && warehouse != undefined) {
+                    formattedAddress = (warehouse.warehouseAddress1 != null && warehouse.warehouseAddress1 != undefined) ?
+                            warehouse.warehouseAddress1 : formattedAddress;
+                    formattedAddress = (warehouse.warehouseAddress2 != null && warehouse.warehouseAddress2 != undefined) ?
+                    formattedAddress + ", " +warehouse.warehouseAddress2 : formattedAddress;
+                    formattedAddress = (warehouse.warehouseCity != null && warehouse.warehouseCity != undefined) ?
+                    formattedAddress + ", " +warehouse.warehouseCity : formattedAddress;
+
+                }
 
                 var formattedStatus = '';
                 if(bidding.status == 'open') {
@@ -104,7 +107,13 @@
                 <div class="item-selling-div centered">
                     <div class="eight columns" style="padding-top: 20px;">
                         <h3>Bid: <%= bidding.bid %></h3>
-                        <p>Quantity: <%= bidding.quantity %><br>
+                        <p>Quantity:
+                            <%if(bidding.quantity !== null && bidding.quantity != "") {%>
+                                <%= bidding.quantity %>
+                            <% } else {%>
+                                <%= item.quantity %>
+                            <% } %>
+                            <br>
                             Buyer: <a href="/user/public/userId/<%= bidding.User.id %>"> <%= bidding.User.username %></a><br>
                             Status: <%= formattedStatus %>
                         </p>
@@ -127,7 +136,12 @@
                                     </tr>
                                     <tr>
                                         <td>Quantity</td>
-                                        <td id="quantity"><%= bidding.quantity %></td>
+                                        <%if(bidding.quantity !== null && bidding.quantity != "") {%>
+                                            <td id="quantity"><%= bidding.quantity %></td>
+                                        <% } else {%>
+                                            <td id="quantity"><%= item.quantity %></td>
+                                        <% } %>
+
                                     </tr>
                                     <tr>
                                         <td>Buyer</td>
@@ -135,7 +149,11 @@
                                     </tr>
                                     <tr>
                                         <td>Package Type</td>
-                                        <td id="package_type"><%= bidding.packageType %></td>
+                                        <%if(bidding.packageType !== null && bidding.packageType != "") {%>
+                                            <td id="package_type"><%= bidding.packageType %></td>
+                                        <% } else {%>
+                                            <td id="package_type"><%= item.packageType %></td>
+                                        <% } %>
                                     </tr>
                                     <tr>
                                         <td>Delivery By</td>
@@ -143,15 +161,25 @@
                                     </tr>
                                     <tr>
                                         <td>Payment Terms</td>
-                                        <td id="payment_terms"><%= bidding.paymentTerms %></td>
+                                        <%if(bidding.paymentTerms !== null && bidding.paymentTerms != "") {%>
+                                            <td id="payment_terms"><%= bidding.paymentTerms %></td>
+                                        <% } else {%>
+                                            <td id="payment_terms"><%= item.paymentTerms %></td>
+                                        <% } %>
                                     </tr>
-                                    <tr>
-                                        <td>Warehouse</td>
-                                        <td id="warehouse"><%= formattedAddress %></td>
-                                    </tr>
+                                    <%if(bidding.deliveryBy == "Seller") {%>
+                                        <tr>
+                                            <td>Warehouse</td>
+                                            <td id="warehouse"><%= formattedAddress %></td>
+                                        </tr>
+                                    <% } %>
                                     <tr>
                                         <td>Note</td>
-                                        <td id="note"><%= bidding.note %></td>
+                                        <%if(bidding.note !== null && bidding.note != "") {%>
+                                            <td id="note"><%= bidding.note %></td>
+                                        <% } else {%>
+                                            <td id="note"><%= item.note %></td>
+                                        <% } %>
                                     </tr>
                                     <tr>
                                         <td>Status</td>
