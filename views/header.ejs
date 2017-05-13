@@ -150,7 +150,15 @@
                         <% } else { %>
                         <i class="fa fa-user"></i>
                         <% } %>
-                    </a><div style="margin-top:-20px; margin-left:30px; font-family:Arial!important; "><%= user.full_name.split(" ")[0] %></div>
+                    </a>
+                    <div style="margin-top:-20px; margin-left:30px; font-family:Arial!important; ">
+                        <%if(user.full_name != null && user.full_name != undefined) {%>
+                            <%= user.full_name.split(" ")[0] %>
+                        <% } else {%>
+                            <%= user.username.substring(0,3).toUpperCase()+'..' %>
+                        <% } %>
+
+                    </div>
                     </span>
                 <% } else {%>
                 <span><a href="/user/basic"><i class="fa fa-user"></i></a></span>
