@@ -52,13 +52,30 @@ $('#submit').click(function (e) {
     e.preventDefault();
     var last_bid = $('#last-bid-value').text().trim().split(" ")[1];
     var bidByUser = $('#your_bid').val();
+    var suggested_price = $('#suggested_price').text().trim().split(" ")[1];
 
     if(parseFloat(last_bid) < parseFloat(bidByUser)) {
-        $('#error_message').hide();
-        $('#submitFormBtn').click();
+        if(parseFloat(bidByUser) > parseFloat(suggested_price)) {
+            $('#error_message').hide();
+            $('#submitFormBtn').click();
+        } else {
+            $('#error_message').show();
+            $('#message_span').text('Your Bid Should higher than '+$('#suggested_price').text()+" (Suggested Price By Seller)");
+        }
+
     } else {
-        $('#error_message').show();
-        $('#message_span').text('Your Bid Should higher than '+$('#last-bid-value').text());
+        if($('#last-bid-value').text().trim() == 'No Bids') {
+            if(parseFloat(bidByUser) > parseFloat(suggested_price)) {
+                $('#error_message').hide();
+                $('#submitFormBtn').click();
+            } else {
+                $('#error_message').show();
+                $('#message_span').text('Your Bid Should higher than '+$('#suggested_price').text()+" (Suggested Price By Seller)");
+            }
+        } else {
+            $('#error_message').show();
+            $('#message_span').text('Your Bid Should higher than '+$('#last-bid-value').text());
+        }
     }
 });
 
