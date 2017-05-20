@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="61a4aa39-20c5-4f13-9e78-9d855475e186" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/www" afterPath="$PROJECT_DIR$/bin/www" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/news.js" afterPath="$PROJECT_DIR$/routes/news.js" />
     </list>
     <ignored path="sellerbnbbackend.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,11 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="www" pinned="false" current-in-tab="true">
+      <file leaf-file-name="www" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bin/www">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
+            <state relative-caret-position="170">
+              <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -66,11 +66,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="news.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="news.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/news.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="576">
-              <caret line="476" column="57" selection-start-line="476" selection-start-column="57" selection-end-line="476" selection-end-column="57" />
+            <state relative-caret-position="225">
+              <caret line="397" column="90" selection-start-line="397" selection-start-column="90" selection-end-line="397" selection-end-column="90" />
               <folding />
             </state>
           </provider>
@@ -155,8 +155,8 @@
         <option value="$PROJECT_DIR$/public/scripts/views/viewnews.js" />
         <option value="$PROJECT_DIR$/views/viewnews.ejs" />
         <option value="$PROJECT_DIR$/views/viewnewsall.ejs" />
-        <option value="$PROJECT_DIR$/routes/news.js" />
         <option value="$PROJECT_DIR$/bin/www" />
+        <option value="$PROJECT_DIR$/routes/news.js" />
       </list>
     </option>
   </component>
@@ -571,7 +571,7 @@
       <workItem from="1494875499115" duration="820000" />
       <workItem from="1495162991643" duration="13304000" />
       <workItem from="1495242399757" duration="5861000" />
-      <workItem from="1495306141419" duration="50000" />
+      <workItem from="1495306141419" duration="1003000" />
     </task>
     <task id="LOCAL-00001" summary="Forgot Password Added">
       <created>1491872343489</created>
@@ -776,11 +776,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495253484550</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="port changed to 80">
+      <created>1495306199810</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1495306199810</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="318331000" />
+    <option name="totallyTimeSpent" value="319284000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="0" width="1378" height="744" extended-state="0" />
@@ -818,7 +825,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="Forgot Password Added" />
     <MESSAGE value="Preview Item added" />
     <MESSAGE value="Bid Page Modifications!" />
     <MESSAGE value="Footer, Seller Account &amp; Buyer Account Modified" />
@@ -843,7 +849,8 @@
     <MESSAGE value="Issue with Seller Account Bidding Details Page solved" />
     <MESSAGE value="Tables &amp; other content not showing in News pages resolved" />
     <MESSAGE value="remove blanked Paragraphs in news" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove blanked Paragraphs in news" />
+    <MESSAGE value="port changed to 80" />
+    <option name="LAST_COMMIT_MESSAGE" value="port changed to 80" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -921,18 +928,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/news.js">
+    <entry file="file://$PROJECT_DIR$/bin/www">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="476" column="57" selection-start-line="476" selection-start-column="57" selection-end-line="476" selection-end-column="57" />
+        <state relative-caret-position="170">
+          <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bin/www">
+    <entry file="file://$PROJECT_DIR$/routes/news.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
+        <state relative-caret-position="225">
+          <caret line="397" column="90" selection-start-line="397" selection-start-column="90" selection-end-line="397" selection-end-column="90" />
           <folding />
         </state>
       </provider>

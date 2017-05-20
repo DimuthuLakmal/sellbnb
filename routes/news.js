@@ -395,8 +395,9 @@ router.get('/news_id/:news_id', function (req, res) {
                 }
 
                 if(content.indexOf('<table') != -1) {
-                    var tableToReplace = removedImageContent.substring(content.indexOf('<table')
+                    var tableToReplace = removedImageContent.substring(removedImageContent.indexOf('<table')
                         ,removedImageContent.indexOf('>',removedImageContent.indexOf('<table'))+1);
+                    console.log(tableToReplace);
                     var removedTableContent = removedImageContent.replace(tableToReplace, '<table class="basic-table">');
                 } else {
                     var removedTableContent = removedImageContent;
