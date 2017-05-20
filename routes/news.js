@@ -332,13 +332,6 @@ router.get('/id/:id', function (req, res) {
                 //extracting paragraphs,image by removing <p> tags and <img> tags
                 var img = content.substring(content.indexOf('src="',content.indexOf("<img"))+5
                     ,content.indexOf('"',content.indexOf('src=\"')+5));
-                var imgToReplace = content.substring(content.indexOf('<img')
-                    ,content.indexOf('>',content.indexOf('<img'))+1);
-                var removedImageContent = content.replace(imgToReplace, "");
-                var removedParagraphStartTag = removedImageContent.split("<p>");
-                _.forEach(removedParagraphStartTag, function(paragraphWithEndTag) {
-                    paragraphs.push(paragraphWithEndTag.split("</p>")[0]);
-                });
 
                 //mapping month
                 var dateComponents = createdAt.toString().split(" ");
@@ -347,7 +340,7 @@ router.get('/id/:id', function (req, res) {
                 var yearOfNews = dateComponents[3];
 
                 req.session.specificNews = {'id': id, 'title': title, 'category': category, 'img': img,
-                    'hits': hits, 'paragraphs': paragraphs, 'user': user, 'date': dateOfNews,
+                    'hits': hits, 'user': user, 'date': dateOfNews,
                     'month': monthOfNews,'year': yearOfNews, comments: news.Comments};
 
                 var News = models.News;
@@ -357,6 +350,61 @@ router.get('/id/:id', function (req, res) {
                 ).then(function (results) {
                     res.redirect('/news/id/'+newsId+'?lan='+req.query['lan']);
                 });
+            });
+        }
+    );
+});
+
+/* Retrieve specific news and its comments from database */
+router.get('/news_id/:news_id', function (req, res) {
+    //retrieve data from req object
+    console.log('visited');
+    sequelize.sync().then(
+        function () {
+            var News = models.News;
+            var User = models.User;
+            var Comment = models.Comment;
+
+            var newsId = req.params.news_id;
+            News.findAll({
+                where: {id: newsId},
+                include: [User,Comment],
+            }).then(function (News) {
+                var news = News[0].dataValues;
+
+                var title = '';
+                var content = '';
+                if(req.query['lan']=='en') {
+                    title = news.english_title;
+                    content = news.english_content;
+                } else if(req.query['lan']=='sn') {
+                    title = news.sinhala_title;
+                    content = news.sinhala_content;
+                } else if(req.query['lan']=='tm') {
+                    title = news.tamil_title;
+                    content = news.tamil_content;
+                }
+
+                //extracting paragraphs,image by removing <p> tags and <img> tags
+                if(content.indexOf('<img') != -1) {
+                    var imgToReplace = content.substring(content.indexOf('<img')
+                        ,content.indexOf('>',content.indexOf('<img'))+1);
+                    var removedImageContent = content.replace(imgToReplace, "");
+                } else {
+                    var removedImageContent = content;
+                }
+
+                if(content.indexOf('<table') != -1) {
+                    var tableToReplace = removedImageContent.substring(content.indexOf('<table')
+                        ,removedImageContent.indexOf('>',removedImageContent.indexOf('<table'))+1);
+                    var removedTableContent = removedImageContent.replace(tableToReplace, '<table class="basic-table">');
+                } else {
+                    var removedTableContent = removedImageContent;
+                }
+
+                var newsContent = {removedTableContent: removedTableContent};
+
+                res.jsonp(newsContent);
             });
         }
     );
@@ -388,15 +436,30 @@ function newsArray (News, offset , req, res) {
             var title = news.english_title;
 
             //removing <p> tags and <img> tags and extract image
-            var img = content.substring(content.indexOf('src="',content.indexOf("<img"))+5
-                ,content.indexOf('"',content.indexOf('src=\"')+5));
-            var imgToReplace = content.substring(content.indexOf('<img')
-                ,content.indexOf('>',content.indexOf('<img'))+1);
-            var removedImage = content.replace(imgToReplace, "");
-            var removedParagraphStartTag = removedImage.split("<p>").join("");
+            var removedImage = content;
+            var img = '';
+            while(removedImage.indexOf('<img') != -1) {
+                if(removedImage.indexOf('<img') != -1) {
+                    if(img == '') {
+                        img = removedImage.substring(removedImage.indexOf('src="',removedImage.indexOf("<img"))+5
+                            ,removedImage.indexOf('"',removedImage.indexOf('src=\"')+5));
+                    }
+                    var imgToReplace = removedImage.substring(removedImage.indexOf('<img')
+                        ,removedImage.indexOf('>',removedImage.indexOf('<img'))+1);
+                    removedImage = removedImage.replace(imgToReplace, "");
+                }
+            }
+
+            if(content.indexOf('<table') != -1) {
+                var tableToReplace = removedImage.substring(removedImage.indexOf('<table')
+                    ,removedImage.indexOf('</table>'));
+                var removedTable = removedImage.replace(tableToReplace, "");
+            } else {
+                var removedTable = removedImage;
+            }
+
+            var removedParagraphStartTag = removedTable.split("<p>").join("");
             var removedParagraphEndTag = removedParagraphStartTag.split("</p>").join("");
-            var removedArticleTag = removedParagraphEndTag.split('<div class="article-text">').join("");
-            var removedArticleEndTag = removedArticleTag.split('</div>').join("");
 
             //mapping month
             var dateComponents = createdAt.toString().split(" ");
@@ -405,7 +468,7 @@ function newsArray (News, offset , req, res) {
             var yearOfNews = dateComponents[3];
 
             newsArr.push({'id': id, 'title': title, 'category': category, 'img': img,
-                'hits': hits, 'content': removedParagraphEndTag, 'user': user, 'date': dateOfNews,
+                'hits': hits, 'content': removedTable, 'user': user, 'date': dateOfNews,
                 'month': monthOfNews,'year': yearOfNews, 'has_sinhala_content': has_sinhala_content, 'has_tamil_content': has_tamil_content});
         // }
     });

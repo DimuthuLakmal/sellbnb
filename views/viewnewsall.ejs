@@ -61,11 +61,11 @@
                 <% for(var i=0; i< News.length; i++) {%>
                 <!-- Post -->
                 <article class="post">
-
-                    <figure class="post-img">
-                        <a href="/news/id/<%= News[i].id %>?lan=en"><img src="<%= News[i].img %>" width="860" height="405" alt=""/></a>
-                    </figure>
-
+                    <% if(News[i].img != undefined && News[i].img != null) {%>
+                        <figure class="post-img">
+                            <a href="/news/id/<%= News[i].id %>?lan=en"><img src="<%= News[i].img %>" width="860" height="405" alt=""/></a>
+                        </figure>
+                    <% } %>
                     <section class="date">
                         <span class="day"><%= News[i].date %></span>
                         <span class="month"><%= News[i].month %></span>
@@ -86,7 +86,7 @@
                             <% } %>
                         </header>
 
-                        <p class="news-paragraph"><%= News[i].content.substr(0,350)+' ...' %></p>
+                        <p class="news-paragraph"><%- News[i].content.substr(0,350)+' ...' %></p>
 
                         <a href="/news/id/<%= News[i].id %>?lan=en" class="button color">Read More</a>
 

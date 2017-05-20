@@ -23,6 +23,12 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
+    <style>
+        table {
+            border: 1px solid lightgray;
+        }
+    </style>
+
 </head>
 
 <body class="boxed">
@@ -60,10 +66,11 @@
 
                 <!-- Post -->
                 <article class="post single">
-
-                    <figure class="post-img">
-                        <a href="#"><img src="<%= News.img %>" width="860" height="405" alt=""/></a>
-                    </figure>
+                    <% if(News.img != undefined && News.img != null) {%>
+                        <figure class="post-img">
+                            <a href="#"><img src="<%= News.img %>" width="860" height="405" alt=""/></a>
+                        </figure>
+                    <% } %>
 
                     <section class="date">
                         <span class="day"><%= News.date %></span>
@@ -81,12 +88,9 @@
                             <span><i class="fa fa-language"></i><a href="/news/id/<%= News.id %>?lan=tm">Tamil</a></span>
                         </header>
 
-                        <% for(var paragraphIndex = 0; paragraphIndex < News.paragraphs.length; paragraphIndex++) {%>
-                            <% if(News.paragraphs[paragraphIndex] !== '') {%>
-                                <p class="news-paragraph"><%= News.paragraphs[paragraphIndex] %></p>
-                            <% } %>
-                        <% } %>
+                        <div id="news_content_div">
 
+                        </div>
                         <!-- Share Buttons -->
                         <div class="share-buttons">
                             <ul>
