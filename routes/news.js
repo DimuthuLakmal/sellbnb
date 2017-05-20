@@ -459,14 +459,18 @@ function newsArray (News, offset , req, res) {
                 var removedTable = removedImage;
             }
 
-            if(content.indexOf('<p></p>') != -1) {
-                var removedBlankPara = removedTable.replace('<p></p>', "");
-            } else {
-                var removedBlankPara = removedTable;
+            var removedBlankPara = removedTable;
+            while(removedBlankPara.indexOf('<p></p>') != -1) {
+                if(removedBlankPara.indexOf('<p></p>') != -1) {
+                    removedBlankPara = removedBlankPara.replace('<p></p>', "");
+                }
             }
 
-            var removedParagraphStartTag = removedTable.split("<p>").join("");
-            var removedParagraphEndTag = removedParagraphStartTag.split("</p>").join("");
+            while(removedBlankPara.indexOf('<p>&nbsp;</p>') != -1) {
+                if(removedBlankPara.indexOf('<p>&nbsp;</p>') != -1) {
+                    removedBlankPara = removedBlankPara.replace('<p>&nbsp;</p>', "");
+                }
+            }
 
             //mapping month
             var dateComponents = createdAt.toString().split(" ");
