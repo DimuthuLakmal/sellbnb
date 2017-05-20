@@ -458,6 +458,12 @@ function newsArray (News, offset , req, res) {
                 var removedTable = removedImage;
             }
 
+            if(content.indexOf('<p></p>') != -1) {
+                var removedBlankPara = removedTable.replace('<p></p>', "");
+            } else {
+                var removedBlankPara = removedTable;
+            }
+
             var removedParagraphStartTag = removedTable.split("<p>").join("");
             var removedParagraphEndTag = removedParagraphStartTag.split("</p>").join("");
 
@@ -468,7 +474,7 @@ function newsArray (News, offset , req, res) {
             var yearOfNews = dateComponents[3];
 
             newsArr.push({'id': id, 'title': title, 'category': category, 'img': img,
-                'hits': hits, 'content': removedTable, 'user': user, 'date': dateOfNews,
+                'hits': hits, 'content': removedBlankPara, 'user': user, 'date': dateOfNews,
                 'month': monthOfNews,'year': yearOfNews, 'has_sinhala_content': has_sinhala_content, 'has_tamil_content': has_tamil_content});
         // }
     });
