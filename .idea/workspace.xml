@@ -30,11 +30,11 @@
         <entry file="file://$PROJECT_DIR$/routes/news.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="238">
-              <caret line="115" column="24" selection-start-line="115" selection-start-column="24" selection-end-line="115" selection-end-column="24" />
+              <caret line="115" column="22" selection-start-line="115" selection-start-column="22" selection-end-line="115" selection-end-column="22" />
               <folding>
-                <marker date="1495357662726" expanded="true" signature="17649:17655" ph=" " />
-                <marker date="1495357662726" expanded="true" signature="17719:17725" ph=" " />
-                <marker date="1495357662726" expanded="true" signature="17809:17815" ph=" " />
+                <marker date="1495357736959" expanded="true" signature="17646:17652" ph=" " />
+                <marker date="1495357736959" expanded="true" signature="17716:17722" ph=" " />
+                <marker date="1495357736959" expanded="true" signature="17806:17812" ph=" " />
               </folding>
             </state>
           </provider>
@@ -545,7 +545,7 @@
       <workItem from="1495162991643" duration="13304000" />
       <workItem from="1495242399757" duration="5861000" />
       <workItem from="1495306141419" duration="6858000" />
-      <workItem from="1495339240946" duration="14912000" />
+      <workItem from="1495339240946" duration="14989000" />
     </task>
     <task id="LOCAL-00001" summary="Forgot Password Added">
       <created>1491872343489</created>
@@ -792,11 +792,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495357560310</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Add News Images facility added.">
+      <created>1495357670163</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1495357670163</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="340051000" />
+    <option name="totallyTimeSpent" value="340128000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="0" width="1378" height="744" extended-state="0" />
@@ -965,11 +972,11 @@
     <entry file="file://$PROJECT_DIR$/routes/news.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
-          <caret line="115" column="24" selection-start-line="115" selection-start-column="24" selection-end-line="115" selection-end-column="24" />
+          <caret line="115" column="22" selection-start-line="115" selection-start-column="22" selection-end-line="115" selection-end-column="22" />
           <folding>
-            <marker date="1495357662726" expanded="true" signature="17649:17655" ph=" " />
-            <marker date="1495357662726" expanded="true" signature="17719:17725" ph=" " />
-            <marker date="1495357662726" expanded="true" signature="17809:17815" ph=" " />
+            <marker date="1495357736959" expanded="true" signature="17646:17652" ph=" " />
+            <marker date="1495357736959" expanded="true" signature="17716:17722" ph=" " />
+            <marker date="1495357736959" expanded="true" signature="17806:17812" ph=" " />
           </folding>
         </state>
       </provider>
