@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="61a4aa39-20c5-4f13-9e78-9d855475e186" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/views/addnews.js" afterPath="$PROJECT_DIR$/public/scripts/views/addnews.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/news.js" afterPath="$PROJECT_DIR$/routes/news.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/addcommodity.ejs" afterPath="$PROJECT_DIR$/views/addcommodity.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/addnews.ejs" afterPath="$PROJECT_DIR$/views/addnews.ejs" />
     </list>
     <ignored path="sellerbnbbackend.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,15 +26,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="news.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="news.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/news.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="115" column="51" selection-start-line="115" selection-start-column="51" selection-end-line="115" selection-end-column="51" />
+            <state relative-caret-position="238">
+              <caret line="115" column="22" selection-start-line="115" selection-start-column="22" selection-end-line="115" selection-end-column="22" />
               <folding>
-                <marker date="1495355569586" expanded="true" signature="17649:17655" ph=" " />
-                <marker date="1495355569586" expanded="true" signature="17719:17725" ph=" " />
-                <marker date="1495355569586" expanded="true" signature="17809:17815" ph=" " />
+                <marker date="1495357543272" expanded="true" signature="17647:17653" ph=" " />
+                <marker date="1495357543272" expanded="true" signature="17717:17723" ph=" " />
+                <marker date="1495357543272" expanded="true" signature="17807:17813" ph=" " />
               </folding>
             </state>
           </provider>
@@ -93,7 +90,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="addnews.ejs" pinned="false" current-in-tab="true">
+      <file leaf-file-name="addnews.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/addnews.ejs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="315">
@@ -173,8 +170,8 @@
         <option value="$PROJECT_DIR$/public/scripts/views/viewallnews.js" />
         <option value="$PROJECT_DIR$/views/addcommodity.ejs" />
         <option value="$PROJECT_DIR$/public/scripts/views/addnews.js" />
-        <option value="$PROJECT_DIR$/routes/news.js" />
         <option value="$PROJECT_DIR$/views/addnews.ejs" />
+        <option value="$PROJECT_DIR$/routes/news.js" />
       </list>
     </option>
   </component>
@@ -548,7 +545,7 @@
       <workItem from="1495162991643" duration="13304000" />
       <workItem from="1495242399757" duration="5861000" />
       <workItem from="1495306141419" duration="6858000" />
-      <workItem from="1495339240946" duration="13552000" />
+      <workItem from="1495339240946" duration="14801000" />
     </task>
     <task id="LOCAL-00001" summary="Forgot Password Added">
       <created>1491872343489</created>
@@ -781,11 +778,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495351763821</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Add News Images facility added.">
+      <created>1495355755206</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1495355755206</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="338691000" />
+    <option name="totallyTimeSpent" value="339940000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="0" width="1378" height="744" extended-state="0" />
@@ -797,9 +801,9 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20042531" sideWeight="0.5051282" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22762951" sideWeight="0.48958334" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22762951" sideWeight="0.48958334" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18053375" sideWeight="0.48809522" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18053375" sideWeight="0.48809522" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3987441" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -823,7 +827,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="Selling Account &amp; Buying Account Finished" />
     <MESSAGE value="Buyer Contract &amp; Seller Contracts are done" />
     <MESSAGE value="packing types is added" />
     <MESSAGE value="Merge branch 'user_profile_functions' of https://github.com/DimuthuLakmal/sellbnb into user_profile_functions&#10;&#10;Conflicts:&#10;&#9;.idea/workspace.xml&#10;" />
@@ -848,7 +851,8 @@
     <MESSAGE value="Table showing errors in News page solved" />
     <MESSAGE value="removed black paragraphs" />
     <MESSAGE value="News routing errors resolved. Country identification added" />
-    <option name="LAST_COMMIT_MESSAGE" value="News routing errors resolved. Country identification added" />
+    <MESSAGE value="Add News Images facility added." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add News Images facility added." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -923,18 +927,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/news.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="115" column="51" selection-start-line="115" selection-start-column="51" selection-end-line="115" selection-end-column="51" />
-          <folding>
-            <marker date="1495355569586" expanded="true" signature="17649:17655" ph=" " />
-            <marker date="1495355569586" expanded="true" signature="17719:17725" ph=" " />
-            <marker date="1495355569586" expanded="true" signature="17809:17815" ph=" " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/viewnewsall.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="875">
@@ -959,6 +951,18 @@
             <element signature="n#style#0;n#input#0;n#div#0;n#fieldset#0;n#form#0;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#form#0;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#div#3;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/news.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="115" column="22" selection-start-line="115" selection-start-column="22" selection-end-line="115" selection-end-column="22" />
+          <folding>
+            <marker date="1495357543272" expanded="true" signature="17647:17653" ph=" " />
+            <marker date="1495357543272" expanded="true" signature="17717:17723" ph=" " />
+            <marker date="1495357543272" expanded="true" signature="17807:17813" ph=" " />
           </folding>
         </state>
       </provider>
