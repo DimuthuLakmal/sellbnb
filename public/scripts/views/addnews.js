@@ -91,3 +91,60 @@ $('#submit-news-button').click(function (e) {
         }
     });
 });
+
+
+//upload news images----------------------------------------
+/**
+ * Created by kjtdi on 1/28/2017.
+ */
+var NewsImages = [];
+
+//handle image upload button click
+$("#newsImagesToUpload").change(function(event){
+    if (this.files && this.files[0]) {
+        var reader = new FileReader();
+
+        //set image to preview
+        reader.onload = function (e) {
+            $('#newsImagePreview-div').append('<div class="two columns">'+
+                '<img src="'+e.target.result+'"'+
+                'style="width: 120px; height: 120px" id="blah"/>'+
+                '<a href="#">(Remove)</a>'+
+                '</div>');
+        }
+
+        reader.readAsDataURL(this.files[0]);
+
+        //pushing images to image array to sent to the server
+        $.each(event.target.files, function(index, file) {
+            reader = new FileReader();
+            reader.onload = function(event) {
+                object = {};
+                object.filename = file.name;
+                object.data = event.target.result;
+                NewsImages.push(object);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+});
+
+$('#news-uploadimage').click(function (e) {
+    e.preventDefault();
+    $('#newsImagesToUpload').click();
+});
+
+//sending data to server using ajax
+$('#submit-image-button').click(function (e) {
+    e.preventDefault();
+
+    $.ajax({url: "/api/news/addimages",
+        type: 'POST',
+        data: {images: NewsImages},
+        success: function(data, status, xhr) {
+            if(status == 'success') {
+                $('#image_message_success').show();
+            }
+        }
+    });
+});

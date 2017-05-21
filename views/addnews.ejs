@@ -99,18 +99,42 @@
 
         <!-- Add News -->
         <div class="twelve columns products">
-            <a style="display: none" href="#small-dialog" class="popup-with-zoom-anim button color" id="cropWindow"></a>
-            <div id="small-dialog" class="small-dialog zoom-anim-dialog mfp-hide upload-demo">
-                <h3 class="headline">Crop Image</h3><span class="line margin-bottom-25"></span>
-                <div class="clearfix"></div>
-                <div align="center">
-                    <div id="upload-demo" class="croppie-container" style="width: 500px; height: 500px">
-                    </div>
-                    <br><br>
-                    <a class="button color" id="crop-btn">Crop Image</a>
-                </div>
 
+            <!-- Headline -->
+            <h3 class="headline">Add Images</h3>
+            <span class="line margin-bottom-0"></span>
+            <div class="clearfix"></div>
+
+            <div class="newsform">
+                <form method="post" name="newsform" action="api/news/addimages">
+
+                    <fieldset>
+                        <div class="twelve alpha columns editform">
+                            <label>Images : </label>
+                            <div class="ten columns" id="newsImagePreview-div"></div>
+                            <button class="commodity-uploadimage" id="news-uploadimage">Upload Images</button>
+                            <input type="file" name="newsImagesToUpload" id="newsImagesToUpload" style="display: none" multiple>
+                        </div>
+
+                        <div class="twelve columns newsform">
+                            <input type="submit" class="submit" id="submit-image-button" value="Submit"/>
+                        </div>
+
+                    </fieldset>
+                    <br>
+                    <div class="notification success closeable" style="display: none" id="image_message_success">
+                        <p><span>Success! </span>Images added successfully!</p>
+                        <a class="close" href="#"></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </form>
             </div>
+            <br>
+            <!-- Headline -->
+            <h3 class="headline">Add News</h3>
+            <span class="line margin-bottom-0"></span>
+            <div class="clearfix"></div>
+
             <div class="newsform">
                 <a style="display: none" href="#small-dialog" class="popup-with-zoom-anim button color" id="cropWindow"></a>
                 <div id="small-dialog" class="small-dialog zoom-anim-dialog mfp-hide upload-demo">

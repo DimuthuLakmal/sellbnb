@@ -107,6 +107,21 @@ router.post('/addnews', function (req, res) {
     }
 });
 
+/* Add Images of News*/
+/* Used in addnews page */
+router.post('/addimages', function (req, res, next) {
+    var totalImages = req.body.images.length;
+    _.forEach(req.body.images, function(image, index) {
+        var imageBuffer = decodeBase64Image(image.data); //decoding base64 images
+        fs.writeFile('../public/uploads/news/images/'+image.filename, imageBuffer.data, function(err) {
+            console.log(err);
+        });
+        if((index+1) == totalImages) {
+            res.sendStatus(200);
+        }
+    });
+});
+
 /* Add news to database. */
 router.get('/titles', function (req, res) {
 
@@ -154,27 +169,8 @@ router.post('/addcomment', function (req, res) {
     res.redirect('/news/id/'+NewsId);
 });
 
-/* Retrieve all news from database */
-// router.get('/viewall/start/:start', function (req, res) {
-//     //retrieve data from req object
-//     sequelize.sync().then(
-//         function () {
-//             var News = models.News;
-//             var User = models.User;
-//             News.findAndCountAll({
-//                 limit: 3,
-//                 offset: parseInt(req.params.start),
-//                 include: [User],
-//                 order: '`id` DESC'
-//             }).then(function (News) {
-//                 //saving news array to a session and redirect
-//                 newsArray(News, req.params.start, req, res);
-//             });
-//         }
-//     );
-// });
-
-/* Retrieve news specific to a category from database */
+/* Retrieve news from database */
+/* Usage: use to market news button in header. Also use to keyword search and category news searches*/
 router.get('/start/:start', function (req, res) {
     var keyword = req.query['keyword'];
     var category = req.query['category'];
@@ -265,28 +261,6 @@ router.get('/viewpopular', function (req, res) {
         }
     );
 });
-
-/* Retrieve news have keywords from database */
-/* Usage: keyword search new news page */
-// router.get('/viewall/keyword/start/:start', function (req, res) {
-//     //retrieve news which has keyword in keyword column
-//     sequelize.sync().then(
-//         function () {
-//             var News = models.News;
-//             var User = models.User;
-//             News.findAndCountAll({
-//                 where: {keywords: {$like: '%'+req.query['keyword'].toLowerCase()+'%'}},
-//                 limit: 3,
-//                 offset: parseInt(req.params.start),
-//                 include: [User],
-//                 order: '`id` DESC'
-//             }).then(function (News) {
-//                 //saving news array to a session and redirect
-//                 newsArray(News, 0, req, res);
-//             });
-//         }
-//     );
-// });
 
 /* Retrieve recent news from database */
 router.get('/viewrecent', function (req, res) {
