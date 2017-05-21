@@ -113,7 +113,7 @@ router.post('/addimages', function (req, res, next) {
     var totalImages = req.body.images.length;
     _.forEach(req.body.images, function(image, index) {
         var imageBuffer = decodeBase64Image(image.data); //decoding base64 images
-        fs.writeFile('/public/uploads/news/images/'+image.filename, imageBuffer.data, function(err) {
+        fs.writeFile('../public/uploads/news/images/'+image.filename, imageBuffer.data, function(err) {
             console.log(err);
         });
         if((index+1) == totalImages) {
