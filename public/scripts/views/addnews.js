@@ -79,18 +79,11 @@ $('#submit-news-button').click(function (e) {
     var category = $('#category').val();
     var userId = $('#userId').val();
     var language = $('#language').val();
-
-    console.log(title);
-    console.log(old_title);
-    console.log(news_content);
-    console.log(category);
-    console.log(userId);
-    console.log(language);
-    console.log(images);
+    var keywords = $('#keywords').val();
 
     $.ajax({url: "/api/news/addnews",
         type: 'POST',
-        data: {title:title, old_title: old_title, language: language, news_content: news_content, userId: userId, images: images, category: category},
+        data: {title:title, old_title: old_title, language: language, news_content: news_content, userId: userId, images: images, category: category, keywords: keywords},
         success: function(data, status, xhr) {
             if(status == 'success') {
                 $('#message_success').show();

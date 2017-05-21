@@ -1,8 +1,3 @@
-/**
- * Created by kjtdi on 2/3/2017.
- */
-
-//get search results for auto suggestion in top search bar
 $('#top_search').keyup(function () {
     var keyword = $(this).val();
     jQuery.ajax({
@@ -25,3 +20,14 @@ $('#top_search').keyup(function () {
         }
     });
 });
+
+$.get("https://ipinfo.io", function(response) {
+    jQuery.ajax({
+        type: "GET",
+        dataType: 'jsonp',
+        url: "/api/countries/code/"+response.country,
+        success: function (obj, textstatus) {
+            $('#flag_img').attr("src","images/flags/"+obj.flag);
+        }
+    });
+}, "jsonp");

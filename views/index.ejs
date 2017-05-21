@@ -158,7 +158,6 @@
                       </div>
                     <% } %>
                   </a>
-                  <a href="#" class="product-button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
                 </div>
 
                 <a href="/items/id/<%= latestItems[itemIndex].id %>">
@@ -346,17 +345,23 @@
 
           <figure class="from-the-blog-image">
             <% if(news.img == null) { %>
-              <a href="blog-single-post.html"><img src="images/from_the_blog_01.jpg" alt="" /></a>
+              <a href="/news/id/<%= news.id %>?lan=en"><img src="images/from_the_blog_01.jpg" alt="" /></a>
             <% } else { %>
-              <a href="blog-single-post.html"><img src="<%= news.img %>" alt="" style="height: 160px; width: 280px;"/></a>
+              <a href="/news/id/<%= news.id %>?lan=en"><img src="<%= news.img %>" alt="" style="height: 160px; width: 280px;"/></a>
             <% } %>
-            <div class="hover-icon"></div>
           </figure>
 
           <section class="from-the-blog-content">
-            <a href="/news/id/<%= news.id %>?lan=en"><h5><%= news.title %></h5></a>
+            <a href="/news/id/<%= news.id %>?lan=en">
+              <h5>
+                <%= news.title.substring(0,25) %>
+                <%if(news.title.length > 25) {%>
+                ...
+                <% } %>
+              </h5>
+            </a>
             <i>By <%= news.user %> on <%= news.date+', '+news.month+' '+news.year %></i>
-            <span><%= news.content.substr(0,50)+' ...' %></span>
+            <span><%- news.content.substr(0,50)+' ...' %></span><br>
             <a href="/news/id/<%= news.id %>?lan=en" class="button gray">Read More</a>
           </section>
 
@@ -399,7 +404,7 @@
 <script src="scripts/puregrid.js"></script>
 <script src="scripts/stacktable.js"></script>
 <script src="scripts/custom.js"></script>
-<script src="scripts/views/index.js"></script>
+<script src="scripts/views/header_func.js"></script>
 
 </body>
 </html>

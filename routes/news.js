@@ -15,13 +15,7 @@ router.post('/addnews', function (req, res) {
     var category = req.body.category;
     var language = req.body.language;
     var news_content = req.body.news_content;
-
-    console.log(title);
-    console.log(old_title);
-    console.log(news_content);
-    console.log(category);
-    console.log(userId);
-    console.log(language);
+    var keywords = req.body.keywords;
 
     if(old_title != "Select News Title") {
         var newId = old_title;
@@ -73,6 +67,7 @@ router.post('/addnews', function (req, res) {
                 english_content: news_content,
                 hits: 0,
                 thumbnail: imageURL,
+                keywords: keywords,
                 UserId: userId,
             }
         } else if(language == "Sinhala"){
@@ -82,6 +77,7 @@ router.post('/addnews', function (req, res) {
                 sinhala_content: news_content,
                 hits: 0,
                 thumbnail: imageURL,
+                keywords: keywords,
                 UserId: userId,
             }
         } else if(language == "Tamil") {
@@ -91,10 +87,10 @@ router.post('/addnews', function (req, res) {
                 tamil_content: news_content,
                 hits: 0,
                 thumbnail: imageURL,
+                keywords: keywords,
                 UserId: userId,
             }
         }
-        console.log(newsObject);
         //store news in database
         sequelize.sync().then(
             function () {
@@ -159,44 +155,79 @@ router.post('/addcomment', function (req, res) {
 });
 
 /* Retrieve all news from database */
-router.get('/viewall/start/:start', function (req, res) {
-    //retrieve data from req object
-    sequelize.sync().then(
-        function () {
-            var News = models.News;
-            var User = models.User;
-            News.findAndCountAll({
-                limit: 3,
-                offset: parseInt(req.params.start),
-                include: [User],
-                order: '`id` DESC'
-            }).then(function (News) {
-                //saving news array to a session and redirect
-                newsArray(News, req.params.start, req, res);
-            });
-        }
-    );
-});
+// router.get('/viewall/start/:start', function (req, res) {
+//     //retrieve data from req object
+//     sequelize.sync().then(
+//         function () {
+//             var News = models.News;
+//             var User = models.User;
+//             News.findAndCountAll({
+//                 limit: 3,
+//                 offset: parseInt(req.params.start),
+//                 include: [User],
+//                 order: '`id` DESC'
+//             }).then(function (News) {
+//                 //saving news array to a session and redirect
+//                 newsArray(News, req.params.start, req, res);
+//             });
+//         }
+//     );
+// });
 
 /* Retrieve news specific to a category from database */
-router.get('/viewall/start/:start/category/:category', function (req, res) {
-    //retrieve data from req object
-    sequelize.sync().then(
-        function () {
-            var News = models.News;
-            var User = models.User;
-            News.findAndCountAll({
-                where: {category: [req.params.category]},
-                limit: 3,
-                offset: parseInt(req.params.start),
-                include: [User],
-                order: '`id` DESC'
-            }).then(function (News) {
-                //saving news array to a session and redirect
-                newsArray(News, 0, req, res);
-            });
-        }
-    );
+router.get('/start/:start', function (req, res) {
+    var keyword = req.query['keyword'];
+    var category = req.query['category'];
+    var start = req.params.start;
+
+    var whereObject = {};
+    var isFromOtherPage = true;
+    if(keyword != 'all' && category == 'all') {
+        whereObject =  {keywords: {$like: '%'+keyword.toLowerCase()+'%'}};
+        isFromOtherPage = false;
+    } else if(keyword == 'all' && category != 'all') {
+        whereObject =  {category: [category]};
+        isFromOtherPage = false;
+    } else if(keyword == 'all' && category == 'all') {
+        whereObject =  {category: [category]};
+        //retrieve data from req object
+        sequelize.sync().then(
+            function () {
+                var News = models.News;
+                var User = models.User;
+                News.findAndCountAll({
+                    limit: 3,
+                    offset: parseInt(req.params.start),
+                    include: [User],
+                    order: '`id` DESC'
+                }).then(function (News) {
+                    //saving news array to a session and redirect
+                    newsArray(News, start, req, res, category, keyword);
+                });
+            }
+        );
+    }
+
+    if(!isFromOtherPage) {
+        //retrieve data from req object
+        sequelize.sync().then(
+            function () {
+                var News = models.News;
+                var User = models.User;
+                News.findAndCountAll({
+                    where: whereObject,
+                    limit: 3,
+                    offset: parseInt(start),
+                    include: [User],
+                    order: '`id` DESC'
+                }).then(function (News) {
+                    //saving news array to a session and redirect
+                    newsArray(News, start, req, res, category, keyword);
+                });
+            }
+        );
+    }
+
 });
 
 /* Retrieve popluar news from database */
@@ -234,6 +265,28 @@ router.get('/viewpopular', function (req, res) {
         }
     );
 });
+
+/* Retrieve news have keywords from database */
+/* Usage: keyword search new news page */
+// router.get('/viewall/keyword/start/:start', function (req, res) {
+//     //retrieve news which has keyword in keyword column
+//     sequelize.sync().then(
+//         function () {
+//             var News = models.News;
+//             var User = models.User;
+//             News.findAndCountAll({
+//                 where: {keywords: {$like: '%'+req.query['keyword'].toLowerCase()+'%'}},
+//                 limit: 3,
+//                 offset: parseInt(req.params.start),
+//                 include: [User],
+//                 order: '`id` DESC'
+//             }).then(function (News) {
+//                 //saving news array to a session and redirect
+//                 newsArray(News, 0, req, res);
+//             });
+//         }
+//     );
+// });
 
 /* Retrieve recent news from database */
 router.get('/viewrecent', function (req, res) {
@@ -412,7 +465,8 @@ router.get('/news_id/:news_id', function (req, res) {
 });
 
 //Construct NewsArray from retrieved data from db and redirect
-function newsArray (News, offset , req, res) {
+function newsArray (News, offset , req, res, category, keyword) {
+    console.log('Visited');
     var newsArr = [];
     // var language = req.session.language;
 
@@ -483,17 +537,15 @@ function newsArray (News, offset , req, res) {
                 'month': monthOfNews,'year': yearOfNews, 'has_sinhala_content': has_sinhala_content, 'has_tamil_content': has_tamil_content});
         // }
     });
-
-    if(offset != null) {
+    var offset_ = offset;
+    var category_ = category;
+    var keyword_ = keyword;
+    if(offset_ != null) {
+        console.log('path: '+'/news/start/'+offset_+'?category='+category_+'&keyword='+keyword_)
         req.session.newsall = newsArr;
         req.session.newsCount = News.count;
         req.session.newsOffset = parseInt(req.params.start);
-
-        if(parseInt(offset) !== 0) {
-            res.redirect('/news/start/'+offset);
-        } else {
-            res.redirect('/news');
-        }
+        res.redirect('/news/start/'+offset_+'?category='+category_+'&keyword='+keyword_);
     } else {
         req.session.latestNews = newsArr;
         res.redirect('/');

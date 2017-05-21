@@ -874,12 +874,24 @@ span.skill-title i {
 	margin: 0;
 }
 
+.news-search {
+	display: block;
+	margin: 0;
+}
+
 .top-search input,
 .apply-coupon input {
 	font-size: 13px;
 	width: 800px;
 	padding: 10px 13px 10px 13px;
 	float: left;
+}
+
+.news-search input {
+	font-size: 13px;
+	width: 800px;
+	padding: 10px 13px 13px 13px;
+	display: inline;
 }
 
 /*
@@ -920,6 +932,24 @@ span.skill-title i {
 	cursor: pointer;
 	color: #fff;
 	float: right;
+	width: 40px;
+	height: 40px;
+	display: inline;
+	padding: 0;
+	border: none;
+	position: relative;
+	-webkit-transition: background-color 0.2s ease-in-out;
+	-moz-transition: background-color 0.2s ease-in-out;
+	-ms-transition: background-color 0.2s ease-in-out;
+	-o-transition: background-color 0.2s ease-in-out;
+	transition: background-color 0.2s ease-in-out;
+}
+
+.news-search button {
+	background: #c0c0c0;
+	border: none;
+	cursor: pointer;
+	color: #fff;
 	width: 40px;
 	height: 40px;
 	display: inline;
@@ -978,11 +1008,21 @@ span.skill-title i {
 
 .top-search button:hover { background-color: #808080; }
 
+.news-search button:hover { background-color: #808080; }
+
 .item-search button:hover { background-color: #808080; }
 
 .commodity-search button:hover { background-color: #808080; }
 
 .top-search button i {
+	top: 0;
+	left: 0;
+	position: relative;
+	display: block;
+	z-index: 20;
+}
+
+.news-search button i {
 	top: 0;
 	left: 0;
 	position: relative;
@@ -7600,6 +7640,8 @@ html[xmlns] .slides {display: block;}
 	.dropdown-notification,
 	.top-search { margin: 35px 0 0 0; }
 
+	.news-search { margin: 35px 0 0 0; }
+
 	.cart-list { left:0; }
 
 	.cart-list .arrow { left: 20px; }
@@ -7687,6 +7729,8 @@ html[xmlns] .slides {display: block;}
 
 	.top-search input { width: 215px; }
 
+	.news-search input { width: 215px; }
+
 	.item-search input { width: 83%; }
 
 	.item-search {
@@ -7749,6 +7793,8 @@ html[xmlns] .slides {display: block;}
 @media only screen and (max-width: 479px) {
 
 	.top-search input { width: 95px }
+
+	.news-search input { width: 95px }
 
 	.item-search input { width: 76.5% }
 

@@ -10,6 +10,7 @@ module.exports = function (sequelize, DataTypes) {
         tamil_content: DataTypes.TEXT,
         hits: DataTypes.INTEGER,
         thumbnail: DataTypes.STRING,
+        keywords: DataTypes.TEXT,
     }, {
         // Define Associations for News table here.
         classMethods: {

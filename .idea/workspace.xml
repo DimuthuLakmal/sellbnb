@@ -2,8 +2,252 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="61a4aa39-20c5-4f13-9e78-9d855475e186" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/favicon.ico" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ad.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ae.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/af.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ag.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/al.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/am.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ao.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ar.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/at.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/au.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/az.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ba.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/bb.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/bd.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/be.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/bf.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/bg.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/bh.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/bi.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/bj.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/bn.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/bo.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/br.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/bs.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/bt.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/bw.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/by.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/bz.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ca.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/cd.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/cf.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/cg.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ch.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ci.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/cl.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/cm.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/cn.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/co.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/cr.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/cu.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/cv.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/cy.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/cz.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/de.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/dj.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/dk.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/dm.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/do.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/dz.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ec.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ee.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/eg.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/eh.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/er.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/es.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/et.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/fi.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/fj.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/fm.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/fr.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ga.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/gb.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/gd.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ge.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/gh.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/gm.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/gn.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/gq.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/gr.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/gt.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/gw.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/gy.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/hn.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/hr.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ht.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/hu.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/id.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ie.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/il.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/in.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/iq.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ir.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/is.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/it.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/jm.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/jo.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/jp.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ke.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/kg.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/kh.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ki.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/km.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/kn.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/kp.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/kr.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ks.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/kw.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/kz.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/la.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/lb.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/lc.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/li.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/lk.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/lr.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ls.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/lt.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/lu.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/lv.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ly.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ma.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/mc.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/md.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/me.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/mg.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/mh.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/mk.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ml.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/mm.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/mn.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/mr.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/mt.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/mu.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/mv.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/mw.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/mx.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/my.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/mz.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/na.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ne.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ng.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ni.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/nl.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/no.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/np.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/nr.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/nz.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/om.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/pa.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/pe.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/pg.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ph.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/pk.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/pl.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/pt.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/pw.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/py.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/qa.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ro.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/rs.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ru.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/rw.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/sa.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/sb.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/sc.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/sd.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/se.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/sg.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/si.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/sk.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/sl.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/sm.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/sn.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/so.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/sr.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/st.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/sv.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/sy.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/sz.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/td.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/tg.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/th.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/tj.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/tl.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/tm.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/tn.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/to.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/tr.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/tt.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/tv.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/tw.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/tz.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ua.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ug.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/us.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/uy.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/uz.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/va.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/vc.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ve.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/vn.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/vu.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ws.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/ye.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/za.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/zm.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/flags/zw.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/models/Country.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/scripts/views/header_func.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/routes/country.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/viewnewsall_backup.ejs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/News.js" afterPath="$PROJECT_DIR$/models/News.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/style.css" afterPath="$PROJECT_DIR$/public/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/views/addnews.js" afterPath="$PROJECT_DIR$/public/scripts/views/addnews.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/views/index.js" afterPath="$PROJECT_DIR$/public/scripts/views/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/views/viewallnews.js" afterPath="$PROJECT_DIR$/public/scripts/views/viewallnews.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/index.js" afterPath="$PROJECT_DIR$/routes/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/news.js" afterPath="$PROJECT_DIR$/routes/news.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/addcommodity.ejs" afterPath="$PROJECT_DIR$/views/addcommodity.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/additem.ejs" afterPath="$PROJECT_DIR$/views/additem.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/additemdetailsbidding.ejs" afterPath="$PROJECT_DIR$/views/additemdetailsbidding.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/addnews.ejs" afterPath="$PROJECT_DIR$/views/addnews.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/bidpage.ejs" afterPath="$PROJECT_DIR$/views/bidpage.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/bidpage_backup.ejs" afterPath="$PROJECT_DIR$/views/bidpage_backup.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/buyercontract.ejs" afterPath="$PROJECT_DIR$/views/buyercontract.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/commoditydetailsadd.ejs" afterPath="$PROJECT_DIR$/views/commoditydetailsadd.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/edititem.ejs" afterPath="$PROJECT_DIR$/views/edititem.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/forgotpassword_code.ejs" afterPath="$PROJECT_DIR$/views/forgotpassword_code.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/forgotpasswordcodeenter.ejs" afterPath="$PROJECT_DIR$/views/forgotpasswordcodeenter.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/header.ejs" afterPath="$PROJECT_DIR$/views/header.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/index.ejs" afterPath="$PROJECT_DIR$/views/index.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/itempreview.ejs" afterPath="$PROJECT_DIR$/views/itempreview.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/login.ejs" afterPath="$PROJECT_DIR$/views/login.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/resetpassword.ejs" afterPath="$PROJECT_DIR$/views/resetpassword.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/searchcommodityadd.ejs" afterPath="$PROJECT_DIR$/views/searchcommodityadd.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/searchresults.ejs" afterPath="$PROJECT_DIR$/views/searchresults.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/sellercontract.ejs" afterPath="$PROJECT_DIR$/views/sellercontract.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/signup.ejs" afterPath="$PROJECT_DIR$/views/signup.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/useraccountbasics.ejs" afterPath="$PROJECT_DIR$/views/useraccountbasics.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/useraccountbuying.ejs" afterPath="$PROJECT_DIR$/views/useraccountbuying.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/useraccountbuying_backup.ejs" afterPath="$PROJECT_DIR$/views/useraccountbuying_backup.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/useraccountcontactinformation.ejs" afterPath="$PROJECT_DIR$/views/useraccountcontactinformation.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/useraccountselling.ejs" afterPath="$PROJECT_DIR$/views/useraccountselling.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/useraccountselling_backup.ejs" afterPath="$PROJECT_DIR$/views/useraccountselling_backup.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/userbusinessinformation.ejs" afterPath="$PROJECT_DIR$/views/userbusinessinformation.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/usercontactinformation.ejs" afterPath="$PROJECT_DIR$/views/usercontactinformation.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/usernotificationpreference.ejs" afterPath="$PROJECT_DIR$/views/usernotificationpreference.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/userpaymentinformation.ejs" afterPath="$PROJECT_DIR$/views/userpaymentinformation.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/userprofile.ejs" afterPath="$PROJECT_DIR$/views/userprofile.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/viewbiddingdetailsseller.ejs" afterPath="$PROJECT_DIR$/views/viewbiddingdetailsseller.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/viewmessagedetails.ejs" afterPath="$PROJECT_DIR$/views/viewmessagedetails.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/viewmessagesinbox.ejs" afterPath="$PROJECT_DIR$/views/viewmessagesinbox.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/viewmessagessent.ejs" afterPath="$PROJECT_DIR$/views/viewmessagessent.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/viewnews.ejs" afterPath="$PROJECT_DIR$/views/viewnews.ejs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/viewnewsall.ejs" afterPath="$PROJECT_DIR$/views/viewnewsall.ejs" />
     </list>
     <ignored path="sellerbnbbackend.iws" />
@@ -27,32 +271,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="viewnews.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/scripts/views/viewnews.js">
+      <file leaf-file-name="news.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/news.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="30" column="47" selection-start-line="30" selection-start-column="47" selection-end-line="30" selection-end-column="47" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="login.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/scripts/views/login.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="13" selection-end-column="2" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="www" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bin/www">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="3" selection-start-line="4" selection-start-column="3" selection-end-line="4" selection-end-column="3" />
-              <folding />
+            <state relative-caret-position="649">
+              <caret line="210" column="8" selection-start-line="210" selection-start-column="8" selection-end-line="210" selection-end-column="8" />
+              <folding>
+                <marker date="1495350842829" expanded="true" signature="18569:18575" ph=" " />
+                <marker date="1495350842829" expanded="true" signature="18639:18645" ph=" " />
+                <marker date="1495350842829" expanded="true" signature="18729:18735" ph=" " />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -60,23 +288,9 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4709">
-              <caret line="277" column="0" selection-start-line="277" selection-start-column="0" selection-end-line="282" selection-end-column="5" />
+            <state relative-caret-position="343">
+              <caret line="209" column="18" selection-start-line="209" selection-start-column="8" selection-end-line="209" selection-end-column="18" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="news.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/routes/news.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="470" column="78" selection-start-line="470" selection-start-column="78" selection-end-line="470" selection-end-column="78" />
-              <folding>
-                <marker date="1495308449610" expanded="true" signature="16431:16437" ph=" " />
-                <marker date="1495308449610" expanded="true" signature="16501:16507" ph=" " />
-                <marker date="1495308449610" expanded="true" signature="16591:16597" ph=" " />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -84,8 +298,18 @@
       <file leaf-file-name="viewnewsall.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/viewnewsall.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="88" column="60" selection-start-line="88" selection-start-column="60" selection-end-line="88" selection-end-column="60" />
+            <state relative-caret-position="875">
+              <caret line="125" column="129" selection-start-line="125" selection-start-column="75" selection-end-line="125" selection-end-column="129" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="viewallnews.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/scripts/views/viewallnews.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="294">
+              <caret line="61" column="98" selection-start-line="61" selection-start-column="98" selection-end-line="61" selection-end-column="98" />
               <folding />
             </state>
           </provider>
@@ -94,39 +318,63 @@
       <file leaf-file-name="viewnews.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/viewnews.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1139">
-              <caret line="67" column="32" selection-start-line="67" selection-start-column="32" selection-end-line="67" selection-end-column="32" />
+            <state relative-caret-position="433">
+              <caret line="263" column="52" selection-start-line="263" selection-start-column="52" selection-end-line="263" selection-end-column="52" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="addnews.ejs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/addnews.ejs">
+      <file leaf-file-name="header.ejs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/header.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="34" column="170" selection-start-line="34" selection-start-column="170" selection-end-line="34" selection-end-column="170" />
+            <state relative-caret-position="177">
+              <caret line="199" column="34" selection-start-line="199" selection-start-column="34" selection-end-line="199" selection-end-column="34" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bidpage.ejs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/bidpage.ejs">
+      <file leaf-file-name="viewmessagessent.ejs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/viewmessagessent.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2397">
-              <caret line="141" column="55" selection-start-line="141" selection-start-column="55" selection-end-line="141" selection-end-column="55" />
+            <state relative-caret-position="447">
+              <caret line="137" column="52" selection-start-line="137" selection-start-column="52" selection-end-line="137" selection-end-column="52" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="additem.ejs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/additem.ejs">
+      <file leaf-file-name="index.ejs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/index.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3553">
-              <caret line="209" column="26" selection-start-line="205" selection-start-column="20" selection-end-line="209" selection-end-column="26" />
+            <state relative-caret-position="280">
+              <caret line="159" column="22" selection-start-line="159" selection-start-column="22" selection-end-line="159" selection-end-column="22" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="addnews.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/scripts/views/addnews.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1445">
+              <caret line="85" column="168" selection-start-line="85" selection-start-column="168" selection-end-line="85" selection-end-column="168" />
+              <folding>
+                <marker date="1495313623722" expanded="true" signature="1527:1554" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="News.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/News.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" column="16" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="16" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -151,17 +399,17 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/views/sellercontract.ejs" />
-        <option value="$PROJECT_DIR$/views/header.ejs" />
-        <option value="$PROJECT_DIR$/public/scripts/views/index.js" />
-        <option value="$PROJECT_DIR$/views/index.ejs" />
-        <option value="$PROJECT_DIR$/views/addnews.ejs" />
-        <option value="$PROJECT_DIR$/routes/index.js" />
-        <option value="$PROJECT_DIR$/public/scripts/views/viewnews.js" />
+        <option value="$PROJECT_DIR$/views/viewmessagedetails.ejs" />
+        <option value="$PROJECT_DIR$/views/viewmessagesinbox.ejs" />
+        <option value="$PROJECT_DIR$/views/viewmessagessent.ejs" />
         <option value="$PROJECT_DIR$/views/viewnews.ejs" />
-        <option value="$PROJECT_DIR$/bin/www" />
+        <option value="$PROJECT_DIR$/views/viewnewsall_backup.ejs" />
+        <option value="$PROJECT_DIR$/views/index.ejs" />
+        <option value="$PROJECT_DIR$/views/header.ejs" />
         <option value="$PROJECT_DIR$/routes/news.js" />
+        <option value="$PROJECT_DIR$/routes/index.js" />
         <option value="$PROJECT_DIR$/views/viewnewsall.ejs" />
+        <option value="$PROJECT_DIR$/public/scripts/views/viewallnews.js" />
       </list>
     </option>
   </component>
@@ -206,7 +454,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -266,50 +514,6 @@
               <option name="myItemId" value="public" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="uploads" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="profile_pic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sellerbnbbackend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sellerbnbbackend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="uploads" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sellerbnbbackend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sellerbnbbackend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="stylesheets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -361,77 +565,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sellerbnbbackend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sellerbnbbackend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="icons" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sellerbnbbackend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sellerbnbbackend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sellerbnbbackend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sellerbnbbackend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sellerbnbbackend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sellerbnbbackend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="bin" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -447,11 +587,11 @@
       <recent name="C:\Projects\sellerbnbbackend2017-01-25\sellerbnbbackend\public\images\footer" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\public\images" />
+      <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\public" />
+      <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\views" />
       <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\public\icons" />
       <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\public\uploads\profile_pic" />
-      <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\views" />
-      <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\public\scripts" />
-      <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\public\css" />
     </key>
   </component>
   <component name="RunManager" selected="Node.js.www">
@@ -576,7 +716,8 @@
       <workItem from="1494875499115" duration="820000" />
       <workItem from="1495162991643" duration="13304000" />
       <workItem from="1495242399757" duration="5861000" />
-      <workItem from="1495306141419" duration="1820000" />
+      <workItem from="1495306141419" duration="6858000" />
+      <workItem from="1495339240946" duration="10658000" />
     </task>
     <task id="LOCAL-00001" summary="Forgot Password Added">
       <created>1491872343489</created>
@@ -795,11 +936,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495307910640</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="removed black paragraphs">
+      <created>1495308721629</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1495308721629</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="320101000" />
+    <option name="totallyTimeSpent" value="335797000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="0" width="1378" height="744" extended-state="0" />
@@ -808,9 +956,10 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19850746" sideWeight="0.4948718" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20879121" sideWeight="0.5119048" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20042531" sideWeight="0.5051282" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3610675" sideWeight="0.48958334" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22762951" sideWeight="0.48958334" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18053375" sideWeight="0.48809522" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -820,7 +969,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -837,7 +985,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="Bid Page Modifications!" />
     <MESSAGE value="Footer, Seller Account &amp; Buyer Account Modified" />
     <MESSAGE value="Selling Account &amp; Buying Account Finished" />
     <MESSAGE value="Buyer Contract &amp; Seller Contracts are done" />
@@ -862,101 +1009,105 @@
     <MESSAGE value="remove blanked Paragraphs in news" />
     <MESSAGE value="port changed to 80" />
     <MESSAGE value="Table showing errors in News page solved" />
-    <option name="LAST_COMMIT_MESSAGE" value="Table showing errors in News page solved" />
+    <MESSAGE value="removed black paragraphs" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed black paragraphs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/scripts/views/additem.js">
+    <entry file="file://$PROJECT_DIR$/views/viewbiddingdetailsseller.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-136">
-          <caret line="52" column="17" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/scripts/views/login.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="13" selection-end-column="2" />
+        <state relative-caret-position="433">
+          <caret line="336" column="52" selection-start-line="336" selection-start-column="52" selection-end-line="336" selection-end-column="52" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/scripts/views/addnews.js">
+    <entry file="file://$PROJECT_DIR$/views/viewmessagedetails.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/express/lib/response.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11573">
-          <caret line="980" column="21" selection-start-line="980" selection-start-column="21" selection-end-line="980" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/addnews.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="34" column="170" selection-start-line="34" selection-start-column="170" selection-end-line="34" selection-end-column="170" />
+        <state relative-caret-position="433">
+          <caret line="176" column="52" selection-start-line="176" selection-start-column="52" selection-end-line="176" selection-end-column="52" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/index.js">
+    <entry file="file://$PROJECT_DIR$/views/index.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4709">
-          <caret line="277" column="0" selection-start-line="277" selection-start-column="0" selection-end-line="282" selection-end-column="5" />
+        <state relative-caret-position="280">
+          <caret line="159" column="22" selection-start-line="159" selection-start-column="22" selection-end-line="159" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/scripts/views/viewnews.js">
+    <entry file="file://$PROJECT_DIR$/views/viewmessagesinbox.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="30" column="47" selection-start-line="30" selection-start-column="47" selection-end-line="30" selection-end-column="47" />
+        <state relative-caret-position="447">
+          <caret line="137" column="52" selection-start-line="137" selection-start-column="52" selection-end-line="137" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/viewmessagessent.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="447">
+          <caret line="137" column="52" selection-start-line="137" selection-start-column="52" selection-end-line="137" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/header.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="199" column="34" selection-start-line="199" selection-start-column="34" selection-end-line="199" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/viewnews.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1139">
-          <caret line="67" column="32" selection-start-line="67" selection-start-column="32" selection-end-line="67" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bin/www">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="3" selection-start-line="4" selection-start-column="3" selection-end-line="4" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/viewnewsall.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="88" column="60" selection-start-line="88" selection-start-column="60" selection-end-line="88" selection-end-column="60" />
+        <state relative-caret-position="433">
+          <caret line="263" column="52" selection-start-line="263" selection-start-column="52" selection-end-line="263" selection-end-column="52" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/news.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="470" column="78" selection-start-line="470" selection-start-column="78" selection-end-line="470" selection-end-column="78" />
+        <state relative-caret-position="649">
+          <caret line="210" column="8" selection-start-line="210" selection-start-column="8" selection-end-line="210" selection-end-column="8" />
           <folding>
-            <marker date="1495308449610" expanded="true" signature="16431:16437" ph=" " />
-            <marker date="1495308449610" expanded="true" signature="16501:16507" ph=" " />
-            <marker date="1495308449610" expanded="true" signature="16591:16597" ph=" " />
+            <marker date="1495350842829" expanded="true" signature="18569:18575" ph=" " />
+            <marker date="1495350842829" expanded="true" signature="18639:18645" ph=" " />
+            <marker date="1495350842829" expanded="true" signature="18729:18735" ph=" " />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="209" column="18" selection-start-line="209" selection-start-column="8" selection-end-line="209" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/viewnewsall.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="875">
+          <caret line="125" column="129" selection-start-line="125" selection-start-column="75" selection-end-line="125" selection-end-column="129" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/views/viewallnews.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="61" column="98" selection-start-line="61" selection-start-column="98" selection-end-line="61" selection-end-column="98" />
+          <folding />
         </state>
       </provider>
     </entry>

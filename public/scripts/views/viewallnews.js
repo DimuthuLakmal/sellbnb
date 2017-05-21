@@ -59,7 +59,7 @@ $(document).ready(function () {
         success: function (obj, textstatus) {
             //populating families in right side bar
             $.each(obj, function (index, family) {
-                $('#family_list').append('<li><a href="/api/news/viewall/start/0/category/'+family.DISTINCT+'">'+family.DISTINCT+'</a></li>');
+                $('#family_list').append('<li><a href="/news/start/0?category='+family.DISTINCT+'&keyword=all">'+family.DISTINCT+'</a></li>');
             });
         }
     });

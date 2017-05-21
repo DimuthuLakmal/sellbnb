@@ -56,6 +56,19 @@
     <div class="container">
 
         <div class="twelve columns">
+
+            <div align="center">
+                <nav class="news-search">
+                    <form action="/api/news/start/0" method="GET">
+                        <input name="category" type="hidden" id="category" value="all"/>
+                        <input class="search-field" style="width: 600px" name="keyword" type="text" placeholder="Search" id="keyword" list="searchresults"/>
+                        <datalist id="searchresults"></datalist>
+                        <button><i class="fa fa-search"></i></button>
+                    </form>
+                </nav>
+            </div>
+            <br><br>
+
             <div class="extra-padding">
 
                 <% for(var i=0; i< News.length; i++) {%>
@@ -110,20 +123,20 @@
                                 var pageThree = (pageMultipationFactor*3) + 3;
                             %>
                             <li>
-                                <a href="/news/start/<%= (pageOne-1) * 3 %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
+                                <a href="/news/start/<%= (pageOne-1) * 3 %>?keyword=<%= URLkeyword %>&category=<%= URLcategory %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
                                     <%= pageOne %>
                                 </a>
                             </li>
                             <% if(maxPageCount >= pageTwo) {%>
                                 <li>
-                                    <a href="/news/start/<%= (pageTwo-1) * 3 %>" <% if(pageTwo === currentPageNumber) { %>class="current-page"<% } %>>
+                                    <a href="/news/start/<%= (pageTwo-1) * 3 %>?keyword=<%= URLkeyword %>&category=<%= URLcategory %>" <% if(pageTwo === currentPageNumber) { %>class="current-page"<% } %>>
                                         <%= pageTwo %>
                                     </a>
                                 </li>
                             <% } %>
                             <% if(maxPageCount >= pageThree) {%>
                                 <li>
-                                    <a href="/news/start/<%= (pageThree-1) * 3 %>" <% if(pageThree === currentPageNumber) { %>class="current-page"<% } %>>
+                                    <a href="/news/start/<%= (pageThree-1) * 3 %>?keyword=<%= URLkeyword %>&category=<%= URLcategory %>" <% if(pageThree === currentPageNumber) { %>class="current-page"<% } %>>
                                         <%= pageThree %>
                                     </a>
                                 </li>
@@ -134,10 +147,10 @@
                     <nav class="pagination-next-prev">
                         <ul>
                             <% if(0 < pageMultipationFactor) {%>
-                                <li><a href="/news/start/<%= (pageMultipationFactor - 1) * 9 %>" class="prev"></a></li>
+                                <li><a href="/news/start/<%= (pageMultipationFactor - 1) * 9 %>?keyword=<%= URLkeyword %>&category=<%= URLcategory %>" class="prev"></a></li>
                             <% } %>
                             <% if(maxPageCount >= (pageMultipationFactor * 3) + 4) {%>
-                                <li><a href="/news/start/<%= (pageMultipationFactor + 1) * 9 %>" class="next"></a></li>
+                                <li><a href="/news/start/<%= (pageMultipationFactor + 1) * 9 %>?keyword=<%= URLkeyword %>&category=<%= URLcategory %>" class="next"></a></li>
                             <% } %>
                         </ul>
                     </nav>
@@ -229,6 +242,7 @@
 <script src="scripts/stacktable.js"></script>
 <script src="scripts/custom.js"></script>
 <script src="scripts/views/viewallnews.js"></script>
+<script src="scripts/views/header_func.js"></script>
 
 </body>
 </html>

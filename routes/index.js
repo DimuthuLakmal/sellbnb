@@ -156,64 +156,6 @@ router.get('/addnews', function (req, res) {
 });
 
 /* GET view first news page. */
-router.get('/news', function (req, res) {
-    removeSessionParameters(req);
-    removeSessionParameterSellingPage(req);
-    var newsAll = req.session.newsall;
-    var newsOffset = req.session.newsOffset;
-    var newsCount = req.session.newsCount;
-    var currentPageNumber = (parseInt(newsOffset) / 3) + 1;
-    var maxPageCount = Math.floor(newsCount / 3);
-    //Note: check whether equation is correct. previous one is maxPageCount % 10 !== 0
-    if (newsCount % 3 !== 0) {
-        maxPageCount++;
-    }
-    var pageMultipationFactor = Math.floor((parseInt(newsOffset) / 9));
-
-    //check whether newsAll session is set
-    if (newsAll === null || newsAll === undefined) {
-        res.redirect('/api/news/viewall/start/0');
-    }
-
-    //this will be needed to populate commodity names in top menu
-    var commodityNames = req.session.commodityNames;
-    //check whether commodityNames session is set
-    req.session.returnToCommodityName = req.path;
-    if (commodityNames === null || commodityNames === undefined) {
-        res.redirect('/api/commodity/names');
-    }
-
-    var notifications = req.session.notifications;
-    var messages = req.session.messages;
-    //check whether notification session is set.
-    if (req.isAuthenticated()) {
-        if (notifications === null || notifications === undefined) {
-            res.redirect('/api/notification/userId/' + req.user.id);
-        }
-        if (messages === null || messages === undefined) {
-            res.redirect('/api/messages/userId/' + req.user.id);
-        }
-    }
-
-    req.session.newsall = null;
-    req.session.newsOffset = null;
-    req.session.newsCount = null;
-    delete req.session.returnToCommodityName;
-    delete req.session.notifications;
-    delete req.session.messages;
-    res.render('viewnewsall', {
-        News: newsAll,
-        currentPageNumber: currentPageNumber,
-        maxPageCount: maxPageCount,
-        pageMultipationFactor: pageMultipationFactor,
-        commodityNames: commodityNames,
-        notifications: notifications,
-        messages: messages,
-        user: req.user,
-    });
-});
-
-/* GET view news page other than first page */
 router.get('/news/start/:start', function (req, res) {
     removeSessionParameters(req);
     removeSessionParameterSellingPage(req);
@@ -230,13 +172,13 @@ router.get('/news/start/:start', function (req, res) {
 
     //check whether newsAll session is set
     if (newsAll === null || newsAll === undefined) {
-        res.redirect('/api/news/viewall/start/' + req.params.start);
+        res.redirect('/api/news/start/'+req.params.start+'?category='+req.query['category']+'&keyword='+req.query['keyword']);
     }
 
     //this will be needed to populate commodity names in top menu
-    var commodityNames = req.session.commodityNames
+    var commodityNames = req.session.commodityNames;
     //check whether commodityNames session is set
-    req.session.returnToCommodityName = req.path;
+    req.session.returnToCommodityName = req.path+'?category='+req.query['category']+'&keyword='+req.query['keyword'];
     if (commodityNames === null || commodityNames === undefined) {
         res.redirect('/api/commodity/names');
     }
@@ -265,11 +207,71 @@ router.get('/news/start/:start', function (req, res) {
         maxPageCount: maxPageCount,
         pageMultipationFactor: pageMultipationFactor,
         commodityNames: commodityNames,
+        URLkeyword: req.query['keyword'],
+        URLcategory: req.query['category'],
         notifications: notifications,
         messages: messages,
         user: req.user,
     });
 });
+
+// /* GET view news page other than first page */
+// router.get('/news/start/:start', function (req, res) {
+//     removeSessionParameters(req);
+//     removeSessionParameterSellingPage(req);
+//     var newsAll = req.session.newsall;
+//     var newsOffset = req.session.newsOffset;
+//     var newsCount = req.session.newsCount;
+//     var currentPageNumber = (parseInt(newsOffset) / 3) + 1;
+//     var maxPageCount = Math.floor(newsCount / 3);
+//     //Note: check whether equation is correct. previous one is maxPageCount % 10 !== 0
+//     if (newsCount % 3 !== 0) {
+//         maxPageCount++;
+//     }
+//     var pageMultipationFactor = Math.floor((parseInt(newsOffset) / 9));
+//
+//     //check whether newsAll session is set
+//     if (newsAll === null || newsAll === undefined) {
+//         res.redirect('/api/news/viewall/start/' + req.params.start);
+//     }
+//
+//     //this will be needed to populate commodity names in top menu
+//     var commodityNames = req.session.commodityNames
+//     //check whether commodityNames session is set
+//     req.session.returnToCommodityName = req.path;
+//     if (commodityNames === null || commodityNames === undefined) {
+//         res.redirect('/api/commodity/names');
+//     }
+//
+//     var notifications = req.session.notifications;
+//     var messages = req.session.messages;
+//     //check whether notification session is set.
+//     if (req.isAuthenticated()) {
+//         if (notifications === null || notifications === undefined) {
+//             res.redirect('/api/notification/userId/' + req.user.id);
+//         }
+//         if (messages === null || messages === undefined) {
+//             res.redirect('/api/messages/userId/' + req.user.id);
+//         }
+//     }
+//
+//     req.session.newsall = null;
+//     req.session.newsOffset = null;
+//     req.session.newsCount = null;
+//     delete req.session.returnToCommodityName;
+//     delete req.session.notifications;
+//     delete req.session.messages;
+//     res.render('viewnewsall', {
+//         News: newsAll,
+//         currentPageNumber: currentPageNumber,
+//         maxPageCount: maxPageCount,
+//         pageMultipationFactor: pageMultipationFactor,
+//         commodityNames: commodityNames,
+//         notifications: notifications,
+//         messages: messages,
+//         user: req.user,
+//     });
+// });
 
 /* GET view single news page*/
 router.get('/news/id/:id', function (req, res) {
