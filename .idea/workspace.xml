@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="61a4aa39-20c5-4f13-9e78-9d855475e186" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/commodity.js" afterPath="$PROJECT_DIR$/routes/commodity.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/items.js" afterPath="$PROJECT_DIR$/routes/items.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/news.js" afterPath="$PROJECT_DIR$/routes/news.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/users.js" afterPath="$PROJECT_DIR$/routes/users.js" />
     </list>
     <ignored path="sellerbnbbackend.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,9 +35,9 @@
             <state relative-caret-position="238">
               <caret line="115" column="22" selection-start-line="115" selection-start-column="22" selection-end-line="115" selection-end-column="22" />
               <folding>
-                <marker date="1495357736959" expanded="true" signature="17646:17652" ph=" " />
-                <marker date="1495357736959" expanded="true" signature="17716:17722" ph=" " />
-                <marker date="1495357736959" expanded="true" signature="17806:17812" ph=" " />
+                <marker date="1495357931185" expanded="true" signature="17643:17649" ph=" " />
+                <marker date="1495357931185" expanded="true" signature="17713:17719" ph=" " />
+                <marker date="1495357931185" expanded="true" signature="17803:17809" ph=" " />
               </folding>
             </state>
           </provider>
@@ -545,7 +548,7 @@
       <workItem from="1495162991643" duration="13304000" />
       <workItem from="1495242399757" duration="5861000" />
       <workItem from="1495306141419" duration="6858000" />
-      <workItem from="1495339240946" duration="14989000" />
+      <workItem from="1495339240946" duration="15176000" />
     </task>
     <task id="LOCAL-00001" summary="Forgot Password Added">
       <created>1491872343489</created>
@@ -799,17 +802,24 @@
       <option name="project" value="LOCAL" />
       <updated>1495357670163</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="Add News Images facility added.">
+      <created>1495357746167</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1495357746167</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="340128000" />
+    <option name="totallyTimeSpent" value="340315000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="0" width="1378" height="744" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19850746" sideWeight="0.4948718" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19850746" sideWeight="0.4948718" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20879121" sideWeight="0.5119048" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -974,9 +984,9 @@
         <state relative-caret-position="238">
           <caret line="115" column="22" selection-start-line="115" selection-start-column="22" selection-end-line="115" selection-end-column="22" />
           <folding>
-            <marker date="1495357736959" expanded="true" signature="17646:17652" ph=" " />
-            <marker date="1495357736959" expanded="true" signature="17716:17722" ph=" " />
-            <marker date="1495357736959" expanded="true" signature="17806:17812" ph=" " />
+            <marker date="1495357931185" expanded="true" signature="17643:17649" ph=" " />
+            <marker date="1495357931185" expanded="true" signature="17713:17719" ph=" " />
+            <marker date="1495357931185" expanded="true" signature="17803:17809" ph=" " />
           </folding>
         </state>
       </provider>

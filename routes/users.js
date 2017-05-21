@@ -403,7 +403,7 @@ router.post('/logo', function (req, res) {
     //write images to image files
     _.forEach(req.body.images, function(image, index) {
         var imageBuffer = decodeBase64Image(image.data); //decoding base64 images
-        fs.writeFile('../public/uploads/logo/'+image.filename, imageBuffer.data, function(err) {
+        fs.writeFile('public/uploads/logo/'+image.filename, imageBuffer.data, function(err) {
             console.log(err);
         });
     });
@@ -436,7 +436,7 @@ router.post('/profile_pic', function (req, res) {
     //write images to image files
     _.forEach(req.body.images, function(image, index) {
         var imageBuffer = decodeBase64Image(image.data); //decoding base64 images
-        fs.writeFile('../public/uploads/profile_pic/'+image.filename, imageBuffer.data, function(err) {
+        fs.writeFile('public/uploads/profile_pic/'+image.filename, imageBuffer.data, function(err) {
             console.log(err);
         });
     });
