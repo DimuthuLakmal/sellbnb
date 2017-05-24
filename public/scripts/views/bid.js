@@ -53,6 +53,8 @@ $('#submit').click(function (e) {
     var last_bid = $('#last-bid-value').text().trim().split(" ")[1];
     var bidByUser = $('#your_bid').val();
     var suggested_price = $('#suggested_price').text().trim().split(" ")[1];
+    console.log(suggested_price);
+    console.log(bidByUser);
 
     if(parseFloat(last_bid) < parseFloat(bidByUser)) {
         if(parseFloat(bidByUser) > parseFloat(suggested_price)) {

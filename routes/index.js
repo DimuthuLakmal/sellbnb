@@ -982,6 +982,7 @@ router.get('/items/add', function (req, res) {
         delete req.session.notifications;
         delete req.session.messages;
         delete req.session.previewImages;
+        delete req.session.commodityName;
         res.render('additem', {
             isAuthenticated: req.isAuthenticated(),
             user: req.user,
@@ -1117,6 +1118,8 @@ router.get('/items/id/:id', function (req, res) {
         }
 
         var message = req.session.bidAddMessage;
+
+        console.log(item.user.username);
 
         req.session.lastBid = null;
         req.session.lastUserBid = null;

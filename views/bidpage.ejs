@@ -59,7 +59,17 @@
             <!-- Headline -->
             <section class="title">
                 <h2><%= item.item.title %></h2>
-                <h5><%= item.user.full_name%></h5>
+                <%
+                    var name='';
+                    if(item.user.company_name != null && item.user.company_name != ''){
+                        name = item.user.company_name;
+                    } else if(item.user.full_name != null && item.user.full_name != ''){
+                        name = item.user.full_name;
+                    }else if(item.user.username != null && item.user.username != ''){
+                        name = item.user.username;
+                    }
+                %>
+                <h5><%= name %></h5>
 
                 <%
                 var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
