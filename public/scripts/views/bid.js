@@ -50,9 +50,9 @@ document.getElementById('delivery_by').onchange = function() {
 
 $('#submit').click(function (e) {
     e.preventDefault();
-    var last_bid = $('#last-bid-value').text().trim().split(" ")[1];
-    var bidByUser = $('#your_bid').val();
-    var suggested_price = $('#suggested_price').text().trim().split(" ")[1];
+    var last_bid = $('#last-bid-value').text().trim().split(" ")[1].trim();
+    var bidByUser = $('#your_bid').val().trim();
+    var suggested_price = $('#suggested_price').text().trim().split(" ")[1].trim();
     console.log($('#suggested_price').text());
     console.log(bidByUser);
     
