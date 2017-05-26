@@ -16,6 +16,7 @@ router.post('/addnews', function (req, res) {
     var language = req.body.language;
     var news_content = req.body.news_content;
     var keywords = req.body.keywords;
+    var summary = req.body.summary;
 
     if(old_title != "Select News Title") {
         var newId = old_title;
@@ -25,18 +26,21 @@ router.post('/addnews', function (req, res) {
             newsObject = {
                 english_title: title,
                 english_content: news_content,
+                english_summary: summary,
                 UserId: userId,
             }
         } else if(language == "Sinhala"){
             newsObject = {
                 sinhala_title: title,
                 sinhala_content: news_content,
+                sinhala_summary: summary,
                 UserId: userId,
             }
         } else if(language == "Tamil") {
             newsObject = {
                 tamil_title: title,
                 tamil_content: news_content,
+                tamil_summary: summary,
                 UserId: userId,
             }
         }
@@ -65,6 +69,7 @@ router.post('/addnews', function (req, res) {
                 english_title: title,
                 category: category,
                 english_content: news_content,
+                english_summary: summary,
                 hits: 0,
                 thumbnail: imageURL,
                 keywords: keywords,
@@ -75,6 +80,7 @@ router.post('/addnews', function (req, res) {
                 sinhala_title: title,
                 category: category,
                 sinhala_content: news_content,
+                sinhala_summary: summary,
                 hits: 0,
                 thumbnail: imageURL,
                 keywords: keywords,
@@ -85,6 +91,7 @@ router.post('/addnews', function (req, res) {
                 tamil_title: title,
                 category: category,
                 tamil_content: news_content,
+                tamil_summary: summary,
                 hits: 0,
                 thumbnail: imageURL,
                 keywords: keywords,
@@ -463,6 +470,7 @@ function newsArray (News, offset , req, res, category, keyword) {
             var createdAt = news.createdAt;
             var content = news.english_content;
             var title = news.english_title;
+            var summary = news.english_summary;
 
             //removing <p> tags and <img> tags and extract image
             var removedImage = content;
@@ -507,7 +515,7 @@ function newsArray (News, offset , req, res, category, keyword) {
             var yearOfNews = dateComponents[3];
 
             newsArr.push({'id': id, 'title': title, 'category': category, 'img': img,
-                'hits': hits, 'content': removedBlankPara, 'user': user, 'date': dateOfNews,
+                'hits': hits, 'content': removedBlankPara, 'summary': summary, 'user': user, 'date': dateOfNews,
                 'month': monthOfNews,'year': yearOfNews, 'has_sinhala_content': has_sinhala_content, 'has_tamil_content': has_tamil_content});
         // }
     });

@@ -361,7 +361,11 @@
               </h5>
             </a>
             <i>By <%= news.user %> on <%= news.date+', '+news.month+' '+news.year %></i>
-            <span><%- news.content.substr(0,50)+' ...' %></span><br>
+            <span>
+                <%if(news.summary!=null) { %>
+                    <%= news.summary.substr(0,50)+'...' %>
+                <% } %>
+            </span><br>
             <a href="/news/id/<%= news.id %>?lan=en" class="button gray">Read More</a>
           </section>
 

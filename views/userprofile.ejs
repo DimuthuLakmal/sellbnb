@@ -80,7 +80,7 @@
             <ul class="tabs-nav">
                 <li class="active"><a href="#tab1">Introduction</a></li>
                 <li><a href="#tab2">Contact Details</a></li>
-                <li><a href="#tab3">Reviews <span class="tab-reviews">(0)</span></a></li>
+                <li><a href="#tab3">Reviews <span class="tab-reviews">(<%= userPublicComments.length %>)</span></a></li>
             </ul>
 
             <!-- Tabs Content -->
@@ -204,8 +204,8 @@
                                 <tr>
                                     <th>Quality</th>
                                     <td>
-                                        <div class="rating <%= rateInString[rate_quality] %>-stars">
-                                            <div class="star-rating"></div>
+                                        <div class="rating <%if(rate_quality!=0) {%><%= rateInString[rate_quality] %>-stars<%}%>">
+                                            <%if(rate_quality!=0) {%><div class="star-rating"></div><%}%>
                                             <div class="star-bg"></div>
                                         </div>
                                     </td>
@@ -217,8 +217,8 @@
                                 <tr>
                                     <th>Delivery</th>
                                     <td>
-                                        <div class="rating <%= rateInString[rate_delivery] %>-stars">
-                                            <div class="star-rating"></div>
+                                        <div class="rating <%if(rate_delivery!=0) {%><%= rateInString[rate_delivery] %>-stars<%}%>">
+                                            <%if(rate_delivery!=0) {%><div class="star-rating"></div><%}%>
                                             <div class="star-bg"></div>
                                         </div>
                                     </td>
@@ -230,8 +230,8 @@
                                 <tr>
                                     <th>Reliability</th>
                                     <td>
-                                        <div class="rating <%= rateInString[rate_reliablity_seller] %>-stars">
-                                            <div class="star-rating"></div>
+                                        <div class="rating <%if(rate_reliablity_seller!=0) {%><%= rateInString[rate_reliablity_seller] %>-stars<%}%>">
+                                            <%if(rate_reliablity_seller!=0) {%><div class="star-rating"></div><%}%>
                                             <div class="star-bg"></div>
                                         </div>
                                     </td>
@@ -249,8 +249,8 @@
                                 <tr>
                                     <th>Payment</th>
                                     <td>
-                                        <div class="rating <%= rateInString[payment] %>-stars">
-                                            <div class="star-rating"></div>
+                                        <div class="rating <%if(payment!=0) {%><%= rateInString[payment] %>-stars<%}%>">
+                                            <%if(payment!=0) {%><div class="star-rating"></div><%}%>
                                             <div class="star-bg"></div>
                                         </div>
                                     </td>
@@ -262,8 +262,8 @@
                                 <tr>
                                     <th>Efficiency</th>
                                     <td>
-                                        <div class="rating <%= rateInString[efficiency] %>-stars">
-                                            <div class="star-rating"></div>
+                                        <div class="rating <%if(efficiency!=0) {%><%= rateInString[efficiency] %>-stars<%}%>">
+                                            <%if(efficiency!=0) {%><div class="star-rating"></div><%}%>
                                             <div class="star-bg"></div>
                                         </div>
                                     </td>
@@ -275,8 +275,8 @@
                                 <tr>
                                     <th>Reliability</th>
                                     <td>
-                                        <div class="rating <%= rateInString[rate_reliablity_buyer] %>-stars">
-                                            <div class="star-rating"></div>
+                                        <div class="rating <%if(rate_reliablity_buyer!=0) {%><%= rateInString[rate_reliablity_buyer] %>-stars<%}%>">
+                                            <%if(rate_reliablity_buyer!=0) {%><div class="star-rating"></div><%}%>
                                             <div class="star-bg"></div>
                                         </div>
                                     </td>
@@ -304,7 +304,7 @@
                                 <input type="hidden" name="rating_reliability_seller" id="rating_reliability_seller" value="0"/>
                                 <input type="hidden" name="rating_payment" id="rating_payment" value="0"/>
                                 <input type="hidden" name="rating_efficiency" id="rating_efficiency" value="0"/>
-                                <input type="hidden" name="reliability_buyer" id="reliability_buyer" value="0"/>
+                                <input type="hidden" name="rating_reliability_buyer" id="rating_reliability_buyer" value="0"/>
                                 <input type="hidden" name="id" value="<%= userPublicInformation.id %>"/>
                                 <input type="hidden" name="userId" value="<%= user.id %>"/>
                                 <fieldset>

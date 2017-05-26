@@ -98,7 +98,7 @@ $('#submit').click(function (e) {
     var userId = $('#userId').val();
     var packingType = $('#packing_type').val();
     var paymentTerms = $('#payment_terms').val();
-    var suggestedPrice = $('#priceUnit').val()+" "+$('#suggested_price').val();
+    var suggestedPrice = $('#priceUnit').val().trim()+" "+$('#suggested_price').val().trim();
     var sellerNote = $('#seller_note').val();
     var hours = $('#hours').val();
     var days = $('#days').val();

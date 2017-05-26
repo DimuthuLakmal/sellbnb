@@ -1079,11 +1079,17 @@ router.get('/items/id/:id', function (req, res) {
         var bidwarehouses = req.session.bidwarehouses;
         var lastBid = req.session.lastBid;
         var lastUserBid = req.session.lastUserBid;
+        var userFeedback = req.session.bidpageUserFeedback;
         var user = req.user;
 
         //check whether item is retrieved from database
         if (item === null || item === undefined) {
             res.redirect('/api/items/id/' + req.params.id);
+        }
+
+        //check whether item is retrieved from database
+        if (userFeedback === null || userFeedback === undefined) {
+            res.redirect('/api/user/userFeedback/id/' + item.user.id+'/itemId/'+req.params.id);
         }
 
         //check whether bid details are retrieved from database
@@ -1116,20 +1122,20 @@ router.get('/items/id/:id', function (req, res) {
                 res.redirect('/api/messages/userId/' + req.user.id);
             }
         }
-
+        
         var message = req.session.bidAddMessage;
 
-        console.log(item.user.username);
+        console.log(item.user);
 
         req.session.lastBid = null;
         req.session.lastUserBid = null;
         req.session.specificBiddingItem = null;
-
         delete req.session.returnTo;
         delete req.session.returnToCommodityName;
         delete req.session.notifications;
         delete req.session.messages;
         delete req.session.bidAddMessage;
+        delete req.session.bidpageUserFeedback;
         res.render('bidpage', {
             isAuthenticated: req.isAuthenticated(),
             user: req.user,
@@ -1142,6 +1148,7 @@ router.get('/items/id/:id', function (req, res) {
             notifications: notifications,
             messages: messages,
             message: message,
+            userFeedback:userFeedback,
         });
     } else {
         //set visited path to session. It uses to rediect to again to that page when login success.

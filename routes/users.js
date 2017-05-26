@@ -773,6 +773,18 @@ router.post('/adduser', function (req, res) {
                                 username: req.body.username,
                                 password: hash,
                                 status: 0,
+                                rate_quality: 0,
+                                rate_delivery: 0,
+                                rate_reliablity_seller: 0,
+                                payment: 0,
+                                efficiency: 0,
+                                rate_reliablity_buyer: 0,
+                                no_of_ratings_quality: 0,
+                                no_of_ratings_delivery: 0,
+                                no_of_ratings_reliablity_seller: 0,
+                                no_of_ratings_payment: 0,
+                                no_of_ratings_efficiency: 0,
+                                no_of_ratings_reliablity_buyer: 0,
                             }
                         ).then(function (createUser) {
                             models.Email.create(
@@ -967,6 +979,28 @@ router.get('/public/userId/:userId', function (req, res) {
     );
 });
 
+/* Retrieve User Information to show in item page*/
+/* Usage: bidpage page*/
+router.get('/userFeedback/id/:id/itemId/:itemId', function (req, res) {
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var User = models.User;
+            var UserComment = models.UserComment;
+            UserComment.findAll({
+                where: {receivedUserIdFk: req.params.id},
+                include: [{
+                    model: User,
+                    as: 'feedbackUserId'
+                }]
+            }).then(function (UserComments) {
+                req.session.bidpageUserFeedback = UserComments;
+                res.redirect('/items/id/'+req.params.itemId)
+            });
+        }
+    );
+});
+
 /* Add feedback to database. */
 /* Usage: userprofile.ejs page */
 router.post('/feedback', function (req, res) {
@@ -977,16 +1011,23 @@ router.post('/feedback', function (req, res) {
     var rate_reliability_seller = req.body.rating_reliability_seller;
     var rate_payment = req.body.rating_payment;
     var rate_efficiency = req.body.rating_efficiency;
-    var rate_reliability_buyer = req.body.reliability_buyer;
+    var rate_reliability_buyer = req.body.rating_reliability_buyer;
     var feedback = req.body.feedback;
     var feedbackUserId = req.body.userId;
 
-    var rate_quality_new = 0;
-    var rate_delivery_new = 0;
-    var rate_reliability_seller_new = 0;
-    var rate_payment_new = 0;
-    var rate_efficiency_new = 0;
-    var rate_reliability_buyer_new = 0;
+    var rate_quality_new = rate_quality;
+    var rate_delivery_new = rate_delivery;
+    var rate_reliability_seller_new = rate_reliability_seller;
+    var rate_payment_new = rate_payment;
+    var rate_efficiency_new = rate_efficiency;
+    var rate_reliability_buyer_new = rate_reliability_buyer;
+
+    var no_of_rate_quality_new = rate_quality == 0 ? 0 : 1;
+    var no_of_rate_delivery_new = rate_delivery == 0 ? 0 : 1;
+    var no_of_rate_reliability_seller_new = rate_reliability_seller == 0 ? 0 : 1;
+    var no_of_rate_payment_new = rate_payment == 0 ? 0 : 1;
+    var no_of_rate_efficiency_new = rate_efficiency == 0 ? 0 : 1;
+    var no_of_rate_reliability_buyer_new = rate_reliability_buyer == 0 ? 0 : 1;
 
     //store news in database
     sequelize.sync().then(
@@ -995,6 +1036,12 @@ router.post('/feedback', function (req, res) {
             var User = models.User;
             UserComment.create({
                 comment: feedback,
+                rate_quality: rate_quality,
+                rate_delivery: rate_delivery,
+                rate_reliablity_seller: rate_reliability_seller,
+                payment: rate_payment,
+                efficiency: rate_efficiency,
+                rate_reliablity_buyer: rate_reliability_buyer,
                 receivedUserIdFk: userId,
                 feedbackUserIdFk: feedbackUserId,
             }).then(function (insertedComment) {
@@ -1018,27 +1065,31 @@ router.post('/feedback', function (req, res) {
                     var no_of_ratings_reliablity_buyer_old = user.no_of_ratings_reliablity_buyer;
 
 
-                    if(no_of_ratings_quality_old > 0) {
+                    if(no_of_ratings_quality_old > 0 && no_of_ratings_quality_old!=null) {
                         var sum = ((rate_quality_old * no_of_ratings_quality_old) + parseInt(rate_quality));
                         rate_quality_new = (sum) / (parseInt(no_of_ratings_quality_old) + 1);
                     }
-                    if(no_of_ratings_delivery_old > 0) {
+
+                    if(no_of_ratings_delivery_old > 0 && no_of_ratings_delivery_old!=null) {
                         rate_delivery_new = (rate_delivery_old * no_of_ratings_delivery_old + parseInt(rate_delivery)) / (no_of_ratings_delivery_old + 1);
                     }
-                    if(no_of_ratings_reliablity_seller_old > 0) {
+
+                    if(no_of_ratings_reliablity_seller_old > 0 && no_of_ratings_reliablity_seller_old!=null) {
                         rate_reliability_seller_new = (rate_reliablity_seller_old * no_of_ratings_reliablity_seller_old + parseInt(rate_reliability_seller)) / (no_of_ratings_reliablity_seller_old + 1);
                     }
-                    if(no_of_ratings_payment_old > 0) {
+
+                    if(no_of_ratings_payment_old > 0 && no_of_ratings_payment_old!=null) {
                         rate_payment_new = (rate_payment_old * no_of_ratings_payment_old + parseInt(rate_payment)) / (no_of_ratings_payment_old + 1);
                     }
-                    if(no_of_ratings_efficiency_old > 0) {
+
+                    if(no_of_ratings_efficiency_old > 0 && no_of_ratings_efficiency_old!=null) {
                         rate_efficiency_new = (rate_efficiency_old * no_of_ratings_efficiency_old + parseInt(rate_efficiency)) / (no_of_ratings_efficiency_old + 1);
                     }
-                    if(no_of_ratings_reliablity_buyer_old > 0) {
+
+                    if(no_of_ratings_reliablity_buyer_old > 0 && no_of_ratings_reliablity_buyer_old!=null) {
                         rate_reliability_buyer_new = (rate_reliability_buyer_old * no_of_ratings_reliablity_buyer_old + parseInt(rate_reliability_buyer)) / (no_of_ratings_reliablity_buyer_old + 1);
                     }
 
-                    res.redirect('/user/public/userId/'+userId);
                     User.update({
                             rate_quality: rate_quality_new,
                             rate_delivery: rate_delivery_new,
@@ -1046,12 +1097,12 @@ router.post('/feedback', function (req, res) {
                             payment: rate_payment_new,
                             efficiency: rate_efficiency_new,
                             rate_reliablity_buyer: rate_reliability_buyer_new,
-                            no_of_ratings_quality: (no_of_ratings_quality_old+1),
-                            no_of_ratings_delivery: (no_of_ratings_delivery_old+1),
-                            no_of_ratings_reliablity_seller: (no_of_ratings_reliablity_seller_old+1),
-                            no_of_ratings_payment: (no_of_ratings_payment_old+1),
-                            no_of_ratings_efficiency: (no_of_ratings_efficiency_old+1),
-                            no_of_ratings_reliablity_buyer: (no_of_ratings_reliablity_buyer_old+1),
+                            no_of_ratings_quality: (no_of_ratings_quality_old+ no_of_rate_quality_new),
+                            no_of_ratings_delivery: (no_of_ratings_delivery_old+no_of_rate_delivery_new),
+                            no_of_ratings_reliablity_seller: (no_of_ratings_reliablity_seller_old+no_of_rate_reliability_seller_new),
+                            no_of_ratings_payment: (no_of_ratings_payment_old+no_of_rate_payment_new),
+                            no_of_ratings_efficiency: (no_of_ratings_efficiency_old+no_of_rate_efficiency_new),
+                            no_of_ratings_reliablity_buyer: (no_of_ratings_reliablity_buyer_old+no_of_rate_reliability_buyer_new),
                         },
                         {where: {id: userId}}
                     ).then(function (results) {

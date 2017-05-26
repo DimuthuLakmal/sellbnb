@@ -80,10 +80,11 @@ $('#submit-news-button').click(function (e) {
     var userId = $('#userId').val();
     var language = $('#language').val();
     var keywords = $('#keywords').val();
+    var summary = $('#news_summary').val();
 
     $.ajax({url: "/api/news/addnews",
         type: 'POST',
-        data: {title:title, old_title: old_title, language: language, news_content: news_content, userId: userId, images: images, category: category, keywords: keywords},
+        data: {title:title, old_title: old_title, language: language, news_content: news_content, summary: summary,userId: userId, images: images, category: category, keywords: keywords},
         success: function(data, status, xhr) {
             if(status == 'success') {
                 $('#message_success').show();

@@ -325,7 +325,6 @@ router.get('/id/:id', function (req, res) {
             var Item = models.Item;
             var User = models.User;
             var ItemImage = models.ItemImage;
-            var ItemComment = models.ItemComment;
             var Commodity = models.Commodity;
             var WareHouse = models.WareHouse;
             var CommodityMeasureUnit = models.CommodityMeasureUnit;
@@ -364,13 +363,6 @@ router.get('/id/:id', function (req, res) {
                 }).then(function (Items) {
                     var similarItems = Items;
 
-                    ItemComment.findAll({
-                        where: {
-                            ItemId: id,
-                        },
-                        include: [User],
-                    }).then(function (Comments) {
-
                         //retrieve similar items
                         Item.findAll({
                             where: {
@@ -406,7 +398,7 @@ router.get('/id/:id', function (req, res) {
                                                 where: {UserId: user.id},
                                             }).then(function (PhoneNumbers) {
                                                 req.session.specificBiddingItem = {'item': item, 'commodity': commodity, 'itemImages': itemImages, 'emails': Emails,
-                                                    'user': user, 'itemComments': Comments, 'warehouse': warehouse, 'remainingTime': difference, 'phoneNumbers': PhoneNumbers,
+                                                    'user': user, 'warehouse': warehouse, 'remainingTime': difference, 'phoneNumbers': PhoneNumbers,
                                                     'similarItems': similarItems, 'measureUnits': MeasuerUnits, 'priceUnits': PriceUnits, 'packingTypes': PackingTypes};
 
                                                 Item.update(
@@ -422,7 +414,7 @@ router.get('/id/:id', function (req, res) {
                                 });
                             });
                         });
-                    });
+
                 });
             });
         }

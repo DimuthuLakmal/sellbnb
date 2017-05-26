@@ -23,7 +23,7 @@
     <script src="scripts/tinymce/tinymce.min.js"></script>
     <script>
         tinymce.init({
-            selector: 'textarea',
+            selector: '#news_content',
             height: 300,
             menubar: false,
             plugins: [
@@ -206,6 +206,11 @@
                         </div>
 
                         <div class="twelve alpha columns">
+                            <label>Summary : </label>
+                            <textarea id="news_summary" name = "news_summary" style="width: 850px"></textarea>
+                        </div>
+
+                        <div class="twelve alpha columns" style="margin-top: 10px">
                             <textarea id="news_content" name = "news_content"></textarea>
                         </div>
 

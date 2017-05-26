@@ -72,22 +72,29 @@
                 <h5><%= name %></h5>
 
                 <%
-                var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
-                var feedbackCount = itemComments.length;
-                var rateSum = 0;
-                for( var commentIndex = 0; commentIndex < itemComments.length; commentIndex++) {
-                    rateSum += parseInt(itemComments[commentIndex].rate);
-                }
-                var avgRate = feedbackCount != 0? Math.floor(rateSum/feedbackCount) : 0;
+                    var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
+
+                    var rate_quality = item.user.rate_quality;
+                    var rate_delivery = item.user.rate_delivery;
+                    var rate_reliablity_seller = item.user.rate_reliablity_seller;
+                    var payment = item.user.payment;
+                    var efficiency = item.user.efficiency;
+                    var rate_reliablity_buyer = item.user.rate_reliablity_buyer;
+
+                    var feedbackCount = item.user.no_of_ratings_delivery+item.user.no_of_ratings_quality+item.user.no_of_ratings_efficiency
+                            +item.user.no_of_ratings_payment+item.user.no_of_ratings_reliablity_buyer
+                            +item.user.no_of_ratings_reliablity_seller;
+                    var avgRate = (rate_quality+rate_delivery+rate_reliablity_buyer+rate_reliablity_seller+payment+efficiency)/6.0;
+                    avgRate = Math.round( avgRate * 10) / 10;
                 %>
 
                 <% if(feedbackCount != 0) {%>
                 <div class="reviews-counter-product">
-                    <div class="rating <%= rateInString[avgRate] %>-stars">
-                        <div class="star-rating"></div>
+                    <div class="rating <%if(avgRate!=0) {%><%= rateInString[Math.floor(avgRate)] %>-stars<%}%>">
+                        <%if(avgRate!=0) {%><div class="star-rating"></div><%}%>
                         <div class="star-bg"></div>
                     </div>
-                    <span style="float: left"><%= rateSum/feedbackCount %> stars</span>
+                    <span style="float: left"><%= avgRate %> stars</span>
                 </div>
                 <% } %>
             </section>
@@ -372,27 +379,40 @@
         <!-- Products -->
         <div class="products">
 
-            <% if(itemComments.length == 0) {%>
+            <% if(userFeedback.length == 0) {%>
             <p>No Reviews Yet! </p>
             <%} %>
             <ul>
-                <% for(commentIndex = 0; commentIndex < itemComments.length; commentIndex++) {
-                    var comment = itemComments[commentIndex];
+                <% for(commentIndex = 0; commentIndex < userFeedback.length; commentIndex++) {
+                    var comment = userFeedback[commentIndex];
                     var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
                 %>
                 <li style="border-bottom: thin solid lightgray">
                     <div class="avatar">
-                        <%if(comment.User.profile_pic == null) { %>
+                        <%if(comment.feedbackUserId.profile_pic == null) { %>
                         <img style="margin-top:5px; margin-left: 100px" src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt=""/>
                         <% } else { %>
-                        <img src="/uploads/profile_pic/<%= comment.User.profile_pic %>" alt="" style="width: 80px; height: 80px;margin-top:5px; margin-left: 100px"/>
+                        <img src="/uploads/profile_pic/<%= comment.feedbackUserId.profile_pic %>" alt="" style="width: 80px; height: 80px;margin-top:5px; margin-left: 100px"/>
                         <% } %>
                     </div>
+                    <%
+                        var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
+
+                        var rate_quality = comment.rate_quality;
+                        var rate_delivery = comment.rate_delivery;
+                        var rate_reliablity_seller = comment.rate_reliablity_seller;
+                        var payment = comment.payment;
+                        var efficiency = comment.efficiency;
+                        var rate_reliablity_buyer = comment.rate_reliablity_buyer;
+
+                        var avgRate = (rate_quality+rate_delivery+rate_reliablity_buyer+rate_reliablity_seller+payment+efficiency)/6.0;
+                        avgRate = Math.round( avgRate * 10) / 10;
+                    %>
                     <div style="padding: 19px 22px 22px 100px;" class="comment-content">
                         <div class="arrow-comment"></div>
-                        <div class="comment-by"><strong><%= comment.User.full_name %></strong><span
+                        <div class="comment-by"><strong><%= comment.feedbackUserId.full_name %></strong><span
                                     class="date"><%= comment.createdAt.split('T')[0] %></span>
-                            <div class="rating <%= rateInString[comment.rate] %>-stars">
+                            <div class="rating <%= rateInString[Math.floor(avgRate)] %>-stars">
                                 <div class="star-rating"></div>
                                 <div class="star-bg"></div>
                             </div>
@@ -402,38 +422,6 @@
                 </li>
                 <% } %>
             </ul>
-            <a style="margin-top:10px" href="#small-dialog" class="popup-with-zoom-anim button color">Add Review</a>
-            <div id="small-dialog" class="small-dialog zoom-anim-dialog mfp-hide" style="top:-800px">
-                <h3 class="headline">Add Review</h3><span class="line margin-bottom-25"></span>
-                <div class="clearfix"></div>
-
-                <!-- Form -->
-                <form id="add-comment" class="add-comment" action="/api/items/feedback" method="POST">
-                    <input type="hidden" name="rating" id="rating" value="0"/>
-                    <input type="hidden" name="id" value="<%= item.item.id %>"/>
-                    <input type="hidden" name="userId" value="<%= user.id %>"/>
-                    <fieldset>
-                        <div class="feedback-rating">
-                            <span style="float:left">Rating:</span>
-                            <input type="radio" id="star5" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-                            <input type="radio" id="star4" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-                            <input type="radio" id="star3" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-                            <input type="radio" id="star2" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-                            <input type="radio" id="star1" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-                        </div>
-
-                        <br><br>
-                        <div>
-                            <label>Review:</label>
-                            <textarea cols="40" rows="3" name="feedback"></textarea>
-                        </div>
-
-                    </fieldset>
-                    <input type="submit" class="button color" value="Add Review" style="width: 100%"/>
-                    <div class="clearfix"></div>
-
-                </form>
-            </div>
 
         </div>
     </div>
