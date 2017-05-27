@@ -410,10 +410,19 @@
                     %>
                     <div style="padding: 19px 22px 22px 100px;" class="comment-content">
                         <div class="arrow-comment"></div>
-                        <div class="comment-by"><strong><%= comment.feedbackUserId.full_name %></strong><span
-                                    class="date"><%= comment.createdAt.split('T')[0] %></span>
-                            <div class="rating <%= rateInString[Math.floor(avgRate)] %>-stars">
-                                <div class="star-rating"></div>
+                        <div class="comment-by">
+                            <%
+                                var name='';
+                                if(comment.feedbackUserId.full_name != null && comment.feedbackUserId.full_name != ''){
+                                    name = comment.feedbackUserId.full_name;
+                                }else if(comment.feedbackUserId.username != null && comment.feedbackUserId.username != ''){
+                                    name = comment.feedbackUserId.username;
+                                }
+                            %>
+                            <strong><%= name %></strong>
+                            <span class="date"><%= comment.createdAt.split('T')[0] %></span>
+                            <div class="rating <%if(avgRate!=0) {%><%= rateInString[Math.floor(avgRate)] %>-stars<%}%>">
+                                <%if(avgRate!=0) {%><div class="star-rating"></div><%}%>
                                 <div class="star-bg"></div>
                             </div>
                         </div>
