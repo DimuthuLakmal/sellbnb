@@ -1774,6 +1774,8 @@ ul.delivery-options {
 	.mega-container .four-columns 			{ width: 452px; }
 	.mega-container .five-columns 			{ width: 569px; }
 	.mega-container .six-columns 			{ width: 686px; }
+
+	.top-search input { width: 400px; }
 }
 
 
@@ -7586,6 +7588,10 @@ html[xmlns] .slides {display: block;}
 		width: 100%;
 	}
 
+	.top-search input{
+		width: 400px;
+	}
+
 	.hide-on-mobile {display: none;}
 
 }
@@ -7771,6 +7777,8 @@ html[xmlns] .slides {display: block;}
 }
 
 @media only screen and (min-width: 767px) and (max-width: 990px) {
+
+	.top-search input { width: 400px; }
 
 	.item-search input { width: 87.3%; }
 

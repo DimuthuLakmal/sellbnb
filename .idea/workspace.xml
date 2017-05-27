@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="61a4aa39-20c5-4f13-9e78-9d855475e186" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/responsive.css" afterPath="$PROJECT_DIR$/public/css/responsive.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/style.css" afterPath="$PROJECT_DIR$/public/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/header.ejs" afterPath="$PROJECT_DIR$/views/header.ejs" />
     </list>
     <ignored path="sellerbnbbackend.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,11 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="header.ejs" pinned="false" current-in-tab="true">
+      <file leaf-file-name="header.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/header.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="195" column="51" selection-start-line="195" selection-start-column="51" selection-end-line="195" selection-end-column="51" />
+            <state relative-caret-position="204">
+              <caret line="172" column="24" selection-start-line="172" selection-start-column="24" selection-end-line="172" selection-end-column="34" />
               <folding>
                 <element signature="n#style#0;n#ul#0;n#nav#0;n#div#0;n#div#1;n#!!top" expanded="true" />
               </folding>
@@ -40,11 +38,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-378">
-              <caret line="7469" column="67" selection-start-line="7469" selection-start-column="67" selection-end-line="7469" selection-end-column="67" />
+            <state relative-caret-position="137">
+              <caret line="884" column="4" selection-start-line="884" selection-start-column="4" selection-end-line="884" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -98,9 +96,9 @@
         <option value="$PROJECT_DIR$/routes/recentsearch.js" />
         <option value="$PROJECT_DIR$/routes/users.js" />
         <option value="$PROJECT_DIR$/views/index.ejs" />
-        <option value="$PROJECT_DIR$/public/css/style.css" />
         <option value="$PROJECT_DIR$/public/css/responsive.css" />
         <option value="$PROJECT_DIR$/views/header.ejs" />
+        <option value="$PROJECT_DIR$/public/css/style.css" />
       </list>
     </option>
   </component>
@@ -398,14 +396,7 @@
       <workItem from="1495796737886" duration="11559000" />
       <workItem from="1495856085684" duration="10823000" />
       <workItem from="1495869960227" duration="5192000" />
-      <workItem from="1495885707188" duration="1957000" />
-    </task>
-    <task id="LOCAL-00002" summary="Preview Item added">
-      <created>1492021382656</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1492021382656</updated>
+      <workItem from="1495885707188" duration="2474000" />
     </task>
     <task id="LOCAL-00003" summary="Bid Page Modifications!">
       <created>1492185952120</created>
@@ -743,11 +734,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495874603719</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="header styles responsiveness added">
+      <created>1495887686607</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1495887686607</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="397233000" />
+    <option name="totallyTimeSpent" value="397750000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -758,9 +756,9 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.144427" sideWeight="0.5142643" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20042531" sideWeight="0.5051282" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20408164" sideWeight="0.48573574" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20408164" sideWeight="0.48573574" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18053375" sideWeight="0.48809522" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18053375" sideWeight="0.48809522" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3987441" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -804,7 +802,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="news adding make user friendly" />
     <MESSAGE value="Commodity Measure unit error resolved" />
     <MESSAGE value="signup page moved to login page with implementing tabs in login page" />
     <MESSAGE value="header changed" />
@@ -829,7 +826,8 @@
     <MESSAGE value="Bid page error, Recent Histrory Suggestions, Popular Commodity section issues corrected" />
     <MESSAGE value="Banner Images replaced" />
     <MESSAGE value="table name errors resolved." />
-    <option name="LAST_COMMIT_MESSAGE" value="table name errors resolved." />
+    <MESSAGE value="header styles responsiveness added" />
+    <option name="LAST_COMMIT_MESSAGE" value="header styles responsiveness added" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -901,14 +899,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-378">
-          <caret line="7469" column="67" selection-start-line="7469" selection-start-column="67" selection-end-line="7469" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/css/responsive.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
@@ -919,11 +909,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/header.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="195" column="51" selection-start-line="195" selection-start-column="51" selection-end-line="195" selection-end-column="51" />
+        <state relative-caret-position="204">
+          <caret line="172" column="24" selection-start-line="172" selection-start-column="24" selection-end-line="172" selection-end-column="34" />
           <folding>
             <element signature="n#style#0;n#ul#0;n#nav#0;n#div#0;n#div#1;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="884" column="4" selection-start-line="884" selection-start-column="4" selection-end-line="884" selection-end-column="17" />
+          <folding />
         </state>
       </provider>
     </entry>
