@@ -81,8 +81,8 @@
       <file leaf-file-name="bidpage.ejs" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/bidpage.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="303" column="38" selection-start-line="303" selection-start-column="38" selection-end-line="303" selection-end-column="38" />
+            <state relative-caret-position="204">
+              <caret line="39" column="16" selection-start-line="39" selection-start-column="16" selection-end-line="39" selection-end-column="16" />
               <folding>
                 <element signature="n#style#0;n#textarea#0;n#div#1;n#fieldset#0;n#form#0;n#div#0;n#td#1;n#tr#0;n#table#0;n#div#3;n#section#0;n#div#2;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#li#0;n#ul#0;n#div#1;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -471,14 +471,7 @@
       <workItem from="1495796737886" duration="11559000" />
       <workItem from="1495856085684" duration="10823000" />
       <workItem from="1495869960227" duration="5192000" />
-      <workItem from="1495885707188" duration="5916000" />
-    </task>
-    <task id="LOCAL-00012" summary="commodity images upload not working resolved">
-      <created>1494124461665</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1494124461665</updated>
+      <workItem from="1495885707188" duration="6271000" />
     </task>
     <task id="LOCAL-00013" summary="news adding make user friendly">
       <created>1494126277314</created>
@@ -816,11 +809,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495890921202</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="wording open to bidding changed to open">
+      <created>1495891659698</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1495891659698</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="401192000" />
+    <option name="totallyTimeSpent" value="401547000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -877,7 +877,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="header issue with full_name resolved" />
     <MESSAGE value="bidpage telephone number issue is resolved" />
     <MESSAGE value="Bid amount validation issue solved" />
     <MESSAGE value="Issue with Seller Account Bidding Details Page solved" />
@@ -902,7 +901,8 @@
     <MESSAGE value="issues in user review resolved" />
     <MESSAGE value="stars in rating logic changed little bit" />
     <MESSAGE value="Social Media links added to footer" />
-    <option name="LAST_COMMIT_MESSAGE" value="Social Media links added to footer" />
+    <MESSAGE value="wording open to bidding changed to open" />
+    <option name="LAST_COMMIT_MESSAGE" value="wording open to bidding changed to open" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -995,8 +995,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/bidpage.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="303" column="38" selection-start-line="303" selection-start-column="38" selection-end-line="303" selection-end-column="38" />
+        <state relative-caret-position="204">
+          <caret line="39" column="16" selection-start-line="39" selection-start-column="16" selection-end-line="39" selection-end-column="16" />
           <folding>
             <element signature="n#style#0;n#textarea#0;n#div#1;n#fieldset#0;n#form#0;n#div#0;n#td#1;n#tr#0;n#table#0;n#div#3;n#section#0;n#div#2;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#li#0;n#ul#0;n#div#1;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />

@@ -37,7 +37,7 @@
         <div class="parallax-overlay"></div>
 
         <div class="parallax-content">
-            <h2>Make Offer <span>Submit Your Offer</span></h2>
+            <h2><%= item.commodity.name %></h2>
 
             <nav id="breadcrumbs">
                 <ul>
@@ -76,7 +76,6 @@
                         name = item.user.username;
                     }
                 %>
-                <h6><%= item.commodity.name %></h6>
                 <h6><a href="/user/public/userId/<%= item.user.id %>"><%= name %></a></h6>
 
                 <%
