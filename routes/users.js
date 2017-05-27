@@ -1230,7 +1230,7 @@ router.post('/forgotpassword/update', function (req, res) {
 router.get('/bestsellers', function (req, res) {
     sequelize.sync().then(
         function () {
-            sequelize.query("SELECT id, profile_pic, logo, full_name, username, company_name, ((rate_quality+rate_delivery+rate_reliablity_seller+payment+efficiency+rate_reliablity_buyer)/6.0) as rating FROM users Order by rating DESC limit 3", { type: sequelize.QueryTypes.SELECT})
+            sequelize.query("SELECT id, profile_pic, logo, full_name, username, company_name, ((rate_quality+rate_delivery+rate_reliablity_seller+payment+efficiency+rate_reliablity_buyer)/6.0) as rating FROM Users Order by rating DESC limit 3", { type: sequelize.QueryTypes.SELECT})
                 .then(function(users) {
                     req.session.bestsellers = users;
                     //res.jsonp(users);

@@ -29,7 +29,7 @@ router.get('/userId/:userId', function (req, res) {
                     var CommodityArr = [];
                     if(RecentSearches.length == 0){
                         CommodityArr = [];
-                        sequelize.query("SELECT count(id) as count, CommodityId FROM items GROUP BY CommodityId ORDER BY count DESC", { type: sequelize.QueryTypes.SELECT})
+                        sequelize.query("SELECT count(id) as count, CommodityId FROM Items GROUP BY CommodityId ORDER BY count DESC", { type: sequelize.QueryTypes.SELECT})
                             .then(function(Commodities) {
 
                                 async.forEach(Commodities, function(commodity, callback1) {
@@ -86,7 +86,7 @@ router.get('/userId/:userId', function (req, res) {
                                 }, callback1);
 
                             }, function (err) {
-                                sequelize.query("SELECT count(id) as count, CommodityId FROM items GROUP BY CommodityId ORDER BY count DESC", { type: sequelize.QueryTypes.SELECT})
+                                sequelize.query("SELECT count(id) as count, CommodityId FROM Items GROUP BY CommodityId ORDER BY count DESC", { type: sequelize.QueryTypes.SELECT})
                                     .then(function(Commodities) {
 
                                         async.forEach(Commodities, function(commodity, callback1) {
@@ -122,7 +122,7 @@ router.get('/userId/:userId', function (req, res) {
         );
     } else {
         var CommodityArr = [];
-        sequelize.query("SELECT count(id) as count, CommodityId FROM items GROUP BY CommodityId ORDER BY count DESC", { type: sequelize.QueryTypes.SELECT})
+        sequelize.query("SELECT count(id) as count, CommodityId FROM Items GROUP BY CommodityId ORDER BY count DESC", { type: sequelize.QueryTypes.SELECT})
             .then(function(Commodities) {
 
                 async.forEach(Commodities, function(commodity, callback1) {
