@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="61a4aa39-20c5-4f13-9e78-9d855475e186" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/footer.ejs" afterPath="$PROJECT_DIR$/views/footer.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/bidpage.ejs" afterPath="$PROJECT_DIR$/views/bidpage.ejs" />
     </list>
     <ignored path="sellerbnbbackend.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,21 +29,11 @@
       <file leaf-file-name="header.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/header.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
+            <state relative-caret-position="1700">
               <caret line="172" column="24" selection-start-line="172" selection-start-column="24" selection-end-line="172" selection-end-column="34" />
               <folding>
                 <element signature="n#style#0;n#ul#0;n#nav#0;n#div#0;n#div#1;n#!!top" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/css/style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="4494" column="0" selection-start-line="4494" selection-start-column="0" selection-end-line="4494" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -88,11 +78,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bidpage.ejs" pinned="false" current-in-tab="false">
+      <file leaf-file-name="bidpage.ejs" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/bidpage.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="100" column="44" selection-start-line="100" selection-start-column="44" selection-end-line="100" selection-end-column="44" />
+            <state relative-caret-position="180">
+              <caret line="303" column="38" selection-start-line="303" selection-start-column="38" selection-end-line="303" selection-end-column="38" />
               <folding>
                 <element signature="n#style#0;n#textarea#0;n#div#1;n#fieldset#0;n#form#0;n#div#0;n#td#1;n#tr#0;n#table#0;n#div#3;n#section#0;n#div#2;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#li#0;n#ul#0;n#div#1;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -102,7 +92,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="footer.ejs" pinned="false" current-in-tab="true">
+      <file leaf-file-name="footer.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/footer.ejs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="114">
@@ -164,8 +154,8 @@
         <option value="$PROJECT_DIR$/views/addnews.ejs" />
         <option value="$PROJECT_DIR$/views/index.ejs" />
         <option value="$PROJECT_DIR$/views/userprofile.ejs" />
-        <option value="$PROJECT_DIR$/views/bidpage.ejs" />
         <option value="$PROJECT_DIR$/views/footer.ejs" />
+        <option value="$PROJECT_DIR$/views/bidpage.ejs" />
       </list>
     </option>
   </component>
@@ -285,6 +275,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sellerbnbbackend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sellerbnbbackend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -316,17 +324,17 @@
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files (x86)\nodejs\node.exe" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\public\images\mini-slides" />
-      <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\public\images" />
-      <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\public" />
-      <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\views" />
-      <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\public\icons" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\public\icons" />
       <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\public\uploads\profile_pic" />
       <recent name="C:\Projects\sellerbnbbackend2017-01-25\sellerbnbbackend\public\images\footer" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\public\images" />
+      <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\public\images\mini-slides" />
+      <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\public" />
+      <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\views" />
+      <recent name="C:\Users\kjtdi\WebstormProjects\sellerbnbbackend\public\icons" />
     </key>
   </component>
   <component name="RunManager" selected="Node.js.www">
@@ -463,14 +471,7 @@
       <workItem from="1495796737886" duration="11559000" />
       <workItem from="1495856085684" duration="10823000" />
       <workItem from="1495869960227" duration="5192000" />
-      <workItem from="1495885707188" duration="5196000" />
-    </task>
-    <task id="LOCAL-00011" summary="Error of message replying resolved">
-      <created>1493670546557</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1493670546557</updated>
+      <workItem from="1495885707188" duration="5916000" />
     </task>
     <task id="LOCAL-00012" summary="commodity images upload not working resolved">
       <created>1494124461665</created>
@@ -808,11 +809,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495890634681</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="Social Media links added to footer">
+      <created>1495890921202</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1495890921202</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="400472000" />
+    <option name="totallyTimeSpent" value="401192000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -869,7 +877,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="index page error in news resolved. English language" />
     <MESSAGE value="header issue with full_name resolved" />
     <MESSAGE value="bidpage telephone number issue is resolved" />
     <MESSAGE value="Bid amount validation issue solved" />
@@ -894,7 +901,8 @@
     <MESSAGE value="Bid page banner not showing is solved. Bid page similar items user's name issue solved" />
     <MESSAGE value="issues in user review resolved" />
     <MESSAGE value="stars in rating logic changed little bit" />
-    <option name="LAST_COMMIT_MESSAGE" value="stars in rating logic changed little bit" />
+    <MESSAGE value="Social Media links added to footer" />
+    <option name="LAST_COMMIT_MESSAGE" value="Social Media links added to footer" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -903,24 +911,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/css/responsive.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="120" column="27" selection-start-line="120" selection-start-column="27" selection-end-line="120" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/header.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="172" column="24" selection-start-line="172" selection-start-column="24" selection-end-line="172" selection-end-column="34" />
-          <folding>
-            <element signature="n#style#0;n#ul#0;n#nav#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -980,23 +970,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/bidpage.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="100" column="44" selection-start-line="100" selection-start-column="44" selection-end-line="100" selection-end-column="44" />
-          <folding>
-            <element signature="n#style#0;n#textarea#0;n#div#1;n#fieldset#0;n#form#0;n#div#0;n#td#1;n#tr#0;n#table#0;n#div#3;n#section#0;n#div#2;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#li#0;n#ul#0;n#div#1;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#li#0;n#ul#0;n#div#1;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/footer.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
           <caret line="20" column="85" selection-start-line="20" selection-start-column="85" selection-end-line="20" selection-end-column="85" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/header.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1700">
+          <caret line="172" column="24" selection-start-line="172" selection-start-column="24" selection-end-line="172" selection-end-column="34" />
+          <folding>
+            <element signature="n#style#0;n#ul#0;n#nav#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/images/Sell_BnB_Logo.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/bidpage.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="303" column="38" selection-start-line="303" selection-start-column="38" selection-end-line="303" selection-end-column="38" />
+          <folding>
+            <element signature="n#style#0;n#textarea#0;n#div#1;n#fieldset#0;n#form#0;n#div#0;n#td#1;n#tr#0;n#table#0;n#div#3;n#section#0;n#div#2;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#li#0;n#ul#0;n#div#1;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#li#0;n#ul#0;n#div#1;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
