@@ -21,7 +21,7 @@ router.get('/', function (req, res) {
     var notifications = req.session.notifications;
     var messages = req.session.messages;
     var bestsellers = req.session.bestsellers;
-    var toprated = req.session.toprated;
+    var recentsearches = req.session.recentsearches;
     var neartocloseItems = req.session.neartocloseItems;
     var latestNews = req.session.latestNews;
 
@@ -38,7 +38,7 @@ router.get('/', function (req, res) {
 
     //check whether best sellers session is set
     if (bestsellers === null || bestsellers === undefined) {
-        res.redirect('/api/items/bestsellers');
+        res.redirect('/api/user/bestsellers');
     }
 
     //check whether top rated items session is set
@@ -46,12 +46,19 @@ router.get('/', function (req, res) {
         res.redirect('/api/items/neartoclose');
     }
 
-    //check whether Near to bidding close items session is set
-    if (toprated === null || toprated === undefined) {
-        res.redirect('/api/items/toprated');
+    if(req.user != null && req.user != undefined) {
+        //check whether Near to bidding close items session is set
+        if (recentsearches === null || recentsearches === undefined) {
+            res.redirect('/api/recentsearch/userId/'+req.user.id);
+        }
+    }else{
+        //check whether Near to bidding close items session is set
+        if (recentsearches === null || recentsearches === undefined) {
+            res.redirect('/api/recentsearch/userId/'+null);
+        }
     }
 
-    //check whether latest news session is set
+    //load recent seraches
     if (latestNews === null || latestNews === undefined) {
         res.redirect('/api/news/viewlatest');
     }
@@ -77,10 +84,10 @@ router.get('/', function (req, res) {
     delete req.session.latestItems;
     delete req.session.latestItems;
     delete req.session.bestsellers;
-    delete req.session.toprated;
     delete req.session.neartocloseItems;
     delete req.session.notifications;
     delete req.session.messages;
+    delete req.session.recentsearches;
     res.render('index', {
         commodityNames: commodityNames,
         latestItems: latestItems,
@@ -88,7 +95,7 @@ router.get('/', function (req, res) {
         notifications: notifications,
         messages: messages,
         bestsellers: bestsellers,
-        toprated: toprated,
+        recentsearches: recentsearches,
         neartocloseItems: neartocloseItems,
         latestNews: latestNews,
         user: req.user,
@@ -1084,7 +1091,7 @@ router.get('/items/id/:id', function (req, res) {
 
         //check whether item is retrieved from database
         if (item === null || item === undefined) {
-            res.redirect('/api/items/id/' + req.params.id);
+            res.redirect('/api/items/id/' + req.params.id + '/userId/'+user.id);
         }
 
         //check whether item is retrieved from database

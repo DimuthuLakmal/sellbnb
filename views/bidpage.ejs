@@ -69,7 +69,8 @@
                         name = item.user.username;
                     }
                 %>
-                <h5><%= name %></h5>
+                <h6><%= item.commodity.name %></h6>
+                <h6><a href="/user/public/userId/<%= item.user.id %>"><%= name %></a></h6>
 
                 <%
                     var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
@@ -94,7 +95,7 @@
                         <%if(avgRate!=0) {%><div class="star-rating"></div><%}%>
                         <div class="star-bg"></div>
                     </div>
-                    <span style="float: left"><%= avgRate %> stars</span>
+                    <span style="float: left">(<%= avgRate %>)</span>
                 </div>
                 <% } %>
             </section>
@@ -194,7 +195,7 @@
                                 </select>
                             </div>
                             <div class="two columns bidform" style="margin-top: -10px">
-                                <input type="submit" class="submit" id="submit" value="Place Bid" style="margin-left: 0px"/>
+                                <input type="submit" class="submit" id="submit" value="Make Offer" style="margin-left: 0px"/>
                             </div>
                         </div>
 
@@ -279,18 +280,10 @@
                     <table border="0px">
                         <tr>
                             <td class="last-bid-label">
-                                <strong>Last Bid </strong>
-                            </td>
-                            <td id="last-bid-value">
-                                <%= lastBid != undefined ? lastBid.bid : 'No Bids' %>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="last-bid-label">
-                                <strong>Your Last Bid </strong>
+                                <strong>Your Last Offer </strong>
                             </td>
                             <td>
-                                <%= lastUserBid != undefined ? lastUserBid.bid : 'No Bids' %>
+                                <%= lastUserBid != undefined ? lastUserBid.bid : 'No Offers' %>
                             </td>
                         </tr>
                         <tr>

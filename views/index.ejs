@@ -90,8 +90,8 @@
                 <div class="one-third column">
                   <a href="/api/items/search/start/0?start=0&keyword=<%= commodityPopular[commodityIndex].name %>" class="img-caption" >
                     <figure style="width: 280px">
-                      <% if(commodityPopular[commodityIndex].images.length > 0) {%>
-                        <img style="width: 280px; height: 280px" src="uploads/commodity/<%= commodityPopular[commodityIndex].images[0].url %>"
+                      <% if(commodityPopular[commodityIndex].CommodityImages.length > 0) {%>
+                        <img style="width: 280px; height: 280px" src="uploads/commodity/<%= commodityPopular[commodityIndex].CommodityImages[0].url %>"
                              alt="" style="width: 280px; height: 185px"/>
                       <% } else { %>
                         <img src="images/featured_img_3.jpg" alt="" style="width: 280px; height: 280px"/>
@@ -158,6 +158,7 @@
                       </div>
                     <% } %>
                   </a>
+                  <a href="/items/id/<%= latestItems[itemIndex].id %>" class="product-button"><i class="fa fa-shopping-cart"></i> Make Offer</a>
                 </div>
 
                 <a href="/items/id/<%= latestItems[itemIndex].id %>">
@@ -199,6 +200,14 @@
 
         <% for(var sellerIndex = 0; sellerIndex < bestsellers.length; sellerIndex++) {
           var Seller = bestsellers[sellerIndex];
+          var name='';
+          if(Seller.company_name != null && Seller.company_name != ''){
+            name = Seller.company_name;
+          } else if(Seller.full_name != null && Seller.full_name != ''){
+            name = Seller.full_name;
+          }else if(Seller.username != null && Seller.username != ''){
+            name = Seller.username;
+          }
         %>
 
         <li><a href="/user/public/userId/<%= Seller.id %>">
@@ -208,16 +217,16 @@
               <img src="/uploads/profile_pic/<%= Seller.profile_pic %>" alt="" style="width: 80px; height: 80px"/>
             <% } %>
 
-            <div class="product-list-desc"><%= Seller.full_name %>
+            <div class="product-list-desc"><%= name %>
               <%
                 var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
-                var avgRate =  Math.floor(Seller.avg_seller);
+                var avgRate =  Math.floor(Seller.rating);
               %>
-              <div class="rating <%= rateInString[avgRate] %>-stars">
-                <div class="star-rating"></div>
+              <div class="rating <%if(avgRate!=0) {%><%= rateInString[Math.floor(avgRate)] %>-stars<%}%>">
+                <%if(avgRate!=0) {%><div class="star-rating"></div><%}%>
                 <div class="star-bg"></div>
               </div>
-              <span><%= Seller.avg_seller.toFixed(1) %> stars</span>
+              <span>(<%= Seller.rating.toFixed(1) %>)</span>
             </div>
           </a></li>
 
@@ -241,27 +250,52 @@
 
       <ul class="product-list top-rated">
 
-        <% for(var topratedIndex = 0; topratedIndex < toprated.length; topratedIndex++) {
-          var item = toprated[topratedIndex];
+        <%
+          var selectedItems = [];
+          var commodityLength = recentsearches.length;
+          while(selectedItems.length < 3) {
+            var selectedCommodityIndex = Math.floor((Math.random()*commodityLength));
+            var itemList = recentsearches[selectedCommodityIndex];
+            if(itemList.length>0) {
+              var selectedItemIndex = Math.floor((Math.random()*itemList.length));
+
+              var isExist = false;
+              for(var index = 0; index < selectedItems.length; index++) {
+                if(selectedItems[index].id == itemList[selectedItemIndex].id) {
+                  isExist = true;
+                }
+              }
+
+              if(!isExist) {
+                selectedItems.push(itemList[selectedItemIndex]);
+              }
+            }
+
+          }
+          for(var recentsearchesIndex = 0; recentsearchesIndex < 3; recentsearchesIndex++) {
+            var item = selectedItems[recentsearchesIndex];
         %>
 
         <li><a href="/items/id/<%= item.id %>">
-            <%if(item.url == null) { %>
+            <%if(item.ItemImages.length <= 0) { %>
             <img src="images/small_product_list_01.jpg" alt="" />
             <% } else { %>
-            <img src="/uploads/items/<%= item.url %>" alt="" style="width: 80px; height: 80px"/>
+            <img src="uploads/items/<%= item.ItemImages[0].url %>" alt="" style="width: 80px; height: 80px"/>
             <% } %>
 
-            <div class="product-list-desc"><%= item.title %>
+            <div class="product-list-desc">
+              <span><%= item.title %></span><br>
               <%
-                var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
-                var avgRate =  Math.floor(item.avg_rate);
+                var name='';
+                if(item.User.company_name != null && item.User.company_name != ''){
+                  name = item.User.company_name;
+                } else if(item.User.full_name != null && item.User.full_name != ''){
+                  name = item.User.full_name;
+                }else if(item.User.username != null && item.User.username != ''){
+                  name = item.User.username;
+                }
               %>
-              <div class="rating <%= rateInString[avgRate] %>-stars">
-                <div class="star-rating"></div>
-                <div class="star-bg"></div>
-              </div>
-              <span><%= item.avg_rate.toFixed(1) %> stars</span>
+              <span><h6><%= name %></h6></span>
             </div>
           </a></li>
 
@@ -296,21 +330,9 @@
             <img src="uploads/items/<%= item.ItemImages[0].url %>" alt="" style="width: 80px; height: 80px"/>
             <% } %>
 
-            <div class="product-list-desc"><%= item.title %>
-              <%
-                var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
-                var feedbackCount = item.ItemComments.length;
-                var rateSum = 0;
-                for( var commentIndex = 0; commentIndex < item.ItemComments.length; commentIndex++) {
-                  rateSum += parseInt(item.ItemComments[commentIndex].rate);
-                }
-                var avgRate = feedbackCount != 0? (rateSum/feedbackCount) : 0;
-              %>
-              <div class="rating <%= rateInString[avgRate] %>-stars">
-                <div class="star-rating"></div>
-                <div class="star-bg"></div>
-              </div>
-              <span><%= avgRate %> stars</span>
+            <div class="product-list-desc">
+              <span><%= item.title %></span><br>
+              <span><h6><%= item.User.full_name %></h6></span>
             </div>
           </a></li>
 

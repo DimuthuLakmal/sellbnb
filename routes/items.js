@@ -74,6 +74,7 @@ router.post('/add', function (req, res) {
                 CommodityId: CommodityId,
                 UserId: UserId,
                 status: 'pending',
+                thumbnail: req.body.images[0].filename,
             }).then(function (insertedItem) {
                 var insertedItemId = insertedItem.dataValues.id;
                 //store item images
@@ -318,7 +319,7 @@ router.post('/keyword', function (req, res) {
 
 /* Retrieve specific item and its comments from database */
 /* Usage: Search Page */
-router.get('/id/:id', function (req, res) {
+router.get('/id/:id/userId/:userId', function (req, res) {
     //retrieve data from req object
     sequelize.sync().then(
         function () {
@@ -397,16 +398,37 @@ router.get('/id/:id', function (req, res) {
                                                 limit: 1,
                                                 where: {UserId: user.id},
                                             }).then(function (PhoneNumbers) {
-                                                req.session.specificBiddingItem = {'item': item, 'commodity': commodity, 'itemImages': itemImages, 'emails': Emails,
-                                                    'user': user, 'warehouse': warehouse, 'remainingTime': difference, 'phoneNumbers': PhoneNumbers,
-                                                    'similarItems': similarItems, 'measureUnits': MeasuerUnits, 'priceUnits': PriceUnits, 'packingTypes': PackingTypes};
+                                                if(req.params.userId != undefined && req.params.userId != null){
+                                                    //Store Searched Commodity in
+                                                    models.RecentSearchCommodity.create({
+                                                        CommodityId: commodity.id,
+                                                        ItemId: item.id,
+                                                        UserId: req.params.userId,
+                                                    }).then(function (insertedRecentSearches) {
 
-                                                Item.update(
-                                                    { hits: (hits+1) },
-                                                    { where: { id: id } }
-                                                ).then(function (results) {
-                                                    res.redirect('/items/id/'+itemId);
-                                                });
+                                                        req.session.specificBiddingItem = {'item': item, 'commodity': commodity, 'itemImages': itemImages, 'emails': Emails,
+                                                            'user': user, 'warehouse': warehouse, 'remainingTime': difference, 'phoneNumbers': PhoneNumbers,
+                                                            'similarItems': similarItems, 'measureUnits': MeasuerUnits, 'priceUnits': PriceUnits, 'packingTypes': PackingTypes};
+
+                                                        Item.update(
+                                                            { hits: (hits+1) },
+                                                            { where: { id: id } }
+                                                        ).then(function (results) {
+                                                            res.redirect('/items/id/'+itemId);
+                                                        });
+                                                    });
+                                                } else {
+                                                    req.session.specificBiddingItem = {'item': item, 'commodity': commodity, 'itemImages': itemImages, 'emails': Emails,
+                                                        'user': user, 'warehouse': warehouse, 'remainingTime': difference, 'phoneNumbers': PhoneNumbers,
+                                                        'similarItems': similarItems, 'measureUnits': MeasuerUnits, 'priceUnits': PriceUnits, 'packingTypes': PackingTypes};
+
+                                                    Item.update(
+                                                        { hits: (hits+1) },
+                                                        { where: { id: id } }
+                                                    ).then(function (results) {
+                                                        res.redirect('/items/id/'+itemId);
+                                                    });
+                                                }
                                             })
                                         })
                                     });
@@ -891,20 +913,6 @@ router.get('/sellcontract/id/:id/bidId/:bidId', function (req, res) {
     getItemForContract(req, res, '/user/sell/contract/bidId/'+req.params.bidId);
 });
 
-/* Retrieve best sellers from database */
-/* Usage: Home Page Page */
-router.get('/bestsellers', function (req, res) {
-    sequelize.sync().then(
-        function () {
-            sequelize.query("SELECT avg(c.rate) as avg_seller, u.id, u.full_name, u.profile_pic from Items i, ItemComments c, Users u WHERE i.id=c.ItemId AND u.id = i.UserId GROUP BY i.UserId ORDER BY avg_seller DESC limit 3", { type: sequelize.QueryTypes.SELECT})
-                .then(function(users) {
-                    req.session.bestsellers = users;
-                    //res.jsonp(users);
-                    res.redirect('/')
-                });
-        }
-    );
-});
 
 /* Retrieve top rated items from database */
 /* Usage: Home Page Page */
@@ -938,7 +946,7 @@ router.get('/neartoclose', function (req, res) {
                     },
                 },
                 order: '`left_time` DESC',
-                include: [ItemImage, ItemComment, User],
+                include: [ItemImage, User],
             }).then(function (items) {
                 var limitedItems = [];
                 _.forEach(items, function(item) {

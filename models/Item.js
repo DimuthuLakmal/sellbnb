@@ -16,6 +16,7 @@ module.exports = function (sequelize, DataTypes) {
         status: DataTypes.STRING,
         duration: DataTypes.INTEGER,
         hits: DataTypes.INTEGER,
+        thumbnail: DataTypes.TEXT,
     }, {
         // Define Associations for Item table here.
         classMethods: {

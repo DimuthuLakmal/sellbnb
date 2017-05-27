@@ -36,6 +36,7 @@
     <div class="fourteen columns">
         <div id="additional-menu">
             <ul>
+                <li><a href="/items/search"><strong>Sell</strong></a></li>
                 <li><img id="flag_img"></li>
                 <% if(user != null && user != undefined) {%>
                 <li><a href="/user/logout">Sign Out</a></li>
@@ -208,9 +209,9 @@
                     <a href="/user/buy/list/start/0,0,0?buyingpageItemOption=Open&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=1">Buy Account</a>
                 </li>
 
-                <li class="demo-button">
-                    <a href="/items/search">Sell</a>
-                </li>
+                <!--<li class="demo-button">-->
+                    <!--<a href="/items/search">Sell</a>-->
+                <!--</li>-->
             </ul>
         </nav>
     </div>
@@ -220,7 +221,6 @@
     document.getElementById('language_select').onchange = function() {
         var index = this.selectedIndex;
         var inputText = this.children[index].value;
-        console.log(inputText);
         var xhttp = new XMLHttpRequest();;
         xhttp.open("GET", "/change_language/language/"+inputText, true);
         xhttp.send();

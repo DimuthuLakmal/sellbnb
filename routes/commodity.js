@@ -5,6 +5,8 @@ var models = require('./../models');
 var sequelize = models.sequelize;
 var fs = require('fs');
 var path = require('path');
+var async = require('async');
+var moment = require('moment');
 
 
 /* POST request to store commodities in database */
@@ -218,28 +220,63 @@ router.get('/commodityName/id/:id', function (req, res) {
 
 
 /* Retrieve popluar commodities from database */
+// router.get('/viewpopular', function (req, res) {
+//     //retrieve data from req object
+//     sequelize.sync().then(
+//         function () {
+//             var Commodity = models.Commodity;
+//             var CommodityImage = models.CommodityImage;
+//             Commodity.findAndCountAll({
+//                 limit: 10,
+//                 include: [CommodityImage],
+//                 order: '`hits` DESC'
+//             }).then(function (Commodities) {
+//                 var commoditiesArr = [];
+//                 //pushing retrieved data to commodity array
+//                 _.forEach(Commodities.rows, function(commodity, index) {
+//                     var id = commodity.id;
+//                     var name = commodity.name;
+//
+//                     commoditiesArr.push({'id': id, 'name': name, 'images': commodity.CommodityImages});
+//                 });
+//                 req.session.commodityPopular = commoditiesArr;
+//                 res.redirect('/');
+//             });
+//         }
+//     );
+// });
+
+
+/* Retrieve popluar commodities from database */
 router.get('/viewpopular', function (req, res) {
     //retrieve data from req object
+
+    var commodityArr = [];
+
     sequelize.sync().then(
         function () {
-            var Commodity = models.Commodity;
-            var CommodityImage = models.CommodityImage;
-            Commodity.findAndCountAll({
-                limit: 10,
-                include: [CommodityImage],
-                order: '`hits` DESC'
-            }).then(function (Commodities) {
-                var commoditiesArr = [];
-                //pushing retrieved data to commodity array
-                _.forEach(Commodities.rows, function(commodity, index) {
-                    var id = commodity.id;
-                    var name = commodity.name;
 
-                    commoditiesArr.push({'id': id, 'name': name, 'images': commodity.CommodityImages});
+            sequelize.query("SELECT CommodityId, COUNT(CommodityId) as count FROM Items WHERE Items.duration >= TIME_TO_SEC(timediff(now(), Items.createdAt)) GROUP BY CommodityId ORDER BY count DESC limit 10", { type: sequelize.QueryTypes.SELECT})
+                .then(function(Commodities) {
+
+                    async.forEach(Commodities, function(commodity, callback1) {
+
+                            models.Commodity.findAll({
+                                where:{
+                                    id: commodity.CommodityId,
+                                },
+                                include:[models.CommodityImage]
+                            }).then(function (PopularCommodities) {
+                                commodityArr.push(PopularCommodities[0]);
+                                callback1(null);
+                            });
+
+                    }, function (err) {
+                        console.log(commodityArr);
+                        req.session.commodityPopular = commodityArr;
+                        res.redirect('/');
+                    });
                 });
-                req.session.commodityPopular = commoditiesArr;
-                res.redirect('/');
-            });
         }
     );
 });

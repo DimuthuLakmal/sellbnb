@@ -174,13 +174,23 @@
                         </div>
                         <div class="five columns">
                             <h3><%= item.title %></h3>
-                            <p>Seller: <a href="/user/public/userId/<%= item.User.id %>"> <%= item.User.username %></a><br>
+                            <%
+                                var name='';
+                                if(item.User.company_name != null && item.User.company_name != ''){
+                                    name = item.User.company_name;
+                                } else if(item.User.full_name != null && item.User.full_name != ''){
+                                    name = item.User.full_name;
+                                }else if(item.User.username != null && item.User.username != ''){
+                                    name = item.User.username;
+                                }
+                            %>
+                            <p>Seller: <a href="/user/public/userId/<%= item.User.id %>"> <%= name %></a><br>
                                 Quantity: <%= item.quantity %><br>
                                 Suggested Price: <%= item.suggestedPrice %><br>
                                 Time Remaining: <%= formattedAddress %></p><br>
                         </div>
                         <div class="four columns" style="float:right">
-                            <form action="/items/id/<%= item.id %>" method="get">
+                            <form action="/items/id/<%= item.id %>" method="GET">
                                 <input type="submit" class="item-selling-btn" value="View Details"/><br>
                             </form>
                         </div>
