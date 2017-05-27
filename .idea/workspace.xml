@@ -3,43 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="61a4aa39-20c5-4f13-9e78-9d855475e186" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/addcommodity.ejs" afterPath="$PROJECT_DIR$/views/addcommodity.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/additem.ejs" afterPath="$PROJECT_DIR$/views/additem.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/additemdetailsbidding.ejs" afterPath="$PROJECT_DIR$/views/additemdetailsbidding.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/addnews.ejs" afterPath="$PROJECT_DIR$/views/addnews.ejs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/bidpage.ejs" afterPath="$PROJECT_DIR$/views/bidpage.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/bidpage_backup.ejs" afterPath="$PROJECT_DIR$/views/bidpage_backup.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/buyercontract.ejs" afterPath="$PROJECT_DIR$/views/buyercontract.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/commoditydetailsadd.ejs" afterPath="$PROJECT_DIR$/views/commoditydetailsadd.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/edititem.ejs" afterPath="$PROJECT_DIR$/views/edititem.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/forgotpassword_code.ejs" afterPath="$PROJECT_DIR$/views/forgotpassword_code.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/forgotpasswordcodeenter.ejs" afterPath="$PROJECT_DIR$/views/forgotpasswordcodeenter.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/index.ejs" afterPath="$PROJECT_DIR$/views/index.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/itempreview.ejs" afterPath="$PROJECT_DIR$/views/itempreview.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/login.ejs" afterPath="$PROJECT_DIR$/views/login.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/resetpassword.ejs" afterPath="$PROJECT_DIR$/views/resetpassword.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/searchcommodityadd.ejs" afterPath="$PROJECT_DIR$/views/searchcommodityadd.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/searchresults.ejs" afterPath="$PROJECT_DIR$/views/searchresults.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/sellercontract.ejs" afterPath="$PROJECT_DIR$/views/sellercontract.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/signup.ejs" afterPath="$PROJECT_DIR$/views/signup.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/useraccountbasics.ejs" afterPath="$PROJECT_DIR$/views/useraccountbasics.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/useraccountbuying.ejs" afterPath="$PROJECT_DIR$/views/useraccountbuying.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/useraccountbuying_backup.ejs" afterPath="$PROJECT_DIR$/views/useraccountbuying_backup.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/useraccountcontactinformation.ejs" afterPath="$PROJECT_DIR$/views/useraccountcontactinformation.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/useraccountselling.ejs" afterPath="$PROJECT_DIR$/views/useraccountselling.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/useraccountselling_backup.ejs" afterPath="$PROJECT_DIR$/views/useraccountselling_backup.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/userbusinessinformation.ejs" afterPath="$PROJECT_DIR$/views/userbusinessinformation.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/usercontactinformation.ejs" afterPath="$PROJECT_DIR$/views/usercontactinformation.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/usernotificationpreference.ejs" afterPath="$PROJECT_DIR$/views/usernotificationpreference.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/userpaymentinformation.ejs" afterPath="$PROJECT_DIR$/views/userpaymentinformation.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/userprofile.ejs" afterPath="$PROJECT_DIR$/views/userprofile.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/viewbiddingdetailsseller.ejs" afterPath="$PROJECT_DIR$/views/viewbiddingdetailsseller.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/viewmessagedetails.ejs" afterPath="$PROJECT_DIR$/views/viewmessagedetails.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/viewmessagesinbox.ejs" afterPath="$PROJECT_DIR$/views/viewmessagesinbox.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/viewmessagessent.ejs" afterPath="$PROJECT_DIR$/views/viewmessagessent.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/viewnews.ejs" afterPath="$PROJECT_DIR$/views/viewnews.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/viewnewsall.ejs" afterPath="$PROJECT_DIR$/views/viewnewsall.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/viewnewsall_backup.ejs" afterPath="$PROJECT_DIR$/views/viewnewsall_backup.ejs" />
     </list>
     <ignored path="sellerbnbbackend.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -127,8 +91,8 @@
       <file leaf-file-name="bidpage.ejs" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/bidpage.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-391">
-              <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
+            <state relative-caret-position="146">
+              <caret line="185" column="45" selection-start-line="185" selection-start-column="45" selection-end-line="185" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -492,14 +456,7 @@
       <workItem from="1495796737886" duration="11559000" />
       <workItem from="1495856085684" duration="10823000" />
       <workItem from="1495869960227" duration="5192000" />
-      <workItem from="1495885707188" duration="2993000" />
-    </task>
-    <task id="LOCAL-00006" summary="Buyer Contract &amp; Seller Contracts are done">
-      <created>1492491463522</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1492491463522</updated>
+      <workItem from="1495885707188" duration="3152000" />
     </task>
     <task id="LOCAL-00007" summary="packing types is added">
       <created>1492493635186</created>
@@ -837,11 +794,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495888465961</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Title changed to Sell BnB">
+      <created>1495888726167</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1495888726167</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="398269000" />
+    <option name="totallyTimeSpent" value="398428000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -855,7 +819,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20408164" sideWeight="0.48573574" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18053375" sideWeight="0.48809522" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18053375" sideWeight="0.48809522" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3987441" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -898,7 +862,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="Commodity Measure unit error resolved" />
     <MESSAGE value="signup page moved to login page with implementing tabs in login page" />
     <MESSAGE value="header changed" />
     <MESSAGE value="News pages changed, language facilites added. Header changed" />
@@ -923,7 +886,8 @@
     <MESSAGE value="Banner Images replaced" />
     <MESSAGE value="table name errors resolved." />
     <MESSAGE value="header styles responsiveness added" />
-    <option name="LAST_COMMIT_MESSAGE" value="header styles responsiveness added" />
+    <MESSAGE value="Title changed to Sell BnB" />
+    <option name="LAST_COMMIT_MESSAGE" value="Title changed to Sell BnB" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1016,8 +980,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/bidpage.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-391">
-          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
+        <state relative-caret-position="146">
+          <caret line="185" column="45" selection-start-line="185" selection-start-column="45" selection-end-line="185" selection-end-column="45" />
           <folding />
         </state>
       </provider>
