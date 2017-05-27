@@ -98,8 +98,8 @@
 
                 <% if(feedbackCount != 0) {%>
                 <div class="reviews-counter-product">
-                    <div class="rating <%if(avgRate!=0) {%><%= rateInString[Math.floor(avgRate)] %>-stars<%}%>">
-                        <%if(avgRate!=0) {%><div class="star-rating"></div><%}%>
+                    <div class="rating <%if(avgRate >= 1) {%><%= rateInString[Math.floor(avgRate)] %>-stars<%}%>">
+                        <%if(avgRate >= 1) {%><div class="star-rating"></div><%}%>
                         <div class="star-bg"></div>
                     </div>
                     <span style="float: left">(<%= avgRate %>)</span>
@@ -421,8 +421,8 @@
                             %>
                             <strong><%= name %></strong>
                             <span class="date"><%= comment.createdAt.split('T')[0] %></span>
-                            <div class="rating <%if(avgRate!=0) {%><%= rateInString[Math.floor(avgRate)] %>-stars<%}%>">
-                                <%if(avgRate!=0) {%><div class="star-rating"></div><%}%>
+                            <div class="rating <%if(avgRate >= 1) {%><%= rateInString[Math.floor(avgRate)] %>-stars<%}%>">
+                                <%if(avgRate >= 1) {%><div class="star-rating"></div><%}%>
                                 <div class="star-bg"></div>
                             </div>
                         </div>
