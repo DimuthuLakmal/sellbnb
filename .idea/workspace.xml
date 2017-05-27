@@ -82,7 +82,7 @@
         <entry file="file://$PROJECT_DIR$/views/bidpage.ejs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="204">
-              <caret line="39" column="16" selection-start-line="39" selection-start-column="16" selection-end-line="39" selection-end-column="16" />
+              <caret line="66" column="58" selection-start-line="66" selection-start-column="58" selection-end-line="66" selection-end-column="58" />
               <folding>
                 <element signature="n#style#0;n#textarea#0;n#div#1;n#fieldset#0;n#form#0;n#div#0;n#td#1;n#tr#0;n#table#0;n#div#3;n#section#0;n#div#2;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#li#0;n#ul#0;n#div#1;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -471,14 +471,7 @@
       <workItem from="1495796737886" duration="11559000" />
       <workItem from="1495856085684" duration="10823000" />
       <workItem from="1495869960227" duration="5192000" />
-      <workItem from="1495885707188" duration="6271000" />
-    </task>
-    <task id="LOCAL-00013" summary="news adding make user friendly">
-      <created>1494126277314</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1494126277314</updated>
+      <workItem from="1495885707188" duration="6487000" />
     </task>
     <task id="LOCAL-00014" summary="Commodity Measure unit error resolved">
       <created>1494128207302</created>
@@ -816,11 +809,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495891659698</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="Change title of banner in bid page to commodity name">
+      <created>1495892005177</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1495892005177</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="401547000" />
+    <option name="totallyTimeSpent" value="401763000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -877,7 +877,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="bidpage telephone number issue is resolved" />
     <MESSAGE value="Bid amount validation issue solved" />
     <MESSAGE value="Issue with Seller Account Bidding Details Page solved" />
     <MESSAGE value="Tables &amp; other content not showing in News pages resolved" />
@@ -902,7 +901,8 @@
     <MESSAGE value="stars in rating logic changed little bit" />
     <MESSAGE value="Social Media links added to footer" />
     <MESSAGE value="wording open to bidding changed to open" />
-    <option name="LAST_COMMIT_MESSAGE" value="wording open to bidding changed to open" />
+    <MESSAGE value="Change title of banner in bid page to commodity name" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change title of banner in bid page to commodity name" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -996,7 +996,7 @@
     <entry file="file://$PROJECT_DIR$/views/bidpage.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
-          <caret line="39" column="16" selection-start-line="39" selection-start-column="16" selection-end-line="39" selection-end-column="16" />
+          <caret line="66" column="58" selection-start-line="66" selection-start-column="58" selection-end-line="66" selection-end-column="58" />
           <folding>
             <element signature="n#style#0;n#textarea#0;n#div#1;n#fieldset#0;n#form#0;n#div#0;n#td#1;n#tr#0;n#table#0;n#div#3;n#section#0;n#div#2;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#li#0;n#ul#0;n#div#1;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
