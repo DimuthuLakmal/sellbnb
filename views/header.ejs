@@ -174,7 +174,7 @@
                 <form action="/api/items/search/start/0" method="GET">
                     <button><i class="fa fa-search"></i></button>
                     <input type="hidden" value="0" name="start"/>
-                    <input class="search-field" style="width: 750px" name="keyword" type="text" placeholder="Search" id="top_search" list="searchresults"/>
+                    <input class="search-field" name="keyword" type="text" placeholder="Search" id="top_search" list="searchresults"/>
                     <datalist id="searchresults"></datalist>
                 </form>
             </nav>
@@ -187,13 +187,13 @@
 
 <!-- Navigation
 ================================================== -->
-<div class="container">
-    <div class="sixteen columns" style="margin-left: -45px; width: 1290px; margin-bottom: -25px">
+<div class="container menu-container">
+    <div class="menu-bar">
 
         <a href="#menu" class="menu-trigger"><i class="fa fa-bars"></i>Menu</a>
 
         <nav id="navigation">
-            <ul class="menu" id="responsive">
+            <ul class="menu" id="responsive" style="margin-bottom:0px">
 
                 <li><a href="/" class="homepage">Home</a></li>
 

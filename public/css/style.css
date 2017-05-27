@@ -882,7 +882,7 @@ span.skill-title i {
 .top-search input,
 .apply-coupon input {
 	font-size: 13px;
-	width: 800px;
+	width: 750px;
 	padding: 10px 13px 10px 13px;
 	float: left;
 }
@@ -1602,7 +1602,6 @@ ul.delivery-options {
 	display: block;
 	position: relative;
 }
-
 
 /* Current Page */
 .menu > li .current { background-color: #505050;}
@@ -7469,6 +7468,7 @@ html[xmlns] .slides {display: block;}
 
 /* Smaller than standard 1180 (devices and browsers) */
 @media only screen and (min-width: 960px) and (max-width: 1389px) {
+
 	#not-found { margin: 50px 0 75px 0; }
 
 	#not-found h2 {
