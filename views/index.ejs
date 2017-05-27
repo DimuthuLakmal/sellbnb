@@ -8,7 +8,7 @@
   <!-- Basic Page Needs
   ================================================== -->
   <meta charset="utf-8">
-  <title>Sell BnB</title>
+  <title>SellBnB</title>
 
   <!-- Mobile Specific Metas
   ================================================== -->
@@ -331,7 +331,17 @@
 
             <div class="product-list-desc">
               <span><%= item.title %></span><br>
-              <span><h6><%= item.User.full_name %></h6></span>
+              <%
+                var name='';
+                if(item.User.company_name != null && item.User.company_name != ''){
+                  name = item.User.company_name;
+                } else if(item.User.full_name != null && item.User.full_name != ''){
+                  name = item.User.full_name;
+                }else if(item.User.username != null && item.User.username != ''){
+                  name = item.User.username;
+                }
+              %>
+              <span><h6><%= name %></h6></span>
             </div>
           </a></li>
 

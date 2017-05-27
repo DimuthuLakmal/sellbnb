@@ -5,7 +5,7 @@
     <!-- Basic Page Needs
     ================================================== -->
     <meta charset="utf-8">
-    <title>Sell BnB</title>
+    <title>SellBnB</title>
 
     <!-- Mobile Specific Metas
     ================================================== -->
@@ -31,13 +31,20 @@
 
     <!-- Titlebar
     ================================================== -->
-    <section class="parallax-titlebar"  data-background="#000" data-opacity="0.3" data-height="160">
+    <section class="parallax-titlebar fullwidth-element"  data-background="#000" data-opacity="0.2" data-height="160">
 
         <img src="images/mini-slides/10.jpg" alt="" />
         <div class="parallax-overlay"></div>
 
         <div class="parallax-content">
-            <h2><%= item.item.title %></h2>
+            <h2>Make Offer <span>Submit Your Offer</span></h2>
+
+            <nav id="breadcrumbs">
+                <ul>
+                    <li>Home</li>
+                    <li>News</li>
+                </ul>
+            </nav>
         </div>
     </section>
     <% if(message != null && message != undefined && message != "") {%>
@@ -439,6 +446,7 @@
                     <div class="four columns">
                         <figure class="product">
                             <div class="mediaholder">
+                                <a href="/items/id/<%= similarItem.id %>">
                                 <% if(similarItem.ItemImages.length > 0) {%>
                                     <img alt="" src="uploads/items/<%= similarItem.ItemImages[0].url %>" style="width: 280px; height: 280px"/>
                                 <% } else { %>
@@ -449,13 +457,23 @@
                                         <img alt="" src="uploads/items/<%= similarItem.ItemImages[1].url %>" style="width: 270px; height: 270px"/>
                                     </div>
                                 <% } %>
-                                <a href="#" class="product-button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+                                <a href="/items/id/<%= similarItem.id %>" class="product-button"><i class="fa fa-shopping-cart"></i> Make Offer</a>
                             </div>
 
                             <a href="/items/id/<%= similarItem.id %>">
                                 <section>
                                     <span class="product-category"><%= similarItem.title %></span>
-                                    <h5><%= similarItem.User.username %></h5>
+                                    <%
+                                        var name='';
+                                        if(similarItem.User.company_name != null && similarItem.User.company_name != ''){
+                                            name = similarItem.User.company_name;
+                                        } else if(similarItem.User.full_name != null && similarItem.User.full_name != ''){
+                                            name = similarItem.User.full_name;
+                                        }else if(similarItem.User.username != null && similarItem.User.username != ''){
+                                            name = similarItem.User.username;
+                                        }
+                                    %>
+                                    <h5><%= name %></h5>
                                 </section>
                             </a>
                         </figure>
