@@ -65,10 +65,13 @@
                 <h3 class="headline">Crop Image</h3><span class="line margin-bottom-25"></span>
                 <div class="clearfix"></div>
                 <div align="center">
-                    <div id="upload-demo" class="croppie-container" style="width: 500px; height: 500px">
+                    <div class="croppie-container" id="croppie-container" style="width: 350px; height: 350px; display: none">
                     </div>
-                    <br><br>
-                    <a class="button color" id="crop-btn">Crop Image</a>
+                    <div class="one columns">
+                        <a class="button color" id="commodity-uploadimage" style="width: 200px; margin-left:3px">Select Image</a>
+                        <input type="file" name="fileToUpload" id="fileToUpload" style="display: none"><br>
+                        <a class="button color" id="crop-btn" style="width: 200px">Crop Image</a>
+                    </div>
                 </div>
 
             </div>
@@ -194,8 +197,7 @@
                             <label>Images : </label>
                             <div class="ten columns" id="imagepreview-div">
                             </div>
-                            <button class="commodity-uploadimage" id="commodity-uploadimage">Upload Images</button>
-                            <input type="file" name="fileToUpload" id="fileToUpload" style="display: none">
+                            <button class="commodity-uploadimage" id="open-uploadimage-modal">Upload Images</button>
                         </div>
                         <div class="twelve columns bidform" style="margin-top: 10px">
                             <input type="submit" class="submit" id="preview" value="Preview"/>

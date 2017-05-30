@@ -19,23 +19,36 @@ $(document).ready(function () {
            $('#imagepreview-div').append('<div class="two columns">'+
                '<img src="'+image.data+'"'+
                'style="width: 120px; height: 120px" id="blah"/>'+
-               '<a href="#">(Remove)</a>'+
+               '<span style="display: none">'+index+'</span>'+
+               '<a class="remove-btn">(Remove)</a>'+
                '</div>');
        });
        localStorage.setItem("visitedPreview", false);
    }
 
-    $uploadCrop = $('#upload-demo').croppie({
+    $uploadCrop = $('#croppie-container').croppie({
+        enableExif: true,
         viewport: {
-            width: 400,
-            height: 400,
+            width: 300,
+            height: 300,
+            type: 'square'
         },
+        boundary: {
+            width: 300,
+            height: 300
+        }
     });
 });
 
 //handle image upload button click
 $("#fileToUpload").change(function(event){
+
     if (this.files && this.files[0]) {
+
+        $('#croppie-container').show();
+        $('#crop-btn').show();
+        $('#commodity-uploadimage').text('Select Another Image');
+
         var reader = new FileReader();
 
         //set image to preview
@@ -44,11 +57,8 @@ $("#fileToUpload").change(function(event){
                 url: e.target.result,
                 zoom: 5,
             }).then(function(){
-                console.log('jQuery bind complete');
             });
         }
-
-        $('#cropWindow').click();
 
         reader.readAsDataURL(this.files[0]);
 
@@ -73,8 +83,9 @@ $('#crop-btn').click(function () {
     }).then(function (resp) {
         $('#imagepreview-div').append('<div class="two columns">'+
             '<img src="'+resp+'"'+
-            'style="width: 120px; height: 120px" id="blah"/>'+
-            '<a href="#">(Remove)</a>'+
+            'style="width: 120px; height: 120px"/>'+
+            '<span style="display: none">'+images.length+'</span>'+
+            '<a class="remove-btn">(Remove)</a>'+
             '</div>');
         images[images.length-1].data = resp;
         $('.mfp-close').click();
@@ -84,6 +95,14 @@ $('#crop-btn').click(function () {
 $('#commodity-uploadimage').click(function (e) {
     e.preventDefault();
     $('#fileToUpload').click();
+});
+
+$('#open-uploadimage-modal').click(function (e) {
+    e.preventDefault();
+    $('#cropWindow').click();
+    $('#croppie-container').hide();
+    $('#crop-btn').hide();
+    $('#commodity-uploadimage').text('Select Image');
 });
 
 //sending data to server using ajax
@@ -121,42 +140,6 @@ $('#submit').click(function (e) {
         }
     });
 });
-
-// $(document).ready(function () {
-//     var userId = $('#userId').val();
-//
-//     $.ajax({url: "/api/user/view/warehouses",
-//         type: 'POST',
-//         data: {userId: userId},
-//         success: function(data, status, xhr) {
-//             $.each(data, function (index, warehouse) {
-//                 var address = warehouse.warehouseAddress1;
-//                 alert('A');
-//                 //$('#warehouse').append('<option>'+address+'</option>');
-//                 $('#warehouse')
-//                     .append('<option>fasdffsd</option>');
-//             });
-//         }
-//     });
-// });
-
-// jQuery.ajax({
-//     type: "GET",
-//     dataType: 'jsonp',
-//     url: "http://ipinfo.io",
-//     success: function (obj, textstatus) {
-//         if(obj.country == 'LK') {
-//             $("#suggested_price").val('LKR.');
-//         } else {
-//             $("#suggested_price").val('USD');
-//         }
-//     }
-// });
-
-//redirect to add warehouse
-// $('#warehouse').change(function () {
-//     alert('A');
-// });
 
 $('#add_warehouse').click(function(e){
     e.preventDefault();
@@ -200,4 +183,9 @@ $('#preview').click(function (e) {
         window.location = "/items/preview";
     }
 
-})
+});
+
+$(".remove-btn").live('click', function(){
+    $(this).parent().remove();
+    images.splice(parseInt($(this).prev().text()),1);
+});

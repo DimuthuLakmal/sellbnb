@@ -141,35 +141,26 @@
           <ul>
             <% for(var itemIndex = 0; itemIndex < latestItems.length; itemIndex++) { %>
             <li>
-              <figure class="product">
-                <div class="mediaholder">
-                  <a href="/items/id/<%= latestItems[itemIndex].id %>">
+              <div class="one-third column">
+                <a href="/items/id/<%= latestItems[itemIndex].id %>" class="img-caption" >
+                  <figure style="width: 280px">
                     <% if(latestItems[itemIndex].images.length > 0) {%>
-                      <img alt="" src="uploads/items/<%= latestItems[itemIndex].images[0].url %>" style="width:280px; height: 280px;"/>
+                    <img alt="" src="uploads/items/<%= latestItems[itemIndex].images[0].url %>" style="width:280px; height: 280px;"/>
                     <% } else { %>
-                      <img alt="" src="images/shop_item_01.jpg" style="width:280px; height: 280px;"/>
+                    <img alt="" src="images/shop_item_01.jpg" style="width:280px; height: 280px;"/>
                     <% } %>
-                    <% if(latestItems[itemIndex].images.length > 1) {%>
-                      <div class="cover">
-                        <img alt="" src="uploads/items/<%= latestItems[itemIndex].images[1].url %>" style="width:280px; height: 280px;"/>
-                      </div>
-                    <% } %>
-                  </a>
-                  <a href="/items/id/<%= latestItems[itemIndex].id %>" class="product-button"><i class="fa fa-shopping-cart"></i> Make Offer</a>
-                </div>
-
-                <a href="/items/id/<%= latestItems[itemIndex].id %>">
-                  <section>
-                    <span class="product-category"><%= latestItems[itemIndex].commodity.name %></span>
-                    <h5><%= latestItems[itemIndex].title %></h5>
-                    <span class="product-price"><%= latestItems[itemIndex].suggestedPrice %></span>
-                  </section>
+                    <figcaption style="width: 250px">
+                      <h3><%= latestItems[itemIndex].commodity.name %></h3>
+                      <h5 style="color:white"><%= latestItems[itemIndex].title %></h5>
+                      <span class="product-price" style="color:white"><%= latestItems[itemIndex].suggestedPrice %></span>
+                    </figcaption>
+                  </figure>
                 </a>
-              </figure>
+              </div>
             </li>
             <% } %>
-
           </ul>
+
           <div class="clearfix"></div>
 
         </div>
