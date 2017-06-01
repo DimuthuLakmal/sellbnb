@@ -191,7 +191,40 @@
       <div class="clearfix"></div>
 
 
+      <ul class="product-list discount">
 
+        <% for(var neartocloseItemsIndex = 0; neartocloseItemsIndex < 3; neartocloseItemsIndex++) {
+          var item = neartocloseItems[neartocloseItemsIndex];
+        %>
+
+        <li><a href="/items/id/<%= item.id %>">
+            <%if(item.ItemImages.length <= 0) { %>
+            <img src="images/small_product_list_01.jpg" alt="" />
+            <% } else { %>
+            <img src="uploads/items/<%= item.ItemImages[0].url %>" alt="" style="width: 80px; height: 80px"/>
+            <% } %>
+
+            <div class="product-list-desc">
+              <span><%= item.title %></span><br>
+              <%
+                var name='';
+                if(item.User.company_name != null && item.User.company_name != ''){
+                  name = item.User.company_name;
+                } else if(item.User.full_name != null && item.User.full_name != ''){
+                  name = item.User.full_name;
+                }else if(item.User.username != null && item.User.username != ''){
+                  name = item.User.username;
+                }
+              %>
+              <span><h6><%= name %></h6></span>
+            </div>
+          </a></li>
+
+        <% } %>
+
+        <li><div class="clearfix"></div></li>
+
+      </ul>
 
     </div>
 
