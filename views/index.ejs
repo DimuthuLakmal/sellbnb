@@ -209,7 +209,42 @@
       <span class="line margin-bottom-30"></span>
     </div>
 
-    
+    <% for(var latestNewsIndex = 0; latestNewsIndex < latestNews.length; latestNewsIndex++) {
+      var news = latestNews[latestNewsIndex];
+    %>
+      <!-- Post #1 -->
+      <div class="four columns">
+        <article class="from-the-blog">
+
+          <figure class="from-the-blog-image">
+            <% if(news.img == null) { %>
+              <a href="/news/id/<%= news.id %>?lan=en"><img src="images/from_the_blog_01.jpg" alt="" /></a>
+            <% } else { %>
+              <a href="/news/id/<%= news.id %>?lan=en"><img src="<%= news.img %>" alt="" style="height: 160px; width: 280px;"/></a>
+            <% } %>
+          </figure>
+
+          <section class="from-the-blog-content">
+            <a href="/news/id/<%= news.id %>?lan=en">
+              <h5>
+                <%= news.title.substring(0,25) %>
+                <%if(news.title.length > 25) {%>
+                ...
+                <% } %>
+              </h5>
+            </a>
+            <i>By <%= news.user %> on <%= news.date+', '+news.month+' '+news.year %></i>
+            <span>
+                <%if(news.summary!=null) { %>
+                    <%= news.summary.substr(0,50)+'...' %>
+                <% } %>
+            </span><br>
+            <a href="/news/id/<%= news.id %>?lan=en" class="button gray">Read More</a>
+          </section>
+
+        </article>
+      </div>
+    <% } %>
 
   </div>
 
