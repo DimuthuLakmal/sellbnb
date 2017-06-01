@@ -54,8 +54,8 @@
       <file leaf-file-name="index.ejs" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/index.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-25">
-              <caret line="274" column="41" selection-start-line="274" selection-start-column="28" selection-end-line="274" selection-end-column="41" />
+            <state relative-caret-position="162">
+              <caret line="282" column="34" selection-start-line="282" selection-start-column="34" selection-end-line="282" selection-end-column="34" />
               <folding>
                 <element signature="n#style#0;n#img#1;n#a#0;n#li#0;n#ul#0;n#div#1;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -438,14 +438,7 @@
       <workItem from="1496164143577" duration="1470000" />
       <workItem from="1496255539559" duration="520000" />
       <workItem from="1496280648300" duration="2265000" />
-      <workItem from="1496327484014" duration="599000" />
-    </task>
-    <task id="LOCAL-00026" summary="Bid amount validation issue solved">
-      <created>1494646647778</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1494646647778</updated>
+      <workItem from="1496327484014" duration="690000" />
     </task>
     <task id="LOCAL-00027" summary="Issue with Seller Account Bidding Details Page solved">
       <created>1494706723898</created>
@@ -783,11 +776,18 @@
       <option name="project" value="LOCAL" />
       <updated>1496282617330</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="Fix for 'You may like loop'">
+      <created>1496328105091</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1496328105092</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="415746000" />
+    <option name="totallyTimeSpent" value="415837000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -844,7 +844,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="remove blanked Paragraphs in news" />
     <MESSAGE value="port changed to 80" />
     <MESSAGE value="Table showing errors in News page solved" />
     <MESSAGE value="removed black paragraphs" />
@@ -869,7 +868,8 @@
     <MESSAGE value="margin betwwen pictures and title section increased in bid page" />
     <MESSAGE value="image cropping issue is resolved in item add page" />
     <MESSAGE value="Checking error in latest Item" />
-    <option name="LAST_COMMIT_MESSAGE" value="Checking error in latest Item" />
+    <MESSAGE value="Fix for 'You may like loop'" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix for 'You may like loop'" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -964,8 +964,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/index.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-25">
-          <caret line="274" column="41" selection-start-line="274" selection-start-column="28" selection-end-line="274" selection-end-column="41" />
+        <state relative-caret-position="162">
+          <caret line="282" column="34" selection-start-line="282" selection-start-column="34" selection-end-line="282" selection-end-column="34" />
           <folding>
             <element signature="n#style#0;n#img#1;n#a#0;n#li#0;n#ul#0;n#div#1;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
