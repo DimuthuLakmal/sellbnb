@@ -197,7 +197,7 @@
           var item = neartocloseItems[neartocloseItemsIndex];
         %>
 
-          <%if(item.id != undefined) {%>
+          <%if(item != undefined) {%>
             <li><a href="/items/id/<%= item.id %>">
                 <%if(item.ItemImages.length <= 0) { %>
                 <img src="images/small_product_list_01.jpg" alt="" />
