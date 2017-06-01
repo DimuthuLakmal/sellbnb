@@ -138,7 +138,28 @@
       <div class="showbiz" data-left="#showbiz_left_2" data-right="#showbiz_right_2" data-play="#showbiz_play_1" >
         <div class="overflowholder">
 
-
+          <ul>
+            <% for(var itemIndex = 0; itemIndex < latestItems.length; itemIndex++) { %>
+            <li>
+              <div class="one-third column">
+                <a href="/items/id/<%= latestItems[itemIndex].id %>" class="img-caption" >
+                  <figure style="width: 280px">
+                    <% if(latestItems[itemIndex].images.length > 0) {%>
+                    <img alt="" src="uploads/items/<%= latestItems[itemIndex].images[0].url %>" style="width:280px; height: 280px;"/>
+                    <% } else { %>
+                    <img alt="" src="images/shop_item_01.jpg" style="width:280px; height: 280px;"/>
+                    <% } %>
+                    <figcaption style="width: 250px">
+                      <h3><%= latestItems[itemIndex].commodity.name %></h3>
+                      <h5 style="color:white"><%= latestItems[itemIndex].title %></h5>
+                      <span class="product-price" style="color:white"><%= latestItems[itemIndex].suggestedPrice %></span>
+                    </figcaption>
+                  </figure>
+                </a>
+              </div>
+            </li>
+            <% } %>
+          </ul>
 
           <div class="clearfix"></div>
 
@@ -163,7 +184,47 @@
       <div class="clearfix"></div>
 
 
+      <ul class="product-list">
 
+        <% for(var sellerIndex = 0; sellerIndex < bestsellers.length; sellerIndex++) {
+          var Seller = bestsellers[sellerIndex];
+          var name='';
+          if(Seller.company_name != null && Seller.company_name != ''){
+            name = Seller.company_name;
+          } else if(Seller.full_name != null && Seller.full_name != ''){
+            name = Seller.full_name;
+          }else if(Seller.username != null && Seller.username != ''){
+            name = Seller.username;
+          }
+        %>
+
+        <li><a href="/user/public/userId/<%= Seller.id %>">
+            <%if(Seller.profile_pic == null) { %>
+              <img src="images/small_product_list_01.jpg" alt="" />
+            <% } else { %>
+              <img src="/uploads/profile_pic/<%= Seller.profile_pic %>" alt="" style="width: 80px; height: 80px"/>
+            <% } %>
+
+            <div class="product-list-desc"><%= name %>
+              <%
+                var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
+                var avgRate =  Math.floor(Seller.rating);
+              %>
+              <div class="rating <%if(avgRate >= 1) {%><%= rateInString[Math.floor(avgRate)] %>-stars<%}%>">
+                <%if(avgRate >= 1) {%><div class="star-rating"></div><%}%>
+                <div class="star-bg"></div>
+              </div>
+              <% if(Seller.rating!=undefined && Seller.rating!=null) {%>
+                <span>(<%= Seller.rating.toFixed(1) %>)</span>
+              <% } %>
+            </div>
+          </a></li>
+
+        <% } %>
+
+        <li><div class="clearfix"></div></li>
+
+      </ul>
 
     </div>
 
@@ -177,62 +238,7 @@
       <div class="clearfix"></div>
 
 
-      <ul class="product-list top-rated">
 
-        <%
-          var selectedItems = [];
-          var commodityLength = recentsearches.length;
-          while(selectedItems.length < 3) {
-            var selectedCommodityIndex = Math.floor((Math.random()*commodityLength));
-            var itemList = recentsearches[selectedCommodityIndex];
-            if(itemList.length>0) {
-              var selectedItemIndex = Math.floor((Math.random()*itemList.length));
-
-              var isExist = false;
-              for(var index = 0; index < selectedItems.length; index++) {
-                if(selectedItems[index].id == itemList[selectedItemIndex].id) {
-                  isExist = true;
-                }
-              }
-
-              if(!isExist) {
-                selectedItems.push(itemList[selectedItemIndex]);
-              }
-            }
-
-          }
-          for(var recentsearchesIndex = 0; recentsearchesIndex < 3; recentsearchesIndex++) {
-            var item = selectedItems[recentsearchesIndex];
-        %>
-
-        <li><a href="/items/id/<%= item.id %>">
-            <%if(item.ItemImages.length <= 0) { %>
-            <img src="images/small_product_list_01.jpg" alt="" />
-            <% } else { %>
-            <img src="uploads/items/<%= item.ItemImages[0].url %>" alt="" style="width: 80px; height: 80px"/>
-            <% } %>
-
-            <div class="product-list-desc">
-              <span><%= item.title %></span><br>
-              <%
-                var name='';
-                if(item.User.company_name != null && item.User.company_name != ''){
-                  name = item.User.company_name;
-                } else if(item.User.full_name != null && item.User.full_name != ''){
-                  name = item.User.full_name;
-                }else if(item.User.username != null && item.User.username != ''){
-                  name = item.User.username;
-                }
-              %>
-              <span><h6><%= name %></h6></span>
-            </div>
-          </a></li>
-
-        <% } %>
-
-        <li><div class="clearfix"></div></li>
-
-      </ul>
 
     </div>
 
