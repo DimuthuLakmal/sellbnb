@@ -78,6 +78,8 @@ router.get('/', function (req, res) {
         res.redirect('/api/items/viewlatest');
     }
 
+    console.log('Index Page Visited');
+
     delete req.session.returnTo;
     delete req.session.returnToCommodityName;
     delete req.session.commodityPopular;
