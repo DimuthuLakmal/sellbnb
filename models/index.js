@@ -14,7 +14,7 @@ var path = require('path');
 //     }
 // });
 
-var sequelize = new Sequelize('seller_bnb', 'root', '0773432552ijse4Ever!', {
+var sequelize = new Sequelize('seller_bnb', 'root', 'ijse', {
     host: 'localhost',
     dialect: 'mysql',
     pool: {

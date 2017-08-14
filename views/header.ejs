@@ -1,8 +1,8 @@
 <script type="text/javascript">
-    document.body.style.zoom="90%";
+    document.body.style.zoom = "90%";
 </script>
 <script>
-    if(window.location.href.indexOf("user/sell/list/start") == -1) {
+    if (window.location.href.indexOf("user/sell/list/start") == -1) {
         localStorage.removeItem("prevDurationOptionOpen");
         localStorage.removeItem("prevPaginationOptionOpen");
         localStorage.removeItem("prevDurationOptionPending");
@@ -11,7 +11,7 @@
         localStorage.removeItem("prevPaginationOptionCancelled");
     }
 
-    if(window.location.href.indexOf("user/buy/list/start") == -1) {
+    if (window.location.href.indexOf("user/buy/list/start") == -1) {
         localStorage.removeItem("prevDurationOptionOpenBuy");
         localStorage.removeItem("prevPaginationOptionOpenBuy");
         localStorage.removeItem("prevDurationOptionPendingBuy");
@@ -20,8 +20,9 @@
         localStorage.removeItem("prevPaginationOptionCancelledBuy");
     }
 </script>
-<!-- Header
-      ================================================== -->
+<!-- Header================================================== -->
+
+
 <div class="container">
 
     <!-- Logo -->
@@ -38,11 +39,11 @@
             <ul>
                 <li><a href="/items/search"><strong>Sell</strong></a></li>
                 <li><img id="flag_img"></li>
-                <% if(user != null && user != undefined) {%>
+                <% if(user != null && user != undefined) { %>
                 <li><a href="/user/logout">Sign Out</a></li>
-                <%} else {%>
+                <% } else { %>
                 <li><a href="/user/login?action=login">Sign In</a></li>
-                <%}%>
+                <% } %>
                 <li>
                     <select style="background-color: white; border-color: white;" id="language_select">
                         <option value="english">English</option>
@@ -63,7 +64,8 @@
 
             <!-- Button -->
             <div class="icon-box">
-                <span><img src="icons/notifications-icon.png" style="width: 24px; height: 24px; margin-top: 8px; margin-left: 8px"/></span>
+                <span><img src="icons/notifications-icon.png"
+                           style="width: 24px; height: 24px; margin-top: 8px; margin-left: 8px"/></span>
             </div>
 
             <% if(notifications != undefined) { %>
@@ -73,7 +75,7 @@
 
                 <div class="cart-amount">
                     <span>You have <%= notifications.length %> notifications</span><br>
-                    <% if(notifications.length > 0) {%>
+                    <% if(notifications.length > 0) { %>
                     <span><a href="/api/notification/update/userId/<%= user.id %>" style="color:darkgray">Clear All</a> </span>
                     <% } %>
                 </div>
@@ -100,7 +102,8 @@
         <div class="cart  dropdown-notification">
             <!-- Button -->
             <div class="icon-box">
-                <span><img src="icons/message-icon.png" style="width: 24px; height: 24px; margin-top: 8px; margin-left: 8px"/></span>
+                <span><img src="icons/message-icon.png"
+                           style="width: 24px; height: 24px; margin-top: 8px; margin-left: 8px"/></span>
             </div>
 
             <% if(messages != undefined) { %>
@@ -114,8 +117,9 @@
 
                 <div class="cart-amount">
                     <span>You have <%= messages.length %> messages</span><br>
-                    <% if(messages.length > 0) {%>
-                    <span><a href="/api/messages/update/userId/<%= user.id %>" style="color:darkgray">Clear All</a> </span>
+                    <% if(messages.length > 0) { %>
+                    <span><a href="/api/messages/update/userId/<%= user.id %>"
+                             style="color:darkgray">Clear All</a> </span>
                     <% } %>
                 </div>
 
@@ -124,10 +128,11 @@
                         var message = messages[messageIndex];
                     %>
                     <li>
-                        <%if(message.seen == 0) {%>
-                        <a href="/api/messages/update/id/<%= message.id %>"><%= message.subject.substring(0,20) %></a>
-                        <% } else {%>
-                        <a href="/api/messages/update/id/<%= message.id %>">Replied to: <%= message.subject.substring(0,20) %></a>
+                        <% if(message.seen == 0) { %>
+                        <a href="/api/messages/update/id/<%= message.id %>"><%= message.subject.substring(0, 20) %></a>
+                        <% } else { %>
+                        <a href="/api/messages/update/id/<%= message.id %>">Replied
+                            to: <%= message.subject.substring(0, 20) %></a>
                         <% } %>
                         <div class="clearfix"></div>
                     </li>
@@ -146,23 +151,25 @@
             <!-- Button -->
             <div class="icon-box">
                 <% if(user != null && user != ''){ %>
-                <span  style="width: 100px"><a href="/user/basic">
-                        <%if(user.profile_pic != null && user.profile_pic != '') {%>
-                        <img src="uploads/profile_pic/<%= user.profile_pic %>" style="width: 25px; height: 25px; margin-top: 8px; margin-left: 10px"/>
+                <span style="width: 100px"><a href="/user/basic">
+                        <% if(user.profile_pic != null && user.profile_pic != '') { %>
+                        <img src="uploads/profile_pic/<%= user.profile_pic %>"
+                             style="width: 25px; height: 25px; margin-top: 8px; margin-left: 10px"/>
                         <% } else { %>
-                        <img src="icons/user_profile.png" style="width: 22px; height: 22px; margin-top: 8px; margin-left: 14px"/>
+                        <img src="icons/user_profile.png"
+                             style="width: 22px; height: 22px; margin-top: 8px; margin-left: 14px"/>
                         <% } %>
                     </a>
                     <div style="margin-top:-20px; margin-left:30px; font-family:Arial!important; ">
-                        <%if(user.full_name != null && user.full_name != undefined) {%>
-                            <%= user.full_name.split(" ")[0] %>
-                        <% } else {%>
-                            <%= user.username.substring(0,3).toUpperCase()+'..' %>
+                        <% if(user.full_name != null && user.full_name != undefined) { %>
+                        <%= user.full_name.split(" ")[0] %>
+                        <% } else { %>
+                        <%= user.username.substring(0, 3).toUpperCase() + '..' %>
                         <% } %>
 
                     </div>
                     </span>
-                <% } else {%>
+                <% } else { %>
                 <span><a href="/user/basic"><i class="fa fa-user"></i></a></span>
                 <% } %>
             </div>
@@ -174,7 +181,8 @@
                 <form action="/api/items/search/start/0" method="GET">
                     <button><i class="fa fa-search"></i></button>
                     <input type="hidden" value="0" name="start"/>
-                    <input class="search-field" name="keyword" type="text" placeholder="Search" id="top_search" list="searchresults"/>
+                    <input class="search-field" name="keyword" type="text" placeholder="Search" id="top_search"
+                           list="searchresults"/>
                     <datalist id="searchresults"></datalist>
                 </form>
             </nav>
@@ -202,15 +210,17 @@
                 </li>
 
                 <li class="demo-button">
-                    <a href="/user/sell/list/start/0,0,0?sellingpageItemOption=Open&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=1">Sell Account</a>
+                    <a href="/user/sell/list/start/0,0,0?sellingpageItemOption=Open&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=1">Sell
+                        Account</a>
                 </li>
 
                 <li class="demo-button">
-                    <a href="/user/buy/list/start/0,0,0?buyingpageItemOption=Open&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=1">Buy Account</a>
+                    <a href="/user/buy/list/start/0,0,0?buyingpageItemOption=Open&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=1">Buy
+                        Account</a>
                 </li>
 
                 <!--<li class="demo-button">-->
-                    <!--<a href="/items/search">Sell</a>-->
+                <!--<a href="/items/search">Sell</a>-->
                 <!--</li>-->
             </ul>
         </nav>
@@ -218,11 +228,12 @@
 </div>
 
 <script>
-    document.getElementById('language_select').onchange = function() {
+    document.getElementById('language_select').onchange = function () {
         var index = this.selectedIndex;
         var inputText = this.children[index].value;
-        var xhttp = new XMLHttpRequest();;
-        xhttp.open("GET", "/change_language/language/"+inputText, true);
+        var xhttp = new XMLHttpRequest();
+        ;
+        xhttp.open("GET", "/change_language/language/" + inputText, true);
         xhttp.send();
     }
 </script>
