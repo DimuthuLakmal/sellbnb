@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="61a4aa39-20c5-4f13-9e78-9d855475e186" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/images/slides/slide1.jpg" afterPath="$PROJECT_DIR$/public/images/slides/slide1.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/images/slides/slide2.jpg" afterPath="$PROJECT_DIR$/public/images/slides/slide2.jpg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/index.js" afterPath="$PROJECT_DIR$/models/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/footer.ejs" afterPath="$PROJECT_DIR$/views/footer.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/header.ejs" afterPath="$PROJECT_DIR$/views/header.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/index.ejs" afterPath="$PROJECT_DIR$/views/index.ejs" />
     </list>
     <ignored path="sellerbnbbackend.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -51,11 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/models/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="18" column="21" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
+            <state relative-caret-position="221">
+              <caret line="16" column="72" selection-start-line="16" selection-start-column="53" selection-end-line="16" selection-end-column="72" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -63,7 +58,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="footer.ejs" pinned="false" current-in-tab="true">
+      <file leaf-file-name="footer.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/footer.ejs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="224">
@@ -168,9 +163,9 @@
         <option value="$PROJECT_DIR$/routes/items.js" />
         <option value="$PROJECT_DIR$/routes/index.js" />
         <option value="$PROJECT_DIR$/views/index.ejs" />
-        <option value="$PROJECT_DIR$/models/index.js" />
         <option value="$PROJECT_DIR$/views/header.ejs" />
         <option value="$PROJECT_DIR$/views/footer.ejs" />
+        <option value="$PROJECT_DIR$/models/index.js" />
       </list>
     </option>
   </component>
@@ -543,14 +538,7 @@
       <workItem from="1498739063694" duration="215000" />
       <workItem from="1499156494904" duration="657000" />
       <workItem from="1500738629138" duration="735000" />
-      <workItem from="1502689517996" duration="3313000" />
-    </task>
-    <task id="LOCAL-00031" summary="Table showing errors in News page solved">
-      <created>1495307910640</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1495307910640</updated>
+      <workItem from="1502689517996" duration="3968000" />
     </task>
     <task id="LOCAL-00032" summary="removed black paragraphs">
       <created>1495308721629</created>
@@ -888,11 +876,18 @@
       <option name="project" value="LOCAL" />
       <updated>1498739115081</updated>
     </task>
-    <option name="localTasksCounter" value="80" />
+    <task id="LOCAL-00080" summary="Changed footer,slide images etc">
+      <created>1502695587682</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1502695587685</updated>
+    </task>
+    <option name="localTasksCounter" value="81" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="441341000" />
+    <option name="totallyTimeSpent" value="441996000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1378" height="744" extended-state="0" />
@@ -949,7 +944,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="Table showing errors in News page solved" />
     <MESSAGE value="removed black paragraphs" />
     <MESSAGE value="News routing errors resolved. Country identification added" />
     <MESSAGE value="Add News Images facility added." />
@@ -974,7 +968,8 @@
     <MESSAGE value="Checking error in latest Item" />
     <MESSAGE value="Fix for 'You may like loop'" />
     <MESSAGE value="mysql credentials changed" />
-    <option name="LAST_COMMIT_MESSAGE" value="mysql credentials changed" />
+    <MESSAGE value="Changed footer,slide images etc" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed footer,slide images etc" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1051,16 +1046,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="18" column="21" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/header.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -1076,6 +1061,16 @@
           <folding>
             <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#h4#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="16" column="72" selection-start-line="16" selection-start-column="53" selection-end-line="16" selection-end-column="72" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
