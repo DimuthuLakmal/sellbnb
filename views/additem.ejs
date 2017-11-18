@@ -30,6 +30,15 @@
     <link rel="stylesheet" href="css/colors/blue.css" id="colors">
     <link rel="stylesheet" href="css/croppie.css" />
 
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.1/css/froala_editor.min.css' rel='stylesheet'
+          type='text/css'/>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.1/css/froala_style.min.css' rel='stylesheet'
+          type='text/css'/>
+
+    <link rel="stylesheet" href="scripts/froalaEditor/colors.css">
+    <link rel="stylesheet" href="scripts/froalaEditor/quick_insert.min.css">
+
+
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -87,7 +96,7 @@
 
             <section class="variables">
 
-                <form method="post" name="bidform">
+                <form method="post" id="addItemForm" >
 
                     <fieldset>
                         <input type="hidden" id="userId" name="userId" value="<%= user.id %>"/>
@@ -99,11 +108,13 @@
                             <input name="title" type="text" id="title" placeholder="Write a descriptive title. [Use words people would search for when looking for your commodity]"/>
                         </div>
 
-
                         <div class="thirteen alpha columns editform">
                             <label>Quantity : </label>
-                            <div class="ten columns" style="margin-left:0px">
-                                <input name="quantity" type="text" id="quantity" placeholder="Quantity you want to put"/>
+                            <div class="five columns" style="margin-left:0px">
+                                <input name="quantityMin" type="text" id="quantity" placeholder="Min"/>
+                            </div>
+                            <div class="five columns" style="margin-left:10px">
+                                <input name="quantityMax" type="text" id="quantity" placeholder="Max"/>
                             </div>
                             <div class="two columns">
                                 <select name="measureUnit" id="measureUnit">
@@ -114,46 +125,10 @@
                             </div>
                         </div>
 
-                        <div class="twelve alpha columns editform">
-                            <label for="delivery_by">Delivery By : </label>
-                            <select id="delivery_by" name="delivery_by">
-                                <option>Buyer</option>
-                                <option>Seller</option>
-                            </select>
-                        </div>
                         <div class="thirteen alpha columns editform">
-                            <div class="nine columns bidform" style="margin-left: 0px;">
-                                <label for="warehouse">Warehouse : </label>
-                                <select id="warehouse" name="warehouse">
-                                    <% for(var warehouseIndex = 0; warehouseIndex < WareHouses.length; warehouseIndex++) {
-                                        var address1 = WareHouses[warehouseIndex].warehouseAddress1;
-                                        var address2 = WareHouses[warehouseIndex].warehouseAddress2;
-                                        var city = WareHouses[warehouseIndex].warehouseCity;
-                                        var address = '';
-                                        if(address1 != null){
-                                            address += address1;
-                                        }
-                                        if(address2 != null){
-                                            address += ', '+address2;
-                                        }
-                                        if(city != null){
-                                            address += ', '+city;
-                                        }
-                                    %>
-                                    <option value="<%= WareHouses[warehouseIndex].id %>"><%= address %></option>
-                                    <% } %>
-                                </select>
-                            </div>
-                            <div class="three columns bidform">
-                                <input type="submit" value="Add Warehouse" id="add_warehouse" style="margin-top: 30px;"/>
-                            </div>
-
-                        </div>
-
-                        <div class="thirteen alpha columns editform">
-                            <div class="twelve columns bidform" style="margin-left: 0px;">
+                            <div class="twelve columns bidform" style="margin-left: 0;">
                                 <label for="packing_type">Packing Type : </label>
-                                <select id="packing_type" name="packing_type">
+                                <select id="packing_type" name="packingType">
                                     <% for(var packingIndex = 0; packingIndex < packingTypes.length; packingIndex++) { %>
                                         <option value="<%= packingTypes[packingIndex].type %>"><%= packingTypes[packingIndex].type %></option>
                                     <% } %>
@@ -162,18 +137,16 @@
                         </div>
 
                         <div class="twelve alpha columns editform">
-                            <label for="payment_terms">Payment Terms : </label>
-                            <select id="payment_terms" name="payment_terms">
-                                <option>1 month credit</option>
-                                <option>1 week credit</option>
-                                <option>Cash On Delivery</option>
-                            </select>
+                            <label for="payment_terms">Lead Time : </label>
+                            <div class="five columns" style="margin-left: 0;">
+                                <input type="text" name="loadTime">
+                            </div>
                         </div>
 
                         <div class="thirteen alpha columns editform">
-                            <label>Suggested Price : </label>
-                            <div class="ten columns" style="margin-left:0px">
-                                <input name="suggested_price" type="text" id="suggested_price" placeholder="Suggest a price for the item"/>
+                            <label>FOB Price : </label>
+                            <div class="five columns" style="margin-left:0px">
+                                <input name="fob_price" type="text" id="suggested_price" placeholder="Suggest a price for the item"/>
                             </div>
                             <div class="two columns">
                                 <select name="priceUnit" id="priceUnit">
@@ -184,22 +157,26 @@
                             </div>
                         </div>
 
-                        <div class="twelve alpha columns bidform">
-                            <label for="payment_terms">Duration : </label>
-                            <div class="two columns bidform" style="margin-left: 0px;">
-                                <input name="days" type="number" id="days" placeholder="Days" value="0"/>
-                            </div>
-                            <div class="two columns bidform">
-                                <input name="hours" type="number" id="hours" placeholder="Hours" value="0"/>
-                            </div>
-                            <div class="two columns bidform">
-                                <input name="mins" type="number" id="mins" placeholder="Mins" value="0"/>
+                        <div class="twelve alpha columns editform">
+                            <label>Origin : </label>
+                            <div class="five columns bidform" style="margin-left: 0px;">
+                                <input name="origin" type="text" id="days" placeholder="" value=""/>
                             </div>
                         </div>
 
                         <div class="twelve alpha columns editform">
-                            <label>Seller Note: <span>*</span></label>
-                            <textarea name="seller_note" cols="91" rows="3" id="seller_note" spellcheck="true" style="width: 97%" placeholder="Describe Your Item"></textarea>
+                            <label>Producer Note: <span>*</span></label>
+                            <textarea name="producer_note" cols="91" rows="3" id="seller_note" spellcheck="true" style="width: 97%" placeholder="Describe Your Item"></textarea>
+                        </div>
+
+                        <div class="twelve alpha columns editform">
+                            <label>Commodity Description: <span>*</span></label>
+                            <div class="twelve alpha columns editform">
+                                <div id="editor">
+                                    <div id='comDescText'></div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="comDesc" id="comDesc">
                         </div>
 
                         <div class="twelve alpha columns editform">
@@ -209,14 +186,14 @@
                             <button class="commodity-uploadimage" id="open-uploadimage-modal">Upload Images</button>
                         </div>
                         <div class="twelve columns bidform" style="margin-top: 10px">
-                            <input type="submit" class="submit" id="preview" value="Preview"/>
+                            <!--<input type="submit" class="submit" id="preview" value="Preview"/>-->
                             <input type="submit" class="submit" id="submit" value="Add" style="margin-top:5px"/>
                         </div>
 
                     </fieldset>
                     <br>
                     <div class="notification success closeable" style="display: none" id="message_success">
-                        <p><span>Success! </span>Item was successfully added for bidding!</p>
+                        <p><span>Success! </span>Item was successfully added to listing!</p>
                         <a class="close" href="#"></a>
                     </div>
                     <div class="clearfix"></div>
@@ -262,6 +239,15 @@
 <script src="scripts/stacktable.js"></script>
 <script src="scripts/custom.js"></script>
 <script src="scripts/croppie.js"></script>
+
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.1/js/froala_editor.min.js'></script>
+<script src="scripts/froalaEditor/colors.min.js"></script>
+<script src="scripts/froalaEditor/quick_insert.min.js"></script>
+<script src="scripts/froalaEditor/align.min.js"></script>
+<script src="scripts/froalaEditor/font_family.min.js"></script>
+<script src="scripts/froalaEditor/font_size.min.js"></script>
+
+
 <script src="scripts/views/additem.js"></script>
 <script src="scripts/views/header_func.js"></script>
 

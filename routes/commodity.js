@@ -198,6 +198,38 @@ router.get('/measureUnits/id/:id', function (req, res) {
             });
         }
     );
+});/* Retrieve measurement Units from database*/
+/* Usage: Item Add Page*/
+router.get('/measureUnits/id2/:id', function (req, res) {
+    //retrieve data from req object
+    sequelize.sync().then(
+        function () {
+            var CommodityMeasureUnit = models.CommodityMeasureUnit;
+            var CommodityPriceUnit = models.CommodityPriceUnit;
+            var CommodityPacking = models.CommodityPacking;
+            CommodityMeasureUnit.findAll({
+                where: {CommodityId: req.params.id},
+            }).then(function (measureUnits) {
+                //saving commodity measure units
+                req.session.measureUnits = measureUnits;
+
+                CommodityPriceUnit.findAll({
+                    where: {CommodityId: req.params.id},
+                }).then(function (priceUnits) {
+                    //saving commodity measure units
+                    req.session.priceUnits = priceUnits;
+
+                    CommodityPacking.findAll({
+                        where: {CommodityId: req.params.id},
+                    }).then(function (packingTypes) {
+                        req.session.packingTypes = packingTypes;
+                        res.redirect('/items/id/' + req.session.specificBiddingItem.item.id);
+                    });
+
+                });
+            });
+        }
+    );
 });
 
 /* Retrieve Commodity Name from database*/
@@ -211,7 +243,7 @@ router.get('/commodityName/id/:id', function (req, res) {
                 where: {id: req.params.id},
             }).then(function (Commodities) {
                 //saving commodity name
-                req.session.commodityName = Commodities[0].dataValues.name;
+                req.session.commodityName = Commodities[0] ? Commodities[0].dataValues.name : '';
                 res.redirect('/items/add');
             });
         }

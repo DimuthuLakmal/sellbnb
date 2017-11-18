@@ -19,6 +19,7 @@ var notification = require('./routes/notification');
 var usermessage = require('./routes/message');
 var country = require('./routes/country');
 var recentsearch = require('./routes/recentsearch');
+var offers = require('./routes/offer');
 
 var app = express();
 
@@ -98,6 +99,7 @@ app.use('/api/notification', notification);
 app.use('/api/messages', usermessage);
 app.use('/api/countries', country);
 app.use('/api/recentsearch', recentsearch);
+app.use('/api/offer', offers);
 // app.use('/logout', function (req, res) {
 //   req.logout();
 //   res.redirect('/');

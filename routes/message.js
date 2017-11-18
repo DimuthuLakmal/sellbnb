@@ -7,6 +7,8 @@ var router = express.Router();
 var models = require('./../models');
 var sequelize = models.sequelize;
 
+const sgAPI = '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';
+
 /* Add message to database. */
 router.post('/add', function (req, res) {
     //retrieve data from req object
@@ -28,8 +30,65 @@ router.post('/add', function (req, res) {
                 receiverUserIdFk: receiverUserId,
             }).then(function (insertedMessage) {
               // Send an email
+              models.User.findAll({
+                where : {
+                  '$User.id$' : receiverUserId
+                },
+                include: [models.Email]
+              }).then(function (recievedUser) {
+                models.User.findAll({
+                  where : {
+                    '$User.id$' : receiverUserId
+                  },
+                  include: [models.Email, models.PhoneNumber]
+                }).then(function (sendUser) {
+                  var emailList = [];
+                  var numList = [];
+                  sendUser[0].Emails.forEach(function (e) {
+                    emailList.push(e.dataValues.email);
+                  });
+                  sendUser[0].PhoneNumbers.forEach(function (e) {
+                    numList.push(e.dataValues.number);
+                  });
 
-                if(returnTo !== undefined && returnTo != null) {
+                  var helper = require('sendgrid').mail;
+
+                  var emailSubject = '[SellBnb] ' + sendUser[0].dataValues.full_name || sendUser[0].dataValues.company_name + ' send you a new message';
+                  emailTxt = 'Buyer <br>' +
+                    'Name : ' + sendUser[0].dataValues.full_name + '<br>' +
+                    'Telephones : ' + numList.join(', ') + '<br>' +
+                    'Emails : ' + emailList.join(', ') + '<br><br>' +
+                    '------- Begin of Message -------<br>' +
+                    '<strong>Subject </strong> : ' + subject + '<br>' +
+                    '<strong>content </strong> : <br>' + message + '<br>' +
+                    '--------- End Message  ---------' +
+                    '<br><br>' +
+                    'to reply this message click here :<br>' +
+                    '<a href="reply">replay</a><br><br>' +
+                    'For Your Information: To help arbitrate disputes and preserve trust and safety, ' +
+                    'we retain all messages buyers and sellers send through SellBnB for two years.  ' +
+                    'This includes your response to the message above.';
+                  from_email = new helper.Email("sellbnb@gmail.com");
+                  to_email = new helper.Email(recievedUser[0].Emails[0].dataValues.email);
+                  content = new helper.Content("text/html", emailTxt);
+                  mail = new helper.Mail(from_email, emailSubject , to_email, content);
+
+                  var sg = require('sendgrid')(sgAPI);
+                  var request = sg.emptyRequest({
+                    method: 'POST',
+                    path: '/v3/mail/send',
+                    body: mail.toJSON()
+                  });
+
+                  sg.API(request, function(error, response) {
+                    console.log('============ Email send ===============');
+                    console.log(response.statusCode);
+                    console.log(response.body);
+                    console.log(response.headers);
+                  });
+                });
+              });
+              if(returnTo !== undefined && returnTo != null) {
                     res.redirect(returnTo);
                 } else {
                     res.redirect('/user/public/userId/'+senderUserId);
@@ -175,18 +234,20 @@ router.get('/update/id/:id', function (req, res) {
                         model: User,
                         as: 'senderUserId'
                     }]
-                }).then(function (Messages) {
-                    console.log(Messages[0]);
-
+                }).then(function (msgs) {
+                  if(msgs[0].dataValues.receiverUserIdFk === req.user.id){
                     MessageReply.findAll({
-                        where: {MessageId: Messages[0].dataValues.id},
-                        include: [User],
+                      where: {MessageId: msgs[0].dataValues.id},
+                      include: [User],
                     }).then(function (MessageReplies) {
-                        req.session.messageReplies = MessageReplies;
-                        req.session.messageDetails = Messages[0];
-                        res.redirect('/user/messages/id/'+id);
+                      req.session.messageReplies = MessageReplies;
+                      req.session.messageDetails = msgs[0];
+                      res.redirect('/user/messages/id/'+id);
                     });
-
+                  } else {
+                    req.session.returnTo = req.session.inCorrectLoginPath;
+                    res.redirect('/user/login?action=login');
+                  }
                 });
             });
         }

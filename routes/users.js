@@ -9,6 +9,7 @@ var bcrypt = require('bcryptjs');
 var salt = bcrypt.genSaltSync(10);
 var fs = require('fs');
 var path = require('path');
+const sgAPI = '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';
 
 //local strategy use verifyCredentials
 passport.use(new passportLocal.Strategy(verifyCredentials));
@@ -93,7 +94,7 @@ router.get('/login', function (req, res, next) {
         commodityNames: commodityNames,
         notifications: notifications,
         messages :messages,
-
+        expectedUser : req.query.expUsr,
         loginOrRegister: 'Login',
         user: req.user,
     });
@@ -853,7 +854,7 @@ router.post('/adduser', function (req, res) {
                                 content = new helper.Content("text/plain", message);
                                 mail = new helper.Mail(from_email, subject, to_email, content);
 
-                                var sg = require('sendgrid')('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');
+                                var sg = require('sendgrid')(sgAPI);
                                 var request = sg.emptyRequest({
                                     method: 'POST',
                                     path: '/v3/mail/send',
@@ -1184,7 +1185,7 @@ router.get('/forgotpassword_code', function (req, res, next) {
                     content = new helper.Content("text/plain", "Your recovery code is "+random_numeber);
                     mail = new helper.Mail(from_email, subject, to_email, content);
 
-                    var sg = require('sendgrid')('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');
+                    var sg = require('sendgrid')(sgAPI);
                     var request = sg.emptyRequest({
                         method: 'POST',
                         path: '/v3/mail/send',

@@ -9,12 +9,13 @@ var sequelize = models.sequelize;
 var fs = require('fs');
 var helper = require('sendgrid').mail;
 var async = require('async');
+const sgAPI = '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';
 
 //store notification details in database
 /* Usage: Buyer Contract Page */
 router.get('/add/mutual/type/:type/bidId/:bidId/itemName/:itemName/itemId/:itemId/userId/:userId/requestFrom/:requestFrom', function (req, res) {
     var redirection = '';
-    var url = ''
+    var url = '';
     if (req.params.requestFrom == 'seller') {
         redirection = '/user/sell/contract/bidId/'+req.params.bidId;
         url = '/user/buy/contract/id/'+req.params.itemId+'?bidId='+req.params.bidId;
@@ -195,7 +196,7 @@ function sendEmailSMS(userId, subject_, message, redirection, res) {
                         content = new helper.Content("text/plain", message);
                         mail = new helper.Mail(from_email, subject, to_email, content);
 
-                        var sg = require('sendgrid')('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');
+                        var sg = require('sendgrid')(sgAPI);
                         var request = sg.emptyRequest({
                             method: 'POST',
                             path: '/v3/mail/send',

@@ -9,6 +9,7 @@ var sequelize = models.sequelize;
 var fs = require('fs');
 var moment = require('moment');
 var async = require('async');
+const sgAPI = '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';
 
 //store bidding details in database
 /* Usage: Bidding Page */
@@ -74,7 +75,7 @@ router.post('/add', function (req, res) {
                     content = new helper.Content("text/plain", "You have successfully added your bid!");
                     mail = new helper.Mail(from_email, subject, to_email, content);
 
-                    var sg = require('sendgrid')('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');
+                    var sg = require('sendgrid')(sgAPI);
                     var request = sg.emptyRequest({
                         method: 'POST',
                         path: '/v3/mail/send',
@@ -396,16 +397,16 @@ router.get('/start/:start/userId/:userId', function (req, res) {
                 async.forEach(Biddings.rows, function(bidding, callback1) {
                     //calculate remaining time
                     var item = bidding.Item;
-                    var difference = ((item.createdAt.getTime() / 1000) + item.duration) - currentTime;
-                    if(difference < 0) {
-                        difference = 0;
-                    }
+                    // var difference = ((item.createdAt.getTime() / 1000) + item.duration) - currentTime;
+                    // if(difference < 0) {
+                    var difference = 0;
+                    // }
 
                     //calculate bidding close time
-                    var closedTimeinSec = ((item.createdAt.getTime() / 1000) + item.duration)*1000;
-                    var closedTime = moment(closedTimeinSec).format('YYYY-MM-DD HH:mm:ss');
+                    // var closedTimeinSec = ((item.createdAt.getTime() / 1000) + item.duration)*1000;
+                    // var closedTime = moment(closedTimeinSec).format('YYYY-MM-DD HH:mm:ss');
 
-                    var formatedTimeCreated = moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss');
+                    // var formatedTimeCreated = moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss');
                     remainingTimes.push([difference, formatedTimeCreated, closedTime]);
 
                     //retrieve item images.

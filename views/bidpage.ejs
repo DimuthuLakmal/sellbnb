@@ -4,11 +4,13 @@
     <!-- Global Site Tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107495910-1"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments)};
-        gtag('js', new Date());
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments)
+      };
+      gtag('js', new Date());
 
-        gtag('config', 'UA-107495910-1');
+      gtag('config', 'UA-107495910-1');
     </script>
 
     <!-- Basic Page Needs
@@ -30,6 +32,20 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
+    <style>
+        /*overrid*/
+        .customSelect .selectedValue {
+            font-size: 18px;
+            padding-top: 11px;
+            height: 27px;
+            color: #999999;
+        }
+
+        .black-text{
+            color: black;
+        }
+    </style>
+
 </head>
 
 <body class="boxed">
@@ -37,30 +53,15 @@
 
     <% include header.ejs %>
 
-
     <!-- Titlebar
     ================================================== -->
-    <section class="parallax-titlebar fullwidth-element"  data-background="#000" data-opacity="0.2" data-height="160">
-
-        <img src="images/mini-slides/10.jpg" alt="" />
-        <div class="parallax-overlay"></div>
-
-        <div class="parallax-content">
-            <h2><%= item.commodity.name %></h2>
-
-            <nav id="breadcrumbs">
-                <ul>
-                    <li>Home</li>
-                    <li>News</li>
-                </ul>
-            </nav>
-        </div>
-    </section>
-    <% if(message != null && message != undefined && message != "") {%>
-        <div class="notification success closeable" id="message_success" style="margin-top: -38px;">
-            <p><span><%= message %></span></p>
-            <a class="close" href="#"></a>
-        </div>
+    <h1 style="color: black; text-align: center; background-color: #f35a5b;"><%= item.commodity.name %></h1>
+    <hr>
+    <% if(message != null && message != undefined && message != "") { %>
+    <div class="notification success closeable" id="message_success" style="margin-top: -38px;">
+        <p><span><%= message %></span></p>
+        <a class="close" href="#"></a>
+    </div>
     <% } %>
     <div class="notification error closeable" id="error_message" style="margin-top: -38px; display: none">
         <p><span id="message_span"></span></p>
@@ -73,271 +74,195 @@
         ================================================== -->
         <div class="eight columns">
             <!-- Headline -->
-            <section class="title" style="margin-bottom: 30px">
-                <h2><%= item.item.title %></h2>
-                <%
-                    var name='';
-                    if(item.user.company_name != null && item.user.company_name != ''){
-                        name = item.user.company_name;
-                    } else if(item.user.full_name != null && item.user.full_name != ''){
-                        name = item.user.full_name;
-                    }else if(item.user.username != null && item.user.username != ''){
-                        name = item.user.username;
-                    }
-                %>
-                <h6><a href="/user/public/userId/<%= item.user.id %>"><%= name %></a></h6>
-
-                <%
-                    var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
-
-                    var rate_quality = item.user.rate_quality;
-                    var rate_delivery = item.user.rate_delivery;
-                    var rate_reliablity_seller = item.user.rate_reliablity_seller;
-                    var payment = item.user.payment;
-                    var efficiency = item.user.efficiency;
-                    var rate_reliablity_buyer = item.user.rate_reliablity_buyer;
-
-                    var feedbackCount = item.user.no_of_ratings_delivery+item.user.no_of_ratings_quality+item.user.no_of_ratings_efficiency
-                            +item.user.no_of_ratings_payment+item.user.no_of_ratings_reliablity_buyer
-                            +item.user.no_of_ratings_reliablity_seller;
-                    var avgRate = (rate_quality+rate_delivery+rate_reliablity_buyer+rate_reliablity_seller+payment+efficiency)/6.0;
-                    avgRate = Math.round( avgRate * 10) / 10;
-                %>
-
-                <% if(feedbackCount != 0) {%>
-                <div class="reviews-counter-product">
-                    <div class="rating <%if(avgRate >= 1) {%><%= rateInString[Math.floor(avgRate)] %>-stars<%}%>">
-                        <%if(avgRate >= 1) {%><div class="star-rating"></div><%}%>
-                        <div class="star-bg"></div>
-                    </div>
-                    <span style="float: left">(<%= avgRate %>)</span>
-                </div>
-                <% } %>
-            </section>
             <div class="slider-padding">
                 <div id="product-slider" class="royalSlider rsDefault">
-                    <% if(item.itemImages.length > 0) {%>
-                        <% for(imageIndex = 0; imageIndex < item.itemImages.length; imageIndex++) {;%>
-                            <img style="width: 350px; height: 350px"
-                                 class="rsImg" src="uploads/items/<%= item.itemImages[imageIndex].url %>"
-                                 data-rsTmb="uploads/items/<%= item.itemImages[imageIndex].url %>"
-                                 alt=""/>
-                        <% } %>
-                    <% } else {  %>
-                        <img class="rsImg" src="images/product_item_01a.jpg" data-rsTmb="images/product_item_thumb_01a.png"
-                             alt=""/>
+                    <% if(item.itemImages.length > 0) { %>
+                    <% for(imageIndex = 0; imageIndex < item.itemImages.length; imageIndex++) {; %>
+                    <img style="width:100%;"
+                         class="rsImg" src="uploads/items/<%= item.itemImages[imageIndex].url %>"
+                         data-rsTmb="uploads/items/<%= item.itemImages[imageIndex].url %>"
+                         alt=""/>
+                    <% } %>
+                    <% } else { %>
+                    <img class="rsImg" src="images/product_item_01a.jpg" data-rsTmb="images/product_item_thumb_01a.png"
+                         alt=""/>
                     <% } %>
                 </div>
                 <div class="clearfix"></div>
             </div>
             <div class="product-page">
 
-                    <!-- Product Details Table -->
-                    <div class="product-div">
-                        <table class="basic-table">
-                            <tr>
-                                <th>Quantity</th>
-                                <td><%= item.item.quantity %></td>
-                            </tr>
+                <!-- Product Details Table -->
+                <div class="product-div">
+                    <table class="basic-table">
+                        <tr>
+                            <th>Max. Quantity</th>
+                            <td><%= item.item.quantityMax %></td>
+                        </tr>
 
-                            <tr>
-                                <th>Packing Type</th>
-                                <td><%= item.item.packageType %></td>
-                            </tr>
+                        <tr>
+                            <th>Min. Quantity</th>
+                            <td><%= item.item.quantityMin%></td>
+                        </tr>
 
-                            <tr>
-                                <th>Delivery By</th>
-                                <td id="item_delivery_by"><%= item.item.deliveryBy %></td>
-                            </tr>
+                        <tr>
+                            <th>Packing Type</th>
+                            <td><%= item.item.packageType %></td>
+                        </tr>
 
-                            <tr>
-                                <th>Warehouse Address</th>
-                                <%
-                                var warehouse = item.warehouse;
-                                var formattedAddress = "";
-                                formattedAddress = (warehouse.warehouseAddress1 != null && warehouse.warehouseAddress1 != undefined) ?
-                                        warehouse.warehouseAddress1 : formattedAddress;
-                                formattedAddress = (warehouse.warehouseAddress2 != null && warehouse.warehouseAddress2 != undefined) ?
-                                formattedAddress + ", " +warehouse.warehouseAddress2 : formattedAddress;
-                                formattedAddress = (warehouse.warehouseCity != null && warehouse.warehouseCity != undefined) ?
-                                formattedAddress + ", " +warehouse.warehouseCity : formattedAddress;
-                                %>
-                                <td><%= formattedAddress %></td>
-                            </tr>
-
-                            <tr>
-                                <th>Payment terms</th>
-                                <td><%= item.item.paymentTerms %></td>
-                            </tr>
-
-                            <tr>
-                                <th>Suggested Price</th>
-                                <td id="suggested_price"><%= item.item.suggestedPrice %></td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <div class="product-seller-note">
-                        <p class="margin-reset"><strong>Seller Note : </strong><%= item.item.note%></p>
-                    </div>
-
+                        <tr>
+                            <th>Lead time</th>
+                            <td><%= item.item.loadTime %></td>
+                        </tr>
+                        <tr>
+                            <th>Origin</th>
+                            <td><%= item.item.origin %></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="product-seller-note">
+                    <p class="margin-reset"><strong>Producer Note : </strong><%= item.item.note %></p>
+                </div>
             </div>
         </div>
 
 
         <!-- Content
         ================================================== -->
-        <div class="seven columns">
-
+        <div class="eight columns">
+            <section class="title" style="margin-bottom: 10px;">
+                <%
+                var name = '';
+                if (item.user.company_name != null && item.user.company_name != '') {
+                    name = item.user.company_name;
+                } else if (item.user.full_name != null && item.user.full_name != '') {
+                    name = item.user.full_name;
+                } else if (item.user.username != null && item.user.username != '') {
+                    name = item.user.username;
+                }
+                %>
+                <h2 style="color: #000; font-size: 30px"><%= item.item.title %></h2>
+                <h6><a href="/user/public/userId/<%= item.user.id %>"><%= name %></a> <span style="color: #14cf00; font-style: oblique">[VERIFIED]</span></h6>
+            </section>
         </div>
 
         <div class="eight products columns">
             <section class="variables">
-                <form method="POST" action="/api/bid/add" id="bidformToSubmit">
-
-                        <input type="hidden" name="id" value="<%= item.item.id %>"/>
-                        <input type="hidden" name="userId" value="<%= user.id %>"/>
-                        <div class="eight alpha columns bidform">
-                            <label>Your Offer : </label>
-                            <div class="four columns" style="margin-left: 0px;">
-                                <input name="bid" type="text" id="your_bid"/>
-                            </div>
-                            <div class="two columns" style="width:120px">
-                                <select name="priceUnit" id="priceUnit">
-                                    <% for(var priceIndex = 0; priceIndex < item.priceUnits.length; priceIndex++) { %>
-                                    <option value="<%= item.priceUnits[priceIndex].unitName %>"><%= item.priceUnits[priceIndex].unitName %></option>
-                                    <% } %>
-                                </select>
-                            </div>
-                            <div class="two columns bidform" style="margin-top: -10px">
-                                <input type="submit" class="submit" id="submit" value="Make Offer" style="margin-left: 0px"/>
-                            </div>
+                <div class="eight columns" style="margin-left:0;">
+                    <h1 style="font-size: 25px;" class="headline">FOB Price: <strong style="font-size: 30px"><%= item.item.suggestedPrice + ' ' + item.priceUnits[0].unitName %></strong></h1>
+                </div>
+                <form method="POST" action="/api/offer/add" id="bidformToSubmit" style="background-color: #5d5c60">
+                    <input type="hidden" name="itemId" value="<%= item.item.id %>"/>
+                    <input type="hidden" name="userId" value="<%= user.id %>"/>
+                    <input type="hidden" name="commodityId" value="<%= item.item.Commodity.id %>"/>
+                    <div class="eight alpha columns bidform" style="display: inline-flex;">
+                        <div class="two columns" style="font-size: 20px; margin-top: 10px">Your Offer : </div>
+                        <div class="four columns" style="margin-left:0;">
+                            <input style="font-size: 18px" name="offerPrice" type="text" id="your_bid"/>
                         </div>
+                        <div class="two columns" style="margin-left:-10px">
+                            <input style="font-size: 18px" type="text" value="<%= item.priceUnits[0].unitName %>" disabled>
+                        </div>
+                    </div>
 
-
-                        <div class="eight alpha columns bidform">
-                            <label for="delivery_by">Delivery By : </label>
-                            <select id="delivery_by" name="delivery_by">
-                                <option value="Buyer">Buyer</option>
-                                <% if(item.item.deliveryBy == 'Seller') {%>
-                                <option selected value="Seller">Seller</option>
-                                <% } else {%>
-                                <option value="Seller">Seller</option>
+                    <div class="eight alpha columns bidform" style="display: inline-flex;">
+                        <div class="two columns" style="font-size: 20px; margin-top: 10px">Quantity : </div>
+                        <div class="four columns" style="margin-left:0;">
+                            <input style="font-size: 18px" name="quantity" type="text" id="quantity"/>
+                        </div>
+                        <div class="two columns" style="margin-left:-10px">
+                            <select name="measureUnit" style="font-size: 18px">
+                                <% for(var measureIndex = 0; measureIndex < measureUnits.length; measureIndex++) { %>
+                                <option value="<%= measureUnits[measureIndex].unitName %>"><%= measureUnits[measureIndex].unitName %></option>
                                 <% } %>
                             </select>
                         </div>
+                    </div>
 
-                        <div class="eight alpha columns bidform" id="buyer_delivery_cost" style="display: none;">
-                            <label>Delivery Cost : </label>
-
-                            <div class="six columns" style="margin-left: 0px;">
-                                <input name="delivery_cost" type="text" id="delivery_cost"/>
-                            </div>
-                            <div class="two columns" style="width:120px">
-                                <select name="priceUnitDelivery" id="priceUnitDelivery">
-                                    <% for(var priceIndex = 0; priceIndex < item.priceUnits.length; priceIndex++) { %>
-                                    <option value="<%= item.priceUnits[priceIndex].unitName %>"><%= item.priceUnits[priceIndex].unitName %></option>
-                                    <% } %>
-                                </select>
-                            </div>
+                    <div class="eight alpha columns bidform" style="display: inline-flex;">
+                        <div class="three columns" style="font-size: 20px; margin-top: 10px">Destination port :</div>
+                        <div class="five columns" style="margin-left: -10px; width: 344px">
+                            <input style="font-size: 18px;" name="destPort" type="text" id="quantity"/>
                         </div>
+                    </div>
 
-                        <div class="eight alpha columns bidform" id="buyer_warehouse">
-                            <label for="warehouse">Warehouse : </label>
-                            <select id="warehouse" name="warehouse">
-                                <% for(var warehouseIndex = 0; warehouseIndex < userWareHouses.length; warehouseIndex++) {
-                                    var warehouse = userWareHouses[warehouseIndex];
-                                    var formattedAddress = "";
-                                    formattedAddress = (warehouse.warehouseAddress1 != null && warehouse.warehouseAddress1 != undefined) ?
-                                            warehouse.warehouseAddress1 : formattedAddress;
-                                    formattedAddress = (warehouse.warehouseAddress2 != null && warehouse.warehouseAddress2 != undefined) ?
-                                    formattedAddress + ", " +warehouse.warehouseAddress2 : formattedAddress;
-                                    formattedAddress = (warehouse.warehouseCity != null && warehouse.warehouseCity != undefined) ?
-                                    formattedAddress + ", " +warehouse.warehouseCity : formattedAddress;
-                                %>
-                                <option value="<%= warehouse.id %>"><%= formattedAddress %></option>
-                                <% } %>
+                    <div class="four alpha columns bidform"  style="display: inline-flex;">
+                        <div class="three columns" style="font-size: 20px; margin-top: 10px;width: 136px">Incoterms : </div>
+                        <div class="two columns">
+                            <select name="incoterms" style="width:50%;">
+                                <option value="FOB">FOB</option>
+                                <option value="CNF">CNF</option>
+                                <option value="CIF">CIF</option>
+                                <option value="Other">Other</option>
                             </select>
                         </div>
-                    <input type="submit" class="submit" id="submitFormBtn" value="Place Bid" style="display:none"/>
-                    <div class="clearfix"></div>
+                        <a href="#">?</a>
+                    </div>
+                    <div class="four alpha columns bidform">
+                        <div class="two columns" style="font-size: 20px; margin-top: 10px; margin-left: 63px">Medium : </div>
+                        <div class="two columns" style="width: 30%; margin-left: -20px;">
+                            <select name="medium">
+                                <option value="Air">Air</option>
+                                <option value="Sea">Sea</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="eight columns">
+                        <div class="two columns" style="font-size: 20px; margin-top: 10px; width:120px; margin-left: 0;">Note : </div>
+                        <div class="five columns" style="margin-top: 10px; width: 407px">
+                            <textarea name="buyerNote" id="" rows="3" style="width: 100%;"></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="eight alpha columns bidform">
+                        <input type="submit" class="button" value="SUBMIT NOW"
+                               style="margin-left:15px; width: 90%"/>
+                        <div class="clearfix"></div>
+                    </div>
                 </form>
                 <br>
-                <div class="notification notice" align="center">
-                    <%
-                    var numdays = Math.floor(item.remainingTime / 86400);
-                    var numhours = Math.floor((item.remainingTime % 86400) / 3600);
-                    var numminutes = Math.floor(((item.remainingTime % 86400) % 3600) / 60);
-                    var numseconds = Math.floor(((item.remainingTime % 86400) % 3600) % 60);
-                    var isAlligibleToBid = true;
-
-
-                    var formattedTime = "";
-                    formattedTime = numdays != 0 ? (formattedTime += numdays + " days ") : formattedTime;
-                    formattedTime = numhours != 0 ? (formattedTime += numhours + " hrs ") : formattedTime;
-                    formattedTime = numminutes != 0 ? (formattedTime += numminutes + " mins ") : formattedTime;
-                    formattedTime = numseconds != 0 ? (formattedTime += numseconds + " secs ") : formattedTime;
-
-                    if(numdays <= 0 && numhours <= 0 && numminutes <= 0 && numseconds <= 0) {
-                        isAlligibleToBid = false;
-                    }
-                    %>
-                    <% if(isAlligibleToBid) {%>
-                    <h4><span>Time left : </span> <%= formattedTime %></h4>
-                    <% } else { %>
-                    <h4><span>Time left : </span> 0 days 0 hrs 0 mins 0 secs</h4>
-                    <% } %>
-
+                <br>
+            </section>
+            <section class="variables">
+                <div class="eight columns">
+                    <h2 class="headline">Producer Details</h2>
+                    <span class="line margin-bottom-0"></span>
                 </div>
-
-                <!-- Bid Table -->
-                <div class="last-bid" align="center">
-                    <table border="0px">
-                        <tr>
-                            <td class="last-bid-label">
-                                <strong>Your Last Offer </strong>
-                            </td>
-                            <td>
-                                <%= lastUserBid != undefined ? lastUserBid.bid : 'No Offers' %>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="last-bid-label">
-                                <strong>Status </strong>
-                            </td>
-                            <td>
-                                <% if(isAlligibleToBid){ %>
-                                Open
-                                <% } else { %>
-                                Closed
-                                <% } %>
-                            </td>
-                        </tr>
-                    </table>
+                <div style="align-items: center; width: 100%;">
+                    <img src="uploads/profile_pic/<%= item.user.profile_pic %>" style="height: 150px;"/>
                 </div>
-                <br><br>
+                <div>
+                    <%- (item.user.companyIntroduction ? item.user.companyIntroduction : '').substr(0, 500) %>
+                </div>
+                <a href="/user/public/userId/<%= item.user.id %>">Read More</a>
                 <!-- Headline -->
                 <div class="eight columns">
                     <h3 class="headline">Contact Seller</h3>
                     <span class="line margin-bottom-0"></span>
                 </div>
+
                 <br>
                 <div class="last-bid" align="center">
                     <table border="0px">
                         <tr>
                             <td class="contact-label">
-                                <span><img src="icons/small-message-icon.png" style="width: 24px; height: 24px; margin-top: 8px; margin-left: 8px"/></span>
+                                <span><img src="icons/small-message-icon.png"
+                                           style="width: 24px; height: 24px; margin-top: 8px; margin-left: 8px"/></span>
                             </td>
                             <td>
-                                <a href="#message-dialog" class="popup-with-zoom-anim margin-left-0" style="color: darkgray">Send Message</a>
-                                <div id="message-dialog" class="small-dialog zoom-anim-dialog mfp-hide" style="margin-top: -850px">
+                                <a href="#message-dialog" class="popup-with-zoom-anim margin-left-0"
+                                   style="color: darkgray">Send Message</a>
+                                <div id="message-dialog" class="small-dialog zoom-anim-dialog mfp-hide"
+                                     style="margin-top: -850px">
                                     <h3 class="headline">Send Message</h3><span class="line margin-bottom-25"></span>
                                     <div class="clearfix"></div>
 
                                     <!-- Form -->
                                     <form id="add-comment" class="add-comment" action="/api/messages/add" method="POST">
                                         <fieldset>
-                                            <input type="hidden" name="returnTo" value="/items/id/<%= item.item.id %>" />
+                                            <input type="hidden" name="returnTo" value="/items/id/<%= item.item.id %>"/>
                                             <input type="hidden" name="receiverUserIdFk" value="<%= item.user.id %>"/>
                                             <input type="hidden" name="senderUserIdFk" value="<%= user.id %>"/>
                                             <div class="twelve alpha columns editform">
@@ -346,21 +271,24 @@
                                             </div>
                                             <div>
                                                 <label>Message:</label>
-                                                <textarea cols="20" rows="3" name="message" style="width: 97%"></textarea>
+                                                <textarea cols="20" rows="3" name="message"
+                                                          style="width: 97%"></textarea>
                                             </div>
                                         </fieldset>
 
-                                        <input type="submit" class="button color" value="Send Message" style="width: 100%"/>
+                                        <input type="submit" class="button color" value="Send Message"
+                                               style="width: 100%"/>
                                         <div class="clearfix"></div>
 
                                     </form>
                                 </div>
                             </td>
                         </tr>
-                        <%if(item.phoneNumbers[0] != null && item.phoneNumbers[0] != undefined) {%>
+                        <% if(item.phoneNumbers[0] != null && item.phoneNumbers[0] != undefined) { %>
                         <tr>
                             <td class="contact-label">
-                                <span><img src="icons/mobile.png" style="width: 24px; height: 24px; margin-top: 8px; margin-left: 8px"/></span>
+                                <span><img src="icons/mobile.png"
+                                           style="width: 24px; height: 24px; margin-top: 8px; margin-left: 8px"/></span>
                             </td>
                             <td>
                                 <a href="#" style="color: darkgray"><%= item.phoneNumbers[0].number %></a>
@@ -370,6 +298,7 @@
 
                     </table>
                 </div>
+
             </section>
         </div>
 
@@ -380,127 +309,75 @@
 
         <!-- Headline -->
         <div class="sixteen columns">
-            <h3 class="headline">Reviews</h3>
+            <h3 class="headline">Commodity Description</h3>
             <span class="line margin-bottom-0"></span>
         </div>
         <br><br>
+        <div>Comod sdf</div>
+
+    </div>
+    <br><br>
+    <% if(item.similarItems.length > 0) { %>
+    <!-- Related Products -->
+    <div class="container margin-top-5">
+
+        <!-- Headline -->
+        <div class="sixteen columns">
+            <h3 class="headline">Related Products</h3>
+            <span class="line margin-bottom-0"></span>
+        </div>
+
         <!-- Products -->
         <div class="products">
 
-            <% if(userFeedback.length == 0) {%>
-            <p>No Reviews Yet! </p>
-            <%} %>
-            <ul>
-                <% for(commentIndex = 0; commentIndex < userFeedback.length; commentIndex++) {
-                    var comment = userFeedback[commentIndex];
-                    var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
-                %>
-                <li style="border-bottom: thin solid lightgray">
-                    <div class="avatar">
-                        <%if(comment.feedbackUserId.profile_pic == null) { %>
-                        <img style="margin-top:5px; margin-left: 100px" src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt=""/>
-                        <% } else { %>
-                        <img src="/uploads/profile_pic/<%= comment.feedbackUserId.profile_pic %>" alt="" style="width: 80px; height: 80px;margin-top:5px; margin-left: 100px"/>
-                        <% } %>
+            <% for(var itemIndex = 0; itemIndex < item.similarItems.length; itemIndex++) {
+                var similarItem = item.similarItems[itemIndex];
+            if(similarItem.id != item.item.id) {
+            %>
+            <div class="four columns">
+                <figure class="product">
+                    <div class="mediaholder">
+                        <a href="/items/id/<%= similarItem.id %>">
+                            <% if(similarItem.ItemImages.length > 0) { %>
+                            <img alt="" src="uploads/items/<%= similarItem.ItemImages[0].url %>"
+                                 style="width: 280px; height: 280px"/>
+                            <% } else { %>
+                            <img alt="" src="images/shop_item_01.jpg" style="width: 280px; height: 280px"/>
+                            <% } %>
+                            <% if(similarItem.ItemImages.length > 1) { %>
+                            <div class="cover">
+                                <img alt="" src="uploads/items/<%= similarItem.ItemImages[1].url %>"
+                                     style="width: 270px; height: 270px"/>
+                            </div>
+                            <% } %>
+                            <a href="/items/id/<%= similarItem.id %>" class="product-button"><i
+                                        class="fa fa-shopping-cart"></i> Make Offer</a>
+                        </a>
                     </div>
-                    <%
-                        var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
-
-                        var rate_quality = comment.rate_quality;
-                        var rate_delivery = comment.rate_delivery;
-                        var rate_reliablity_seller = comment.rate_reliablity_seller;
-                        var payment = comment.payment;
-                        var efficiency = comment.efficiency;
-                        var rate_reliablity_buyer = comment.rate_reliablity_buyer;
-
-                        var avgRate = (rate_quality+rate_delivery+rate_reliablity_buyer+rate_reliablity_seller+payment+efficiency)/6.0;
-                        avgRate = Math.round( avgRate * 10) / 10;
-                    %>
-                    <div style="padding: 19px 22px 22px 100px;" class="comment-content">
-                        <div class="arrow-comment"></div>
-                        <div class="comment-by">
+                    <a href="/items/id/<%= similarItem.id %>">
+                        <section>
+                            <span class="product-category"><%= similarItem.title %></span>
                             <%
-                                var name='';
-                                if(comment.feedbackUserId.full_name != null && comment.feedbackUserId.full_name != ''){
-                                    name = comment.feedbackUserId.full_name;
-                                }else if(comment.feedbackUserId.username != null && comment.feedbackUserId.username != ''){
-                                    name = comment.feedbackUserId.username;
+                                var name = '';
+                                if (similarItem.User.company_name != null && similarItem.User.company_name != '') {
+                                    name = similarItem.User.company_name;
+                                } else if (similarItem.User.full_name != null && similarItem.User.full_name != '') {
+                                    name = similarItem.User.full_name;
+                                } else if (similarItem.User.username != null && similarItem.User.username != '') {
+                                    name = similarItem.User.username;
                                 }
                             %>
-                            <strong><%= name %></strong>
-                            <span class="date"><%= comment.createdAt.split('T')[0] %></span>
-                            <div class="rating <%if(avgRate >= 1) {%><%= rateInString[Math.floor(avgRate)] %>-stars<%}%>">
-                                <%if(avgRate >= 1) {%><div class="star-rating"></div><%}%>
-                                <div class="star-bg"></div>
-                            </div>
-                        </div>
-                        <p><%= comment.comment%></p>
-                    </div>
-                </li>
-                <% } %>
-            </ul>
+                            <h5><%= name %></h5>
+                        </section>
+                    </a>
+                </figure>
+            </div>
+            <% }
+            }
+            %>
 
         </div>
     </div>
-    <br><br>
-    <% if(item.similarItems.length > 0) {%>
-        <!-- Related Products -->
-        <div class="container margin-top-5">
-
-            <!-- Headline -->
-            <div class="sixteen columns">
-                <h3 class="headline">Related Products</h3>
-                <span class="line margin-bottom-0"></span>
-            </div>
-
-            <!-- Products -->
-            <div class="products">
-
-                <% for(var itemIndex = 0; itemIndex < item.similarItems.length; itemIndex++) {
-                    var similarItem = item.similarItems[itemIndex];
-                    if(similarItem.id != item.item.id) {
-                %>
-                    <div class="four columns">
-                        <figure class="product">
-                            <div class="mediaholder">
-                                <a href="/items/id/<%= similarItem.id %>">
-                                <% if(similarItem.ItemImages.length > 0) {%>
-                                    <img alt="" src="uploads/items/<%= similarItem.ItemImages[0].url %>" style="width: 280px; height: 280px"/>
-                                <% } else { %>
-                                    <img alt="" src="images/shop_item_01.jpg" style="width: 280px; height: 280px"/>
-                                <% } %>
-                                <% if(similarItem.ItemImages.length > 1) {%>
-                                    <div class="cover">
-                                        <img alt="" src="uploads/items/<%= similarItem.ItemImages[1].url %>" style="width: 270px; height: 270px"/>
-                                    </div>
-                                <% } %>
-                                <a href="/items/id/<%= similarItem.id %>" class="product-button"><i class="fa fa-shopping-cart"></i> Make Offer</a>
-                            </div>
-
-                            <a href="/items/id/<%= similarItem.id %>">
-                                <section>
-                                    <span class="product-category"><%= similarItem.title %></span>
-                                    <%
-                                        var name='';
-                                        if(similarItem.User.company_name != null && similarItem.User.company_name != ''){
-                                            name = similarItem.User.company_name;
-                                        } else if(similarItem.User.full_name != null && similarItem.User.full_name != ''){
-                                            name = similarItem.User.full_name;
-                                        }else if(similarItem.User.username != null && similarItem.User.username != ''){
-                                            name = similarItem.User.username;
-                                        }
-                                    %>
-                                    <h5><%= name %></h5>
-                                </section>
-                            </a>
-                        </figure>
-                    </div>
-                <%  }
-                }
-                %>
-
-            </div>
-        </div>
 
     <% } %>
 

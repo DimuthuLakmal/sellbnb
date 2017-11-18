@@ -7,185 +7,216 @@ var parameters = [];
 var $uploadCrop;
 
 $(document).ready(function () {
-   var itemPreviewed = JSON.parse(localStorage.getItem("previewItem"));
-   var visitedPreview = localStorage.getItem("visitedPreview");
+  var itemPreviewed = JSON.parse(localStorage.getItem("previewItem"));
+  var visitedPreview = localStorage.getItem("visitedPreview");
 
-    if(visitedPreview == undefined || visitedPreview == null) {
-        localStorage.setItem("visitedPreview", false);
-    }
-   if(itemPreviewed != undefined && itemPreviewed != null && visitedPreview == "true") {
-       images = itemPreviewed.images;
-       $.each(images, function(index, image) {
-           $('#imagepreview-div').append('<div class="two columns">'+
-               '<img src="'+image.data+'"'+
-               'style="width: 120px; height: 120px" id="blah"/>'+
-               '<span style="display: none">'+index+'</span>'+
-               '<a class="remove-btn">(Remove)</a>'+
-               '</div>');
-       });
-       localStorage.setItem("visitedPreview", false);
-   }
-
-    $uploadCrop = $('#croppie-container').croppie({
-        enableExif: true,
-        viewport: {
-            width: 300,
-            height: 300,
-            type: 'square'
-        },
-        boundary: {
-            width: 300,
-            height: 300
-        }
+  if (visitedPreview == undefined || visitedPreview == null) {
+    localStorage.setItem("visitedPreview", false);
+  }
+  if (itemPreviewed != undefined && itemPreviewed != null && visitedPreview == "true") {
+    images = itemPreviewed.images;
+    $.each(images, function (index, image) {
+      $('#imagepreview-div').append('<div class="two columns">' +
+        '<img src="' + image.data + '"' +
+        'style="width: 120px; height: 120px" id="blah"/>' +
+        '<span style="display: none">' + index + '</span>' +
+        '<a class="remove-btn">(Remove)</a>' +
+        '</div>');
     });
+    localStorage.setItem("visitedPreview", false);
+  }
+
+  $uploadCrop = $('#croppie-container').croppie({
+    enableExif: true,
+    viewport: {
+      width: 300,
+      height: 300,
+      type: 'square'
+    },
+    boundary: {
+      width: 300,
+      height: 300
+    }
+  });
 });
 
 //handle image upload button click
-$("#fileToUpload").change(function(event){
+$("#fileToUpload").change(function (event) {
 
-    if (this.files && this.files[0]) {
+  if (this.files && this.files[0]) {
 
-        $('#croppie-container').show();
-        $('#crop-btn').show();
-        $('#commodity-uploadimage').text('Select Another Image');
+    $('#croppie-container').show();
+    $('#crop-btn').show();
+    $('#commodity-uploadimage').text('Select Another Image');
 
-        var reader = new FileReader();
+    var reader = new FileReader();
 
-        //set image to preview
-        reader.onload = function (e) {
-            $uploadCrop.croppie('bind', {
-                url: e.target.result,
-                zoom: 5,
-            }).then(function(){
-            });
-        }
-
-        reader.readAsDataURL(this.files[0]);
-
-        //pushing images to image array to sent to the server
-        $.each(event.target.files, function(index, file) {
-            reader = new FileReader();
-            reader.onload = function(event) {
-                object = {};
-                object.filename = file.name;
-                object.data = event.target.result;
-                images.push(object);
-            };
-            reader.readAsDataURL(file);
-        });
+    //set image to preview
+    reader.onload = function (e) {
+      $uploadCrop.croppie('bind', {
+        url: e.target.result,
+        zoom: 5,
+      }).then(function () {
+      });
     }
+
+    reader.readAsDataURL(this.files[0]);
+
+    //pushing images to image array to sent to the server
+    $.each(event.target.files, function (index, file) {
+      reader = new FileReader();
+      reader.onload = function (event) {
+        object = {};
+        object.filename = file.name;
+        object.data = event.target.result;
+        images.push(object);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
 });
 
 $('#crop-btn').click(function () {
-    $uploadCrop.croppie('result', {
-        type: 'base64',
-        size: 'viewport'
-    }).then(function (resp) {
-        $('#imagepreview-div').append('<div class="two columns">'+
-            '<img src="'+resp+'"'+
-            'style="width: 120px; height: 120px"/>'+
-            '<span style="display: none">'+images.length+'</span>'+
-            '<a class="remove-btn">(Remove)</a>'+
-            '</div>');
-        images[images.length-1].data = resp;
-        $('.mfp-close').click();
-    });
+  $uploadCrop.croppie('result', {
+    type: 'base64',
+    size: 'viewport'
+  }).then(function (resp) {
+    $('#imagepreview-div').append('<div class="two columns">' +
+      '<img src="' + resp + '"' +
+      'style="width: 120px; height: 120px"/>' +
+      '<span style="display: none">' + images.length + '</span>' +
+      '<a class="remove-btn">(Remove)</a>' +
+      '</div>');
+    images[images.length - 1].data = resp;
+    $('.mfp-close').click();
+  });
 });
 
 $('#commodity-uploadimage').click(function (e) {
-    e.preventDefault();
-    $('#fileToUpload').click();
+  e.preventDefault();
+  $('#fileToUpload').click();
 });
 
 $('#open-uploadimage-modal').click(function (e) {
-    e.preventDefault();
-    $('#cropWindow').click();
-    $('#croppie-container').hide();
-    $('#crop-btn').hide();
-    $('#commodity-uploadimage').text('Select Image');
+  e.preventDefault();
+  $('#cropWindow').click();
+  $('#croppie-container').hide();
+  $('#crop-btn').hide();
+  $('#commodity-uploadimage').text('Select Image');
 });
 
 //sending data to server using ajax
 $('#submit').click(function (e) {
-    e.preventDefault();
 
-    var quantity = $('#quantity').val()+' '+$('#measureUnit').val();
-    var title = $('#title').val();
-    var deliveryBy = $('#delivery_by').val();
-    var warehouseId = $('#warehouse').val();
-    var commodityId = $('#commodityId').val();
-    var userId = $('#userId').val();
-    var packingType = $('#packing_type').val();
-    var paymentTerms = $('#payment_terms').val();
-    var suggestedPrice = $('#priceUnit').val().trim()+" "+$('#suggested_price').val().trim();
-    var sellerNote = $('#seller_note').val();
-    var hours = $('#hours').val();
-    var days = $('#days').val();
-    var mins = $('#mins').val();
-    var duration = parseInt(days) * 24 * 3600 + parseInt(hours) * 3600 + parseInt(mins) * 60;
+  e.preventDefault();
 
-    // if(title == "") {
-    //     title = $('#commodityName').val();
-    // }
+  var htmlValues = $('#comDescText').froalaEditor('html.get', true);
+  $('#comDesc').val(htmlValues);
 
-    $.ajax({url: "/api/items/add",
-        type: 'POST',
-        data: {title:title, quantity: quantity, deliveryBy: deliveryBy, warehouseId: warehouseId, commodityId: commodityId,
-            userId: userId, images: images, duration: duration, packingType: packingType,paymentTerms: paymentTerms,
-            suggestedPrice: suggestedPrice, sellerNote: sellerNote},
-        success: function(data, status, xhr) {
-            if(status == 'success') {
-                $('#message_success').show();
-            }
-        }
-    });
+  var quantity = $('#quantity').val() + ' ' + $('#measureUnit').val();
+
+  var data = {};
+  $('#addItemForm').serializeArray().forEach(function (d) {
+    data[d['name']] = d['value'];
+  });
+  data['images'] = images;
+
+  $.ajax({
+    url: "/api/items/add",
+    type: 'POST',
+    data: data,
+    success: function (data, status, xhr) {
+      if (status == 'success') {
+        $('#message_success').show();
+      }
+    }
+  });
 });
 
-$('#add_warehouse').click(function(e){
-    e.preventDefault();
-    window.location = "/user/contact"
+$('#add_warehouse').click(function (e) {
+  e.preventDefault();
+  window.location = "/user/contact"
 });
 
 $('#preview').click(function (e) {
 
-    e.preventDefault();
-    var quantity = $('#quantity').val()+' '+$('#measureUnit').val();
-    var title = $('#title').val();
-    var deliveryBy = $('#delivery_by').val();
-    var warehouse = $('#warehouse').text();
-    var commodityId = $('#commodityId').val();
-    var userId = $('#userId').val();
-    var packingType = $('#packing_type').val();
-    var paymentTerms = $('#payment_terms').val();
-    var suggestedPrice = $('#priceUnit').val()+" "+$('#suggested_price').val();
-    var sellerNote = $('#seller_note').val();
-    var hours = $('#hours').val();
-    var days = $('#days').val();
-    var mins = $('#mins').val();
+  e.preventDefault();
+  var quantity = $('#quantity').val() + ' ' + $('#measureUnit').val();
+  var title = $('#title').val();
+  var deliveryBy = $('#delivery_by').val();
+  var warehouse = $('#warehouse').text();
+  var commodityId = $('#commodityId').val();
+  var userId = $('#userId').val();
+  var packingType = $('#packing_type').val();
+  var paymentTerms = $('#payment_terms').val();
+  var suggestedPrice = $('#priceUnit').val() + " " + $('#suggested_price').val();
+  var sellerNote = $('#seller_note').val();
+  var hours = $('#hours').val();
+  var days = $('#days').val();
+  var mins = $('#mins').val();
 
-    var item = {quantity: quantity, title: title, deliveryBy: deliveryBy, warehouse: warehouse, commodityId: commodityId,
-    userId: userId, packingType: packingType, paymentTerms:paymentTerms, suggestedPrice: suggestedPrice, sellerNote: sellerNote,
-    hours: hours, days: days, mins: mins, images: images};
+  var item = {
+    quantity: quantity,
+    title: title,
+    deliveryBy: deliveryBy,
+    warehouse: warehouse,
+    commodityId: commodityId,
+    userId: userId,
+    packingType: packingType,
+    paymentTerms: paymentTerms,
+    suggestedPrice: suggestedPrice,
+    sellerNote: sellerNote,
+    hours: hours,
+    days: days,
+    mins: mins,
+    images: images
+  };
 
-    localStorage.setItem('previewItem', JSON.stringify(item));
+  localStorage.setItem('previewItem', JSON.stringify(item));
 
-    if(images.length > 0) {
-        $.ajax({url: "/api/items/preview",
-            type: 'POST',
-            data: {images: images},
-            success: function(data, status, xhr) {
-                if(status == 'success') {
-                    window.location = "/items/preview";
-                }
-            }
-        });
-    } else {
-        window.location = "/items/preview";
+  if (images.length > 0) {
+    $.ajax({
+      url: "/api/items/preview",
+      type: 'POST',
+      data: {images: images},
+      success: function (data, status, xhr) {
+        if (status == 'success') {
+          window.location = "/items/preview";
+        }
+      }
+    });
+  } else {
+    window.location = "/items/preview";
+  }
+
+});
+
+$(".remove-btn").live('click', function () {
+  $(this).parent().remove();
+  images.splice(parseInt($(this).prev().text()), 1);
+});
+
+
+$(function () {
+  $('#comDescText').froalaEditor({
+      height: '200px',
+//        toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'color', '|', 'undo', 'redo'],
+      // Colors list.
+      colorsBackground: [
+        '#15E67F', '#E3DE8C', '#D8A076', '#D83762', '#76B6D8', 'REMOVE',
+        '#1C7A90', '#249CB8', '#4ABED9', '#FBD75B', '#FBE571', '#FFFFFF'
+      ],
+      colorsDefaultTab: 'background',
+      colorsStep: 6,
+      colorsText: [
+        '#15E67F', '#E3DE8C', '#D8A076', '#D83762', '#76B6D8', 'REMOVE',
+        '#1C7A90', '#249CB8', '#4ABED9', '#FBD75B', '#FBE571', '#FFFFFF'
+      ],
+//        quickInsertButtons: ['ol', 'ul'],
+//      pluginsEnabled: ['quickInsert', 'lists'],
+//      quickInsertTags: ['h1', 'h2', 'h3', 'h4', 'blockquote']
     }
-
+  )
 });
 
-$(".remove-btn").live('click', function(){
-    $(this).parent().remove();
-    images.splice(parseInt($(this).prev().text()),1);
-});
+

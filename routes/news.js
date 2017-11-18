@@ -379,7 +379,7 @@ router.get('/id/:id', function (req, res) {
 
                 var News = models.News;
                 News.update(
-                    { hits: (hits+1) },
+                    { hits: (parseInt(hits)+1) },
                     { where: { id: id } }
                 ).then(function (results) {
                     res.redirect('/news/id/'+newsId+'?lan='+req.query['lan']);

@@ -34,20 +34,6 @@ router.get('/viewall', function (req, res) {
 
 //store item in database
 router.post('/add', function (req, res) {
-    //retrive data from reqeust header
-    var quantity = req.body.quantity;
-    var measureUnit = req.body.measureUnit;
-    var title = req.body.title;
-    var deliveryBy = req.body.deliveryBy;
-    var WareHouseId = req.body.warehouseId;
-    var packingType = req.body.packingType;
-    var paymentTerms = req.body.paymentTerms;
-    var suggestedPrice = req.body.suggestedPrice;
-    var sellerNote = req.body.sellerNote;
-    var duration = req.body.duration;
-    var CommodityId = req.body.commodityId;
-    var UserId = req.body.userId;
-
     //write images to image files
     _.forEach(req.body.images, function(image, index) {
         var imageBuffer = decodeBase64Image(image.data); //decoding base64 images
@@ -61,20 +47,21 @@ router.post('/add', function (req, res) {
         function () {
             var Item = models.Item;
             Item.create({
-                title: title,
-                quantity: quantity,
-                measureUnit: measureUnit,
-                deliveryBy: deliveryBy,
-                WareHouseId: WareHouseId,
-                packageType: packingType,
-                paymentTerms: paymentTerms,
-                suggestedPrice: suggestedPrice,
-                note: sellerNote,
-                duration: duration,
-                CommodityId: CommodityId,
-                UserId: UserId,
-                status: 'pending',
-                thumbnail: req.body.images[0].filename,
+              title: req.body.title,
+              quantityMin: req.body.quantityMin,
+              quantityMax: req.body.quantityMax,
+              measureUnit: req.body.measureUnit,
+              packageType: req.body.packingType,
+              priceUnit: req.body.priceUnit,
+              note: req.body.producer_note,
+              status: 'pending',
+              loadTime: req.body.loadTime,
+              thumbnail: req.body.images[0].filename,
+              origin: req.body.origin,
+              commodityDesc: req.body.comDesc,
+              CommodityId: req.body.commodityId,
+              UserId: req.body.userId,
+              suggestedPrice: req.body.fob_price,
             }).then(function (insertedItem) {
                 var insertedItemId = insertedItem.dataValues.id;
                 //store item images
@@ -414,7 +401,7 @@ router.get('/id/:id/userId/:userId', function (req, res) {
                                                             'similarItems': similarItems, 'measureUnits': MeasuerUnits, 'priceUnits': PriceUnits, 'packingTypes': PackingTypes};
 
                                                         Item.update(
-                                                            { hits: (hits+1) },
+                                                            { hits: (parseInt(hits)+1) },
                                                             { where: { id: id } }
                                                         ).then(function (results) {
                                                             res.redirect('/items/id/'+itemId);
@@ -426,7 +413,7 @@ router.get('/id/:id/userId/:userId', function (req, res) {
                                                         'similarItems': similarItems, 'measureUnits': MeasuerUnits, 'priceUnits': PriceUnits, 'packingTypes': PackingTypes};
 
                                                     Item.update(
-                                                        { hits: (hits+1) },
+                                                        { hits: (parseInt(hits)+1) },
                                                         { where: { id: id } }
                                                     ).then(function (results) {
                                                         res.redirect('/items/id/'+itemId);
