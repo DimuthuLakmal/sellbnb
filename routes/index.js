@@ -10,11 +10,11 @@ router.get('/', function (req, res) {
     removeSessionParameterSellingPage(req);
     removeSessionParameters(req);
 
-    if(req.session.language == null || req.session.language == undefined) {
+    if(req.session.language === null || req.session.language === undefined) {
         req.session.language = "english";
     }
 
-    //retreieve required data from session
+    //retrieve required data from session
     var commodityPopular = req.session.commodityPopular;
     var commodityNames = req.session.commodityNames;
     var latestItems = req.session.latestItems;
@@ -104,7 +104,6 @@ router.get('/', function (req, res) {
     });
 
 });
-
 
 /* GET add news page. */
 router.get('/addnews', function (req, res) {
@@ -622,7 +621,7 @@ router.get('/user/public/userId/:userId', function (req, res) {
     delete req.session.errorMessage;
     if (req.isAuthenticated()) {
         //this will be needed to populate commodity names in top menu
-        var commodityNames = req.session.commodityNames
+        var commodityNames = req.session.commodityNames;
         //check whether commodityNames session is set
         req.session.returnToCommodityName = req.path;
         if (commodityNames === null || commodityNames === undefined) {
@@ -1174,7 +1173,7 @@ router.get('/user/sell/list/start/:start', function (req, res) {
     if (req.isAuthenticated()) {
 
         //this will be needed to populate commodity names in top menu
-        var commodityNames = req.session.commodityNames
+        var commodityNames = req.session.commodityNames;
         //check whether commodityNames session is set
         req.session.returnToCommodityName = req.path+ '?sellingpageItemOption=Open&openDurationOption=' + req.query['openDurationOption'] + '&pendingDurationOption=' + req.query['pendingDurationOption'] + '&cancelledDurationOption=' + req.query['cancelledDurationOption'];
         if (commodityNames === null || commodityNames === undefined) {
@@ -2178,12 +2177,6 @@ router.get('/user/sent', function (req, res) {
     });
 });
 
-//change site's language
-router.get('/change_language/language/:language', function (req, res) {
-    req.session.language = req.params.language;
-    res.json("Language Changed");
-});
-
 //to remove unnecessary session parameters
 function removeSessionParameters(req) {
     delete req.session.selectedClass;
@@ -2194,7 +2187,7 @@ function removeSessionParameters(req) {
     delete req.session.endPrice;
 }
 
-//remove unnecessary session paramters when created at user selling page, when switching to other routes
+//remove unnecessary session parameters when created at user selling page, when switching to other routes
 function removeSessionParameterSellingPage(req) {
     delete req.session.sellpageItemOption;
 }

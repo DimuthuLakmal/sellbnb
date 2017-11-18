@@ -8,11 +8,13 @@
     <!-- Global Site Tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107495910-1"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments)};
-        gtag('js', new Date());
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments)
+      };
+      gtag('js', new Date());
 
-        gtag('config', 'UA-107495910-1');
+      gtag('config', 'UA-107495910-1');
     </script>
 
     <!-- Basic Page Needs
@@ -38,7 +40,6 @@
 <body class="boxed">
 <div id="wrapper">
 
-
     <% include header.ejs %>
 
     <!-- Titlebar
@@ -63,13 +64,13 @@
     ================================================== -->
     <div class="parallax-banner fullwidth-element" data-background="#000" data-opacity="0.4" data-height="200">
 
-        <% if(userPublicInformation.logo != null && userPublicInformation.logo != '' && userPublicInformation.logo != undefined) {%>
-            <img src="uploads/logo/<%= userPublicInformation.logo %>" alt="" id="company-logo" style="width: 100%"/>
+        <% if(userPublicInformation.logo != null && userPublicInformation.logo != '' && userPublicInformation.logo != undefined) { %>
+        <img src="uploads/logo/<%= userPublicInformation.logo %>" alt="" id="company-logo" style="width: 100%"/>
         <% } else { %>
-            <img src="images/parallax_03.jpg" alt="" id="company-logo"/>
+        <img src="images/parallax_03.jpg" alt="" id="company-logo"/>
         <% } %>
         <div class="parallax-overlay"></div>
-        <% if(userPublicInformation.mailingddress1 != null) {
+        <% if (userPublicInformation.mailingddress1 != null) {
             var address = userPublicInformation.mailingddress1;
             if (userPublicInformation.mailingddress2 != '') {
                 address += ', ' + userPublicInformation.mailingddress2;
@@ -77,7 +78,7 @@
             if (userPublicInformation.mailingCity != '') {
                 address += ', ' + userPublicInformation.mailingCity;
             }
-          }
+        }
         %>
         <div class="parallax-title"><%= userPublicInformation.company_name %> <span><%= address %></span></div>
     </div>
@@ -85,462 +86,159 @@
     <div class="margin-top-40"></div>
 
     <div class="container">
-        <div class="sixteen columns">
-            <!-- Tabs Navigation -->
-            <ul class="tabs-nav">
-                <li class="active"><a href="#tab1">Introduction</a></li>
-                <li><a href="#tab2">Contact Details</a></li>
-                <li><a href="#tab3">Reviews <span class="tab-reviews">(<%= userPublicComments.length %>)</span></a></li>
-            </ul>
 
-            <!-- Tabs Content -->
-            <div class="tabs-container">
+        <!-- Sidebar
+        ================================================== -->
+        <div class="four columns">
+            <% if(userPublicInformation.profile_pic != null && userPublicInformation.profile_pic != '') { %>
+            <img src="uploads/profile_pic/<%= userPublicInformation.profile_pic %>"
+                 style="width: 100%;"/>
+            <% } else { %>
+            <img src="icons/user_profile.png"
+                 style="width: 100%"/>
+            <% } %>
+            <!--contact table-->
+            <table class="basic-table">
+                <tr>
+                    <th>Name</th>
+                    <td><%= userPublicInformation.company_name %></td>
+                </tr>
 
-                <div class="tab-content" id="tab1">
-                    <p><%= userPublicInformation.companyIntroduction %></p>
-                </div>
+                <tr>
+                    <th> Warehouse Address</th>
+                    <% var warehouses = userContactInformation.WareHouses %>
+                    <td>
+                        <% for(var warehouseIndex = 0; warehouseIndex < warehouses.length; warehouseIndex++) {
+                            var address = warehouses[warehouseIndex].warehouseAddress1;
+                            if (warehouses[warehouseIndex].warehouseAddress2 != '' && warehouses[warehouseIndex].warehouseAddress2 != null) {
+                                address += ', ' + warehouses[warehouseIndex].warehouseAddress2;
+                            }
+                            if (warehouses[warehouseIndex].warehouseCity != '' && warehouses[warehouseIndex].warehouseCity != null) {
+                                address += ', ' + warehouses[warehouseIndex].warehouseCity;
+                            }
+                        %>
+                        <%= address %>
+                        <% } %>
+                    </td>
+                </tr>
 
-                <div class="tab-content" id="tab2">
+            </table>
+            <div class="row">
+                <a href="#message-dialog" class="popup-with-zoom-anim button color margin-left-0" style="width: 90%">Send
+                    Message</a>
+                <div id="message-dialog" class="small-dialog zoom-anim-dialog mfp-hide" style="margin-top: 0px">
+                    <h3 class="headline">Send Message</h3><span class="line margin-bottom-25"></span>
+                    <div class="clearfix"></div>
+                    <!-- Form -->
+                    <form id="add-comment" class="add-comment" action="/api/messages/add" method="POST">
+                        <fieldset>
+                            <input type="hidden" name="returnTo" value="/user/public/userId/<%= userPublicInformation.id %>" />
+                            <input type="hidden" name="receiverUserIdFk" value="<%= userPublicInformation.id %>"/>
+                            <input type="hidden" name="senderUserIdFk" value="<%= user.id  %>"/>
+                            <div class="twelve alpha columns editform">
+                                <label>Subject:</label>
+                                <input type="text" name="subject" placeholder="Type message subject"/>
+                            </div>
+                            <div>
+                                <label>Message:</label>
+                                <textarea cols="20" rows="3" name="message" style="width: 97%"></textarea>
+                            </div>
+                        </fieldset>
 
-                    <table class="basic-table">
-
-                        <tr>
-                            <th>Mail Address</th>
-                            <td>
-                                <% if(userPublicInformation.mailingddress1 != null) {
-                                        var address = user.mailingddress1;
-                                        if (userPublicInformation.mailingddress2 != '') {
-                                            address += ', ' + user.mailingddress2;
-                                        }
-                                        if (userPublicInformation.mailingCity != '') {
-                                            address += ', ' + user.mailingCity;
-                                        }
-                                    }
-                                %>
-                                <%= address %>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th>Email</th>
-                            <td>sellerbnb@gmail.com</td>
-                        </tr>
-
-                        <tr>
-                            <th>Mobile</th>
-                            <% var phonenumbers = userContactInformation.PhoneNumbers %>
-                            <td>
-                                <% for(var phoneIndex = 0; phoneIndex < phonenumbers.length; phoneIndex++) {%>
-                                    <%= phonenumbers[phoneIndex].number %>
-                                <% } %>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th>Web Site</th>
-                            <td><%= userPublicInformation.website %></td>
-                        </tr>
-
-                        <tr>
-                            <th> Warehouse Address</th>
-                            <% var warehouses = userContactInformation.WareHouses %>
-                            <td>
-                                <% for(var warehouseIndex = 0; warehouseIndex < warehouses.length; warehouseIndex++) {
-                                    var address = warehouses[warehouseIndex].warehouseAddress1;
-                                    if(warehouses[warehouseIndex].warehouseAddress2 != '' && warehouses[warehouseIndex].warehouseAddress2 != null) {
-                                        address += ', ' + warehouses[warehouseIndex].warehouseAddress2;
-                                    }
-                                    if(warehouses[warehouseIndex].warehouseCity != '' && warehouses[warehouseIndex].warehouseCity != null) {
-                                        address += ', ' + warehouses[warehouseIndex].warehouseCity;
-                                    }
-                                %>
-                                <%= address %>
-                                <% } %>
-                            </td>
-                        </tr>
-
-                    </table>
-                    <div class="row" align="right">
-                        <a href="#message-dialog" class="popup-with-zoom-anim button color margin-left-0">Send Message</a>
-                    </div>
-                    <div id="message-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
-                        <h3 class="headline">Send Message</h3><span class="line margin-bottom-25"></span>
+                        <input type="submit" class="button color" value="Send Message" style="width: 100%"/>
                         <div class="clearfix"></div>
 
-                        <!-- Form -->
-                        <form id="add-comment" class="add-comment" action="/api/messages/add" method="POST">
-                            <fieldset>
-                                <input type="hidden" name="receiverUserIdFk" value="<%= userPublicInformation.id %>"/>
-                                <input type="hidden" name="senderUserIdFk" value="<%= user.id %>"/>
-                                <div class="twelve alpha columns editform">
-                                    <label>Subject:</label>
-                                    <input type="text" name="subject" placeholder="Type message subject"/>
-                                </div>
-                                <div>
-                                    <label>Message:</label>
-                                    <textarea cols="20" rows="3" name="message" style="width: 97%"></textarea>
-                                </div>
-                            </fieldset>
-
-                            <input type="submit" class="button color" value="Send Message" style="width: 100%"/>
-                            <div class="clearfix"></div>
-
-                        </form>
-                    </div>
-
+                    </form>
                 </div>
-
-                <div class="tab-content" id="tab3">
-
-                    <!-- Reviews -->
-                    <section class="comments">
-                        <h3 class="headline">Ratings</h3><span class="line"></span><div class="clearfix"></div>
-
-                        <div class="seven columns">
-                            <section>
-                                <h6><strong>As a seller</strong></h6>
-                            </section>
-                            <table class="basic-table">
-                                <%
-                                    var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
-
-                                    var rate_quality = Math.floor(userPublicInformation.rate_quality);
-                                    var rate_delivery = Math.floor(userPublicInformation.rate_delivery);
-                                    var rate_reliablity_seller = Math.floor(userPublicInformation.rate_reliablity_seller);
-                                    var payment = Math.floor(userPublicInformation.payment);
-                                    var efficiency = Math.floor(userPublicInformation.efficiency);
-                                    var rate_reliablity_buyer = Math.floor(userPublicInformation.rate_reliablity_buyer);
-                                %>
-                                <tr>
-                                    <th>Quality</th>
-                                    <td>
-                                        <div class="rating <%if(rate_quality!=0) {%><%= rateInString[rate_quality] %>-stars<%}%>">
-                                            <%if(rate_quality!=0) {%><div class="star-rating"></div><%}%>
-                                            <div class="star-bg"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span>( <%= Math.round(userPublicInformation.rate_quality * 10) / 10 %> )</span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th>Delivery</th>
-                                    <td>
-                                        <div class="rating <%if(rate_delivery!=0) {%><%= rateInString[rate_delivery] %>-stars<%}%>">
-                                            <%if(rate_delivery!=0) {%><div class="star-rating"></div><%}%>
-                                            <div class="star-bg"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span>( <%= Math.round(userPublicInformation.rate_delivery * 10) / 10 %> )</span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th>Reliability</th>
-                                    <td>
-                                        <div class="rating <%if(rate_reliablity_seller!=0) {%><%= rateInString[rate_reliablity_seller] %>-stars<%}%>">
-                                            <%if(rate_reliablity_seller!=0) {%><div class="star-rating"></div><%}%>
-                                            <div class="star-bg"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span>( <%= Math.round(userPublicInformation.rate_reliablity_seller * 10) / 10 %> )</span>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="seven columns">
-                            <section>
-                                <h6><strong>As a Buyer</strong></h6>
-                            </section>
-                            <table class="basic-table">
-                                <tr>
-                                    <th>Payment</th>
-                                    <td>
-                                        <div class="rating <%if(payment!=0) {%><%= rateInString[payment] %>-stars<%}%>">
-                                            <%if(payment!=0) {%><div class="star-rating"></div><%}%>
-                                            <div class="star-bg"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span>( <%= Math.round(userPublicInformation.payment * 10) / 10 %> )</span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th>Efficiency</th>
-                                    <td>
-                                        <div class="rating <%if(efficiency!=0) {%><%= rateInString[efficiency] %>-stars<%}%>">
-                                            <%if(efficiency!=0) {%><div class="star-rating"></div><%}%>
-                                            <div class="star-bg"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span>( <%= Math.round(userPublicInformation.efficiency * 10) / 10 %> )</span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th>Reliability</th>
-                                    <td>
-                                        <div class="rating <%if(rate_reliablity_buyer!=0) {%><%= rateInString[rate_reliablity_buyer] %>-stars<%}%>">
-                                            <%if(rate_reliablity_buyer!=0) {%><div class="star-rating"></div><%}%>
-                                            <div class="star-bg"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span>( <%= Math.round(userPublicInformation.rate_reliablity_buyer * 10) / 10 %> )</span>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-
-                        <div class="row">
-                            <% if(biddingCountUserProfile > 0) {%>
-                                <a href="#small-dialog" class="popup-with-zoom-anim button color margin-left-0">Add Review</a>
-                            <% } %>
-                        </div>
-
-                        <div id="small-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
-                            <h3 class="headline">Add Review</h3><span class="line margin-bottom-25"></span>
-                            <div class="clearfix"></div>
-
-                            <!-- Form -->
-                            <form id="add-comment" class="add-comment" action="/api/user/feedback" method="POST">
-                                <input type="hidden" name="rating_quality" id="rating_quality" value="0"/>
-                                <input type="hidden" name="rating_delivery" id="rating_delivery" value="0"/>
-                                <input type="hidden" name="rating_reliability_seller" id="rating_reliability_seller" value="0"/>
-                                <input type="hidden" name="rating_payment" id="rating_payment" value="0"/>
-                                <input type="hidden" name="rating_efficiency" id="rating_efficiency" value="0"/>
-                                <input type="hidden" name="rating_reliability_buyer" id="rating_reliability_buyer" value="0"/>
-                                <input type="hidden" name="id" value="<%= userPublicInformation.id %>"/>
-                                <input type="hidden" name="userId" value="<%= user.id %>"/>
-                                <fieldset>
-                                    <div class="three columns">
-                                        <section>
-                                            <h6><strong>As a seller</strong></h6>
-                                        </section>
-                                        <table class="basic-table">
-                                            <tr>
-                                                <th>Quality</th>
-                                                <td>
-                                                    <div class="feedback-rating">
-                                                        <input type="radio" id="star5_quality" value="5" onclick="rate(value,'quality')"/><label class = "full" for="star5_quality" title="Awesome - 5 stars"></label>
-                                                        <input type="radio" id="star4_quality" value="4" onclick="rate(value,'quality')"/><label class = "full" for="star4_quality" title="Pretty good - 4 stars"></label>
-                                                        <input type="radio" id="star3_quality" value="3" onclick="rate(value,'quality')"/><label class = "full" for="star3_quality" title="Meh - 3 stars"></label>
-                                                        <input type="radio" id="star2_quality" value="2" onclick="rate(value,'quality')"/><label class = "full" for="star2_quality" title="Kinda bad - 2 stars"></label>
-                                                        <input type="radio" id="star1_quality" value="1" onclick="rate(value,'quality')"/><label class = "full" for="star1_quality" title="Sucks big time - 1 star"></label>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <th>Delivery</th>
-                                                <td>
-                                                    <div class="feedback-rating">
-                                                        <input type="radio" id="star5_delivery" value="5" onclick="rate(value,'delivery')"/><label class = "full" for="star5_delivery" title="Awesome - 5 stars"></label>
-                                                        <input type="radio" id="star4_delivery" value="4" onclick="rate(value,'delivery')"/><label class = "full" for="star4_delivery" title="Pretty good - 4 stars"></label>
-                                                        <input type="radio" id="star3_delivery" value="3" onclick="rate(value,'delivery')"/><label class = "full" for="star3_delivery" title="Meh - 3 stars"></label>
-                                                        <input type="radio" id="star2_delivery" value="2" onclick="rate(value,'delivery')"/><label class = "full" for="star2_delivery" title="Kinda bad - 2 stars"></label>
-                                                        <input type="radio" id="star1_delivery" value="1" onclick="rate(value,'delivery')"/><label class = "full" for="star1_delivery" title="Sucks big time - 1 star"></label>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <th>Reliability</th>
-                                                <td>
-                                                    <div class="feedback-rating">
-                                                        <input type="radio" id="star5_reliability_seller" value="5" onclick="rate(value,'reliability_seller')"/><label class = "full" for="star5_reliability_seller" title="Awesome - 5 stars"></label>
-                                                        <input type="radio" id="star4_reliability_seller" value="4" onclick="rate(value,'reliability_seller')"/><label class = "full" for="star4_reliability_seller" title="Pretty good - 4 stars"></label>
-                                                        <input type="radio" id="star3_reliability_seller" value="3" onclick="rate(value,'reliability_seller')"/><label class = "full" for="star3_reliability_seller" title="Meh - 3 stars"></label>
-                                                        <input type="radio" id="star2_reliability_seller" value="2" onclick="rate(value,'reliability_seller')"/><label class = "full" for="star2_reliability_seller" title="Kinda bad - 2 stars"></label>
-                                                        <input type="radio" id="star1_reliability_seller" value="1" onclick="rate(value,'reliability_seller')"/><label class = "full" for="star1_reliability_seller" title="Sucks big time - 1 star"></label>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div> <br><br>
-                                    <div class="three columns">
-                                        <section>
-                                            <h6><strong>As a Buyer</strong></h6>
-                                        </section>
-                                        <table class="basic-table">
-                                            <tr>
-                                                <th>Payment</th>
-                                                <td>
-                                                    <div class="feedback-rating">
-                                                        <input type="radio" id="star5_payment" value="5" onclick="rate(value,'payment')"/><label class = "full" for="star5_payment" title="Awesome - 5 stars"></label>
-                                                        <input type="radio" id="star4_payment" value="4" onclick="rate(value,'payment')"/><label class = "full" for="star4_payment" title="Pretty good - 4 stars"></label>
-                                                        <input type="radio" id="star3_payment" value="3" onclick="rate(value,'payment')"/><label class = "full" for="star3_payment" title="Meh - 3 stars"></label>
-                                                        <input type="radio" id="star2_payment" value="2" onclick="rate(value,'payment')"/><label class = "full" for="star2_payment" title="Kinda bad - 2 stars"></label>
-                                                        <input type="radio" id="star1_payment" value="1" onclick="rate(value,'payment')"/><label class = "full" for="star1_payment" title="Sucks big time - 1 star"></label>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <th>Efficiency</th>
-                                                <td>
-                                                    <div class="feedback-rating">
-                                                        <input type="radio" id="star5_efficiency" value="5" onclick="rate(value,'efficiency')"/><label class = "full" for="star5_efficiency" title="Awesome - 5 stars"></label>
-                                                        <input type="radio" id="star4_efficiency" value="4" onclick="rate(value,'efficiency')"/><label class = "full" for="star4_efficiency" title="Pretty good - 4 stars"></label>
-                                                        <input type="radio" id="star3_efficiency" value="3" onclick="rate(value,'efficiency')"/><label class = "full" for="star3_efficiency" title="Meh - 3 stars"></label>
-                                                        <input type="radio" id="star2_efficiency" value="2" onclick="rate(value,'efficiency')"/><label class = "full" for="star2_efficiency" title="Kinda bad - 2 stars"></label>
-                                                        <input type="radio" id="star1_efficiency" value="1" onclick="rate(value,'efficiency')"/><label class = "full" for="star1_efficiency" title="Sucks big time - 1 star"></label>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <th>Reliability</th>
-                                                <td>
-                                                    <div class="feedback-rating">
-                                                        <input type="radio" id="star5_reliability_buyer" value="5" onclick="rate(value,'reliability_buyer')"/><label class = "full" for="star5_reliability_buyer" title="Awesome - 5 stars"></label>
-                                                        <input type="radio" id="star4_reliability_buyer" value="4" onclick="rate(value,'reliability_buyer')"/><label class = "full" for="star4_reliability_buyer" title="Pretty good - 4 stars"></label>
-                                                        <input type="radio" id="star3_reliability_buyer" value="3" onclick="rate(value,'reliability_buyer')"/><label class = "full" for="star3_reliability_buyer" title="Meh - 3 stars"></label>
-                                                        <input type="radio" id="star2_reliability_buyer" value="2" onclick="rate(value,'reliability_buyer')"/><label class = "full" for="star2_reliability_buyer" title="Kinda bad - 2 stars"></label>
-                                                        <input type="radio" id="star1_reliability_buyer" value="1" onclick="rate(value,'reliability_buyer')"/><label class = "full" for="star1_reliability_buyer" title="Sucks big time - 1 star"></label>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-
-                                    <br><br>
-                                    <div>
-                                        <label>Review:</label>
-                                        <textarea cols="40" rows="3" name="feedback"></textarea>
-                                    </div>
-
-                                </fieldset>
-
-                                <input type="submit" class="button color" value="Add Review" style="width: 100%"/>
-                                <div class="clearfix"></div>
-
-                            </form>
-                        </div>
-
-                        <h3 class="headline">Reviews</h3><span class="line"></span><div class="clearfix"></div>
-                        <ul>
-                            <% for(commentIndex = 0; commentIndex < userPublicComments.length; commentIndex++) {
-                                var comment = userPublicComments[commentIndex];
-                                var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
-                            %>
-                            <li style="border-bottom: thin solid lightgray">
-                                <div class="avatar">
-                                    <%if(comment.feedbackUserId.profile_pic == null) { %>
-                                    <img style="margin-top:5px; margin-left: 100px" src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt=""/>
-                                    <% } else { %>
-                                    <img src="/uploads/profile_pic/<%= comment.feedbackUserId.profile_pic %>" alt="" style="width: 80px; height: 80px;margin-top:5px; margin-left: 100px"/>
-                                    <% } %>
-                                </div>
-                                <%
-                                    var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
-
-                                    var rate_quality = comment.rate_quality;
-                                    var rate_delivery = comment.rate_delivery;
-                                    var rate_reliablity_seller = comment.rate_reliablity_seller;
-                                    var payment = comment.payment;
-                                    var efficiency = comment.efficiency;
-                                    var rate_reliablity_buyer = comment.rate_reliablity_buyer;
-
-                                    var avgRate = (rate_quality+rate_delivery+rate_reliablity_buyer+rate_reliablity_seller+payment+efficiency)/6.0;
-                                    avgRate = Math.round( avgRate * 10) / 10;
-                                %>
-                                <div style="padding: 19px 22px 22px 100px;" class="comment-content">
-                                        <div class="comment-by">
-                                            <%
-                                                var name='';
-                                                if(comment.feedbackUserId.full_name != null && comment.feedbackUserId.full_name != ''){
-                                                    name = comment.feedbackUserId.full_name;
-                                                }else if(comment.feedbackUserId.username != null && comment.feedbackUserId.username != ''){
-                                                    name = comment.feedbackUserId.username;
-                                                }
-                                            %>
-                                            <strong><%= name %></strong>
-                                            <span class="date"><%= comment.createdAt.split('T')[0] %></span>
-                                            <div class="rating <%if(avgRate >= 1) {%><%= rateInString[Math.floor(avgRate)] %>-stars<%}%>">
-                                                <%if(avgRate >= 1) {%><div class="star-rating"></div><%}%>
-                                                <div class="star-bg"></div>
-                                            </div>
-                                        <p><%= comment.comment %></p>
-                                    </div>
-                                </li>
-                            <% } %>
-                        </ul>
-                    </section>
-
-                </div>
-
             </div>
+        </div>
+        <div class="twelve columns products">
+            <p><%- userPublicInformation.companyIntroduction %></p>
+        </div>
+        <div class="sixteen columns">
+            <h3 class="headline">Business Photos</h3>
+            <span class="line margin-bottom-0"></span>
+
+            <div class="sixteen columns" style="float: left; display: inline-flex; overflow-x: auto;">
+            <% var imgLst = JSON.parse(userPublicInformation.business_images != null && userPublicInformation.business_images != '' ? userPublicInformation.business_images : '[]') %>
+            <% for(var x = 0; x < imgLst.length; x++) { %>
+            <img style="height: 200px;" src="uploads/businessImages/<%= imgLst[x] %>" alt="">
+            <% } %>
+            </div>
+            <br>
+            <br>
         </div>
     </div>
-
-    <!-- Related Products -->
-    <div class="container margin-top-5">
-
-        <!-- Headline -->
-        <div class="sixteen columns">
-            <h3 class="headline">Current Listings</h3>
-            <span class="line margin-bottom-0"></span>
-        </div>
-
-        <!-- Carousel -->
-        <div id="new-arrivals" class="showbiz-container sixteen columns" >
-
-            <!-- Navigation -->
-            <div class="showbiz-navigation">
-                <div id="showbiz_left_2" class="sb-navigation-left"><i class="fa fa-angle-left"></i></div>
-                <div id="showbiz_right_2" class="sb-navigation-right"><i class="fa fa-angle-right"></i></div>
+    <div class="container">
+        <div class="container margin-top-5">
+            <br><br><br>
+            <!-- Headline -->
+            <div class="sixteen columns">
+                <h3 class="headline">Current Listings</h3>
+                <span class="line margin-bottom-0"></span>
             </div>
-            <div class="clearfix"></div>
 
-            <!-- Products -->
-            <div class="showbiz" data-left="#showbiz_left_2" data-right="#showbiz_right_2" data-play="#showbiz_play_1" >
-                <div class="overflowholder">
+            <!-- Carousel -->
+            <div id="new-arrivals" class="showbiz-container sixteen columns">
 
-                    <ul>
-                        <% for(var itemIndex = 0; itemIndex < userPublicCurrentListing.length; itemIndex++) { %>
-                        <li>
-                            <figure class="product">
-                                <div class="mediaholder">
-                                    <a href="/items/id/<%= userPublicCurrentListing[itemIndex].id %>">
-                                        <% if(userPublicCurrentListing[itemIndex].ItemImages.length > 0) {%>
-                                        <img alt="" src="uploads/items/<%= userPublicCurrentListing[itemIndex].ItemImages[0].url %>" style="width:280px; height: 280px;"/>
-                                        <% } else { %>
-                                        <img alt="" src="images/shop_item_01.jpg" style="width:280px; height: 280px;"/>
-                                        <% } %>
-                                        <% if(userPublicCurrentListing[itemIndex].ItemImages.length > 1) {%>
-                                        <div class="cover">
-                                            <img alt="" src="uploads/items/<%= userPublicCurrentListing[itemIndex].ItemImages[1].url %>" style="width:280px; height: 280px;"/>
-                                        </div>
-                                        <% } %>
-                                    </a>
-                                    <a href="/items/id/<%= userPublicCurrentListing[itemIndex].id %>" class="product-button"><i class="fa fa-shopping-cart"></i> Make Offer</a>
-                                </div>
-
-                                <a href="/items/id/<%= userPublicCurrentListing[itemIndex].id %>">
-                                    <section>
-                                        <span class="product-category"><%= userPublicCurrentListing[itemIndex].Commodity.name %></span>
-                                        <span class="product-price"><%= userPublicCurrentListing[itemIndex].suggestedPrice %></span>
-                                    </section>
-                                </a>
-                            </figure>
-                        </li>
-                        <% } %>
-
-                    </ul>
-                    <div class="clearfix"></div>
-
+                <!-- Navigation -->
+                <div class="showbiz-navigation">
+                    <div id="showbiz_left_2" class="sb-navigation-left"><i class="fa fa-angle-left"></i></div>
+                    <div id="showbiz_right_2" class="sb-navigation-right"><i class="fa fa-angle-right"></i></div>
                 </div>
                 <div class="clearfix"></div>
+
+                <!-- Products -->
+                <div class="showbiz" data-left="#showbiz_left_2" data-right="#showbiz_right_2"
+                     data-play="#showbiz_play_1">
+                    <div class="overflowholder">
+
+                        <ul>
+                            <% for(var itemIndex = 0; itemIndex < userPublicCurrentListing.length; itemIndex++) { %>
+                            <li>
+                                <figure class="product">
+                                    <div class="mediaholder">
+                                        <a href="/items/id/<%= userPublicCurrentListing[itemIndex].id %>">
+                                            <% if(userPublicCurrentListing[itemIndex].ItemImages.length > 0) { %>
+                                            <img alt=""
+                                                 src="uploads/items/<%= userPublicCurrentListing[itemIndex].ItemImages[0].url %>"
+                                                 style="width:280px; height: 280px;"/>
+                                            <% } else { %>
+                                            <img alt="" src="images/shop_item_01.jpg"
+                                                 style="width:280px; height: 280px;"/>
+                                            <% } %>
+                                            <% if(userPublicCurrentListing[itemIndex].ItemImages.length > 1) { %>
+                                            <div class="cover">
+                                                <img alt=""
+                                                     src="uploads/items/<%= userPublicCurrentListing[itemIndex].ItemImages[1].url %>"
+                                                     style="width:280px; height: 280px;"/>
+                                            </div>
+                                            <% } %>
+                                        </a>
+                                        <a href="/items/id/<%= userPublicCurrentListing[itemIndex].id %>"
+                                           class="product-button"><i class="fa fa-shopping-cart"></i> Make Offer</a>
+                                    </div>
+
+                                    <a href="/items/id/<%= userPublicCurrentListing[itemIndex].id %>">
+                                        <section>
+                                            <span class="product-category"><%= userPublicCurrentListing[itemIndex].Commodity.name %></span>
+                                            <span class="product-price"><%= userPublicCurrentListing[itemIndex].suggestedPrice %></span>
+                                        </section>
+                                    </a>
+                                </figure>
+                            </li>
+                            <% } %>
+
+                        </ul>
+                        <div class="clearfix"></div>
+
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
             </div>
         </div>
-
     </div>
+    <!-- Related Products -->
 
     <div class="margin-top-50"></div>
 

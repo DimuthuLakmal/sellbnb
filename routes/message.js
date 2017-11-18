@@ -27,6 +27,8 @@ router.post('/add', function (req, res) {
                 senderUserIdFk: senderUserId,
                 receiverUserIdFk: receiverUserId,
             }).then(function (insertedMessage) {
+              // Send an email
+
                 if(returnTo !== undefined && returnTo != null) {
                     res.redirect(returnTo);
                 } else {

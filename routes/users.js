@@ -461,6 +461,48 @@ router.post('/profile_pic', function (req, res) {
     });
 });
 
+/* Add Business Images Of user */
+router.post('/businessImages', function (req, res) {
+  //retrieve data from req object
+  var userId = req.body.userId;
+
+  //write images to image files
+  _.forEach(req.body.images, function(image, index) {
+    var imageBuffer = decodeBase64Image(image.data); //decoding base64 images
+    fs.writeFile('public/uploads/businessImages/'+image.filename, imageBuffer.data, function(err) {
+      console.log(err);
+    });
+  });
+
+  var imageURL = req.body.images[req.body.images.length-1].filename;
+  //add logo to user table
+  sequelize.sync().then(
+    function () {
+      var User = models.User;
+      User.findAll({where : {id : userId}}).then(function(users) {
+        var bi = [];
+        if(users[0].business_images !== null && users[0].business_images != '') {
+          bi = JSON.parse(users[0].business_images);
+        }
+        bi.push(imageURL);
+        User.update(
+          { business_images: JSON.stringify(bi) },
+          { where: { id: userId } }
+        ).then(function (results) {
+          res.redirect('/user/business');
+        }).catch(function (error) {
+          req.session.errorMessage = 'Invalid Image.';
+          res.redirect('/user/business');
+        });
+      });
+    }
+  ).catch(function (error) {
+    console.log(error);
+  });
+});
+
+
+
 /* Change Company Introduction */
 router.post('/companyIntroduction', function (req, res) {
     //retrieve data from req object
@@ -948,7 +990,7 @@ router.get('/public/userId/:userId', function (req, res) {
             var ItemImage = models.ItemImage;
             var Commodity = models.Commodity;
             User.findAll({
-                where: {id: req.params.userId},
+                where: {id: req.params.userId}
             }).then(function (Users) {
                 //saving informations to sessions
                 var user  = Users[0];
@@ -963,7 +1005,7 @@ router.get('/public/userId/:userId', function (req, res) {
                     Item.findAll({
                         where: {
                             UserId: req.params.userId,
-                            status: 'pending',
+                            status: 'pending'
                         },
                         include:[ItemImage, Commodity]
                     }).then(function (Items) {

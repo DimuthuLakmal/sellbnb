@@ -8,13 +8,22 @@
     <!-- Global Site Tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107495910-1"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments)};
-        gtag('js', new Date());
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments)
+      };
+      gtag('js', new Date());
 
-        gtag('config', 'UA-107495910-1');
+      gtag('config', 'UA-107495910-1');
     </script>
+    <!-- Include Editor style. -->
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.1/css/froala_editor.min.css' rel='stylesheet'
+          type='text/css'/>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.1/css/froala_style.min.css' rel='stylesheet'
+          type='text/css'/>
 
+    <link rel="stylesheet" href="scripts/froalaEditor/colors.css">
+    <link rel="stylesheet" href="scripts/froalaEditor/quick_insert.min.css">
     <!-- Basic Page Needs
     ================================================== -->
     <meta charset="utf-8">
@@ -43,9 +52,9 @@
 
     <!-- Titlebar
     ================================================== -->
-    <section class="parallax-titlebar fullwidth-element"  data-background="#000" data-opacity="0.2" data-height="160">
+    <section class="parallax-titlebar fullwidth-element" data-background="#000" data-opacity="0.2" data-height="160">
 
-        <img src="images/mini-slides/6.jpg" alt="" />
+        <img src="images/mini-slides/6.jpg" alt=""/>
         <div class="parallax-overlay"></div>
 
         <div class="parallax-content">
@@ -93,40 +102,60 @@
         <div class="twelve columns products">
 
             <!-- Headline Business Logo-->
-            <h3 class="headline">Company Logo</h3><span class="line margin-bottom-30"></span><div class="clearfix"></div>
-            <% if(user.logo != null && user.logo != '' && user.logo != undefined) {%>
-                <img src="uploads/logo/<%= user.logo %>" alt="" id="company-logo"/>
+            <h3 class="headline">Company Logo</h3><span class="line margin-bottom-30"></span>
+            <div class="clearfix"></div>
+            <% if(user.logo != null && user.logo != '' && user.logo != undefined) { %>
+            <img src="uploads/logo/<%= user.logo %>" alt="" id="company-logo"/>
             <% } else { %>
-                <img src="images/titlebar_bg_02.jpg" alt="" id="company-logo"/>
+            <img src="images/titlebar_bg_02.jpg" alt="" id="company-logo"/>
             <% } %>
             <input type="hidden" id="userId" value="<%= user.id %>"/>
             <input type="file" name="fileToUpload" id="fileToUpload" style="display: none">
             <a style="color:#2db2ea;float: right; margin-top:10px" id="logo-upload">Upload New Image</a></td>
 
             <br><br>
-            <!-- Headline Business Introduction-->
-            <h3 class="headline">Company Introduction</h3><span class="line margin-bottom-30"></span><div class="clearfix"></div>
-            <p><%= user.companyIntroduction %></p>
-            <% if(user.companyIntroduction != '' && user.companyIntroduction != undefined) { %>
-                <a class="popup-with-zoom-anim" href="#edit-introduction-dialog" style="color:#2db2ea;float: right">Edit</a><br/>
+            <!--Bussiness Image upload-->
+
+            <h3 class="headline">Business Images</h3><span class="line margin-bottom-30"></span>
+            <div class="clearfix"></div>
+            <% if(user.business_images!=null && user.business_images !='') { %>
+            <p>you have uploaded <%= JSON.parse(user.business_images).length %> photos</p>
             <% } else { %>
-                <a class="popup-with-zoom-anim" href="#edit-introduction-dialog" style="color:#2db2ea;float: right">Add</a><br/>
+            <p>You don't have upload any photo yet.</p>
+            <% } %>
+            <input id="imageFile" name="imageFile[]" type="file" style="display: none" multiple/>
+            <a style="color:#2db2ea;float: right; margin-top:10px" id="images-upload">Upload New Image</a></td>
+
+            <br><br>
+            <!-- Headline Business Introduction-->
+            <h3 class="headline">Company Introduction</h3><span class="line margin-bottom-30"></span>
+            <div class="clearfix"></div>
+            <p><%- user.companyIntroduction %></p>
+            <% if(user.companyIntroduction != '' && user.companyIntroduction != undefined) { %>
+            <a class="popup-with-zoom-anim" href="#edit-introduction-dialog" style="color:#2db2ea;float: right">Edit</a><br/>
+            <% } else { %>
+            <a class="popup-with-zoom-anim" href="#edit-introduction-dialog"
+               style="color:#2db2ea;float: right">Add</a><br/>
             <% } %>
 
             <div id="edit-introduction-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
                 <h2 class="margin-bottom-10">Edit Introduction</h2>
-                <form method="post" name="editform" action="/api/user/companyIntroduction">
+                <form method="post" name="editform" action="/api/user/companyIntroduction" id="CompyIntroForm">
 
                     <fieldset>
 
-                        <input type="hidden" name="id" value="<%= user.id %>" />
+                        <input type="hidden" name="id" value="<%= user.id %>"/>
 
                         <div class="twelve alpha columns editform">
-                            <textarea row="20" style="width: 97%;margin-bottom: 10px" name="newCompanyIntroduction"></textarea>
+                            <div id="editor">
+                                <div id='introductionEditor' style="margin-top: 30px;">
+                                </div>
+                            </div>
                         </div>
+                        <input type="hidden" id="introRawTxt" name="newCompanyIntroduction">
 
                         <div class="twelve columns editform">
-                            <input type="submit" class="submit" id="submitnewintroduction" value="Save"/>
+                            <input id="submitCompyIntro" type="submit" class="submit" id="submitnewintroduction" value="Save"/>
                         </div>
 
                     </fieldset>
@@ -138,7 +167,8 @@
             <br><br>
 
             <!-- Headline Trading Commodities-->
-            <h3 class="headline">Trading Commodities</h3><span class="line margin-bottom-30"></span><div class="clearfix"></div>
+            <h3 class="headline">Trading Commodities</h3><span class="line margin-bottom-30"></span>
+            <div class="clearfix"></div>
 
             <table class="basic-table" style="">
 
@@ -146,58 +176,63 @@
                 <tr>
                     <td> Buying</td>
                     <td>
-                        <% for(var tradingIndex = 0; tradingIndex < userTradingBusinessInformation.length ; tradingIndex++) {%>
-                            <%if(userTradingBusinessInformation[tradingIndex].buyOrSell == 0) {%>
-                                 <%= userTradingBusinessInformation[tradingIndex].Commodity.name %>
-                                <a href="#" style="color:#2db2ea;" class="tradingbuyingremove">(Remove)</a><br>
-                                <form action="/api/user/tradingcommodity/delete" method="post">
-                                    <input type="hidden" value="<%= userTradingBusinessInformation[tradingIndex].id %>" name="tradingCommodityId"/>
-                                </form>
-                            <% } %>
+                        <% for(var tradingIndex = 0; tradingIndex < userTradingBusinessInformation.length ; tradingIndex++) { %>
+                        <% if(userTradingBusinessInformation[tradingIndex].buyOrSell == 0) { %>
+                        <%= userTradingBusinessInformation[tradingIndex].Commodity.name %>
+                        <a href="#" style="color:#2db2ea;" class="tradingbuyingremove">(Remove)</a><br>
+                        <form action="/api/user/tradingcommodity/delete" method="post">
+                            <input type="hidden" value="<%= userTradingBusinessInformation[tradingIndex].id %>"
+                                   name="tradingCommodityId"/>
+                        </form>
+                        <% } %>
                         <% } %>
                     </td>
-                        <td>
-                            <a class="popup-with-zoom-anim" href="#buying-commodity-add-dialog" style="color:#2db2ea;">Add</a><br/>
+                    <td>
+                        <a class="popup-with-zoom-anim" href="#buying-commodity-add-dialog"
+                           style="color:#2db2ea;">Add</a><br/>
 
-                            <div id="buying-commodity-add-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
-                                <h2 class="margin-bottom-10">Add New Commodity</h2>
-                                <form method="post" name="editform" action="/api/user/tradingcommodity/add">
+                        <div id="buying-commodity-add-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
+                            <h2 class="margin-bottom-10">Add New Commodity</h2>
+                            <form method="post" name="editform" action="/api/user/tradingcommodity/add">
 
-                                    <fieldset>
+                                <fieldset>
 
-                                        <div class="twelve alpha columns editform">
-                                            <input type="hidden" name="type" value="0"/>
-                                            <input type="hidden" name="id" value="<%= user.id %>"/>
-                                            <input name="tradingcommodity" type="text" id="newbuyingcommodity" placeholder="New Commodity" list="searchresults"/>
-                                            <datalist id="searchresults"></datalist>
-                                        </div>
+                                    <div class="twelve alpha columns editform">
+                                        <input type="hidden" name="type" value="0"/>
+                                        <input type="hidden" name="id" value="<%= user.id %>"/>
+                                        <input name="tradingcommodity" type="text" id="newbuyingcommodity"
+                                               placeholder="New Commodity" list="searchresults"/>
+                                        <datalist id="searchresults"></datalist>
+                                    </div>
 
-                                        <div class="twelve columns editform">
-                                            <input type="submit" class="submit" id="submitbuyingcommodity" value="Save"/>
-                                        </div>
+                                    <div class="twelve columns editform">
+                                        <input type="submit" class="submit" id="submitbuyingcommodity" value="Save"/>
+                                    </div>
 
-                                    </fieldset>
+                                </fieldset>
 
-                                    <div class="clearfix"></div>
-                                </form>
-                            </div>
-                        </td>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td> Selling</td>
                     <td>
-                        <% for(var tradingIndex = 0; tradingIndex < userTradingBusinessInformation.length ; tradingIndex++) {%>
-                            <%if(userTradingBusinessInformation[tradingIndex].buyOrSell == 1) {%>
-                                <%= userTradingBusinessInformation[tradingIndex].Commodity.name %>
-                                <a href="#" style="color:#2db2ea;" class="tradingsellingremove">(Remove)</a><br>
-                                <form action="/api/user/tradingcommodity/delete" method="post">
-                                    <input type="hidden" value="<%= userTradingBusinessInformation[tradingIndex].id %>" name="tradingCommodityId"/>
-                                </form>
-                            <% } %>
+                        <% for(var tradingIndex = 0; tradingIndex < userTradingBusinessInformation.length ; tradingIndex++) { %>
+                        <% if(userTradingBusinessInformation[tradingIndex].buyOrSell == 1) { %>
+                        <%= userTradingBusinessInformation[tradingIndex].Commodity.name %>
+                        <a href="#" style="color:#2db2ea;" class="tradingsellingremove">(Remove)</a><br>
+                        <form action="/api/user/tradingcommodity/delete" method="post">
+                            <input type="hidden" value="<%= userTradingBusinessInformation[tradingIndex].id %>"
+                                   name="tradingCommodityId"/>
+                        </form>
+                        <% } %>
                         <% } %>
                     </td>
                     <td>
-                        <a class="popup-with-zoom-anim" href="#selling-commodity-add-dialog" style="color:#2db2ea;">Add</a><br/>
+                        <a class="popup-with-zoom-anim" href="#selling-commodity-add-dialog"
+                           style="color:#2db2ea;">Add</a><br/>
 
                         <div id="selling-commodity-add-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
                             <h2 class="margin-bottom-10">Add New Commodity</h2>
@@ -208,7 +243,8 @@
                                     <div class="twelve alpha columns editform">
                                         <input type="hidden" name="type" value="1"/>
                                         <input type="hidden" name="id" value="<%= user.id %>"/>
-                                        <input name="tradingcommodity" type="text" id="newsellingcommodity" placeholder="New Commodity" list="searchresultsselling"/>
+                                        <input name="tradingcommodity" type="text" id="newsellingcommodity"
+                                               placeholder="New Commodity" list="searchresultsselling"/>
                                         <datalist id="searchresultsselling"></datalist>
                                     </div>
 
@@ -228,41 +264,44 @@
 
             <br><br>
             <!-- Headline Business Certificate-->
-            <h3 class="headline">Business Certificate</h3><span class="line margin-bottom-30"></span><div class="clearfix"></div>
+            <h3 class="headline">Business Certificate</h3><span class="line margin-bottom-30"></span>
+            <div class="clearfix"></div>
 
             <table class="basic-table" style="">
                 <thead>
-                    <tr>
-                        <th>
-                            Certificate Number
-                        </th>
-                        <th>
-                            Certificate Name
-                        </th>
-                        <th>
-                        </th>
-                    </tr>
+                <tr>
+                    <th>
+                        Certificate Number
+                    </th>
+                    <th>
+                        Certificate Name
+                    </th>
+                    <th>
+                    </th>
+                </tr>
                 </thead>
                 <tbody>
-                    <% for(var certificateIndex = 0; certificateIndex < userCertificateInformation.length ; certificateIndex++) {%>
-                        <tr>
-                            <td>
-                                <%= userCertificateInformation[certificateIndex].number %>
-                            </td>
-                            <td>
-                                <%= userCertificateInformation[certificateIndex].name %>
-                            </td>
-                            <td>
-                                <a href="#" style="color:#2db2ea;" class="certificateremove">(Expire)</a><br>
-                                <form action="/api/user/certificate/delete" method="post">
-                                    <input type="hidden" value="<%= userCertificateInformation[certificateIndex].id %>" name="certificateId"/>
-                                </form>
-                            </td>
-                        </tr>
-                    <% } %>
+                <% for(var certificateIndex = 0; certificateIndex < userCertificateInformation.length ; certificateIndex++) { %>
+                <tr>
+                    <td>
+                        <%= userCertificateInformation[certificateIndex].number %>
+                    </td>
+                    <td>
+                        <%= userCertificateInformation[certificateIndex].name %>
+                    </td>
+                    <td>
+                        <a href="#" style="color:#2db2ea;" class="certificateremove">(Expire)</a><br>
+                        <form action="/api/user/certificate/delete" method="post">
+                            <input type="hidden" value="<%= userCertificateInformation[certificateIndex].id %>"
+                                   name="certificateId"/>
+                        </form>
+                    </td>
+                </tr>
+                <% } %>
                 </tbody>
             </table>
-            <a class="popup-with-zoom-anim" href="#certificate-add-dialog" style="color:#2db2ea;float: right">Add Certificate</a><br/>
+            <a class="popup-with-zoom-anim" href="#certificate-add-dialog" style="color:#2db2ea;float: right">Add
+                Certificate</a><br/>
 
             <div id="certificate-add-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
                 <h2 class="margin-bottom-10">Add New Cerficate</h2>
@@ -271,7 +310,7 @@
                     <fieldset>
 
                         <div class="twelve alpha columns editform">
-                            <input type="hidden" name="id" value="<%= user.id %>"/>
+                            <input type="hidden" name="id" value=""/>
                             <input name="newcertificatenumber" type="text" placeholder="Certificate Number"/>
                             <input name="newcertificatename" type="text" placeholder="Certificate Name"/>
                         </div>
@@ -285,6 +324,7 @@
                     <div class="clearfix"></div>
                 </form>
             </div>
+
         </div>
 
     </div>
@@ -323,8 +363,17 @@
 <script src="scripts/puregrid.js"></script>
 <script src="scripts/stacktable.js"></script>
 <script src="scripts/custom.js"></script>
-<script src="scripts/views/userbusinessinformation.js"></script>
 <script src="scripts/views/header_func.js"></script>
 
+<!-- Include JS file. -->
+<script type='text/javascript'
+        src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.1/js/froala_editor.min.js'></script>
+<script src="scripts/froalaEditor/colors.min.js"></script>
+<script src="scripts/froalaEditor/quick_insert.min.js"></script>
+<script src="scripts/froalaEditor/align.min.js"></script>
+<script src="scripts/froalaEditor/font_family.min.js"></script>
+<script src="scripts/froalaEditor/font_size.min.js"></script>
+
+<script src="scripts/views/userbusinessinformation.js"></script>
 </body>
 </html>

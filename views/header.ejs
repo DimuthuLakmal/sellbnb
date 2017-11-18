@@ -44,13 +44,6 @@
                 <% } else { %>
                 <li><a href="/user/login?action=login">Sign In</a></li>
                 <% } %>
-                <li>
-                    <select style="background-color: white; border-color: white;" id="language_select">
-                        <option value="english">English</option>
-                        <option value="sinhala">සිංහල</option>
-                        <option value="tamil">தமிழ்</option>
-                    </select>
-                </li>
             </ul>
         </div>
     </div>
@@ -139,9 +132,7 @@
                     <% } %>
                 </ul>
 
-                <div class="clearfix">
-
-                </div>
+                <div class="clearfix"></div>
             </div>
             <% } %>
 
@@ -226,14 +217,3 @@
         </nav>
     </div>
 </div>
-
-<script>
-    document.getElementById('language_select').onchange = function () {
-        var index = this.selectedIndex;
-        var inputText = this.children[index].value;
-        var xhttp = new XMLHttpRequest();
-        ;
-        xhttp.open("GET", "/change_language/language/" + inputText, true);
-        xhttp.send();
-    }
-</script>
