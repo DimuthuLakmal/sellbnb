@@ -84,7 +84,6 @@ router.get('/', function (req, res) {
   delete req.session.returnToCommodityName;
   delete req.session.commodityPopular;
   delete req.session.latestItems;
-  delete req.session.latestItems;
   delete req.session.bestsellers;
   delete req.session.neartocloseItems;
   delete req.session.notifications;
@@ -1138,7 +1137,7 @@ router.get('/items/id/:id', function (req, res) {
 
     var message = req.session.bidAddMessage;
 
-    console.log(item.user);
+    // console.log(item.user);
 
     req.session.lastBid = null;
     req.session.lastUserBid = null;

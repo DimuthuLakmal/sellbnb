@@ -9,7 +9,7 @@ var bcrypt = require('bcryptjs');
 var salt = bcrypt.genSaltSync(10);
 var fs = require('fs');
 var path = require('path');
-const sgAPI = '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';
+const sgAPI = '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';
 
 //local strategy use verifyCredentials
 passport.use(new passportLocal.Strategy(verifyCredentials));
@@ -245,12 +245,12 @@ router.post('/companyname', function (req, res) {
 
 
 /* Add Email Of user */
-router.post('/email/add', function (req, res) {
+router.post('/emails/add', function (req, res) {
     //retrieve data from req object
     var newemail = req.body.newemail;
     var userId = req.body.id;
 
-    //add new email of user to email table
+    //add new emails of user to emails table
     sequelize.sync().then(
         function () {
             var Email = models.Email;
@@ -271,11 +271,11 @@ router.post('/email/add', function (req, res) {
 });
 
 /* Delete Email Of user */
-router.post('/email/delete', function (req, res) {
+router.post('/emails/delete', function (req, res) {
     //retrieve data from req object
     var emailId = req.body.emailId;
 
-    //add new email of user to email table
+    //add new emails of user to emails table
     sequelize.sync().then(
         function () {
             var Email = models.Email;
@@ -299,7 +299,7 @@ router.post('/phone/add', function (req, res) {
     var newphone = req.body.newphone;
     var userId = req.body.id;
 
-    //add new email of user to email table
+    //add new emails of user to emails table
     sequelize.sync().then(
         function () {
             var PhoneNumber = models.PhoneNumber;
@@ -324,7 +324,7 @@ router.post('/phone/delete', function (req, res) {
     //retrieve data from req object
     var phoneId = req.body.phoneId;
 
-    //add new email of user to email table
+    //add new emails of user to emails table
     sequelize.sync().then(
         function () {
             var PhoneNumber = models.PhoneNumber;
@@ -538,7 +538,7 @@ router.post('/warehouse/add', function (req, res) {
     var warehouseCity = req.body.newwarehousecity;
     var userId = req.body.id;
 
-    //add new email of user to email table
+    //add new emails of user to emails table
     sequelize.sync().then(
         function () {
             var WareHouse = models.WareHouse;
@@ -567,7 +567,7 @@ router.post('/tradingcommodity/add', function (req, res) {
     var userId = req.body.id;
     var type = req.body.type;
 
-    //add new email of user to email table
+    //add new emails of user to emails table
     sequelize.sync().then(
         function () {
             var TradingCommodity = models.TradingCommodity;
@@ -669,7 +669,7 @@ router.post('/certificate/add', function (req, res) {
     var newcertificatenumber = req.body.newcertificatenumber;
     var userId = req.body.id;
 
-    //add new email of user to email table
+    //add new emails of user to emails table
     sequelize.sync().then(
         function () {
             var BusinessCertificate = models.BusinessCertificate;
@@ -805,7 +805,7 @@ router.post('/adduser', function (req, res) {
                     }
                 }).then(function (Emails) {
                     if (!_.isUndefined(Emails[0])) {
-                        req.session.signupError = 'Your email exists already. Please try again';
+                        req.session.signupError = 'Your emails exists already. Please try again';
                         res.redirect('/user/signup?action=signup');
                     } else {
                         //set error message to flash
@@ -1174,7 +1174,7 @@ router.get('/forgotpassword_code', function (req, res, next) {
                 },
             }).then(function (Email) {
                 if (!_.isUndefined(Email[0])) {
-                    //var email = Email[0].dataValues;
+                    //var emails = Email[0].dataValues;
                     var random_numeber = Math.floor(Math.random() * (100000 - 10000 + 1)) + 10000;
 
                     var helper = require('sendgrid').mail;

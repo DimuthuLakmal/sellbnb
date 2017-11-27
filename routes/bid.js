@@ -9,7 +9,7 @@ var sequelize = models.sequelize;
 var fs = require('fs');
 var moment = require('moment');
 var async = require('async');
-const sgAPI = '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';
+const sgAPI = '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';
 
 //store bidding details in database
 /* Usage: Bidding Page */
@@ -217,7 +217,7 @@ function test(req, res) {
     } else if(buyingpageItemOption == 'Pending') {
         whereObject = {
             UserId: userId,
-            '$Item.duration$': {gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))}
+            // '$Item.duration$': {gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))}
         };
         req.session.buyingpageItemOption = 'Pending';
     } else if(buyingpageItemOption == 'Canceled') {

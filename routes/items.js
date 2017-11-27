@@ -62,6 +62,7 @@ router.post('/add', function (req, res) {
               CommodityId: req.body.commodityId,
               UserId: req.body.userId,
               suggestedPrice: req.body.fob_price,
+              hits: 0,
             }).then(function (insertedItem) {
                 var insertedItemId = insertedItem.dataValues.id;
                 //store item images
@@ -153,12 +154,12 @@ router.get('/viewlatest', function (req, res) {
             var Commodity = models.Commodity;
             Item.findAndCountAll({
                 where: {
-                    duration: {gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))},
+                    // duration: {gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))},
                     status:'pending',
                 },
                 limit: 10,
                 include: [ItemImage, Commodity],
-                order: '`id` DESC'
+                order: '`createdAt` DESC'
             }).then(function (Items) {
                 var itemsArr = [];
                 //pushing retrieved data to commodity array
@@ -343,9 +344,9 @@ router.get('/id/:id/userId/:userId', function (req, res) {
                 Item.findAll({
                     where: {
                         CommodityId: item.CommodityId,
-                        duration: {
-                            gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
-                        },
+                        // duration: {
+                        //     gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
+                        // },
                         id: {
                             $ne: id,
                         }
@@ -416,7 +417,7 @@ router.get('/id/:id/userId/:userId', function (req, res) {
                                                         { hits: (parseInt(hits)+1) },
                                                         { where: { id: id } }
                                                     ).then(function (results) {
-                                                        res.redirect('/items/id/'+itemId);
+
                                                     });
                                                 }
                                             })

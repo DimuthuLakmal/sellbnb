@@ -1,0 +1,20 @@
+<h2>You got a message from : <%= senderName %> on item : <%= itemName %></h2>
+<ul>
+    <li><strong>Name :</strong><%= fullName %></li>
+    <li><strong>Telephones :</strong><%= telephones %></li>
+    <li><strong>Emails :</strong><%= emails %></li>
+</ul>
+<h3></h3>
+<br>
+<strong>------- Begin of Message -------</strong><br>
+<strong>Subject :</strong> <%= subject %><br>
+<strong>content :</strong> <%= message %><br>
+<strong>--------- End Message ---------</strong>
+<br><br>
+to reply this message click here :<br>
+<a href="<%= replyUrl %>"><%= replyUrl %></a>
+
+<br><br>
+<p>For Your Information: To help arbitrate disputes and preserve trust and safety,
+    we retain all messages buyers and sellers send through SellBnB for two years.
+    This includes your response to the message above.</p>

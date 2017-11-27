@@ -9,7 +9,7 @@ var sequelize = models.sequelize;
 var fs = require('fs');
 var helper = require('sendgrid').mail;
 var async = require('async');
-const sgAPI = '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';
+const sgAPI = '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';
 
 //store notification details in database
 /* Usage: Buyer Contract Page */
@@ -123,7 +123,7 @@ function addNotification(res, req, url, description, emailDescription, subject_,
                 seen: false,
                 UserId: req.params.userId,
             }).then(function (insertedNotificaion) {
-                //sending email & SMS
+                //sending emails & SMS
                 var subject = subject_;
                 var message = emailDescription;
                 sendEmailSMS(req.params.userId, subject, message, redirection, res);
@@ -169,10 +169,10 @@ function addNotification(res, req, url, description, emailDescription, subject_,
     });
 }
 
-//sending email using sendgrid
+//sending emails using sendgrid
 function sendEmailSMS(userId, subject_, message, redirection, res) {
 
-    //retrive user's email address
+    //retrive user's emails address
     sequelize.sync().then(
         function () {
             var User = models.User;
@@ -248,7 +248,7 @@ function sendEmailSMS(userId, subject_, message, redirection, res) {
 }
 
 function retrieveEmailMobileNumber (userId) {
-    //get email & mobile number details of user
+    //get emails & mobile number details of user
     var EmailAddress = null;
     sequelize.sync().then(
         function () {

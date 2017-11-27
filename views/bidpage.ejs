@@ -55,7 +55,7 @@
 
     <!-- Titlebar
     ================================================== -->
-    <h1 style="color: black; text-align: center; background-color: #f35a5b;"><%= item.commodity.name %></h1>
+    <h1 style="color: black; text-align: center; background-color: #f35a5b; font-size: 30px;"><%= item.commodity.name %></h1>
     <hr>
     <% if(message != null && message != undefined && message != "") { %>
     <div class="notification success closeable" id="message_success" style="margin-top: -38px;">
@@ -94,28 +94,28 @@
 
                 <!-- Product Details Table -->
                 <div class="product-div">
-                    <table class="basic-table">
+                    <table class="basic-table" style="color: #000; font-size: 20px;">
                         <tr>
-                            <th>Max. Quantity</th>
+                            <th style="font-size: 20px;">Max. Quantity</th>
                             <td><%= item.item.quantityMax %></td>
                         </tr>
 
                         <tr>
-                            <th>Min. Quantity</th>
+                            <th style="font-size: 20px;">Min. Quantity</th>
                             <td><%= item.item.quantityMin%></td>
                         </tr>
 
                         <tr>
-                            <th>Packing Type</th>
+                            <th style="font-size: 20px;">Packing Type</th>
                             <td><%= item.item.packageType %></td>
                         </tr>
 
                         <tr>
-                            <th>Lead time</th>
+                            <th style="font-size: 20px;">Lead time</th>
                             <td><%= item.item.loadTime %></td>
                         </tr>
                         <tr>
-                            <th>Origin</th>
+                            <th style="font-size: 20px;">Origin</th>
                             <td><%= item.item.origin %></td>
                         </tr>
                     </table>
@@ -125,7 +125,6 @@
                 </div>
             </div>
         </div>
-
 
         <!-- Content
         ================================================== -->
@@ -142,19 +141,21 @@
                 }
                 %>
                 <h2 style="color: #000; font-size: 30px"><%= item.item.title %></h2>
-                <h6><a href="/user/public/userId/<%= item.user.id %>"><%= name %></a> <span style="color: #14cf00; font-style: oblique">[VERIFIED]</span></h6>
+                <h6><a href="/user/public/userId/<%= item.user.id %>"><%= name %></a> <span style="color: #1ecfca; font-style: oblique">[VERIFIED]</span></h6>
             </section>
         </div>
 
-        <div class="eight products columns">
+        <div class="eight products columns" style="padding: 20px 0; background-color: #e2e2e2">
             <section class="variables">
                 <div class="eight columns" style="margin-left:0;">
-                    <h1 style="font-size: 25px;" class="headline">FOB Price: <strong style="font-size: 30px"><%= item.item.suggestedPrice + ' ' + item.priceUnits[0].unitName %></strong></h1>
+                    <h1 style="margin-left: 10px; background-color: #e2e2e2" class="headline">FOB Price: <strong style="font-size: 30px; color: #f45c30;"><%= item.item.suggestedPrice + ' ' + item.priceUnits[0].unitName %></strong></h1>
                 </div>
                 <form method="POST" action="/api/offer/add" id="bidformToSubmit" style="background-color: #5d5c60">
                     <input type="hidden" name="itemId" value="<%= item.item.id %>"/>
                     <input type="hidden" name="userId" value="<%= user.id %>"/>
+                    <input type="hidden" name="itemOwner" value="<%= item.user.id %>"/>
                     <input type="hidden" name="commodityId" value="<%= item.item.Commodity.id %>"/>
+                    <input type="hidden" name="priceUnit" value="<%= item.priceUnits[0].unitName %>"/>
                     <div class="eight alpha columns bidform" style="display: inline-flex;">
                         <div class="two columns" style="font-size: 20px; margin-top: 10px">Your Offer : </div>
                         <div class="four columns" style="margin-left:0;">
@@ -217,17 +218,19 @@
                     </div>
 
                     <div class="eight alpha columns bidform">
-                        <input type="submit" class="button" value="SUBMIT NOW"
-                               style="margin-left:15px; width: 90%"/>
+                        <input type="submit"  class="button" value="SUBMIT NOW"
+                               style="margin-left:10px; width: 95%; background-color: #f35336; font-size: 20px; color: black;"/>
                         <div class="clearfix"></div>
                     </div>
                 </form>
                 <br>
                 <br>
             </section>
+        </div>
+        <div class="eight products columns" style="margin-top: 30px">
             <section class="variables">
                 <div class="eight columns">
-                    <h2 class="headline">Producer Details</h2>
+                    <h2 class="headline" style="color: black; font-size: 30px; margin-bottom: 10px; text-transform: capitalize">Producer Details</h2>
                     <span class="line margin-bottom-0"></span>
                 </div>
                 <div style="align-items: center; width: 100%;">
@@ -238,22 +241,13 @@
                 </div>
                 <a href="/user/public/userId/<%= item.user.id %>">Read More</a>
                 <!-- Headline -->
-                <div class="eight columns">
-                    <h3 class="headline">Contact Seller</h3>
-                    <span class="line margin-bottom-0"></span>
-                </div>
-
                 <br>
                 <div class="last-bid" align="center">
                     <table border="0px">
                         <tr>
-                            <td class="contact-label">
-                                <span><img src="icons/small-message-icon.png"
-                                           style="width: 24px; height: 24px; margin-top: 8px; margin-left: 8px"/></span>
-                            </td>
                             <td>
-                                <a href="#message-dialog" class="popup-with-zoom-anim margin-left-0"
-                                   style="color: darkgray">Send Message</a>
+                                <a href="#message-dialog" class="button popup-with-zoom-anim margin-left-0"
+                                style="color: black; background-color: #f35336">Contact Producer Now</a>
                                 <div id="message-dialog" class="small-dialog zoom-anim-dialog mfp-hide"
                                      style="margin-top: -850px">
                                     <h3 class="headline">Send Message</h3><span class="line margin-bottom-25"></span>
@@ -284,18 +278,6 @@
                                 </div>
                             </td>
                         </tr>
-                        <% if(item.phoneNumbers[0] != null && item.phoneNumbers[0] != undefined) { %>
-                        <tr>
-                            <td class="contact-label">
-                                <span><img src="icons/mobile.png"
-                                           style="width: 24px; height: 24px; margin-top: 8px; margin-left: 8px"/></span>
-                            </td>
-                            <td>
-                                <a href="#" style="color: darkgray"><%= item.phoneNumbers[0].number %></a>
-                            </td>
-                        </tr>
-                        <% } %>
-
                     </table>
                 </div>
 
@@ -309,12 +291,11 @@
 
         <!-- Headline -->
         <div class="sixteen columns">
-            <h3 class="headline">Commodity Description</h3>
+            <h3 class="headline" style="color: black; font-size: 30px; margin-bottom: 10px; text-transform: capitalize">Commodity Description</h3>
             <span class="line margin-bottom-0"></span>
         </div>
         <br><br>
-        <div>Comod sdf</div>
-
+        <div style="padding-left: 10px;"><%-item.item.commodityDesc%></div>
     </div>
     <br><br>
     <% if(item.similarItems.length > 0) { %>
@@ -323,7 +304,7 @@
 
         <!-- Headline -->
         <div class="sixteen columns">
-            <h3 class="headline">Related Products</h3>
+            <h3 class="headline" style="color: black; font-size: 30px; margin-bottom: 10px; text-transform: capitalize">Related Products</h3>
             <span class="line margin-bottom-0"></span>
         </div>
 

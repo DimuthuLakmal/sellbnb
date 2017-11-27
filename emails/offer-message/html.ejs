@@ -1,0 +1,36 @@
+<h2>Item <%= item.title %> has offer</h2>
+<h3>Buyer Details</h3>
+<ul>
+    <li><strong>Name :</strong><%= buy.name %></li>
+    <li><strong>Telephones :</strong><%= buy.telephones %></li>
+    <li><strong>Emails :</strong><%= buy.emails %></li>
+</ul>
+<h3>Item Details</h3>
+<ul>
+    <li><strong>Commodity: </strong><%= item.commodity %></li>
+    <li><strong>Item Title: </strong><%= item.title %></li>
+    <li><strong>Producer Name: </strong><%= item.producer %></li>
+    <li><strong>Min Qty: </strong><%= item.minQ %></li>
+    <li><strong>Max Qty: </strong><%= item.maxQ %></li>
+    <li><strong>Packing Type: </strong><%= item.packingType %></li>
+    <li><strong>Load Time: </strong><%= item.loadTime %></li>
+    <li><strong>Origin: </strong><%= item.origin %></li>
+    <li><strong>Producer Note: </strong><%= item.note %></li>
+</ul>
+<h3>Offer Details</h3>
+<ul>
+    <li><strong>Offer: </strong><%= off.price %></li>
+    <li><strong>Quantity: </strong><%= off.qty %></li>
+    <li><strong>Destination Port: </strong><%= off.destinationPort %></li>
+    <li><strong>Incoterms: </strong><%= off.incoterms %></li>
+    <li><strong>Medium: </strong><%= off.medium %></li>
+    <li><strong>Note: </strong><%= off.note %></li>
+</ul>
+
+to reply this message click here :<br>
+<a href="<%= replyUrl %>"><%= replyUrl %></a>
+
+<br><br>
+<p>For Your Information: To help arbitrate disputes and preserve trust and safety,
+    we retain all messages buyers and sellers send through SellBnB for two years.
+    This includes your response to the message above.</p>
