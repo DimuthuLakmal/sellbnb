@@ -779,7 +779,7 @@
 
 			e.preventDefault();
 			var user_name       = $('input[name=name]').val();
-			var user_email      = $('input[name=email]').val();
+			var user_email      = $('input[name=emails]').val();
 			var user_comment    = $('textarea[name=comment]').val();
 
 			//simple validation at client's end
@@ -790,7 +790,7 @@
 				proceed = false;
 			}
 			if(user_email===""){
-				$('input[name=email]').addClass('error');
+				$('input[name=emails]').addClass('error');
 				proceed = false;
 			}
 			if(user_comment==="") {

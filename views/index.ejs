@@ -4,442 +4,226 @@
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en"> <!--<![endif]-->
 <head>
-  <!-- Global Site Tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107495910-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments)};
-    gtag('js', new Date());
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107495910-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag('js', new Date());
 
-    gtag('config', 'UA-107495910-1');
-  </script>
+      gtag('config', 'UA-107495910-1');
+    </script>
 
-  <!-- Basic Page Needs
-  ================================================== -->
-  <meta charset="utf-8">
-  <title>SellBnB</title>
+    <!-- Basic Page Needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>SellBnB</title>
 
-  <!-- Mobile Specific Metas
-  ================================================== -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Mobile Specific Metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <!-- CSS
-  ================================================== -->
-  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/colors/blue.css" id="colors">
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/colors/blue.css" id="colors">
 
-  <!--[if lt IE 9]>
-  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
 </head>
 
 <body class="boxed">
 <div id="wrapper">
-  <div class="container" style="background-color: #B20000; width: 100%; height: 30px">
-    <center>
-      <div style="padding-top: 3px; color: white; font-size: 11px">
-        <b>Beta Version v1.0</b>
-      </div>
-    </center>
+    <% include header.ejs %>
 
-
-  </div>
-
-  <% include header.ejs %>
-
-  <!-- Slider
-  ================================================== -->
-  <div class="container fullwidth-element home-slider">
-
-    <div class="tp-banner-container">
-      <div class="tp-banner">
-        <ul>
-          <!-- Slide 1  -->
-          <li data-transition="fade" data-slotamount="7" data-masterspeed="1500" >
-            <img src="images/slides/slide1.jpg"  alt="slidebg1"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
-          </li>
-
-          <!-- Slide 2  -->
-          <li data-transition="zoomout" data-slotamount="7" data-masterspeed="1000">
-            <img src="images/slides/slide2.jpg"  alt="darkblurbg"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
-          </li>
-
-          <!--&lt;!&ndash; Slide 3  &ndash;&gt;-->
-          <!--<li data-transition="fadetotopfadefrombottom" data-slotamount="7" data-masterspeed="1000">-->
-            <!--<img src="images/slides/slide3.jpg"  alt="darkblurbg"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">-->
-          <!--</li>-->
-
-        </ul>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- Featured
-  ================================================== -->
-  <div class="container" >
-
-
-    <!-- Headline -->
-    <div class="sixteen columns">
-      <h3 class="headline">Commodities</h3>
-      <span class="line margin-bottom-0"></span>
+    <div class="row sellbnb-quat">
+        <span>Shipments are Inspected By SellBnB Field Officers Before Shipping.</span>
     </div>
 
-    <!-- Carousel -->
-    <div id="category-div" class="showbiz-container sixteen columns" >
+    <!-- Slider -->
+    <img src="images/slides/slide1.jpg" alt="slidebg1" style="width: 100%; height: 50vh;" data-bgfit="cover"
+         data-bgposition="left top" data-bgrepeat="no-repeat">
+    <!-- Featured
+    ================================================== -->
+    <div class="container">
 
-      <!-- Navigation -->
-      <div class="showbiz-navigation">
-        <div id="showbiz_left_1" class="sb-navigation-left"><i class="fa fa-angle-left"></i></div>
-        <div id="showbiz_right_1" class="sb-navigation-right"><i class="fa fa-angle-right"></i></div>
-      </div>
-      <div class="clearfix"></div>
 
-      <!-- Products -->
-      <div class="showbiz" data-left="#showbiz_left_1" data-right="#showbiz_right_1" data-play="#showbiz_play_1" >
-        <div class="overflowholder">
-
-          <ul>
-            <% for(var commodityIndex = 0; commodityIndex < commodityPopular.length; commodityIndex++) {%>
-              <li>
-                <div class="one-third column">
-                  <a href="/api/items/search/start/0?start=0&keyword=<%= commodityPopular[commodityIndex].name %>" class="img-caption" >
-                    <figure style="width: 280px">
-                      <% if(commodityPopular[commodityIndex].CommodityImages.length > 0) {%>
-                        <img style="width: 280px; height: 280px" src="uploads/commodity/<%= commodityPopular[commodityIndex].CommodityImages[0].url %>"
-                             alt="" style="width: 280px; height: 185px"/>
-                      <% } else { %>
-                        <img src="images/featured_img_3.jpg" alt="" style="width: 280px; height: 280px"/>
-                      <% } %>
-                      <figcaption style="width: 250px">
-                        <h3><%= commodityPopular[commodityIndex].name %></h3>
-                      </figcaption>
-                    </figure>
-                  </a>
-                </div>
-              </li>
-            <% } %>
-          </ul>
-
+        <!-- Headline -->
+        <div class="sixteen columns">
+            <h3 class="headline">Commodities</h3>
+            <span class="line margin-bottom-0"></span>
         </div>
-      </div>
-    </div>
 
-  </div>
-  <div class="clearfix"></div>
+        <!-- Carousel -->
+        <div id="category-div" class="showbiz-container sixteen columns">
 
-
-  <!-- New Listing
-  ================================================== -->
-  <div class="container">
-
-    <!-- Headline -->
-    <div class="sixteen columns">
-      <h3 class="headline">New Listings</h3>
-      <span class="line margin-bottom-0"></span>
-    </div>
-
-    <!-- Carousel -->
-    <div id="new-arrivals" class="showbiz-container sixteen columns" >
-
-      <!-- Navigation -->
-      <div class="showbiz-navigation">
-        <div id="showbiz_left_2" class="sb-navigation-left"><i class="fa fa-angle-left"></i></div>
-        <div id="showbiz_right_2" class="sb-navigation-right"><i class="fa fa-angle-right"></i></div>
-      </div>
-      <div class="clearfix"></div>
-
-      <!-- Products -->
-      <div class="showbiz" data-left="#showbiz_left_2" data-right="#showbiz_right_2" data-play="#showbiz_play_1" >
-        <div class="overflowholder">
-
-          <ul>
-            <% for(var itemIndex = 0; itemIndex < latestItems.length; itemIndex++) { %>
-            <li>
-              <div class="one-third column">
-                <a href="/items/id/<%= latestItems[itemIndex].id %>" class="img-caption" >
-                  <figure style="width: 280px">
-                    <% if(latestItems[itemIndex].images.length > 0) {%>
-                    <img alt="" src="uploads/items/<%= latestItems[itemIndex].images[0].url %>" style="width:280px; height: 280px;"/>
-                    <% } else { %>
-                    <img alt="" src="images/shop_item_01.jpg" style="width:280px; height: 280px;"/>
-                    <% } %>
-                    <figcaption style="width: 250px">
-                      <h3><%= latestItems[itemIndex].commodity.name %></h3>
-                      <h5 style="color:white"><%= latestItems[itemIndex].title %></h5>
-                      <span class="product-price" style="color:white"><%= latestItems[itemIndex].suggestedPrice %></span>
-                    </figcaption>
-                  </figure>
-                </a>
-              </div>
-            </li>
-            <% } %>
-          </ul>
-
-          <div class="clearfix"></div>
-
-        </div>
-        <div class="clearfix"></div>
-      </div>
-    </div>
-
-  </div>
-
-
-  <!-- Product Lists
-  ================================================== -->
-  <div class="container margin-bottom-25">
-
-    <!-- Best Sellers -->
-    <div class="one-third column">
-
-      <!-- Headline -->
-      <h3 class="headline">Best Sellers</h3>
-      <span class="line margin-bottom-0"></span>
-      <div class="clearfix"></div>
-
-
-      <ul class="product-list">
-
-        <% for(var sellerIndex = 0; sellerIndex < bestsellers.length; sellerIndex++) {
-          var Seller = bestsellers[sellerIndex];
-          var name='';
-          if(Seller.company_name != null && Seller.company_name != ''){
-            name = Seller.company_name;
-          } else if(Seller.full_name != null && Seller.full_name != ''){
-            name = Seller.full_name;
-          }else if(Seller.username != null && Seller.username != ''){
-            name = Seller.username;
-          }
-        %>
-
-        <li><a href="/user/public/userId/<%= Seller.id %>">
-            <%if(Seller.profile_pic == null) { %>
-              <img src="images/small_product_list_01.jpg" alt="" />
-            <% } else { %>
-              <img src="/uploads/profile_pic/<%= Seller.profile_pic %>" alt="" style="width: 80px; height: 80px"/>
-            <% } %>
-
-            <div class="product-list-desc"><%= name %>
-              <%
-                var rateInString = ['zero', 'one', 'two', 'three', 'four', 'five'];
-                var avgRate =  Math.floor(Seller.rating);
-              %>
-              <div class="rating <%if(avgRate >= 1) {%><%= rateInString[Math.floor(avgRate)] %>-stars<%}%>">
-                <%if(avgRate >= 1) {%><div class="star-rating"></div><%}%>
-                <div class="star-bg"></div>
-              </div>
-              <% if(Seller.rating!=undefined && Seller.rating!=null) {%>
-                <span>(<%= Seller.rating.toFixed(1) %>)</span>
-              <% } %>
+            <!-- Navigation -->
+            <div class="showbiz-navigation">
+                <div id="showbiz_left_1" class="sb-navigation-left"><i class="fa fa-angle-left"></i></div>
+                <div id="showbiz_right_1" class="sb-navigation-right"><i class="fa fa-angle-right"></i></div>
             </div>
-          </a></li>
+            <div class="clearfix"></div>
 
-        <% } %>
+            <!-- Products -->
+            <div class="showbiz" data-left="#showbiz_left_1" data-right="#showbiz_right_1" data-play="#showbiz_play_1">
+                <div class="overflowholder">
 
-        <li><div class="clearfix"></div></li>
-
-      </ul>
-
-    </div>
-
-
-    <!-- Top Rated -->
-    <div class="one-third column">
-
-      <!-- Headline -->
-      <h3 class="headline">You may like</h3>
-      <span class="line margin-bottom-0"></span>
-      <div class="clearfix"></div>
-
-        <ul class="product-list top-rated">
-
-            <%
-            var selectedItems = [];
-            var commodityLength = recentsearches.length;
-            var totalCount = 0;
-            for(var commodityIndex = 0; commodityIndex < commodityLength; commodityIndex++) {
-                var itemList = recentsearches[commodityIndex];
-                totalCount += itemList.length;
-            }
-            if(totalCount > 3) {
-                while(selectedItems.length < 3) {
-                    var selectedCommodityIndex = Math.floor((Math.random()*commodityLength));
-                    var itemList = recentsearches[selectedCommodityIndex];
-                    if(itemList.length>0) {
-                        var selectedItemIndex = Math.floor((Math.random()*itemList.length));
-
-                        var isExist = false;
-                        for(var index = 0; index < selectedItems.length; index++) {
-                            if(selectedItems[index].id == itemList[selectedItemIndex].id) {
-                                isExist = true;
-                            }
-                        }
-
-                        if(!isExist) {
-                            selectedItems.push(itemList[selectedItemIndex]);
-                        }
-                    }
-
-                }
-            } else {
-                for(var commodityIndex = 0; commodityIndex < commodityLength; commodityIndex++) {
-                    var itemList = recentsearches[commodityIndex];
-                    if(itemList.length>0) {
-                        for(var itemIndex = 0; itemIndex < itemList.length; itemIndex++) {
-                            selectedItems.push(itemList[itemIndex]);
-                        }
-                    }
-                }
-            }
-
-            for(var recentsearchesIndex = 0; recentsearchesIndex < 3; recentsearchesIndex++) {
-                var item = selectedItems[recentsearchesIndex];
-            %>
-                <%if(item != undefined) {%>
-                    <li>
-                        <a href="/items/id/<%= item.id %>">
-                            <%if(item.ItemImages.length <= 0) { %>
-                            <img src="images/small_product_list_01.jpg" alt="" />
-                            <% } else { %>
-                            <img src="uploads/items/<%= item.ItemImages[0].url %>" alt="" style="width: 80px; height: 80px"/>
-                            <% } %>
-
-                            <div class="product-list-desc">
-                                <span><%= item.title %></span><br>
-                                <%
-                                    var name='';
-                                    if(item.User.company_name != null && item.User.company_name != ''){
-                                        name = item.User.company_name;
-                                    } else if(item.User.full_name != null && item.User.full_name != ''){
-                                        name = item.User.full_name;
-                                    }else if(item.User.username != null && item.User.username != ''){
-                                        name = item.User.username;
-                                    }
-                                %>
-                                <span><h6><%= name %></h6></span>
+                    <ul>
+                        <% for(var commodityIndex = 0; commodityIndex < commodityPopular.length; commodityIndex++) { %>
+                        <li>
+                            <div class="one-third column">
+                                <a href="/api/items/search/start/0?start=0&keyword=<%= commodityPopular[commodityIndex].name %>"
+                                   class="img-caption">
+                                    <figure style="width: 280px">
+                                        <% if(commodityPopular[commodityIndex].CommodityImages.length > 0) { %>
+                                        <img style="width: 280px; height: 280px"
+                                             src="uploads/commodity/<%= commodityPopular[commodityIndex].CommodityImages[0].url %>"
+                                             alt="" style="width: 280px; height: 185px"/>
+                                        <% } else { %>
+                                        <img src="images/featured_img_3.jpg" alt=""
+                                             style="width: 280px; height: 280px"/>
+                                        <% } %>
+                                        <figcaption style="width: 250px">
+                                            <h3><%= commodityPopular[commodityIndex].name %></h3>
+                                        </figcaption>
+                                    </figure>
+                                </a>
                             </div>
-                        </a>
-                    </li>
-                <% } %>
-            <% } %>
+                        </li>
+                        <% } %>
+                    </ul>
 
-            <li><div class="clearfix"></div></li>
-
-        </ul>
-
-    </div>
-
-
-    <!-- Weekly Sales -->
-    <div class="one-third column">
-
-      <!-- Headline -->
-      <h3 class="headline">Near To Bid Close</h3>
-      <span class="line margin-bottom-0"></span>
-      <div class="clearfix"></div>
-
-
-      <ul class="product-list discount">
-
-        <% for(var neartocloseItemsIndex = 0; neartocloseItemsIndex < 3; neartocloseItemsIndex++) {
-          var item = neartocloseItems[neartocloseItemsIndex];
-        %>
-
-        <%if(item != undefined) {%>
-        <li><a href="/items/id/<%= item.id %>">
-            <%if(item.ItemImages.length <= 0) { %>
-            <img src="images/small_product_list_01.jpg" alt="" />
-            <% } else { %>
-            <img src="uploads/items/<%= item.ItemImages[0].url %>" alt="" style="width: 80px; height: 80px"/>
-            <% } %>
-
-            <div class="product-list-desc">
-              <span><%= item.title %></span><br>
-              <%
-                var name='';
-                if(item.User.company_name != null && item.User.company_name != ''){
-                  name = item.User.company_name;
-                } else if(item.User.full_name != null && item.User.full_name != ''){
-                  name = item.User.full_name;
-                }else if(item.User.username != null && item.User.username != ''){
-                  name = item.User.username;
-                }
-              %>
-              <span><h6><%= name %></h6></span>
+                </div>
             </div>
-          </a>
-        </li>
-        <% } %>
-        <% } %>
+        </div>
 
-        <li><div class="clearfix"></div></li>
+    </div>
+    <div class="clearfix"></div>
 
-      </ul>
+
+    <!-- New Listing
+    ================================================== -->
+    <div class="container">
+
+        <!-- Headline -->
+        <div class="sixteen columns">
+            <h3 class="headline">New Listings</h3>
+            <span class="line margin-bottom-0"></span>
+        </div>
+
+        <!-- Carousel -->
+        <div id="new-arrivals" class="showbiz-container sixteen columns">
+
+            <!-- Navigation -->
+            <div class="showbiz-navigation">
+                <div id="showbiz_left_2" class="sb-navigation-left"><i class="fa fa-angle-left"></i></div>
+                <div id="showbiz_right_2" class="sb-navigation-right"><i class="fa fa-angle-right"></i></div>
+            </div>
+            <div class="clearfix"></div>
+
+            <!-- Products -->
+            <div class="showbiz" data-left="#showbiz_left_2" data-right="#showbiz_right_2" data-play="#showbiz_play_1">
+                <div class="overflowholder">
+
+                    <ul>
+                        <% for(var itemIndex = 0; itemIndex < latestItems.length; itemIndex++) { %>
+                        <li>
+                            <div class="one-third column">
+                                <a href="/items/id/<%= latestItems[itemIndex].id %>" class="img-caption">
+                                    <figure style="width: 280px">
+                                        <% if(latestItems[itemIndex].images.length > 0) { %>
+                                        <img alt="" src="uploads/items/<%= latestItems[itemIndex].images[0].url %>"
+                                             style="width:280px; height: 280px;"/>
+                                        <% } else { %>
+                                        <img alt="" src="images/shop_item_01.jpg" style="width:280px; height: 280px;"/>
+                                        <% } %>
+                                        <figcaption style="width: 250px">
+                                            <h3><%= latestItems[itemIndex].commodity.name %></h3>
+                                            <h5 style="color:white"><%= latestItems[itemIndex].title %></h5>
+                                            <span class="product-price"
+                                                  style="color:white"><%= latestItems[itemIndex].suggestedPrice %></span>
+                                        </figcaption>
+                                    </figure>
+                                </a>
+                            </div>
+                        </li>
+                        <% } %>
+                    </ul>
+
+                    <div class="clearfix"></div>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+    </div>
+    
+    <div>
+        <img src="images/steps.png" alt="steps" style="width: 90%; margin: 0 auto 30px auto">
+    </div>
+
+    <!-- Latest Articles
+    ================================================== -->
+    <div class="container">
+
+        <!-- Headline -->
+        <div class="sixteen columns">
+            <h3 class="headline">Latest Articles</h3>
+            <span class="line margin-bottom-30"></span>
+        </div>
+
+        <% for(var latestNewsIndex = 0; latestNewsIndex < latestNews.length; latestNewsIndex++) {
+            var news = latestNews[latestNewsIndex];
+        %>
+        <!-- Post #1 -->
+        <div class="four columns">
+            <article class="from-the-blog">
+
+                <figure class="from-the-blog-image">
+                    <% if(news.img == null) { %>
+                    <a href="/news/id/<%= news.id %>?lan=en"><img src="images/from_the_blog_01.jpg" alt=""/></a>
+                    <% } else { %>
+                    <a href="/news/id/<%= news.id %>?lan=en"><img src="<%= news.img %>" alt=""
+                                                                  style="height: 160px; width: 280px;"/></a>
+                    <% } %>
+                </figure>
+
+                <section class="from-the-blog-content">
+                    <a href="/news/id/<%= news.id %>?lan=en">
+                        <h5>
+                            <%= news.title.substring(0, 25) %>
+                            <% if(news.title.length > 25) { %>
+                            ...
+                            <% } %>
+                        </h5>
+                    </a>
+                    <i>By <%= news.user %> on <%= news.date + ', ' + news.month + ' ' + news.year %></i>
+                    <span>
+                        <% if(news.summary != null) { %>
+                        <%= news.summary.substr(0, 50) + '...' %>
+                        <% } %>
+                    </span><br>
+                    <a href="/news/id/<%= news.id %>?lan=en" class="button gray">Read More</a>
+                </section>
+
+            </article>
+        </div>
+        <% } %>
 
     </div>
 
-  </div>
-  <div class="clearfix"></div>
+    <div class="margin-top-50"></div>
 
-
-  <!-- Latest Articles
-  ================================================== -->
-  <div class="container" >
-
-    <!-- Headline -->
-    <div class="sixteen columns" >
-      <h3 class="headline">Latest Articles</h3>
-      <span class="line margin-bottom-30"></span>
-    </div>
-
-    <% for(var latestNewsIndex = 0; latestNewsIndex < latestNews.length; latestNewsIndex++) {
-      var news = latestNews[latestNewsIndex];
-    %>
-      <!-- Post #1 -->
-      <div class="four columns">
-        <article class="from-the-blog">
-
-          <figure class="from-the-blog-image">
-            <% if(news.img == null) { %>
-              <a href="/news/id/<%= news.id %>?lan=en"><img src="images/from_the_blog_01.jpg" alt="" /></a>
-            <% } else { %>
-              <a href="/news/id/<%= news.id %>?lan=en"><img src="<%= news.img %>" alt="" style="height: 160px; width: 280px;"/></a>
-            <% } %>
-          </figure>
-
-          <section class="from-the-blog-content">
-            <a href="/news/id/<%= news.id %>?lan=en">
-              <h5>
-                <%= news.title.substring(0,25) %>
-                <%if(news.title.length > 25) {%>
-                ...
-                <% } %>
-              </h5>
-            </a>
-            <i>By <%= news.user %> on <%= news.date+', '+news.month+' '+news.year %></i>
-            <span>
-                <%if(news.summary!=null) { %>
-                    <%= news.summary.substr(0,50)+'...' %>
-                <% } %>
-            </span><br>
-            <a href="/news/id/<%= news.id %>?lan=en" class="button gray">Read More</a>
-          </section>
-
-        </article>
-      </div>
-    <% } %>
-
-  </div>
-
-  <div class="margin-top-50"></div>
-
-  <!-- Footer
-  ================================================== -->
-  <% include footer.ejs %>
+    <!-- Footer
+    ================================================== -->
+    <% include footer.ejs %>
 
 </div>
 

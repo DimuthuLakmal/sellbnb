@@ -25,7 +25,8 @@ module.exports = function (sequelize, DataTypes) {
         no_of_ratings_payment: DataTypes.INTEGER,
         no_of_ratings_efficiency: DataTypes.INTEGER,
         no_of_ratings_reliablity_buyer: DataTypes.INTEGER,
-        business_images: DataTypes.STRING
+        business_images: DataTypes.STRING,
+        is_seller: DataTypes.BOOLEAN,
     },{
         //Define Association for User
         classMethods: {

@@ -116,7 +116,7 @@
                 </div>
 
                 <div class="tab-content" id="tab2">
-                    <form method="post" class="register" action="/user/adduser" id="registerForm">
+                    <form method="post" class="register" action="/user/addseller" id="registerForm">
 
                         <% if(signupError != '' && signupError != null) { %>
                         <div class="notification error closeable">
@@ -138,21 +138,6 @@
                         <p class="form-row form-row-wide">
                             <label for="reg_email">Email Address: <span class="required">*</span></label>
                             <input type="email" class="input-text" name="email" id="reg_email"/>
-                        </p>
-
-                        <p class="form-row form-row-wide">
-                            <label for="reg_email">Personal Name: <span class="required">*</span></label>
-                            <input type="text" class="input-text" name="personal_name" id="reg_email"/>
-                        </p>
-
-                        <p class="form-row form-row-wide">
-                            <label for="reg_email">Company name: </label>
-                            <input type="text" class="input-text" name="company_name" id="reg_email"/>
-                        </p>
-
-                        <p class="form-row form-row-wide">
-                            <label for="reg_email">Telephone: <span class="required">*</span></label>
-                            <input type="text" class="input-text" name="telephone" id="reg_email"/>
                         </p>
 
                         <p class="form-row form-row-wide">

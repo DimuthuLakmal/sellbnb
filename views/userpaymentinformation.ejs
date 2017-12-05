@@ -75,7 +75,9 @@
                     <li><a href="/user/basic">Basic Account</a></li>
                     <li><a href="/user/contact">Contact Information</a></li>
                     <li><a href="/user/payment" class="active">Payment Information</a></li>
+                    <% if(user.is_seller) { %>
                     <li><a href="/user/business">Business Information</a></li>
+                    <% } %>
                     <li><a href="/user/inbox">Messages</a></li>
                     <!--<li><a href="/user/notification">Notification Preferences</a></li>-->
 

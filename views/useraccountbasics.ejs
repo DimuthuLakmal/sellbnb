@@ -74,13 +74,14 @@
                     <li><a href="/user/basic" class="active">Basic Account</a></li>
                     <li><a href="/user/contact">Contact Information</a></li>
                     <li><a href="/user/payment">Payment Information</a></li>
-                    <li><a href="/user/business">Business Information</a></li>
+                    <% if(user.is_seller) { %>
+                        <li><a href="/user/business">Business Information</a></li>
+                    <% } %>
                     <li><a href="/user/inbox">Messages</a></li>
                     <!--<li><a href="/user/notification">Notification Preferences</a></li>-->
 
                 </ul>
                 <div class="clearfix"></div>
-
             </div>
 
         </div>

@@ -1,193 +1,144 @@
 <script type="text/javascript">
-    document.body.style.zoom = "90%";
+  document.body.style.zoom = "100%";
 </script>
 <script>
-    if (window.location.href.indexOf("user/sell/list/start") == -1) {
-        localStorage.removeItem("prevDurationOptionOpen");
-        localStorage.removeItem("prevPaginationOptionOpen");
-        localStorage.removeItem("prevDurationOptionPending");
-        localStorage.removeItem("prevPaginationOptionPending");
-        localStorage.removeItem("prevDurationOptionCancelled");
-        localStorage.removeItem("prevPaginationOptionCancelled");
-    }
+  if (window.location.href.indexOf("user/sell/list/start") == -1) {
+    localStorage.removeItem("prevDurationOptionOpen");
+    localStorage.removeItem("prevPaginationOptionOpen");
+    localStorage.removeItem("prevDurationOptionPending");
+    localStorage.removeItem("prevPaginationOptionPending");
+    localStorage.removeItem("prevDurationOptionCancelled");
+    localStorage.removeItem("prevPaginationOptionCancelled");
+  }
 
-    if (window.location.href.indexOf("user/buy/list/start") == -1) {
-        localStorage.removeItem("prevDurationOptionOpenBuy");
-        localStorage.removeItem("prevPaginationOptionOpenBuy");
-        localStorage.removeItem("prevDurationOptionPendingBuy");
-        localStorage.removeItem("prevPaginationOptionPendingBuy");
-        localStorage.removeItem("prevDurationOptionCancelledBuy");
-        localStorage.removeItem("prevPaginationOptionCancelledBuy");
-    }
+  if (window.location.href.indexOf("user/buy/list/start") == -1) {
+    localStorage.removeItem("prevDurationOptionOpenBuy");
+    localStorage.removeItem("prevPaginationOptionOpenBuy");
+    localStorage.removeItem("prevDurationOptionPendingBuy");
+    localStorage.removeItem("prevPaginationOptionPendingBuy");
+    localStorage.removeItem("prevDurationOptionCancelledBuy");
+    localStorage.removeItem("prevPaginationOptionCancelledBuy");
+  }
 </script>
-<!-- Header
-      ================================================== -->
 
-<div class="container">
+<style>
+    .header-link {
+        padding-top: 6px;
+        font-size: 25px;
+        font-family: inherit;
+        margin-top: 30px;
+        text-align: right;
+    }
+
+    .header-link > a {
+        color: blue;
+    }
+
+    .sellbnb-quat {
+        margin:10px 0;
+        text-align: center;
+    }
+    .sellbnb-quat>span {
+        color: #23008b;
+        font-family: cursive;
+        font-size: 20px;
+        background-color: #fff;
+    }
+
+    .header-bar {
+        background-color: blue;
+        height: 40px;
+        width:100%;
+        line-height:40px;
+        font-size: 25px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .demo-button {
+        width: 23%;
+        text-align: center;
+    }
+</style>
+<!-- Header -->
+<div class="container header-bar">
+    <div class="two columns" >
+        <a href="" style="color: #ffffff;">HELP</a>
+    </div>
+    <div class="fourteen columns" style="color:#333333;">
+        All Sellers Are <span style="color:#fffce5;">Producers,  Preselected, and Inspected By SellBnB</span>
+    </div>
+</div>
+
+<div class="container" style="padding-top: 1px">
 
     <!-- Logo -->
-    <div class="two columns">
+    <div class="three columns">
         <div id="logo">
             <h1><a href="/"><img src="images/Sell_BnB_Logo.png" alt="Trizzy"/></a></h1>
         </div>
     </div>
-
-
-    <!-- Additional Menu -->
-    <div class="fourteen columns">
-        <div id="additional-menu">
-            <ul>
-                <li><a href="/items/search"><strong>Sell</strong></a></li>
-                <li><img id="flag_img"></li>
-                <% if(user != null && user != undefined) { %>
-                <li><a href="/user/logout">Sign Out</a></li>
-                <% } else { %>
-                <li><a href="/user/login?action=login">Sign In</a></li>
-                <% } %>
-            </ul>
-        </div>
+    <div class="seven columns" style="margin-top: 30px">
+        <nav class="top-search">
+            <form action="/api/ms/search/start/0" method="GET">
+                <button><i class="fa fa-search"></i></button>
+                <input type="hidden" value="0" name="start"/>
+                <input class="search-field" name="keyword" type="text" placeholder="Search" id="top_search"
+                       list="searchresults" style="width: 400px"/>
+                <datalist id="searchresults"></datalist>
+            </form>
+        </nav>
     </div>
 
+    <div class="two columns header-link" style="margin-top: 30px">
+        <a href="/user/basic">PROFILE</a>
+    </div>
 
-    <!-- Shopping Cart -->
-    <div class="fourteen columns">
+    <!--<div class="cart  dropdown-notification">-->
+    <!--&lt;!&ndash; Button &ndash;&gt;-->
+    <!--<div class="icon-box">-->
+    <!--<% if(user != null && user != ''){ %>-->
+    <!--<span style="width: 100px"><a href="/user/basic">-->
+    <!--<% if(user.profile_pic != null && user.profile_pic != '') { %>-->
+    <!--<img src="uploads/profile_pic/<%= user.profile_pic %>"-->
+    <!--style="width: 25px; height: 25px; margin-top: 8px; margin-left: 10px"/>-->
+    <!--<% } else { %>-->
+    <!--<img src="icons/user_profile.png"-->
+    <!--style="width: 22px; height: 22px; margin-top: 8px; margin-left: 14px"/>-->
+    <!--<% } %>-->
+    <!--</a>-->
+    <!--<div style="margin-top:-20px; margin-left:30px; font-family:Arial!important; ">-->
+    <!--<% if(user.full_name != null && user.full_name != undefined) { %>-->
+    <!--<%= user.full_name.split(" ")[0] %>-->
+    <!--<% } else { %>-->
+    <!--<%= user.username.substring(0, 3).toUpperCase() + '..' %>-->
+    <!--<% } %>-->
 
+    <!--</div>-->
+    <!--</span>-->
+    <!--<% } else { %>-->
+    <!--<span><a href="/user/basic"><i class="fa fa-user"></i></a></span>-->
+    <!--<% } %>-->
+    <!--</div>-->
+    <!--</div>-->
 
-        <div class="cart dropdown-notification">
-
-            <!-- Button -->
-            <div class="icon-box">
-                <span><img src="icons/notifications-icon.png"
-                           style="width: 24px; height: 24px; margin-top: 8px; margin-left: 8px"/></span>
-            </div>
-
-            <% if(notifications != undefined) { %>
-            <div class="cart-list">
-
-                <div class="arrow"></div>
-
-                <div class="cart-amount">
-                    <span>You have <%= notifications.length %> notifications</span><br>
-                    <% if(notifications.length > 0) { %>
-                    <span><a href="/api/notification/update/userId/<%= user.id %>" style="color:darkgray">Clear All</a> </span>
-                    <% } %>
-                </div>
-
-                <ul>
-                    <% for (var notificationIndex = 0; notificationIndex < notifications.length; notificationIndex++) {
-                        var notification = notifications[notificationIndex];
-                    %>
-                    <li>
-                        <a href="/api/notification/update/id/<%= notification.id %>"><%= notification.description %></a>
-                        <div class="clearfix"></div>
-                    </li>
-                    <% } %>
-                </ul>
-
-                <div class="clearfix">
-
-                </div>
-            </div>
-            <% } %>
-
-        </div>
-
-        <div class="cart  dropdown-notification">
-            <!-- Button -->
-            <div class="icon-box">
-                <span><img src="icons/message-icon.png"
-                           style="width: 24px; height: 24px; margin-top: 8px; margin-left: 8px"/></span>
-            </div>
-
-            <% if(messages != undefined) { %>
-            <div class="cart-list">
-
-                <div class="arrow"></div>
-
-                <div class="cart-amount">
-                    <span><a href="/user/inbox" style="color:darkgray">View All Messages</a> </span>
-                </div>
-
-                <div class="cart-amount">
-                    <span>You have <%= messages.length %> messages</span><br>
-                    <% if(messages.length > 0) { %>
-                    <span><a href="/api/messages/update/userId/<%= user.id %>"
-                             style="color:darkgray">Clear All</a> </span>
-                    <% } %>
-                </div>
-
-                <ul>
-                    <% for (var messageIndex = 0; messageIndex < messages.length; messageIndex++) {
-                        var message = messages[messageIndex];
-                    %>
-                    <li>
-                        <% if(message.seen == 0) { %>
-                        <a href="/api/messages/update/id/<%= message.id %>"><%= message.subject.substring(0, 20) %></a>
-                        <% } else { %>
-                        <a href="/api/messages/update/id/<%= message.id %>">Replied
-                            to: <%= message.subject.substring(0, 20) %></a>
-                        <% } %>
-                        <div class="clearfix"></div>
-                    </li>
-                    <% } %>
-                </ul>
-
-                <div class="clearfix"></div>
-            </div>
-            <% } %>
-
-        </div>
-
-        <div class="cart  dropdown-notification">
-            <!-- Button -->
-            <div class="icon-box">
-                <% if(user != null && user != ''){ %>
-                <span style="width: 100px"><a href="/user/basic">
-                        <% if(user.profile_pic != null && user.profile_pic != '') { %>
-                        <img src="uploads/profile_pic/<%= user.profile_pic %>"
-                             style="width: 25px; height: 25px; margin-top: 8px; margin-left: 10px"/>
-                        <% } else { %>
-                        <img src="icons/user_profile.png"
-                             style="width: 22px; height: 22px; margin-top: 8px; margin-left: 14px"/>
-                        <% } %>
-                    </a>
-                    <div style="margin-top:-20px; margin-left:30px; font-family:Arial!important; ">
-                        <% if(user.full_name != null && user.full_name != undefined) { %>
-                        <%= user.full_name.split(" ")[0] %>
-                        <% } else { %>
-                        <%= user.username.substring(0, 3).toUpperCase() + '..' %>
-                        <% } %>
-
-                    </div>
-                    </span>
-                <% } else { %>
-                <span><a href="/user/basic"><i class="fa fa-user"></i></a></span>
-                <% } %>
-            </div>
-        </div>
-
-        <!-- Search -->
-        <div align="center">
-            <nav class="top-search">
-                <form action="/api/ms/search/start/0" method="GET">
-                    <button><i class="fa fa-search"></i></button>
-                    <input type="hidden" value="0" name="start"/>
-                    <input class="search-field" name="keyword" type="text" placeholder="Search" id="top_search"
-                           list="searchresults"/>
-                    <datalist id="searchresults"></datalist>
-                </form>
-            </nav>
-        </div>
-
+    <div class="two columns header-link" style="margin-top: 30px">
+        <a href="">INBOX</a>
+    </div>
+    <div class="two columns header-link" style="margin-top: 30px">
+        <% if(user != null && user != undefined) { %>
+        <a href="/user/logout">Sign Out</a>
+        <% } else { %>
+        <a href="/user/login?action=login">Sign In</a>
+        <% } %>
     </div>
 
 </div>
 
-
 <!-- Navigation
 ================================================== -->
-<div class="container menu-container">
-    <div class="menu-bar">
+<div class="container" style="width: 100%;">
+    <div class="menu-bar" style="margin-left: 0;">
 
         <a href="#menu" class="menu-trigger"><i class="fa fa-bars"></i>Menu</a>
 
@@ -201,13 +152,15 @@
                 </li>
 
                 <li class="demo-button">
-                    <a href="/user/sell/list/start/0,0,0?sellingpageItemOption=Open&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=1">Sell
-                        Account</a>
+                    <a href="">Who We Are</a>
                 </li>
 
                 <li class="demo-button">
-                    <a href="/user/buy/list/start/0,0,0?buyingpageItemOption=Open&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=1">Buy
-                        Account</a>
+                    <a href="">Our team</a>
+                </li>
+
+                <li class="demo-button">
+                    <a href="">How to</a>
                 </li>
 
                 <!--<li class="demo-button">-->

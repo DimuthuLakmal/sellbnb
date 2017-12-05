@@ -165,7 +165,7 @@ router.get('/viewlatest', function (req, res) {
                 //pushing retrieved data to commodity array
                 console.log('Visited latest item');
                 _.forEach(Items.rows, function(item, index) {
-                    console.log('Visited latest item '+index);
+                    // console.log('Visited latest item '+index);
                     var id = item.id;
                     var title = item.title;
                     var quantity = item.quantity;
