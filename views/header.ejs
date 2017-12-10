@@ -24,21 +24,26 @@
 <style>
     .header-link {
         padding-top: 6px;
-        font-size: 25px;
+        font-size: 20px;
         font-family: inherit;
         margin-top: 30px;
         text-align: right;
     }
 
-    .header-link > a {
-        color: blue;
+    .header-link > span > a {
+        color: #003953;
+    }
+
+    .header-link > span {
+        margin: 0 15px;
     }
 
     .sellbnb-quat {
-        margin:10px 0;
+        margin: 10px 0;
         text-align: center;
     }
-    .sellbnb-quat>span {
+
+    .sellbnb-quat > span {
         color: #23008b;
         font-family: cursive;
         font-size: 20px;
@@ -46,31 +51,76 @@
     }
 
     .header-bar {
-        background-color: blue;
+        background-color: #0076bd;
         height: 40px;
-        width:100%;
-        line-height:40px;
-        font-size: 25px;
+        width: 100%;
+        line-height: 40px;
+        font-size: 13px;
         font-weight: bold;
         text-align: center;
     }
 
     .demo-button {
-        width: 23%;
+        width: 25%;
         text-align: center;
+    }
+
+    .menu > li > a {
+        color: #003953;
+    }
+
+    .search {
+        width: 100%;
+        position: relative
+    }
+
+    .searchTerm2 {
+        float: left !important;
+        width: 100% !important;
+        border: 3px solid #003953 !important;
+        padding: 5px !important;
+        height: 20px;
+        border-radius: 5px !important;
+        outline: none !important;
+        color: #9DBFAF !important;
+    }
+
+    .searchTerm2:focus {
+        color: black !important;
+    }
+
+    .searchButton {
+        position: absolute;
+        right: -50px;
+        width: 100px;
+        height: 36px;
+        border: 1px solid #003953;
+        background: #003953;
+        text-align: center;
+        color: #fff;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 20px;
+    }
+
+    /*Resize the wrap to see the search bar change!*/
+    .wrap {
+        width: 100%;
+        top: 50%;
+        left: 50%;
     }
 </style>
 <!-- Header -->
 <div class="container header-bar">
-    <div class="two columns" >
+    <div class="two columns" style=" border-right: solid 2px #6220a4">
         <a href="" style="color: #ffffff;">HELP</a>
     </div>
-    <div class="fourteen columns" style="color:#333333;">
+    <div class="fourteen columns" style="color:#333333; text-align:left;">
         All Sellers Are <span style="color:#fffce5;">Producers,  Preselected, and Inspected By SellBnB</span>
     </div>
 </div>
 
-<div class="container" style="padding-top: 1px">
+<div class="container" style="padding-top: 1px; z-index:2;">
 
     <!-- Logo -->
     <div class="three columns">
@@ -79,60 +129,36 @@
         </div>
     </div>
     <div class="seven columns" style="margin-top: 30px">
-        <nav class="top-search">
-            <form action="/api/ms/search/start/0" method="GET">
-                <button><i class="fa fa-search"></i></button>
-                <input type="hidden" value="0" name="start"/>
-                <input class="search-field" name="keyword" type="text" placeholder="Search" id="top_search"
-                       list="searchresults" style="width: 400px"/>
-                <datalist id="searchresults"></datalist>
-            </form>
-        </nav>
+        <!--<button><i class="fa fa-search"></i></button>-->
+        <!--<input class="search-field" name="keyword" type="text" placeholder="Search" id="top_search"-->
+        <!--list="searchresults" style="width: 400px"/>-->
+        <!--<datalist id="searchresults"></datalist>-->
+
+        <div class="wrap">
+            <div class="search">
+                <form action="/api/items/search/start/0" method="GET">
+                    <input type="hidden" value="0" name="start"/>
+                    <input type="text" class="searchTerm2" name="keyword" placeholder="Search for commodities"
+                           id="top_search" list="searchresults">
+                    <datalist id="searchresults"></datalist>
+                    <button type="submit" class="searchButton">
+                        Search
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
-
-    <div class="two columns header-link" style="margin-top: 30px">
-        <a href="/user/basic">PROFILE</a>
+    <div class="seven columns header-link">
+        <span><a href="/user/basic">PROFILE</a></span>
+        <span><a href="/user/inbox">INBOX</a></span>
+        <span>
+            <% if(user != null && user != undefined) { %>
+            <a href="/user/logout">LOG OUT</a>
+            <% } else { %>
+            <a href="/user/login?action=login">LOG IN</a>
+            <% } %>
+        </span>
     </div>
-
-    <!--<div class="cart  dropdown-notification">-->
-    <!--&lt;!&ndash; Button &ndash;&gt;-->
-    <!--<div class="icon-box">-->
-    <!--<% if(user != null && user != ''){ %>-->
-    <!--<span style="width: 100px"><a href="/user/basic">-->
-    <!--<% if(user.profile_pic != null && user.profile_pic != '') { %>-->
-    <!--<img src="uploads/profile_pic/<%= user.profile_pic %>"-->
-    <!--style="width: 25px; height: 25px; margin-top: 8px; margin-left: 10px"/>-->
-    <!--<% } else { %>-->
-    <!--<img src="icons/user_profile.png"-->
-    <!--style="width: 22px; height: 22px; margin-top: 8px; margin-left: 14px"/>-->
-    <!--<% } %>-->
-    <!--</a>-->
-    <!--<div style="margin-top:-20px; margin-left:30px; font-family:Arial!important; ">-->
-    <!--<% if(user.full_name != null && user.full_name != undefined) { %>-->
-    <!--<%= user.full_name.split(" ")[0] %>-->
-    <!--<% } else { %>-->
-    <!--<%= user.username.substring(0, 3).toUpperCase() + '..' %>-->
-    <!--<% } %>-->
-
-    <!--</div>-->
-    <!--</span>-->
-    <!--<% } else { %>-->
-    <!--<span><a href="/user/basic"><i class="fa fa-user"></i></a></span>-->
-    <!--<% } %>-->
-    <!--</div>-->
-    <!--</div>-->
-
-    <div class="two columns header-link" style="margin-top: 30px">
-        <a href="">INBOX</a>
-    </div>
-    <div class="two columns header-link" style="margin-top: 30px">
-        <% if(user != null && user != undefined) { %>
-        <a href="/user/logout">Sign Out</a>
-        <% } else { %>
-        <a href="/user/login?action=login">Sign In</a>
-        <% } %>
-    </div>
-
 </div>
 
 <!-- Navigation
@@ -143,20 +169,20 @@
         <a href="#menu" class="menu-trigger"><i class="fa fa-bars"></i>Menu</a>
 
         <nav id="navigation">
-            <ul class="menu" id="responsive" style="margin-bottom:0px">
+            <ul class="menu" id="responsive" style="margin-bottom:0; background-color: #f5f5f5">
 
-                <li><a href="/" class="homepage">Home</a></li>
+                <!--<li><a href="/" class="homepage">Home</a></li>-->
 
                 <li class="demo-button">
                     <a href="/news/start/0?category=all&keyword=all">Market News</a>
                 </li>
 
                 <li class="demo-button">
-                    <a href="">Who We Are</a>
+                    <a href="/who_we_are">Who We Are</a>
                 </li>
 
                 <li class="demo-button">
-                    <a href="">Our team</a>
+                    <a href="/team">Our team</a>
                 </li>
 
                 <li class="demo-button">

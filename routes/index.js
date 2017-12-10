@@ -2110,6 +2110,12 @@ router.get('/user/inbox', function (req, res) {
   // check whether use logged or not
 
   var user = req.user;
+
+  if(user === undefined) {
+    req.session.returnTo = req.path;
+    res.redirect('/user/login?action=login');
+  }
+
   var inboxMessages = req.session.inboxMessages;
 
   //this will be needed to populate commodity names in top menu
@@ -2190,6 +2196,21 @@ router.get('/user/sent', function (req, res) {
     commodityNames: commodityNames,
     notifications: notifications,
     messages: messages,
+  });
+});
+
+router.get('/team', function (req, res) {
+  removeSessionParameters(req);
+  var user = req.user;
+  res.render('team', {
+    user: user,
+  });
+});
+router.get('/who_we_are', function (req, res) {
+  removeSessionParameters(req);
+  var user = req.user;
+  res.render('who_we_are', {
+    user: user,
   });
 });
 

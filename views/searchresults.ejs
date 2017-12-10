@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]>
+<html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en"> <!--<![endif]-->
 <head>
@@ -160,17 +163,6 @@
 
             <% for(var itemIndex = 0; itemIndex < items.length; itemIndex++) {
                 var item = items[itemIndex];
-                var remainingTime = remainingTimes[itemIndex];
-                var numdays = Math.floor(remainingTime / 86400);
-                var numhours = Math.floor((remainingTime % 86400) / 3600);
-                var numminutes = Math.floor(((remainingTime % 86400) % 3600) / 60);
-                var numseconds = Math.floor(((remainingTime % 86400) % 3600) % 60);
-
-                var formattedAddress = "";
-                formattedAddress = numdays != 0 ? (formattedAddress += numdays + " days ") : formattedAddress;
-                formattedAddress = numhours != 0 ? (formattedAddress += numhours + " hrs ") : formattedAddress;
-                formattedAddress = numminutes != 0 ? (formattedAddress += numminutes + " mins ") : formattedAddress;
-                formattedAddress = numseconds != 0 ? (formattedAddress += numseconds + " secs ") : formattedAddress;
             %>
                 <div class="item-selling-div twelve columns">
                     <div class="item-selling-div">
@@ -194,9 +186,9 @@
                                 }
                             %>
                             <p>Seller: <a href="/user/public/userId/<%= item.User.id %>"> <%= name %></a><br>
-                                Quantity: <%= item.quantity %><br>
-                                Suggested Price: <%= item.suggestedPrice %><br>
-                                Time Remaining: <%= formattedAddress %></p><br>
+                                Minimum Quantity: <%= item.quantityMin %><br>
+                                Maximum iQuantity: <%= item.quantityMax %><br>
+                                Suggested Price: <%= item.suggestedPrice%><br>
                         </div>
                         <div class="four columns" style="float:right">
                             <form action="/items/id/<%= item.id %>" method="GET">

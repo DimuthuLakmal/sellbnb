@@ -1245,29 +1245,13 @@ router.get('/forgotpassword_code', function (req, res, next) {
           //var emails = Email[0].dataValues;
           var random_numeber = Math.floor(Math.random() * (100000 - 10000 + 1)) + 10000;
 
-          var helper = require('sendgrid').mail;
-
-          from_email = new helper.Email("sellbnb@gmail.com");
-          to_email = new helper.Email(email);
-          subject = 'Password Recovery';
-          content = new helper.Content("text/plain", "Your recovery code is " + random_numeber);
-          mail = new helper.Mail(from_email, subject, to_email, content);
-
-          var sg = require('sendgrid')(sgAPI);
-          var request = sg.emptyRequest({
-            method: 'POST',
-            path: '/v3/mail/send',
-            body: mail.toJSON()
-          });
-
-          sg.API(request, function (error, response) {
-            console.log(response.statusCode);
-            console.log(response.body);
-            console.log(response.headers);
-            req.session.recoveryCode = random_numeber;
-            req.session.recoveryEmail = email;
-            res.redirect('/user/forgotpassword/entercode');
-          });
+          require('./email-controller').sendEmail({
+            template: 'forgot-password',
+            to: email,
+            subject: '[SellBnb] Password Recovery',
+          }, {
+            randomNumber: random_numeber,
+          })
         } else {
           req.session.recoveryEmailError = 'Invalid Email Address';
           res.redirect('/user/forgotpassword');
@@ -1277,8 +1261,6 @@ router.get('/forgotpassword_code', function (req, res, next) {
   ).catch(function (error) {
     console.log(error);
   });
-
-
 });
 
 /* GET users listing. */

@@ -703,9 +703,9 @@ function retrieveItems(req, res, keyword) {
 
     //define where object of sequelize object according to parameter selected in search results page
     var whereObject = {
-        duration: {
-            gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
-        },
+        // duration: {
+        //     gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
+        // },
         $or: [
             {'$Commodity.name$': {$like: '%'+keyword+'%'}},
             {title: {$like: '%'+keyword+'%'}}
@@ -770,10 +770,10 @@ function retrieveItems(req, res, keyword) {
                                         Item.aggregate('segment', 'DISTINCT',{
                                             plain: false,
                                             where: {
-                                                duration: {
-                                                    gte: sequelize.fn("TIME_TO_SEC",
-                                                        sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
-                                                },
+                                                // duration: {
+                                                //     gte: sequelize.fn("TIME_TO_SEC",
+                                                //         sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
+                                                // },
                                                 $or: [
                                                     {'$Commodity.name$': {$like: '%'+keyword+'%'}},
                                                     {title: {$like: '%'+keyword+'%'}}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]>
+<html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en"> <!--<![endif]-->
+<head>
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107495910-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments)};
+      gtag('js', new Date());
+
+      gtag('config', 'UA-107495910-1');
+    </script>
+
+    <%
+    if (typeof(message)== undefined)
+        var message = "";
+    %>
+    <!-- Basic Page Needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>SellBnB</title>
+
+    <!-- Mobile Specific Metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/colors/blue.css" id="colors">
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+</head>
+
+<body class="boxed">
+<div id="wrapper">
+
+    <% include header.ejs %>
+
+    <!-- Titlebar
+    ================================================== -->
+    <section class="parallax-titlebar fullwidth-element" data-background="#000" data-opacity="0.2" data-height="160">
+
+        <img src="images/mini-slides/6.jpg" alt=""/>
+        <div class="parallax-overlay"></div>
+
+        <div class="parallax-content">
+            <h2>Who We Are</h2>
+        </div>
+    </section>
+
+
+    <!-- Content
+    ================================================== -->
+
+    <!-- Container -->
+    <div class="container" style="color:#000;">
+        <div class="fourteen columns">
+            Have you had difficulty finding the right commodity producer?<br>
+            Weren’t you sure who to trust: buyer, trader, no one?<br>
+            Have you had trouble communicating with producers or getting the right prices?<br><br>
+
+            We provide solutions to all these problems you face. We work with a pool of preselected,
+            credible, hardworking commodity producers to satisfy your requirements.
+            By only working with producers we make sure that you have access to the best price in the market. <br><br>
+
+            This is a collaborative effort towards brining producers into the global export market and supporting
+            buyers to buy efficiently and risk free. As there is a saying that the journey of a
+            thousand miles begins with one step, we are first working with only few producers and commodities to
+            ensure smooth service. <br><br>
+
+            Credibility and efficiency are at most important for us. <br>
+            <ul>
+                <li>SellBnB inspects producer’s business operation,and the information is shared on the platform</li>
+                <li>SellBnB directly participate the communication between the producer and buyer</li>
+                <li>SellBnB only releases the money to producer after inspecting the shipment</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="margin-top-50"></div>
+
+
+    <!-- Footer
+    ================================================== -->
+    <% include footer.ejs %>
+
+</div>
+
+
+<!-- Java Script
+================================================== -->
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="scripts/jquery.jpanelmenu.js"></script>
+<script src="scripts/jquery.themepunch.plugins.min.js"></script>
+<script src="scripts/jquery.themepunch.revolution.min.js"></script>
+<script src="scripts/jquery.themepunch.showbizpro.min.js"></script>
+<script src="scripts/jquery.magnific-popup.min.js"></script>
+<script src="scripts/hoverIntent.js"></script>
+<script src="scripts/superfish.js"></script>
+<script src="scripts/jquery.pureparallax.js"></script>
+<script src="scripts/jquery.pricefilter.js"></script>
+<script src="scripts/jquery.selectric.min.js"></script>
+<script src="scripts/jquery.royalslider.min.js"></script>
+<script src="scripts/SelectBox.js"></script>
+<script src="scripts/modernizr.custom.js"></script>
+<script src="scripts/waypoints.min.js"></script>
+<script src="scripts/jquery.flexslider-min.js"></script>
+<script src="scripts/jquery.counterup.min.js"></script>
+<script src="scripts/jquery.tooltips.min.js"></script>
+<script src="scripts/jquery.isotope.min.js"></script>
+<script src="scripts/puregrid.js"></script>
+<script src="scripts/stacktable.js"></script>
+<script src="scripts/custom.js"></script>
+<script src="scripts/views/header_func.js"></script>
+
+</body>
+</html>
