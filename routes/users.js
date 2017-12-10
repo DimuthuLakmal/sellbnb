@@ -93,7 +93,7 @@ router.get('/login', function (req, res, next) {
         commodityNames: commodityNames,
         notifications: notifications,
         messages :messages,
-        expectedUser : req.query.expUsr,
+        expectedUser : req.query.expUsr || '',
         loginOrRegister: 'Login',
         user: req.user,
     });
@@ -129,7 +129,7 @@ router.get('/login_seller', function (req, res, next) {
         commodityNames: commodityNames,
         notifications: notifications,
         messages :messages,
-        expectedUser : req.query.expUsr,
+        expectedUser : req.query.expUsr || '',
         loginOrRegister: 'Login',
         user: req.user,
     });
@@ -830,7 +830,11 @@ router.get('/sell/warehouses/userId/:userId/itemId/:itemId', function (req, res)
 });
 
 router.post('/adduser', function (req, res) {
-  if (typeof(req.body.username) != "undefined" && typeof(req.body.password) != "undefined" && typeof(req.body.email) != "undefined") {
+  if (typeof(req.body.username) !== "undefined" && req.body.username !== '' &&
+    typeof(req.body.password) !== "undefined"&& req.body.password !== '' &&
+    typeof(req.body.full_name) !== "undefined"&& req.body.full_name !== '' &&
+    typeof(req.body.telephone) !== "undefined"&& req.body.telephone !== '' &&
+    typeof(req.body.email) !== "undefined" && req.body.email !=='' ) {
     models.User.findAll({
       where: {
         username: req.body.username,
@@ -856,6 +860,8 @@ router.post('/adduser', function (req, res) {
               {
                 username: req.body.username,
                 password: hash,
+                full_name: req.body.full_name,
+                company_name: req.body.company_name,
                 status: 0,
                 rate_quality: 0,
                 rate_delivery: 0,
@@ -868,31 +874,31 @@ router.post('/adduser', function (req, res) {
                 no_of_ratings_reliablity_seller: 0,
                 no_of_ratings_payment: 0,
                 no_of_ratings_efficiency: 0,
-                no_of_ratings_reliablity_buyer: 0,
+                no_of_ratings_reliablity_buyer: 0
               }
             ).then(function (createUser) {
               models.Email.create(
                 {
                   email: req.body.email,
-                  UserId: createUser.id,
+                  UserId: createUser.id
                 }
               ).then(function () {
-                res.redirect('/user/basic');
+                models.PhoneNumber.create({
+                  number: req.body.telephone,
+                  UserId: createUser.id
+                }).then(function () {
+                  return res.redirect('/user/basic');
+                });
               });
-              res.redirect('/user/basic');
             });
           }
         });
-
-
       }
     });
 
   } else {
-    res.send("error in adding user!").status(err.status || 500).render('error', {
-      message: err.message,
-      error: err
-    });
+    req.session.signupError = 'error in adding user. missing required fields. Please try again';
+    res.redirect('/user/signup?action=signup');
   }
 
 });

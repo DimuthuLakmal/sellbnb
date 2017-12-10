@@ -230,7 +230,7 @@
                     <td> Company Name</td>
                     <td> <%= user.company_name %></td>
                     <td>
-                        <% if(user.company_name != '' && user.full_name != undefined) { %>
+                        <% if(user.company_name != '' || user.company_name != undefined) { %>
                         <a class="popup-with-zoom-anim" href="#companyname-edit-dialog" style="color:#2db2ea;">Edit</a><br/>
                         <% } else { %>
                         <a class="popup-with-zoom-anim" href="#companyname-edit-dialog" style="color:#2db2ea;">Add</a><br/>
