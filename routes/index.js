@@ -2213,6 +2213,28 @@ router.get('/who_we_are', function (req, res) {
     user: user,
   });
 });
+router.get('/how_to', function (req, res) {
+  removeSessionParameters(req);
+  var user = req.user;
+  res.render('how_to', {
+    user: user,
+  });
+});
+router.get('/help', function (req, res) {
+  removeSessionParameters(req);
+  var user = req.user;
+  res.render('help', {
+    user: user,
+  });
+});
+router.get('/my_hidden_links', function (req, res) {
+  removeSessionParameters(req);
+  var user = req.user;
+  res.render('hidden-urls', {
+    user: user,
+  });
+});
+
 
 //to remove unnecessary session parameters
 function removeSessionParameters(req) {

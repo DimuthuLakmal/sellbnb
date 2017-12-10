@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]>
+<html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en"> <!--<![endif]-->
+<head>
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107495910-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments)};
+      gtag('js', new Date());
+
+      gtag('config', 'UA-107495910-1');
+    </script>
+
+    <%
+    if (typeof(message)== undefined)
+        var message = "";
+    %>
+    <!-- Basic Page Needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>SellBnB</title>
+
+    <!-- Mobile Specific Metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/colors/blue.css" id="colors">
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+</head>
+
+<body class="boxed">
+<div id="wrapper">
+
+    <% include header.ejs %>
+    <!-- Titlebar
+    ================================================== -->
+    <!--<section class="parallax-titlebar fullwidth-element" data-background="#000" data-opacity="0.2" data-height="160">-->
+
+    <!--<img src="images/mini-slides/6.jpg" alt=""/>-->
+    <!--<div class="parallax-overlay"></div>-->
+
+    <!--<div class="parallax-content">-->
+    <!--<h2>Who We Are</h2>-->
+    <!--</div>-->
+    <!--</section>-->
+
+    <div class="row" style="text-align: center; background-color: #003953;">
+        <h1 style="color: white">Help and FAQ</h1>
+    </div>
+    <!-- Content
+    ================================================== -->
+
+    <!-- Container -->
+    <div class="container" style="color:#000;">
+        <div class="one columns" style="visibility: hidden">a</div>
+        <div class="fifteen columns" style="font-size: 18px">
+            <div style="background-image: url('images/help-cover.jpg'); height: 250px; background-size: 100%; position: relative;">
+                <h1 style="position: absolute; top: 25px; left:35px; color:black;">How can we help you?</h1>
+                <form action="" method="POST">
+                    <textarea name="issue"  placeholder="Please describe your issue" style="resize: none; position: absolute;top: 75px;left: 45px;width: 280px;height: 78px;color:black;border-radius: 10px;"></textarea>
+                    <button style="position: absolute;top: 75px;left: 360px;border: none;color:black;border-radius: 5px;background: orange;width: 90px;height: 30px;">SEND</button>
+                </form>
+            </div>
+
+            <div>
+                <h1 style="color:#000; margin-top: 30px;">Frequently Asked Questions</h1>
+                <h3 style="color:#000; font-weight:bold">What are incoterms?</h3>
+                <p style="padding-left:25px;;">
+                    Incoterms are a series of sales terms used in international trade. Commonly used incoterms are:
+                    <br><br>
+                    “Free On Board” or FOB means that the seller delivers the goods on board the vessel nominated by
+                    the buyer at the named port of shipment or procures the goods already so delivered.
+                    The risk of loss of or damage to the goods passes when the goods are on board the vessel,
+                    and the buyer bears all costs from that moment onwards.
+                    <br><br>
+                    CIF Cost, Insurance and Freight “Cost, Insurance and Freight” means that the seller
+                    delivers the goods on board the vessel or procures the goods already so delivered.
+                    The risk of loss of or damage to the goods passes when the goods are on board the
+                    vessel. The seller must contract for and pay the costs and freight necessary to
+                    bring the goods to the named port of destination.
+                    <br><br>
+                    ‘The seller also contracts for insurance cover against the buyer’s risk of loss of
+                    or damage to the goods during the carriage. The buyer should note that under CIF
+                    the seller is required to obtain insurance only on minimum cover. Should the
+                    buyer wish to have more insurance protection, it will need either to agree as
+                    much expressly with the seller or to make its own extra insurance arrangements.”
+                    <br><br>
+                    For additional information on incoterms, please refer:
+                    <a href="https://iccwbo.org/resources-for-business/incoterms-rules/incoterms-rules-2010/">https://iccwbo.org/resources-for-business/incoterms-rules/incoterms-rules-2010/</a>
+                    or send us a message.
+                </p>
+                <hr>
+
+                <h3 style="color:#000; font-weight:bold">Why buyer messages are replied by Ant Commodity not producer?</h3>
+                <p style="padding-left:25px;;">
+                    To maintain the standard of the site for accuracy, and fast response, Ant Commodity has a team
+                    (Field Officers) that first review the message and communicate with the corresponding buyer
+                    for the response.
+                    <br><br>
+                    Field Officers have a substantial education on each commodity listed on the site. Buyers
+                    can trade with confidence that the information they are getting is accurate.
+                </p>
+                <hr>
+                <h3 style="color:#000; font-weight:bold">Is the 1% fee negotiable? </h3>
+                <div style="padding-left:25px;;">
+                    No, it is not. For the 1% fee that is collected from each contract below services are provided:
+                    <table>
+                        <tr>
+                            <td style="width: 30px; padding-left: 10px;"><i class="fa fa-arrows"></i></td>
+                            <td>To get credible producers into the platform, Ant Commodity inspect every producer and provide a report on the platform. </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30px; padding-left: 10px;"><i class="fa fa-arrows"></i></td>
+                            <td>To ensure that accurate information is shared in a timely manner, Ant Commodity works has an intermediary in exchanging information between producer and buyer. </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30px; padding-left: 10px;"><i class="fa fa-arrows"></i></td>
+                            <td>To ensure buyer receives the shipment they agreed to purchase,AntCommodity inspect the shipment before releasing the funds to the producers. </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30px; padding-left: 10px;"><i class="fa fa-arrows"></i></td>
+                            <td>Ant Commodity works with a hardworking, skilled commodity, logistics experts to provide a better service.</td>
+                        </tr>
+                    </table>
+                </div>
+                <hr>
+
+                <h3 style="color:#000; font-weight:bold">What if the shipment does not pass inspection byAnt Commodity?</h3>
+                <div style="padding-left:25px;;">
+                    If the inspection is failed, Ant Commodity will not release the funds to producer
+                    nor send the shipment to buyer. Ant Commodity will send the inspection report to producer
+                    and buyer at the same time with information about the discrepancies.
+                    <br><br>
+                    Ant Commodity will coordinate both sides to come to an agreement. If an agreement
+                    cannot be reached, AntCommodity will cancel the contract, and will send the full
+                    amount excluding bank charges back to buyer.
+                </div>
+                <hr>
+
+                <h3 style="color:#000; font-weight:bold">Who is shipping the shipment?</h3>
+                <div style="padding-left:25px;;">
+                    It is Ant Commodity that send the shipment to the buyer, not the producer.
+                    We have a team of experts that understands the international trade very well.
+                    <br><br>
+                    After Ant Commodity inspects the shipment, pass the inspection and release the funds to
+                    buyer, AntCommodity receives temporary ownership of the shipment. This gives no room for
+                    the producer to make changes to the shipment before shipping.
+                </div>
+                <hr>
+
+                <h3 style="color:#000; font-weight:bold">What are our payment terms and methods?</h3>
+                <div style="padding-left:25px;;">
+                    There is no subscription fee, or any other fee for buyers search commodities or interact with
+                    producers on Ant Commodity.
+                    <br><br>
+                    For requests that require a payment of less than $100, AntCommodity will send an online payment
+                    to send the payment. For the online payment, there will be a 3.5% bank fee. Ant Commodity
+                    must receive the payment in full to execute the service.
+                    <br><br>
+                    For orders that require a payment of more than $100, AntCommodity will send bank information
+                    to send the funds to. This will be a T/T transfer, and there will be a $45 fixed bank fee for
+                    each transaction. Ant Commodity must receive the payment in full to execute the service.
+                </div>
+                <hr>
+
+                <h3 style="color:#000; font-weight:bold">Is my credit card and bank details safe?</h3>
+                <div style="padding-left:25px;;">
+                    We do not store your credit card details on our severs. We use third-party services to
+                    process your transaction, and each time you send us a payment,
+                    you will need to submit your cards details.
+                    <br><br>
+                    For bank details, we may ask for your bank number or t/t receipt to confirm the
+                    payment. As the information will be transferred through our messaging app, the
+                    information will be stored up to two years. We use the highest SSL
+                    encryption technology to secure all transactions.
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+
+    <div class="margin-top-50"></div>
+
+
+    <!-- Footer
+    ================================================== -->
+    <% include footer.ejs %>
+
+</div>
+
+
+<!-- Java Script
+================================================== -->
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="scripts/jquery.jpanelmenu.js"></script>
+<script src="scripts/jquery.themepunch.plugins.min.js"></script>
+<script src="scripts/jquery.themepunch.revolution.min.js"></script>
+<script src="scripts/jquery.themepunch.showbizpro.min.js"></script>
+<script src="scripts/jquery.magnific-popup.min.js"></script>
+<script src="scripts/hoverIntent.js"></script>
+<script src="scripts/superfish.js"></script>
+<script src="scripts/jquery.pureparallax.js"></script>
+<script src="scripts/jquery.pricefilter.js"></script>
+<script src="scripts/jquery.selectric.min.js"></script>
+<script src="scripts/jquery.royalslider.min.js"></script>
+<script src="scripts/SelectBox.js"></script>
+<script src="scripts/modernizr.custom.js"></script>
+<script src="scripts/waypoints.min.js"></script>
+<script src="scripts/jquery.flexslider-min.js"></script>
+<script src="scripts/jquery.counterup.min.js"></script>
+<script src="scripts/jquery.tooltips.min.js"></script>
+<script src="scripts/jquery.isotope.min.js"></script>
+<script src="scripts/puregrid.js"></script>
+<script src="scripts/stacktable.js"></script>
+<script src="scripts/custom.js"></script>
+<script src="scripts/views/header_func.js"></script>
+
+</body>
+</html>
