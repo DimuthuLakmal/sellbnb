@@ -37,14 +37,14 @@ router.get('/', function (req, res) {
   }
 
   //check whether best sellers session is set
-  if (bestsellers === null || bestsellers === undefined) {
-    return res.redirect('/api/user/bestsellers');
-  }
+  // if (bestsellers === null || bestsellers === undefined) {
+  //   return res.redirect('/api/user/bestsellers');
+  // }
 
   //check whether top rated items session is set
-  if (neartocloseItems === null || neartocloseItems === undefined) {
-    return res.redirect('/api/items/neartoclose');
-  }
+  // if (neartocloseItems === null || neartocloseItems === undefined) {
+  //   return res.redirect('/api/items/neartoclose');
+  // }
 
   if (req.user != null && req.user != undefined) {
     //check whether Near to bidding close items session is set

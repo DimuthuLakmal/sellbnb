@@ -289,7 +289,7 @@ router.get('/viewpopular', function (req, res) {
   sequelize.sync().then(
     function () {
 
-      sequelize.query("SELECT CommodityId, COUNT(CommodityId) as count FROM Items WHERE Items.duration >= TIME_TO_SEC(timediff(now(), Items.createdAt)) GROUP BY CommodityId ORDER BY count DESC limit 10", {type: sequelize.QueryTypes.SELECT})
+      sequelize.query("SELECT CommodityId, COUNT(CommodityId) as count FROM Items GROUP BY CommodityId ORDER BY count DESC limit 10", {type: sequelize.QueryTypes.SELECT})
         .then(function (Commodities) {
 
           async.forEach(Commodities, function (commodity, callback1) {
