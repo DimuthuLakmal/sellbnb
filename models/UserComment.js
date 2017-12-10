@@ -9,7 +9,9 @@ module.exports = function (sequelize, DataTypes) {
         efficiency: DataTypes.DOUBLE,
         rate_reliablity_buyer: DataTypes.DOUBLE,
     }, {
-        // Define Associations for Item table here.
+      charset: 'utf8',
+      collate: 'utf8_unicode_ci',
+      // Define Associations for Item table here.
         classMethods: {
             associate: function (models) {
                 UserComment.belongsTo(models.User, {

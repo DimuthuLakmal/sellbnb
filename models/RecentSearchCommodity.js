@@ -6,7 +6,9 @@
 module.exports = function (sequelize, DataTypes) {
     var RecentSearchCommodity = sequelize.define('RecentSearchCommodity',{},
         {
-            // Define Associations for Recent Search Commodity table here.
+          charset: 'utf8',
+          collate: 'utf8_unicode_ci',
+          // Define Associations for Recent Search Commodity table here.
             classMethods: {
                 associate: function (models) {
                     RecentSearchCommodity.belongsTo(models.Commodity);

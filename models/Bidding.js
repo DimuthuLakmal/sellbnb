@@ -14,7 +14,9 @@ module.exports = function (sequelize, DataTypes) {
         note: DataTypes.STRING,
         status: DataTypes.STRING,
     }, {
-        // Define Associations for Bidding table here.
+      charset: 'utf8',
+      collate: 'utf8_unicode_ci',
+      // Define Associations for Bidding table here.
         classMethods: {
             associate: function (models) {
                 Bidding.belongsTo(models.User);

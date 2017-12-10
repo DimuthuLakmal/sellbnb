@@ -28,7 +28,9 @@ module.exports = function (sequelize, DataTypes) {
         business_images: DataTypes.STRING,
         is_seller: DataTypes.BOOLEAN,
     },{
-        //Define Association for User
+      charset: 'utf8',
+      collate: 'utf8_unicode_ci',
+      //Define Association for User
         classMethods: {
             associate: function (models) {
                 User.hasMany(models.WareHouse);

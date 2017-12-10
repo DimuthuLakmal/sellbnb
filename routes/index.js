@@ -27,55 +27,55 @@ router.get('/', function (req, res) {
 
   //check whether commodityPopular session is set
   if (commodityPopular === null || commodityPopular === undefined) {
-    res.redirect('/api/commodity/viewpopular');
+    return res.redirect('/api/commodity/viewpopular');
   }
 
   //check whether commodityNames session is set
   req.session.returnToCommodityName = req.path;
   if (commodityNames === null || commodityNames === undefined) {
-    res.redirect('/api/commodity/names');
+    return res.redirect('/api/commodity/names');
   }
 
   //check whether best sellers session is set
   if (bestsellers === null || bestsellers === undefined) {
-    res.redirect('/api/user/bestsellers');
+    return res.redirect('/api/user/bestsellers');
   }
 
   //check whether top rated items session is set
   if (neartocloseItems === null || neartocloseItems === undefined) {
-    res.redirect('/api/items/neartoclose');
+    return res.redirect('/api/items/neartoclose');
   }
 
   if (req.user != null && req.user != undefined) {
     //check whether Near to bidding close items session is set
     if (recentsearches === null || recentsearches === undefined) {
-      res.redirect('/api/recentsearch/userId/' + req.user.id);
+      return res.redirect('/api/recentsearch/userId/' + req.user.id);
     }
   } else {
     //check whether Near to bidding close items session is set
     if (recentsearches === null || recentsearches === undefined) {
-      res.redirect('/api/recentsearch/userId/' + null);
+      return res.redirect('/api/recentsearch/userId/' + null);
     }
   }
 
   //load recent seraches
   if (latestNews === null || latestNews === undefined) {
-    res.redirect('/api/news/viewlatest');
+    return res.redirect('/api/news/viewlatest');
   }
 
   //check whether notification session is set.
   if (req.isAuthenticated()) {
     if (notifications === null || notifications === undefined) {
-      res.redirect('/api/notification/userId/' + req.user.id);
+      return res.redirect('/api/notification/userId/' + req.user.id);
     }
     if (messages === null || messages === undefined) {
-      res.redirect('/api/messages/userId/' + req.user.id);
+      return res.redirect('/api/messages/userId/' + req.user.id);
     }
   }
 
   //check whether latest items session is set
   if (latestItems === null || latestItems === undefined) {
-    res.redirect('/api/items/viewlatest');
+    return res.redirect('/api/items/viewlatest');
   }
 
   console.log('Index Page Visited');
@@ -89,7 +89,7 @@ router.get('/', function (req, res) {
   delete req.session.notifications;
   delete req.session.messages;
   delete req.session.recentsearches;
-  res.render('index', {
+  return res.render('index', {
     commodityNames: commodityNames,
     latestItems: latestItems,
     commodityPopular: commodityPopular,
@@ -115,17 +115,17 @@ router.get('/addnews', function (req, res) {
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
-      res.redirect('/api/commodity/names');
+      return res.redirect('/api/commodity/names');
     }
 
     var families = req.session.families;
     if (families === null || families === undefined) {
-      res.redirect('/api/commodity/families?add=true');
+      return res.redirect('/api/commodity/families?add=true');
     }
 
     var newsTitles = req.session.newsTitles;
     if (newsTitles === null || newsTitles === undefined) {
-      res.redirect('/api/news/titles');
+      return res.redirect('/api/news/titles');
     }
 
     var notifications = req.session.notifications;
@@ -133,10 +133,10 @@ router.get('/addnews', function (req, res) {
     //check whether notification session is set.
     if (req.isAuthenticated()) {
       if (notifications === null || notifications === undefined) {
-        res.redirect('/api/notification/userId/' + req.user.id);
+        return res.redirect('/api/notification/userId/' + req.user.id);
       }
       if (messages === null || messages === undefined) {
-        res.redirect('/api/messages/userId/' + req.user.id);
+        return res.redirect('/api/messages/userId/' + req.user.id);
       }
     }
 
@@ -146,7 +146,7 @@ router.get('/addnews', function (req, res) {
     delete req.session.messages;
     delete req.session.families;
     delete req.session.newsTitles;
-    res.render('addnews', {
+    return res.render('addnews', {
       commodityNames: commodityNames,
       notifications: notifications,
       messages: messages,
@@ -157,7 +157,7 @@ router.get('/addnews', function (req, res) {
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path;
-    res.redirect('/user/login?action=login');
+    return res.redirect('/user/login?action=login');
   }
 
 });
@@ -179,7 +179,7 @@ router.get('/news/start/:start', function (req, res) {
 
   //check whether newsAll session is set
   if (newsAll === null || newsAll === undefined) {
-    res.redirect('/api/news/start/' + req.params.start + '?category=' + req.query['category'] + '&keyword=' + req.query['keyword']);
+    return res.redirect('/api/news/start/' + req.params.start + '?category=' + req.query['category'] + '&keyword=' + req.query['keyword']);
   }
 
   //this will be needed to populate commodity names in top menu
@@ -187,7 +187,7 @@ router.get('/news/start/:start', function (req, res) {
   //check whether commodityNames session is set
   req.session.returnToCommodityName = req.path + '?category=' + req.query['category'] + '&keyword=' + req.query['keyword'];
   if (commodityNames === null || commodityNames === undefined) {
-    res.redirect('/api/commodity/names');
+    return res.redirect('/api/commodity/names');
   }
 
   var notifications = req.session.notifications;
@@ -195,10 +195,10 @@ router.get('/news/start/:start', function (req, res) {
   //check whether notification session is set.
   if (req.isAuthenticated()) {
     if (notifications === null || notifications === undefined) {
-      res.redirect('/api/notification/userId/' + req.user.id);
+      return res.redirect('/api/notification/userId/' + req.user.id);
     }
     if (messages === null || messages === undefined) {
-      res.redirect('/api/messages/userId/' + req.user.id);
+      return res.redirect('/api/messages/userId/' + req.user.id);
     }
   }
 
@@ -208,7 +208,7 @@ router.get('/news/start/:start', function (req, res) {
   delete req.session.returnToCommodityName;
   delete req.session.notifications;
   delete req.session.messages;
-  res.render('viewnewsall', {
+  return res.render('viewnewsall', {
     News: newsAll,
     currentPageNumber: currentPageNumber,
     maxPageCount: maxPageCount,
@@ -222,64 +222,6 @@ router.get('/news/start/:start', function (req, res) {
   });
 });
 
-// /* GET view news page other than first page */
-// router.get('/news/start/:start', function (req, res) {
-//     removeSessionParameters(req);
-//     removeSessionParameterSellingPage(req);
-//     var newsAll = req.session.newsall;
-//     var newsOffset = req.session.newsOffset;
-//     var newsCount = req.session.newsCount;
-//     var currentPageNumber = (parseInt(newsOffset) / 3) + 1;
-//     var maxPageCount = Math.floor(newsCount / 3);
-//     //Note: check whether equation is correct. previous one is maxPageCount % 10 !== 0
-//     if (newsCount % 3 !== 0) {
-//         maxPageCount++;
-//     }
-//     var pageMultipationFactor = Math.floor((parseInt(newsOffset) / 9));
-//
-//     //check whether newsAll session is set
-//     if (newsAll === null || newsAll === undefined) {
-//         res.redirect('/api/news/viewall/start/' + req.params.start);
-//     }
-//
-//     //this will be needed to populate commodity names in top menu
-//     var commodityNames = req.session.commodityNames
-//     //check whether commodityNames session is set
-//     req.session.returnToCommodityName = req.path;
-//     if (commodityNames === null || commodityNames === undefined) {
-//         res.redirect('/api/commodity/names');
-//     }
-//
-//     var notifications = req.session.notifications;
-//     var messages = req.session.messages;
-//     //check whether notification session is set.
-//     if (req.isAuthenticated()) {
-//         if (notifications === null || notifications === undefined) {
-//             res.redirect('/api/notification/userId/' + req.user.id);
-//         }
-//         if (messages === null || messages === undefined) {
-//             res.redirect('/api/messages/userId/' + req.user.id);
-//         }
-//     }
-//
-//     req.session.newsall = null;
-//     req.session.newsOffset = null;
-//     req.session.newsCount = null;
-//     delete req.session.returnToCommodityName;
-//     delete req.session.notifications;
-//     delete req.session.messages;
-//     res.render('viewnewsall', {
-//         News: newsAll,
-//         currentPageNumber: currentPageNumber,
-//         maxPageCount: maxPageCount,
-//         pageMultipationFactor: pageMultipationFactor,
-//         commodityNames: commodityNames,
-//         notifications: notifications,
-//         messages: messages,
-//         user: req.user,
-//     });
-// });
-
 /* GET view single news page*/
 router.get('/news/id/:id', function (req, res) {
   removeSessionParameters(req);
@@ -288,7 +230,7 @@ router.get('/news/id/:id', function (req, res) {
 
   //check whether newsAll session is set
   if (news === null || news === undefined) {
-    res.redirect('/api/news/id/' + req.params.id + '?lan=' + req.query['lan']);
+    return res.redirect('/api/news/id/' + req.params.id + '?lan=' + req.query['lan']);
   }
 
   //this will be needed to populate commodity names in top menu
@@ -296,7 +238,7 @@ router.get('/news/id/:id', function (req, res) {
   //check whether commodityNames session is set
   req.session.returnToCommodityName = req.path + '?lan=' + req.query['lan'];
   if (commodityNames === null || commodityNames === undefined) {
-    res.redirect('/api/commodity/names');
+    return res.redirect('/api/commodity/names');
   }
 
   var notifications = req.session.notifications;
@@ -304,10 +246,10 @@ router.get('/news/id/:id', function (req, res) {
   //check whether notification session is set.
   if (req.isAuthenticated()) {
     if (notifications === null || notifications === undefined) {
-      res.redirect('/api/notification/userId/' + req.user.id);
+      return res.redirect('/api/notification/userId/' + req.user.id);
     }
     if (messages === null || messages === undefined) {
-      res.redirect('/api/messages/userId/' + req.user.id);
+      return res.redirect('/api/messages/userId/' + req.user.id);
     }
   }
 
@@ -315,7 +257,7 @@ router.get('/news/id/:id', function (req, res) {
   delete req.session.returnToCommodityName;
   delete req.session.notifications;
   delete req.session.messages;
-  res.render('viewnews', {
+  return res.render('viewnews', {
     News: news,
     commodityNames: commodityNames,
     notifications: notifications,
@@ -339,7 +281,7 @@ router.get('/user/basic', function (req, res) {
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
-      res.redirect('/api/commodity/names');
+      return res.redirect('/api/commodity/names');
     }
 
     var notifications = req.session.notifications;
@@ -347,10 +289,10 @@ router.get('/user/basic', function (req, res) {
     //check whether notification session is set.
     if (req.isAuthenticated()) {
       if (notifications === null || notifications === undefined) {
-        res.redirect('/api/notification/userId/' + req.user.id);
+        return res.redirect('/api/notification/userId/' + req.user.id);
       }
       if (messages === null || messages === undefined) {
-        res.redirect('/api/messages/userId/' + req.user.id);
+        return res.redirect('/api/messages/userId/' + req.user.id);
       }
     }
 
@@ -358,7 +300,7 @@ router.get('/user/basic', function (req, res) {
     delete req.session.returnToCommodityName;
     delete req.session.notifications;
     delete req.session.messages;
-    res.render('useraccountbasics', {
+    return res.render('useraccountbasics', {
       isAuthenticated: req.isAuthenticated(),
       user: req.user,
       errorMessage: errorMessage,
@@ -369,7 +311,7 @@ router.get('/user/basic', function (req, res) {
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path;
-    res.redirect('/user/login?action=login');
+    return res.redirect('/user/login?action=login');
   }
 });
 
@@ -388,7 +330,7 @@ router.get('/user/contact', function (req, res) {
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
-      res.redirect('/api/commodity/names');
+      return res.redirect('/api/commodity/names');
     }
 
     var notifications = req.session.notifications;
@@ -396,10 +338,10 @@ router.get('/user/contact', function (req, res) {
     //check whether notification session is set.
     if (req.isAuthenticated()) {
       if (notifications === null || notifications === undefined) {
-        res.redirect('/api/notification/userId/' + req.user.id);
+        return res.redirect('/api/notification/userId/' + req.user.id);
       }
       if (messages === null || messages === undefined) {
-        res.redirect('/api/messages/userId/' + req.user.id);
+        return res.redirect('/api/messages/userId/' + req.user.id);
       }
     }
 
@@ -408,7 +350,7 @@ router.get('/user/contact', function (req, res) {
     if (req.isAuthenticated()) {
       req.session.redirectContactInforPath = req.path;
       if (userContactInformation === null || userContactInformation === undefined) {
-        res.redirect('/api/user/contactinfo/userId/' + req.user.id);
+        return res.redirect('/api/user/contactinfo/userId/' + req.user.id);
       }
     }
 
@@ -419,7 +361,7 @@ router.get('/user/contact', function (req, res) {
     delete req.session.notifications;
     delete req.session.messages;
     delete req.session.redirectContactInforPath;
-    res.render('useraccountcontactinformation', {
+    return res.render('useraccountcontactinformation', {
       isAuthenticated: req.isAuthenticated(),
       user: req.user,
       errorMessage: errorMessage,
@@ -431,7 +373,7 @@ router.get('/user/contact', function (req, res) {
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path;
-    res.redirect('/user/login?action=login');
+    return res.redirect('/user/login?action=login');
   }
 });
 
@@ -449,7 +391,7 @@ router.get('/user/business', function (req, res) {
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
-      res.redirect('/api/commodity/names');
+      return res.redirect('/api/commodity/names');
     }
 
     var notifications = req.session.notifications;
@@ -457,10 +399,10 @@ router.get('/user/business', function (req, res) {
     //check whether notification session is set.
     if (req.isAuthenticated()) {
       if (notifications === null || notifications === undefined) {
-        res.redirect('/api/notification/userId/' + req.user.id);
+        return res.redirect('/api/notification/userId/' + req.user.id);
       }
       if (messages === null || messages === undefined) {
-        res.redirect('/api/messages/userId/' + req.user.id);
+        return res.redirect('/api/messages/userId/' + req.user.id);
       }
     }
 
@@ -468,7 +410,7 @@ router.get('/user/business', function (req, res) {
     //check whether notification session is set.
     if (req.isAuthenticated()) {
       if (userTradingBusinessInformation === null || userTradingBusinessInformation === undefined) {
-        res.redirect('/api/user/businessinfo/userId/' + req.user.id);
+        return res.redirect('/api/user/businessinfo/userId/' + req.user.id);
       }
     }
 
@@ -476,7 +418,7 @@ router.get('/user/business', function (req, res) {
     //check whether notification session is set.
     if (req.isAuthenticated()) {
       if (userCertificateInformation === null || userCertificateInformation === undefined) {
-        res.redirect('/api/user/certificateinfo/userId/' + req.user.id);
+        return res.redirect('/api/user/certificateinfo/userId/' + req.user.id);
       }
     }
 
@@ -499,7 +441,7 @@ router.get('/user/business', function (req, res) {
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path;
-    res.redirect('/user/login?action=login');
+    return res.redirect('/user/login?action=login');
   }
 });
 
@@ -517,7 +459,7 @@ router.get('/user/payment', function (req, res) {
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
-      res.redirect('/api/commodity/names');
+      return res.redirect('/api/commodity/names');
     }
 
     var notifications = req.session.notifications;
@@ -525,10 +467,10 @@ router.get('/user/payment', function (req, res) {
     //check whether notification session is set.
     if (req.isAuthenticated()) {
       if (notifications === null || notifications === undefined) {
-        res.redirect('/api/notification/userId/' + req.user.id);
+        return res.redirect('/api/notification/userId/' + req.user.id);
       }
       if (messages === null || messages === undefined) {
-        res.redirect('/api/messages/userId/' + req.user.id);
+        return res.redirect('/api/messages/userId/' + req.user.id);
       }
     }
 
@@ -536,7 +478,7 @@ router.get('/user/payment', function (req, res) {
     //retreive user payment information
     if (req.isAuthenticated()) {
       if (userPaymentInformation === null || userPaymentInformation === undefined) {
-        res.redirect('/api/user/paymentinfo/userId/' + req.user.id);
+        return res.redirect('/api/user/paymentinfo/userId/' + req.user.id);
       }
     }
 
@@ -557,7 +499,7 @@ router.get('/user/payment', function (req, res) {
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path;
-    res.redirect('/user/login?action=login');
+    return res.redirect('/user/login?action=login');
   }
 });
 
@@ -576,7 +518,7 @@ router.get('/user/notification', function (req, res) {
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
-      res.redirect('/api/commodity/names');
+      return res.redirect('/api/commodity/names');
     }
 
     var notifications = req.session.notifications;
@@ -584,10 +526,10 @@ router.get('/user/notification', function (req, res) {
     //check whether notification session is set.
     if (req.isAuthenticated()) {
       if (notifications === null || notifications === undefined) {
-        res.redirect('/api/notification/userId/' + req.user.id);
+        return res.redirect('/api/notification/userId/' + req.user.id);
       }
       if (messages === null || messages === undefined) {
-        res.redirect('/api/messages/userId/' + req.user.id);
+        return res.redirect('/api/messages/userId/' + req.user.id);
       }
     }
 
@@ -606,7 +548,7 @@ router.get('/user/notification', function (req, res) {
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path;
-    res.redirect('/user/login?action=login');
+    return res.redirect('/user/login?action=login');
   }
 });
 
@@ -624,7 +566,7 @@ router.get('/user/public/userId/:userId', function (req, res) {
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
-      res.redirect('/api/commodity/names');
+      return res.redirect('/api/commodity/names');
     }
 
     var notifications = req.session.notifications;
@@ -632,10 +574,10 @@ router.get('/user/public/userId/:userId', function (req, res) {
     //check whether notification session is set.
     if (req.isAuthenticated()) {
       if (notifications === null || notifications === undefined) {
-        res.redirect('/api/notification/userId/' + req.user.id);
+        return res.redirect('/api/notification/userId/' + req.user.id);
       }
       if (messages === null || messages === undefined) {
-        res.redirect('/api/messages/userId/' + req.user.id);
+        return res.redirect('/api/messages/userId/' + req.user.id);
       }
     }
 
@@ -644,7 +586,7 @@ router.get('/user/public/userId/:userId', function (req, res) {
     var userPublicComments = req.session.userPublicComments;
     var userPublicCurrentListing = req.session.userPublicCurrentListing;
     if (userPublicInformation === null || userPublicInformation === undefined) {
-      res.redirect('/api/user/public/userId/' + req.params.userId);
+      return res.redirect('/api/user/public/userId/' + req.params.userId);
     }
 
 
@@ -653,7 +595,7 @@ router.get('/user/public/userId/:userId', function (req, res) {
     if (req.isAuthenticated()) {
       req.session.redirectContactInforPath = req.path;
       if (userContactInformation === null || userContactInformation === undefined) {
-        res.redirect('/api/user/contactinfo/userId/' + req.user.id);
+        return res.redirect('/api/user/contactinfo/userId/' + req.user.id);
       }
     }
 
@@ -661,7 +603,7 @@ router.get('/user/public/userId/:userId', function (req, res) {
     //retreive user contact information
     if (req.isAuthenticated()) {
       if (biddingCountUserProfile === null || biddingCountUserProfile === undefined) {
-        res.redirect('/api/bid/userId/' + req.user.id + '/itemUserId/' + req.params.userId);
+        return res.redirect('/api/bid/userId/' + req.user.id + '/itemUserId/' + req.params.userId);
       }
     }
 
@@ -691,7 +633,7 @@ router.get('/user/public/userId/:userId', function (req, res) {
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path;
-    res.redirect('/user/login?action=login');
+    return res.redirect('/user/login?action=login');
   }
 });
 
@@ -705,7 +647,7 @@ router.get('/commodity/add', function (req, res) {
   //check whether commodityNames session is set
   req.session.returnToCommodityName = req.path;
   if (commodityNames === null || commodityNames === undefined) {
-    res.redirect('/api/commodity/names');
+    return res.redirect('/api/commodity/names');
   }
 
   var notifications = req.session.notifications;
@@ -713,10 +655,10 @@ router.get('/commodity/add', function (req, res) {
   //check whether notification session is set.
   if (req.isAuthenticated()) {
     if (notifications === null || notifications === undefined) {
-      res.redirect('/api/notification/userId/' + req.user.id);
+      return res.redirect('/api/notification/userId/' + req.user.id);
     }
     if (messages === null || messages === undefined) {
-      res.redirect('/api/messages/userId/' + req.user.id);
+      return res.redirect('/api/messages/userId/' + req.user.id);
     }
   }
 
@@ -744,7 +686,7 @@ router.get('/commodity/add', function (req, res) {
   //   //set visited path to session. It uses to rediect to again to that page when login success.
   //   req.session.returnTo = req.path;
   //   console.log(req.session.returnTo);
-  //   res.redirect('/user/login?action=login');
+  //   return res.redirect('/user/login?action=login');
   // }
 });
 
@@ -757,7 +699,7 @@ router.get('/items/search', function (req, res) {
 
     var recentSearches = req.session.recentSearches;
     if (recentSearches === null || recentSearches === undefined) {
-      res.redirect('/api/commodity/recentsearch/userId/' + req.user.id);
+      return res.redirect('/api/commodity/recentsearch/userId/' + req.user.id);
     }
 
     //this will be needed to populate commodity names in top menu
@@ -765,13 +707,13 @@ router.get('/items/search', function (req, res) {
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
-      res.redirect('/api/commodity/names');
+      return res.redirect('/api/commodity/names');
     }
 
     var commodities = req.session.commodities;
     //check whether commodities session is set
     if (commodities === null || commodities === undefined) {
-      res.redirect('/api/commodity/viewall');
+      return res.redirect('/api/commodity/viewall');
     }
 
     var notifications = req.session.notifications;
@@ -779,10 +721,10 @@ router.get('/items/search', function (req, res) {
     //check whether notification session is set.
     if (req.isAuthenticated()) {
       if (notifications === null || notifications === undefined) {
-        res.redirect('/api/notification/userId/' + req.user.id);
+        return res.redirect('/api/notification/userId/' + req.user.id);
       }
       if (messages === null || messages === undefined) {
-        res.redirect('/api/messages/userId/' + req.user.id);
+        return res.redirect('/api/messages/userId/' + req.user.id);
       }
     }
 
@@ -804,7 +746,7 @@ router.get('/items/search', function (req, res) {
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path;
-    res.redirect('/user/login?action=login');
+    return res.redirect('/user/login?action=login');
   }
 });
 
@@ -827,7 +769,7 @@ router.get('/items', function (req, res) {
   //check whether commodityNames session is set
   req.session.returnToCommodityName = req.path;
   if (commodityNames === null || commodityNames === undefined) {
-    res.redirect('/api/commodity/names');
+    return res.redirect('/api/commodity/names');
   }
 
   var notifications = req.session.notifications;
@@ -835,10 +777,10 @@ router.get('/items', function (req, res) {
   //check whether notification session is set.
   if (req.isAuthenticated()) {
     if (notifications === null || notifications === undefined) {
-      res.redirect('/api/notification/userId/' + req.user.id);
+      return res.redirect('/api/notification/userId/' + req.user.id);
     }
     if (messages === null || messages === undefined) {
-      res.redirect('/api/messages/userId/' + req.user.id);
+      return res.redirect('/api/messages/userId/' + req.user.id);
     }
   }
 
@@ -891,7 +833,7 @@ router.get('/items/add/commoditydetails', function (req, res) {
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
-      res.redirect('/api/commodity/names');
+      return res.redirect('/api/commodity/names');
     }
 
     var notifications = req.session.notifications;
@@ -899,10 +841,10 @@ router.get('/items/add/commoditydetails', function (req, res) {
     //check whether notification session is set.
     if (req.isAuthenticated()) {
       if (notifications === null || notifications === undefined) {
-        res.redirect('/api/notification/userId/' + req.user.id);
+        return res.redirect('/api/notification/userId/' + req.user.id);
       }
       if (messages === null || messages === undefined) {
-        res.redirect('/api/messages/userId/' + req.user.id);
+        return res.redirect('/api/messages/userId/' + req.user.id);
       }
     }
 
@@ -925,7 +867,7 @@ router.get('/items/add/commoditydetails', function (req, res) {
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path;
-    res.redirect('/user/login?action=login');
+    return res.redirect('/user/login?action=login');
   }
 
 });
@@ -948,17 +890,17 @@ router.get('/items/add', function (req, res) {
 
     //check whether warehouses session is set
     if (warehouses === null || warehouses === undefined) {
-      res.redirect('/api/user/view/warehouses/userId/' + req.user.id);
+      return res.redirect('/api/user/view/warehouses/userId/' + req.user.id);
     }
 
     //check whether commodityMeasurements session is set
     if (measureUnits === null || measureUnits === undefined) {
-      res.redirect('/api/commodity/measureUnits/id/' + req.session.commodityId);
+      return res.redirect('/api/commodity/measureUnits/id/' + req.session.commodityId);
     }
 
     //check whether commodityName session is set
     if (commodityName === null || commodityName === undefined) {
-      res.redirect('/api/commodity/commodityName/id/' + req.session.commodityId);
+      return res.redirect('/api/commodity/commodityName/id/' + req.session.commodityId);
     }
 
     //this will be needed to populate commodity names in top menu
@@ -966,7 +908,7 @@ router.get('/items/add', function (req, res) {
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
-      res.redirect('/api/commodity/names');
+      return res.redirect('/api/commodity/names');
     }
 
     var notifications = req.session.notifications;
@@ -974,10 +916,10 @@ router.get('/items/add', function (req, res) {
     //check whether notification session is set.
 
     if (notifications === null || notifications === undefined) {
-      res.redirect('/api/notification/userId/' + req.user.id);
+      return res.redirect('/api/notification/userId/' + req.user.id);
     }
     if (messages === null || messages === undefined) {
-      res.redirect('/api/messages/userId/' + req.user.id);
+      return res.redirect('/api/messages/userId/' + req.user.id);
     }
 
     delete req.session.returnTo;
@@ -1006,7 +948,7 @@ router.get('/items/add', function (req, res) {
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path;
-    res.redirect('/user/login?action=login');
+    return res.redirect('/user/login?action=login');
   }
 });
 
@@ -1026,12 +968,12 @@ router.get('/items/add', function (req, res) {
 
     //check whether warehouses session is set
     if (warehouses === null || warehouses === undefined) {
-      res.redirect('/api/user/view/warehouses/userId/' + req.user.id);
+      return res.redirect('/api/user/view/warehouses/userId/' + req.user.id);
     }
 
     //check whether commodityMeasurements session is set
     if (measureUnits === null || measureUnits === undefined) {
-      res.redirect('/api/commodity/measureUnits/id/' + req.session.commodityId);
+      return res.redirect('/api/commodity/measureUnits/id/' + req.session.commodityId);
     }
 
     //this will be needed to populate commodity names in top menu
@@ -1039,7 +981,7 @@ router.get('/items/add', function (req, res) {
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
-      res.redirect('/api/commodity/names');
+      return res.redirect('/api/commodity/names');
     }
 
     var notifications = req.session.notifications;
@@ -1047,10 +989,10 @@ router.get('/items/add', function (req, res) {
     //check whether notification session is set.
 
     if (notifications === null || notifications === undefined) {
-      res.redirect('/api/notification/userId/' + req.user.id);
+      return res.redirect('/api/notification/userId/' + req.user.id);
     }
     if (messages === null || messages === undefined) {
-      res.redirect('/api/messages/userId/' + req.user.id);
+      return res.redirect('/api/messages/userId/' + req.user.id);
     }
 
     delete req.session.returnTo;
@@ -1074,7 +1016,7 @@ router.get('/items/add', function (req, res) {
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path;
-    res.redirect('/user/login?action=login');
+    return res.redirect('/user/login?action=login');
   }
 });
 
@@ -1091,28 +1033,28 @@ router.get('/items/id/:id', function (req, res) {
     var measureUnits = req.session.measureUnits;
     //check whether item is retrieved from database
     if (item === null || item === undefined) {
-      res.redirect('/api/items/id/' + req.params.id + '/userId/' + user.id);
+      return res.redirect('/api/items/id/' + req.params.id + '/userId/' + user.id);
     }
 
     //check whether commodityMeasurements session is set
     if (measureUnits === null || measureUnits === undefined) {
-      res.redirect('/api/commodity/measureUnits/id2/' + item.commodity.id);
+      return res.redirect('/api/commodity/measureUnits/id2/' + item.commodity.id);
     }
 
     //check whether item is retrieved from database
     if (userFeedback === null || userFeedback === undefined) {
-      res.redirect('/api/user/userFeedback/id/' + item.user.id + '/itemId/' + req.params.id);
+      return res.redirect('/api/user/userFeedback/id/' + item.user.id + '/itemId/' + req.params.id);
     }
 
     //check whether bid details are retrieved from database
     if (lastBid === null || lastBid === undefined) {
-      res.redirect('/api/bid/items/userId/' + user.id + '/itemId/' + req.params.id);
+      return res.redirect('/api/bid/items/userId/' + user.id + '/itemId/' + req.params.id);
     }
 
 
     //check whether user is set. this is needed to retrieve user's warehouses
     if ((bidwarehouses === null || bidwarehouses === undefined) && (user != null && user != undefined)) {
-      res.redirect('/api/user/bidding/warehouses/userId/' + user.id + '/itemId/' + item.item.id);
+      return res.redirect('/api/user/bidding/warehouses/userId/' + user.id + '/itemId/' + item.item.id);
     }
 
     //this will be needed to populate commodity names in top menu
@@ -1120,7 +1062,7 @@ router.get('/items/id/:id', function (req, res) {
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
-      res.redirect('/api/commodity/names');
+      return res.redirect('/api/commodity/names');
     }
 
     var notifications = req.session.notifications;
@@ -1128,10 +1070,10 @@ router.get('/items/id/:id', function (req, res) {
     //check whether notification session is set.
     if (req.isAuthenticated()) {
       if (notifications === null || notifications === undefined) {
-        res.redirect('/api/notification/userId/' + req.user.id);
+        return res.redirect('/api/notification/userId/' + req.user.id);
       }
       if (messages === null || messages === undefined) {
-        res.redirect('/api/messages/userId/' + req.user.id);
+        return res.redirect('/api/messages/userId/' + req.user.id);
       }
     }
 
@@ -1169,7 +1111,7 @@ router.get('/items/id/:id', function (req, res) {
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path;
-    res.redirect('/user/login?action=login');
+    return res.redirect('/user/login?action=login');
   }
 });
 
@@ -1185,7 +1127,7 @@ router.get('/user/sell/list/start/:start', function (req, res) {
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path + '?sellingpageItemOption=Open&openDurationOption=' + req.query['openDurationOption'] + '&pendingDurationOption=' + req.query['pendingDurationOption'] + '&cancelledDurationOption=' + req.query['cancelledDurationOption'];
     if (commodityNames === null || commodityNames === undefined) {
-      res.redirect('/api/commodity/names');
+      return res.redirect('/api/commodity/names');
     }
 
     var notifications = req.session.notifications;
@@ -1193,10 +1135,10 @@ router.get('/user/sell/list/start/:start', function (req, res) {
     //check whether notification session is set.
     if (req.isAuthenticated()) {
       if (notifications === null || notifications === undefined) {
-        res.redirect('/api/notification/userId/' + req.user.id);
+        return res.redirect('/api/notification/userId/' + req.user.id);
       }
       if (messages === null || messages === undefined) {
-        res.redirect('/api/messages/userId/' + req.user.id);
+        return res.redirect('/api/messages/userId/' + req.user.id);
       }
     }
 
@@ -1212,7 +1154,7 @@ router.get('/user/sell/list/start/:start', function (req, res) {
 
       //check whether itemlist session is set
       if (req.session.sellingListOpen === null || req.session.sellingListOpen === undefined) {
-        res.redirect('/api/items/start/' + req.params.start + '/userId/' + user.id + '?sellingpageItemOption=Open&openDurationOption=' + req.query['openDurationOption'] + '&pendingDurationOption=' + req.query['pendingDurationOption'] + '&cancelledDurationOption=' + req.query['cancelledDurationOption']);
+        return res.redirect('/api/items/start/' + req.params.start + '/userId/' + user.id + '?sellingpageItemOption=Open&openDurationOption=' + req.query['openDurationOption'] + '&pendingDurationOption=' + req.query['pendingDurationOption'] + '&cancelledDurationOption=' + req.query['cancelledDurationOption']);
       }
 
       var itemsOffsetOpen = req.session.itemsSellingAccountOffset;
@@ -1234,7 +1176,7 @@ router.get('/user/sell/list/start/:start', function (req, res) {
 
       //check whether itemlist session is set
       if (req.session.sellingListPending === null || req.session.sellingListPending === undefined) {
-        res.redirect('/api/items/start/' + req.params.start + '/userId/' + user.id + '?sellingpageItemOption=Pending&openDurationOption=' + req.query['openDurationOption'] + '&pendingDurationOption=' + req.query['pendingDurationOption'] + '&cancelledDurationOption=' + req.query['cancelledDurationOption']);
+        return res.redirect('/api/items/start/' + req.params.start + '/userId/' + user.id + '?sellingpageItemOption=Pending&openDurationOption=' + req.query['openDurationOption'] + '&pendingDurationOption=' + req.query['pendingDurationOption'] + '&cancelledDurationOption=' + req.query['cancelledDurationOption']);
       }
 
 
@@ -1257,7 +1199,7 @@ router.get('/user/sell/list/start/:start', function (req, res) {
 
       //check whether itemlist session is set
       if (req.session.sellingListCancelled === null || req.session.sellingListCancelled === undefined) {
-        res.redirect('/api/items/start/' + req.params.start + '/userId/' + user.id + '?sellingpageItemOption=Cancelled&openDurationOption=' + req.query['openDurationOption'] + '&pendingDurationOption=' + req.query['pendingDurationOption'] + '&cancelledDurationOption=' + req.query['cancelledDurationOption']);
+        return res.redirect('/api/items/start/' + req.params.start + '/userId/' + user.id + '?sellingpageItemOption=Cancelled&openDurationOption=' + req.query['openDurationOption'] + '&pendingDurationOption=' + req.query['pendingDurationOption'] + '&cancelledDurationOption=' + req.query['cancelledDurationOption']);
       }
 
       var itemsOffsetCancelled = req.session.itemsSellingAccountOffset;
@@ -1280,7 +1222,7 @@ router.get('/user/sell/list/start/:start', function (req, res) {
     //
     // //check whether sellingList session is set
     // if (sellingList === null || sellingList === undefined) {
-    //     res.redirect('/api/items/start/' + req.params.start + '/userId/' + user.id);
+    //     return res.redirect('/api/items/start/' + req.params.start + '/userId/' + user.id);
     // }
 
     // var itemsOffset = req.session.itemsSellingAccountOffset;
@@ -1365,7 +1307,7 @@ router.get('/user/sell/list/start/:start', function (req, res) {
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path + "?sellingpageItemOption=Open&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=1";
-    res.redirect('/user/login?action=login');
+    return res.redirect('/user/login?action=login');
   }
 });
 
@@ -1382,7 +1324,7 @@ router.get('/user/buy/list/start/:start', function (req, res) {
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path + '?buyingpageItemOption=Open&openDurationOption=' + req.query['openDurationOption'] + '&pendingDurationOption=' + req.query['pendingDurationOption'] + '&cancelledDurationOption=' + req.query['cancelledDurationOption'];
     if (commodityNames === null || commodityNames === undefined) {
-      res.redirect('/api/commodity/names');
+      return res.redirect('/api/commodity/names');
     }
 
     var notifications = req.session.notifications;
@@ -1390,10 +1332,10 @@ router.get('/user/buy/list/start/:start', function (req, res) {
     //check whether notification session is set.
     if (req.isAuthenticated()) {
       if (notifications === null || notifications === undefined) {
-        res.redirect('/api/notification/userId/' + req.user.id);
+        return res.redirect('/api/notification/userId/' + req.user.id);
       }
       if (messages === null || messages === undefined) {
-        res.redirect('/api/messages/userId/' + req.user.id);
+        return res.redirect('/api/messages/userId/' + req.user.id);
       }
     }
 
@@ -1408,7 +1350,7 @@ router.get('/user/buy/list/start/:start', function (req, res) {
 
       //check whether biddinglist session is set
       if (req.session.buyingListOpen === null || req.session.buyingListOpen === undefined) {
-        res.redirect('/api/bid/start/' + req.params.start + '/userId/' + user.id + '?buyingpageItemOption=Open&openDurationOption=' + req.query['openDurationOption'] + '&pendingDurationOption=' + req.query['pendingDurationOption'] + '&cancelledDurationOption=' + req.query['cancelledDurationOption']);
+        return res.redirect('/api/bid/start/' + req.params.start + '/userId/' + user.id + '?buyingpageItemOption=Open&openDurationOption=' + req.query['openDurationOption'] + '&pendingDurationOption=' + req.query['pendingDurationOption'] + '&cancelledDurationOption=' + req.query['cancelledDurationOption']);
       }
 
       var biddingsOffsetOpen = req.session.itemsBuyingAccountOffset;
@@ -1430,7 +1372,7 @@ router.get('/user/buy/list/start/:start', function (req, res) {
 
       //check whether biddinglist session is set
       if (req.session.buyingListPending === null || req.session.buyingListPending === undefined) {
-        res.redirect('/api/bid/start/' + req.params.start + '/userId/' + user.id + '?buyingpageItemOption=Pending&openDurationOption=' + req.query['openDurationOption'] + '&pendingDurationOption=' + req.query['pendingDurationOption'] + '&cancelledDurationOption=' + req.query['cancelledDurationOption']);
+        return res.redirect('/api/bid/start/' + req.params.start + '/userId/' + user.id + '?buyingpageItemOption=Pending&openDurationOption=' + req.query['openDurationOption'] + '&pendingDurationOption=' + req.query['pendingDurationOption'] + '&cancelledDurationOption=' + req.query['cancelledDurationOption']);
       }
 
       var biddingsOffsetPending = req.session.itemsBuyingAccountOffset;
@@ -1452,7 +1394,7 @@ router.get('/user/buy/list/start/:start', function (req, res) {
 
       //check whether biddinglist session is set
       if (req.session.buyingListCancelled === null || req.session.buyingListCancelled === undefined) {
-        res.redirect('/api/bid/start/' + req.params.start + '/userId/' + user.id + '?buyingpageItemOption=Cancelled&openDurationOption=' + req.query['openDurationOption'] + '&pendingDurationOption=' + req.query['pendingDurationOption'] + '&cancelledDurationOption=' + req.query['cancelledDurationOption']);
+        return res.redirect('/api/bid/start/' + req.params.start + '/userId/' + user.id + '?buyingpageItemOption=Cancelled&openDurationOption=' + req.query['openDurationOption'] + '&pendingDurationOption=' + req.query['pendingDurationOption'] + '&cancelledDurationOption=' + req.query['cancelledDurationOption']);
       }
 
       var biddingsOffsetCancelled = req.session.itemsBuyingAccountOffset;
@@ -1548,7 +1490,7 @@ router.get('/user/buy/list/start/:start', function (req, res) {
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path + "?buyingpageItemOption=Open&openDurationOption=1&pendingDurationOption=1&cancelledDurationOption=1";
-    res.redirect('/user/login?action=login');
+    return res.redirect('/user/login?action=login');
   }
 });
 
@@ -1573,12 +1515,12 @@ router.get('/user/sell/bids/start/:start', function (req, res) {
 
     //check whether biddingList session is set
     if (biddingDetails === null || biddingDetails === undefined) {
-      res.redirect('/api/bid/start/' + req.params.start + '/itemId/' + itemId);
+      return res.redirect('/api/bid/start/' + req.params.start + '/itemId/' + itemId);
     }
 
     //check whether user warehouses are set
     if (userwarehousesSell == null || userwarehousesSell == undefined) {
-      res.redirect('/api/user/sell/warehouses/userId/' + user.id + '/itemId/' + itemId);
+      return res.redirect('/api/user/sell/warehouses/userId/' + user.id + '/itemId/' + itemId);
     }
 
     //get currency & measure units
@@ -1588,7 +1530,7 @@ router.get('/user/sell/bids/start/:start', function (req, res) {
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path + "?itemId=" + itemId;
     if (commodityNames === null || commodityNames === undefined) {
-      res.redirect('/api/commodity/names');
+      return res.redirect('/api/commodity/names');
     }
 
     var notifications = req.session.notifications;
@@ -1596,10 +1538,10 @@ router.get('/user/sell/bids/start/:start', function (req, res) {
     //check whether notification session is set.
     if (req.isAuthenticated()) {
       if (notifications === null || notifications === undefined) {
-        res.redirect('/api/notification/userId/' + req.user.id);
+        return res.redirect('/api/notification/userId/' + req.user.id);
       }
       if (messages === null || messages === undefined) {
-        res.redirect('/api/messages/userId/' + req.user.id);
+        return res.redirect('/api/messages/userId/' + req.user.id);
       }
     }
 
@@ -1649,7 +1591,7 @@ router.get('/user/sell/bids/start/:start', function (req, res) {
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path;
-    res.redirect('/user/login?action=login');
+    return res.redirect('/user/login?action=login');
   }
 });
 
@@ -1672,12 +1614,12 @@ router.get('/user/sell/edit', function (req, res) {
 
     //check whether BiddingItem session is set
     if (specificBiddingItemSell === null || specificBiddingItemSell === undefined) {
-      res.redirect('/api/items/sell/id/' + itemId);
+      return res.redirect('/api/items/sell/id/' + itemId);
     }
 
     //check whether user warehouses are set
     if (userwarehousesSell == null || userwarehousesSell == undefined) {
-      res.redirect('/api/user/sell/warehouses/userId/' + user.id + '/itemId/' + itemId);
+      return res.redirect('/api/user/sell/warehouses/userId/' + user.id + '/itemId/' + itemId);
     }
 
     //this will be needed to populate commodity names in top menu
@@ -1685,7 +1627,7 @@ router.get('/user/sell/edit', function (req, res) {
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
-      res.redirect('/api/commodity/names');
+      return res.redirect('/api/commodity/names');
     }
 
     var notifications = req.session.notifications;
@@ -1693,10 +1635,10 @@ router.get('/user/sell/edit', function (req, res) {
     //check whether notification session is set.
     if (req.isAuthenticated()) {
       if (notifications === null || notifications === undefined) {
-        res.redirect('/api/notification/userId/' + req.user.id);
+        return res.redirect('/api/notification/userId/' + req.user.id);
       }
       if (messages === null || messages === undefined) {
-        res.redirect('/api/messages/userId/' + req.user.id);
+        return res.redirect('/api/messages/userId/' + req.user.id);
       }
     }
 
@@ -1724,7 +1666,7 @@ router.get('/user/sell/edit', function (req, res) {
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path;
-    res.redirect('/user/login?action=login');
+    return res.redirect('/user/login?action=login');
   }
 });
 
@@ -1747,7 +1689,7 @@ router.get('/user/buy/contract/id/:id', function (req, res) {
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path + '?bidId=' + req.session.bidIdContract;
     if (commodityNames === null || commodityNames === undefined) {
-      res.redirect('/api/commodity/names');
+      return res.redirect('/api/commodity/names');
     }
 
     var notifications = req.session.notifications;
@@ -1755,21 +1697,21 @@ router.get('/user/buy/contract/id/:id', function (req, res) {
     //check whether notification session is set.
     if (req.isAuthenticated()) {
       if (notifications === null || notifications === undefined) {
-        res.redirect('/api/notification/userId/' + req.user.id);
+        return res.redirect('/api/notification/userId/' + req.user.id);
       }
       if (messages === null || messages === undefined) {
-        res.redirect('/api/messages/userId/' + req.user.id);
+        return res.redirect('/api/messages/userId/' + req.user.id);
       }
     }
 
     //check whether contractedItem session is set
     if (buyContractItem === null || buyContractItem === undefined) {
-      res.redirect('/api/items/contract/id/' + itemId);
+      return res.redirect('/api/items/contract/id/' + itemId);
     }
 
     //check whether contractBid session is set
     if (buyContractBid === null || buyContractBid === undefined) {
-      res.redirect('/api/bid/contract/userId/' + user.id + '/bidId/' + req.session.bidIdContract + '/itemId/' + itemId);
+      return res.redirect('/api/bid/contract/userId/' + user.id + '/bidId/' + req.session.bidIdContract + '/itemId/' + itemId);
     }
 
     req.session.buyContractItem = null;
@@ -1794,7 +1736,7 @@ router.get('/user/buy/contract/id/:id', function (req, res) {
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path;
-    res.redirect('/user/login?action=login');
+    return res.redirect('/user/login?action=login');
   }
 });
 
@@ -1813,12 +1755,12 @@ router.get('/user/sell/contract/bidId/:bidId', function (req, res) {
 
     // //check whether contractedItem session is set
     // if (sellContractItem === null || sellContractItem === undefined) {
-    //   res.redirect('/api/items/sellcontract/id/'+itemId+'/bidId/'+bidId);
+    //   return res.redirect('/api/items/sellcontract/id/'+itemId+'/bidId/'+bidId);
     // }
 
     //check whether contractBid session is set
     if (sellContractBid === null || sellContractBid === undefined) {
-      res.redirect('/api/bid/sellcontract/bidId/' + bidId);
+      return res.redirect('/api/bid/sellcontract/bidId/' + bidId);
     }
 
     //this will be needed to populate commodity names in top menu
@@ -1826,7 +1768,7 @@ router.get('/user/sell/contract/bidId/:bidId', function (req, res) {
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
-      res.redirect('/api/commodity/names');
+      return res.redirect('/api/commodity/names');
     }
 
     var notifications = req.session.notifications;
@@ -1834,10 +1776,10 @@ router.get('/user/sell/contract/bidId/:bidId', function (req, res) {
     //check whether notification session is set.
     if (req.isAuthenticated()) {
       if (notifications === null || notifications === undefined) {
-        res.redirect('/api/notification/userId/' + req.user.id);
+        return res.redirect('/api/notification/userId/' + req.user.id);
       }
       if (messages === null || messages === undefined) {
-        res.redirect('/api/messages/userId/' + req.user.id);
+        return res.redirect('/api/messages/userId/' + req.user.id);
       }
     }
 
@@ -1862,7 +1804,7 @@ router.get('/user/sell/contract/bidId/:bidId', function (req, res) {
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path;
-    res.redirect('/user/login?action=login');
+    return res.redirect('/user/login?action=login');
   }
 });
 
@@ -1879,7 +1821,7 @@ router.get('/user/forgotpassword', function (req, res) {
   //check whether commodityNames session is set
   req.session.returnToCommodityName = req.path;
   if (commodityNames === null || commodityNames === undefined) {
-    res.redirect('/api/commodity/names');
+    return res.redirect('/api/commodity/names');
   }
 
   var notifications = req.session.notifications;
@@ -1887,10 +1829,10 @@ router.get('/user/forgotpassword', function (req, res) {
   //check whether notification session is set.
   if (req.isAuthenticated()) {
     if (notifications === null || notifications === undefined) {
-      res.redirect('/api/notification/userId/' + req.user.id);
+      return res.redirect('/api/notification/userId/' + req.user.id);
     }
     if (messages === null || messages === undefined) {
-      res.redirect('/api/messages/userId/' + req.user.id);
+      return res.redirect('/api/messages/userId/' + req.user.id);
     }
   }
 
@@ -1922,7 +1864,7 @@ router.get('/user/forgotpassword/entercode', function (req, res) {
   //check whether commodityNames session is set
   req.session.returnToCommodityName = req.path;
   if (commodityNames === null || commodityNames === undefined) {
-    res.redirect('/api/commodity/names');
+    return res.redirect('/api/commodity/names');
   }
 
   var notifications = req.session.notifications;
@@ -1930,10 +1872,10 @@ router.get('/user/forgotpassword/entercode', function (req, res) {
   //check whether notification session is set.
   if (req.isAuthenticated()) {
     if (notifications === null || notifications === undefined) {
-      res.redirect('/api/notification/userId/' + req.user.id);
+      return res.redirect('/api/notification/userId/' + req.user.id);
     }
     if (messages === null || messages === undefined) {
-      res.redirect('/api/messages/userId/' + req.user.id);
+      return res.redirect('/api/messages/userId/' + req.user.id);
     }
   }
 
@@ -1966,7 +1908,7 @@ router.get('/items/preview', function (req, res) {
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
-      res.redirect('/api/commodity/names');
+      return res.redirect('/api/commodity/names');
     }
 
     var notifications = req.session.notifications;
@@ -1974,10 +1916,10 @@ router.get('/items/preview', function (req, res) {
     //check whether notification session is set.
     if (req.isAuthenticated()) {
       if (notifications === null || notifications === undefined) {
-        res.redirect('/api/notification/userId/' + req.user.id);
+        return res.redirect('/api/notification/userId/' + req.user.id);
       }
       if (messages === null || messages === undefined) {
-        res.redirect('/api/messages/userId/' + req.user.id);
+        return res.redirect('/api/messages/userId/' + req.user.id);
       }
     }
 
@@ -1998,7 +1940,7 @@ router.get('/items/preview', function (req, res) {
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path;
-    res.redirect('/user/login?action=login');
+    return res.redirect('/user/login?action=login');
   }
 
 });
@@ -2016,7 +1958,7 @@ router.get('/user/resetpassword', function (req, res) {
   //check whether commodityNames session is set
   req.session.returnToCommodityName = req.path;
   if (commodityNames === null || commodityNames === undefined) {
-    res.redirect('/api/commodity/names');
+    return res.redirect('/api/commodity/names');
   }
 
   var notifications = req.session.notifications;
@@ -2024,10 +1966,10 @@ router.get('/user/resetpassword', function (req, res) {
   //check whether notification session is set.
   if (req.isAuthenticated()) {
     if (notifications === null || notifications === undefined) {
-      res.redirect('/api/notification/userId/' + req.user.id);
+      return res.redirect('/api/notification/userId/' + req.user.id);
     }
     if (messages === null || messages === undefined) {
-      res.redirect('/api/messages/userId/' + req.user.id);
+      return res.redirect('/api/messages/userId/' + req.user.id);
     }
   }
 
@@ -2063,7 +2005,7 @@ router.get('/user/messages/id/:id', function (req, res) {
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
-      res.redirect('/api/commodity/names');
+      return res.redirect('/api/commodity/names');
     }
 
     var notifications = req.session.notifications;
@@ -2071,13 +2013,13 @@ router.get('/user/messages/id/:id', function (req, res) {
     //check whether notification session is set.
     if (req.isAuthenticated()) {
       if (messageDetails === null || messageDetails === undefined) {
-        res.redirect('/api/messages/update/id/' + req.params.id);
+        return res.redirect('/api/messages/update/id/' + req.params.id);
       }
       if (notifications === null || notifications === undefined) {
-        res.redirect('/api/notification/userId/' + req.user.id);
+        return res.redirect('/api/notification/userId/' + req.user.id);
       }
       if (messages === null || messages === undefined) {
-        res.redirect('/api/messages/userId/' + req.user.id);
+        return res.redirect('/api/messages/userId/' + req.user.id);
       }
     }
 
@@ -2099,7 +2041,7 @@ router.get('/user/messages/id/:id', function (req, res) {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path;
     req.session.inCorrectLoginPath = req.path;
-    res.redirect('/user/login?action=login');
+    return res.redirect('/user/login?action=login');
   }
 });
 
@@ -2113,7 +2055,7 @@ router.get('/user/inbox', function (req, res) {
 
   if(user === undefined) {
     req.session.returnTo = req.path;
-    res.redirect('/user/login?action=login');
+    return res.redirect('/user/login?action=login');
   }
 
   var inboxMessages = req.session.inboxMessages;
@@ -2123,7 +2065,7 @@ router.get('/user/inbox', function (req, res) {
   //check whether commodityNames session is set
   req.session.returnToCommodityName = req.path;
   if (commodityNames === null || commodityNames === undefined) {
-    res.redirect('/api/commodity/names');
+    return res.redirect('/api/commodity/names');
   }
 
   var notifications = req.session.notifications;
@@ -2131,13 +2073,13 @@ router.get('/user/inbox', function (req, res) {
   //check whether notification session is set.
   if (req.isAuthenticated()) {
     if (inboxMessages === null || inboxMessages === undefined) {
-      res.redirect('/api/messages/inbox/userId/' + user.id);
+      return res.redirect('/api/messages/inbox/userId/' + user.id);
     }
     if (notifications === null || notifications === undefined) {
-      res.redirect('/api/notification/userId/' + req.user.id);
+      return res.redirect('/api/notification/userId/' + req.user.id);
     }
     if (messages === null || messages === undefined) {
-      res.redirect('/api/messages/userId/' + req.user.id);
+      return res.redirect('/api/messages/userId/' + req.user.id);
     }
   }
 
@@ -2168,7 +2110,7 @@ router.get('/user/sent', function (req, res) {
   //check whether commodityNames session is set
   req.session.returnToCommodityName = req.path;
   if (commodityNames === null || commodityNames === undefined) {
-    res.redirect('/api/commodity/names');
+    return res.redirect('/api/commodity/names');
   }
 
   var notifications = req.session.notifications;
@@ -2176,13 +2118,13 @@ router.get('/user/sent', function (req, res) {
   //check whether notification session is set.
   if (req.isAuthenticated()) {
     if (sentMessages === null || sentMessages === undefined) {
-      res.redirect('/api/messages/sent/userId/' + user.id);
+      return res.redirect('/api/messages/sent/userId/' + user.id);
     }
     if (notifications === null || notifications === undefined) {
-      res.redirect('/api/notification/userId/' + req.user.id);
+      return res.redirect('/api/notification/userId/' + req.user.id);
     }
     if (messages === null || messages === undefined) {
-      res.redirect('/api/messages/userId/' + req.user.id);
+      return res.redirect('/api/messages/userId/' + req.user.id);
     }
   }
 

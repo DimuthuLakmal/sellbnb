@@ -4,7 +4,9 @@ module.exports = function (sequelize, DataTypes) {
         message: DataTypes.TEXT,
         seen: DataTypes.BOOLEAN,
     }, {
-        // Define Associations for User table here.
+      charset: 'utf8',
+      collate: 'utf8_unicode_ci',
+      // Define Associations for User table here.
         classMethods: {
             associate: function (models) {
                 MessageReply.belongsTo(models.User);

@@ -12,7 +12,9 @@ module.exports = function (sequelize, DataTypes) {
         specification: DataTypes.TEXT,
         hits: DataTypes.INTEGER,
     }, {
-        // Define Associations for Commodity Table here.
+      charset: 'utf8',
+      collate: 'utf8_unicode_ci',
+      // Define Associations for Commodity Table here.
         classMethods: {
             associate: function (models) {
                 Commodity.hasMany(models.CommodityParameter);

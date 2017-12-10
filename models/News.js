@@ -15,7 +15,9 @@ module.exports = function (sequelize, DataTypes) {
         thumbnail: DataTypes.STRING,
         keywords: DataTypes.TEXT,
     }, {
-        // Define Associations for News table here.
+      charset: 'utf8',
+      collate: 'utf8_unicode_ci',
+      // Define Associations for News table here.
         classMethods: {
             associate: function (models) {
                 News.belongsTo(models.User);

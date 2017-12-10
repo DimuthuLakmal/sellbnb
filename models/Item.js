@@ -23,7 +23,9 @@ module.exports = function (sequelize, DataTypes) {
         origin: DataTypes.TEXT,
         commodityDesc: DataTypes.TEXT,
     }, {
-        // Define Associations for Item table here.
+      charset: 'utf8',
+      collate: 'utf8_unicode_ci',
+      // Define Associations for Item table here.
         classMethods: {
             associate: function (models) {
                 Item.belongsTo(models.User);

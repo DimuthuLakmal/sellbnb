@@ -11,6 +11,8 @@ module.exports = function (sequelize, DataTypes) {
     medium: DataTypes.STRING,
     note: DataTypes.STRING,
   }, {
+    charset: 'utf8',
+    collate: 'utf8_unicode_ci',
     classMethods: {
       associate: function (models) {
         Offer.belongsTo(models.Item);

@@ -9,7 +9,6 @@ var bcrypt = require('bcryptjs');
 var salt = bcrypt.genSaltSync(10);
 var fs = require('fs');
 var path = require('path');
-const sgAPI = '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';
 
 //local strategy use verifyCredentials
 passport.use(new passportLocal.Strategy(verifyCredentials));

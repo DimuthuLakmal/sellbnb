@@ -6,7 +6,9 @@ module.exports = function (sequelize, DataTypes) {
     var TradingCommodity = sequelize.define('TradingCommodity', {
         buyOrSell: DataTypes.INTEGER,
     }, {
-        // Define Associations for Trading Commodity table here.
+      charset: 'utf8',
+      collate: 'utf8_unicode_ci',
+      // Define Associations for Trading Commodity table here.
         classMethods: {
             associate: function (models) {
                 TradingCommodity.belongsTo(models.User);
