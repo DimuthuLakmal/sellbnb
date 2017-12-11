@@ -522,7 +522,7 @@ router.post('/businessImages', function (req, res) {
       var User = models.User;
       User.findAll({where: {id: userId}}).then(function (users) {
         var bi = [];
-        if (users[0].business_images !== null && users[0].business_images != '') {
+        if (users[0].business_images !== null && users[0].business_images !== '') {
           bi = JSON.parse(users[0].business_images);
         }
         bi.push(imageURL);

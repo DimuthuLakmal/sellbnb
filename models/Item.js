@@ -17,7 +17,7 @@ module.exports = function (sequelize, DataTypes) {
         note: DataTypes.STRING,
         status: DataTypes.STRING,
         duration: DataTypes.INTEGER,
-        loadTime: DataTypes.INTEGER,
+        loadTime: DataTypes.STRING,
         hits: DataTypes.INTEGER,
         thumbnail: DataTypes.TEXT,
         origin: DataTypes.TEXT,

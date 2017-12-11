@@ -45,45 +45,44 @@
     <!-- Titlebar
     ================================================== -->
     <!--<section class="titlebar">-->
-        <!--<div class="container">-->
-            <!--<div class="sixteen columns">-->
-                <!--<h2>User Profile</h2>-->
+    <!--<div class="container">-->
+    <!--<div class="sixteen columns">-->
+    <!--<h2>User Profile</h2>-->
 
-                <!--<nav id="breadcrumbs">-->
-                    <!--<ul>-->
-                        <!--<li><a href="#">Home</a></li>-->
-                        <!--<li><a href="#">Products</a></li>-->
-                        <!--<li><a href="#">User Profile</a></li>-->
-                    <!--</ul>-->
-                <!--</nav>-->
-            <!--</div>-->
-        <!--</div>-->
+    <!--<nav id="breadcrumbs">-->
+    <!--<ul>-->
+    <!--<li><a href="#">Home</a></li>-->
+    <!--<li><a href="#">Products</a></li>-->
+    <!--<li><a href="#">User Profile</a></li>-->
+    <!--</ul>-->
+    <!--</nav>-->
+    <!--</div>-->
+    <!--</div>-->
     <!--</section>-->
-<div class="row"></div>
+    <% if (userPublicInformation.mailingddress1 != null) {
+        var address = userPublicInformation.mailingddress1;
+        if (userPublicInformation.mailingddress2 != '') {
+            address += ', ' + userPublicInformation.mailingddress2;
+        }
+        if (userPublicInformation.mailingCity != '') {
+            address += ', ' + userPublicInformation.mailingCity;
+        }
+    }
+    %>
+
+    <div class="row" style="text-align: center; background-color: #003953;">
+        <h1 style="color: white"> <%= userPublicInformation.company_name || userPublicInformation.username %></h1>
+        <span style="color:white;"> <%= address %></span>
+    </div>
+    <div class="row"></div>
     <!-- Parallax Banner
     ================================================== -->
-    <div class="parallax-banner fullwidth-element" data-background="#000" data-opacity="0.4" data-height="200">
+    <!--<div class="parallax-banner fullwidth-element" data-background="#000" data-opacity="0.4" data-height="200">-->
 
-        <% if(userPublicInformation.logo != null && userPublicInformation.logo != '' && userPublicInformation.logo != undefined) { %>
-        <img src="uploads/logo/<%= userPublicInformation.logo %>" alt="" id="company-logo" style="width: 100%"/>
-        <% } else { %>
-        <img src="images/parallax_03.jpg" alt="" id="company-logo"/>
-        <% } %>
-        <div class="parallax-overlay"></div>
-        <% if (userPublicInformation.mailingddress1 != null) {
-            var address = userPublicInformation.mailingddress1;
-            if (userPublicInformation.mailingddress2 != '') {
-                address += ', ' + userPublicInformation.mailingddress2;
-            }
-            if (userPublicInformation.mailingCity != '') {
-                address += ', ' + userPublicInformation.mailingCity;
-            }
-        }
-        %>
-        <div class="parallax-title"><%= userPublicInformation.company_name %> <span><%= address %></span></div>
-    </div>
+    <!--<div class="parallax-overlay"></div>-->
 
-    <div class="margin-top-40"></div>
+
+    <!--<div class="margin-top-40"></div>-->
 
     <div class="container">
 
@@ -98,31 +97,6 @@
                  style="width: 100%"/>
             <% } %>
             <!--contact table-->
-            <table class="basic-table">
-                <tr>
-                    <th>Name</th>
-                    <td><%= userPublicInformation.company_name %></td>
-                </tr>
-
-                <tr>
-                    <th> Warehouse Address</th>
-                    <% var warehouses = userContactInformation.WareHouses %>
-                    <td>
-                        <% for(var warehouseIndex = 0; warehouseIndex < warehouses.length; warehouseIndex++) {
-                            var address = warehouses[warehouseIndex].warehouseAddress1;
-                            if (warehouses[warehouseIndex].warehouseAddress2 != '' && warehouses[warehouseIndex].warehouseAddress2 != null) {
-                                address += ', ' + warehouses[warehouseIndex].warehouseAddress2;
-                            }
-                            if (warehouses[warehouseIndex].warehouseCity != '' && warehouses[warehouseIndex].warehouseCity != null) {
-                                address += ', ' + warehouses[warehouseIndex].warehouseCity;
-                            }
-                        %>
-                        <%= address %>
-                        <% } %>
-                    </td>
-                </tr>
-
-            </table>
             <div class="row">
                 <a href="#message-dialog" class="popup-with-zoom-anim button color margin-left-0" style="width: 90%">Send
                     Message</a>
@@ -132,9 +106,10 @@
                     <!-- Form -->
                     <form id="add-comment" class="add-comment" action="/api/messages/add" method="POST">
                         <fieldset>
-                            <input type="hidden" name="returnTo" value="/user/public/userId/<%= userPublicInformation.id %>" />
+                            <input type="hidden" name="returnTo"
+                                   value="/user/public/userId/<%= userPublicInformation.id %>"/>
                             <input type="hidden" name="receiverUserIdFk" value="<%= userPublicInformation.id %>"/>
-                            <input type="hidden" name="senderUserIdFk" value="<%= user.id  %>"/>
+                            <input type="hidden" name="senderUserIdFk" value="<%= user.id %>"/>
                             <div class="twelve alpha columns editform">
                                 <label>Subject:</label>
                                 <input type="text" name="subject" placeholder="Type message subject"/>
@@ -160,15 +135,16 @@
             <span class="line margin-bottom-0"></span>
 
             <div class="sixteen columns" style="float: left; display: inline-flex; overflow-x: auto;">
-            <% var imgLst = JSON.parse(userPublicInformation.business_images != null && userPublicInformation.business_images != '' ? userPublicInformation.business_images : '[]') %>
-            <% for(var x = 0; x < imgLst.length; x++) { %>
-            <img style="height: 200px;" src="uploads/businessImages/<%= imgLst[x] %>" alt="">
-            <% } %>
+                <% var imgLst = JSON.parse(userPublicInformation.business_images != null && userPublicInformation.business_images != '' ? userPublicInformation.business_images : '[]') %>
+                <% for(var x = 0; x < imgLst.length; x++) { %>
+                <img style="height: 200px;" src="uploads/businessImages/<%= imgLst[x] %>" alt="">
+                <% } %>
             </div>
             <br>
             <br>
         </div>
     </div>
+    <% if(userPublicCurrentListing.length > 0){ %>
     <div class="container">
         <div class="container margin-top-5">
             <br><br><br>
@@ -239,6 +215,7 @@
         </div>
     </div>
     <!-- Related Products -->
+    <% } %>
 
     <div class="margin-top-50"></div>
 

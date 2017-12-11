@@ -100,19 +100,6 @@
         ================================================== -->
 
         <div class="twelve columns products">
-
-            <!-- Headline Business Logo-->
-            <h3 class="headline">Company Logo</h3><span class="line margin-bottom-30"></span>
-            <div class="clearfix"></div>
-            <% if(user.logo != null && user.logo != '' && user.logo != undefined) { %>
-            <img src="uploads/logo/<%= user.logo %>" alt="" id="company-logo"/>
-            <% } else { %>
-            <img src="images/titlebar_bg_02.jpg" alt="" id="company-logo"/>
-            <% } %>
-            <input type="hidden" id="userId" value="<%= user.id %>"/>
-            <input type="file" name="fileToUpload" id="fileToUpload" style="display: none">
-            <a style="color:#2db2ea;float: right; margin-top:10px" id="logo-upload">Upload New Image</a></td>
-
             <br><br>
             <!--Bussiness Image upload-->
 
@@ -123,6 +110,7 @@
             <% } else { %>
             <p>You don't have upload any photo yet.</p>
             <% } %>
+            <input type="hidden" value="<%= user.id %>" id="userId">
             <input id="imageFile" name="imageFile[]" type="file" style="display: none" multiple/>
             <a style="color:#2db2ea;float: right; margin-top:10px" id="images-upload">Upload New Image</a></td>
 

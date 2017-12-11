@@ -19,7 +19,7 @@ router.get('/code/:code', function (req, res) {
             Country.findAll({
                 where: {code: code},
             }).then(function (Countries) {
-                res.jsonp(Countries[0].dataValues);
+                res.jsonp(Countries[0] ? Countries[0].dataValues : {});
             });
         }
     );
