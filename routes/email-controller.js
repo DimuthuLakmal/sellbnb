@@ -15,7 +15,7 @@ module.exports.sendEmail = function (data, locals) {
   });
   const email = new Email({
     message: {
-      from: 'antcommodity@gmail.com'
+      from: 'toprankz123@gmail.com'
     },
     send: true,
     transport: ndmlTransporter,
