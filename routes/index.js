@@ -2169,6 +2169,11 @@ router.get('/help', function (req, res) {
     user: user,
   });
 });
+
+router.get('/news', function (req, res) {
+  res.redirect('/news/start/0?category=all&keyword=all');
+});
+
 router.get('/my_hidden_links', function (req, res) {
   removeSessionParameters(req);
   var user = req.user;

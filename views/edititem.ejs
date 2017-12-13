@@ -30,8 +30,8 @@
     <!-- CSS
     ================================================== -->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/colors/blue.css" id="colors">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/colors/blue.css" id="colors">
 
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -44,42 +44,7 @@
 
     <% include header.ejs %>
 
-    <!-- Titlebar
-    ================================================== -->
-    <!--<section class="parallax-titlebar fullwidth-element" data-background="#000" data-opacity="0.45" data-height="160">-->
-
-        <!--<img src="images/titlebar_bg_02.jpg" alt=""/>-->
-        <!--<div class="parallax-overlay"></div>-->
-
-        <!--<div class="parallax-content">-->
-            <!--<h2><%= item.title %> <span>Bidding Details</span></h2>-->
-
-            <!--<nav id="breadcrumbs">-->
-                <!--<ul>-->
-                    <!--<li>Home</li>-->
-                    <!--<li>Sell Account</li>-->
-                    <!--<li>Bidding Details</li>-->
-                <!--</ul>-->
-            <!--</nav>-->
-        <!--</div>-->
-    <!--</section>-->
-<div class="row"></div>
     <div class="container">
-
-
-        <!-- Content
-        ================================================== -->
-        <!--<div class="twelve columns">-->
-
-        <!--&lt;!&ndash; Search &ndash;&gt;-->
-        <!--<div class="item-search">-->
-        <!--<form action="#" method="get">-->
-        <!--<button><i class="fa fa-search"></i></button>-->
-        <!--<input class="search-field" type="text" placeholder="Search" value="" size="5" maxlength="4"/>-->
-        <!--</form>-->
-        <!--</div>-->
-
-        <!--</div>-->
 
         <div class="fourteen columns centered">
 
@@ -94,7 +59,7 @@
                         <div class="ten columns" id="imagepreview-div">
                             <% for(imageIndex = 0; imageIndex < item.ItemImages.length; imageIndex++) {%>
                             <div class="two columns">
-                                <img src="uploads/items/<%= item.ItemImages[imageIndex].url %>"
+                                <img src="/uploads/items/<%= item.ItemImages[imageIndex].url %>"
                                      alt="" style="width: 120px; height: 120px"/>
                                 <a href="#">(Remove)</a>
                             </div>
@@ -255,30 +220,30 @@
 ================================================== -->
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="scripts/jquery.jpanelmenu.js"></script>
-<script src="scripts/jquery.themepunch.plugins.min.js"></script>
-<script src="scripts/jquery.themepunch.revolution.min.js"></script>
-<script src="scripts/jquery.themepunch.showbizpro.min.js"></script>
-<script src="scripts/jquery.magnific-popup.min.js"></script>
-<script src="scripts/hoverIntent.js"></script>
-<script src="scripts/superfish.js"></script>
-<script src="scripts/jquery.pureparallax.js"></script>
-<script src="scripts/jquery.pricefilter.js"></script>
-<script src="scripts/jquery.selectric.min.js"></script>
-<script src="scripts/jquery.royalslider.min.js"></script>
-<script src="scripts/SelectBox.js"></script>
-<script src="scripts/modernizr.custom.js"></script>
-<script src="scripts/waypoints.min.js"></script>
-<script src="scripts/jquery.flexslider-min.js"></script>
-<script src="scripts/jquery.counterup.min.js"></script>
-<script src="scripts/jquery.tooltips.min.js"></script>
-<script src="scripts/jquery.isotope.min.js"></script>
-<script src="scripts/puregrid.js"></script>
-<script src="scripts/stacktable.js"></script>
-<script src="scripts/custom.js"></script>
+<script src="/scripts/jquery.jpanelmenu.js"></script>
+<script src="/scripts/jquery.themepunch.plugins.min.js"></script>
+<script src="/scripts/jquery.themepunch.revolution.min.js"></script>
+<script src="/scripts/jquery.themepunch.showbizpro.min.js"></script>
+<script src="/scripts/jquery.magnific-popup.min.js"></script>
+<script src="/scripts/hoverIntent.js"></script>
+<script src="/scripts/superfish.js"></script>
+<script src="/scripts/jquery.pureparallax.js"></script>
+<script src="/scripts/jquery.pricefilter.js"></script>
+<script src="/scripts/jquery.selectric.min.js"></script>
+<script src="/scripts/jquery.royalslider.min.js"></script>
+<script src="/scripts/SelectBox.js"></script>
+<script src="/scripts/modernizr.custom.js"></script>
+<script src="/scripts/waypoints.min.js"></script>
+<script src="/scripts/jquery.flexslider-min.js"></script>
+<script src="/scripts/jquery.counterup.min.js"></script>
+<script src="/scripts/jquery.tooltips.min.js"></script>
+<script src="/scripts/jquery.isotope.min.js"></script>
+<script src="/scripts/puregrid.js"></script>
+<script src="/scripts/stacktable.js"></script>
+<script src="/scripts/custom.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
-<script src="scripts/views/viewbiddingdetailsseller.js"></script>
-<script src="scripts/views/header_func.js"></script>
+<script src="/scripts/views/viewbiddingdetailsseller.js"></script>
+<script src="/scripts/views/header_func.js"></script>
 
 </body>
 </html>

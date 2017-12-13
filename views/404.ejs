@@ -7,13 +7,17 @@
     <!-- Global Site Tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107495910-1"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments)};
-        gtag('js', new Date());
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments)};
+      gtag('js', new Date());
 
-        gtag('config', 'UA-107495910-1');
+      gtag('config', 'UA-107495910-1');
     </script>
 
+    <%
+    if (typeof(message)== undefined)
+        var message = "";
+    %>
     <!-- Basic Page Needs
     ================================================== -->
     <meta charset="utf-8">
@@ -25,7 +29,6 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/colors/blue.css" id="colors">
 
@@ -40,39 +43,34 @@
 
     <% include header.ejs %>
 
-<div class="row"></div>
-    <div class="container">
+    <!-- Titlebar
+    ================================================== -->
+    <!--<section class="parallax-titlebar fullwidth-element" data-background="#000" data-opacity="0.2" data-height="160">-->
 
-        <!-- Content
-        ================================================== -->
-        <div class="twelve columns products centered">
-                <h3 class="headline">What do you want to sell?</h3><span class="line margin-bottom-30"></span><div class="clearfix"></div>
-                <!-- Search -->
-                <form action="/api/commodity/search" method="post">
-                    <input type="hidden" value="<%= user.id%>" name="userId">
-                    <div class="commodity-search">
-                        <button><i class="fa fa-search"></i></button>
-                        <input class="search-field" type="text" placeholder="Search Your Commodity" list="commodities" name="commodity"/>
-                        <datalist id="commodities">
-                            <% for(var commodityIndex = 0; commodityIndex < Commodities.length; commodityIndex++) {%>
-                            <option value="<%= Commodities[commodityIndex].name %>">
-                                <% } %>
-                        </datalist>
-                    </div>
-                    <button class="commoditysearch-nextbtn">Next</button>
-                </form>
+        <!--<img src="images/mini-slides/6.jpg" alt=""/>-->
+        <!--<div class="parallax-overlay"></div>-->
 
-                <h3 class="headline" style="margin-top: 50px">Recent Searches</h3><span class="line margin-bottom-30"></span><div class="clearfix"></div>
-                <nav class="tags">
-                    <% for(searchIndex = 0; searchIndex < recentSearches.length; searchIndex++) {%>
-                        <a href="/api/commodity/search/commodity/<%= recentSearches[searchIndex].DISTINCT %>/userId/<%= user.id%>"><%= recentSearches[searchIndex].DISTINCT %></a>
-                    <% } %>
-                </nav>
-            </div>
+        <!--<div class="parallax-content">-->
+            <!--<h2>Who We Are</h2>-->
+        <!--</div>-->
+    <!--</section>-->
 
+<div class="row" style="text-align: center; background-color: #003953;">
+    <h1 style="color: white">Page Not Found :(</h1>
+</div>
+    <!-- Content
+    ================================================== -->
+
+    <!-- Container -->
+    <div class="container" style="color:#000;">
+        <div class="four columns" style="visibility: hidden">a</div>
+        <div class="eight columns" style="font-size: 18px">
+            <img src="/images/404.jpg" alt="" style="width: 100%">
+        </div>
     </div>
 
     <div class="margin-top-50"></div>
+
 
     <!-- Footer
     ================================================== -->

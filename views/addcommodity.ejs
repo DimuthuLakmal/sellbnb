@@ -7,11 +7,13 @@
     <!-- Global Site Tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107495910-1"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments)};
-        gtag('js', new Date());
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments)
+      };
+      gtag('js', new Date());
 
-        gtag('config', 'UA-107495910-1');
+      gtag('config', 'UA-107495910-1');
     </script>
 
     <!-- Basic Page Needs
@@ -20,7 +22,7 @@
     <title>SellBnB</title>
 
     <!-- Mobile Specific Metas
-    ================================================== -->
+    ===================s=============================== -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <!-- CSS
@@ -39,50 +41,13 @@
 <div id="wrapper">
 
     <% include header.ejs %>
-
-
-    <!-- Titlebar
-    ================================================== -->
-    <!--<section class="parallax-titlebar fullwidth-element"  data-background="#000" data-opacity="0.45" data-height="160">-->
-
-        <!--<img src="images/titlebar_bg_02.jpg" alt="" />-->
-        <!--<div class="parallax-overlay"></div>-->
-
-        <!--<div class="parallax-content">-->
-            <!--<h2>User Account <span>Contact Details</span></h2>-->
-
-            <!--<nav id="breadcrumbs">-->
-                <!--<ul>-->
-                    <!--<li>Home</li>-->
-                    <!--<li>Account</li>-->
-                    <!--<li>Contact Details</li>-->
-                <!--</ul>-->
-            <!--</nav>-->
-        <!--</div>-->
-    <!--</section>-->
-<div class="row"></div>
+    <div class="row"></div>
     <div class="container">
 
         <!-- Sidebar
         ================================================== -->
         <div class="four columns">
-<div style="visibility: hidden;">a</div>
-            <!--&lt;!&ndash; Categories &ndash;&gt;-->
-            <!--<div class="widget margin-top-0">-->
-
-                <!--<ul id="categories">-->
-
-                    <!--<li><a href="#">Basic Account</a></li>-->
-                    <!--<li><a href="#">Contact Information</a></li>-->
-                    <!--<li><a href="#">Bank Account</a></li>-->
-                    <!--<li><a href="#">Business Information</a></li>-->
-                    <!--<li><a href="#">Notification Preferences</a></li>-->
-
-                <!--</ul>-->
-                <!--<div class="clearfix"></div>-->
-
-            <!--</div>-->
-
+            <div style="visibility: hidden;">a</div>
         </div>
 
 
@@ -126,27 +91,32 @@
 
                         <div class="twelve alpha columns bidform">
                             <label>Price Units : </label>
-                            <input name="price_unit" type="text" id="price_unit" placeholder="Price Unit 1, Price Unit 2, Price Unit 3"/>
+                            <input name="price_unit" type="text" id="price_unit"
+                                   placeholder="Price Unit 1, Price Unit 2, Price Unit 3"/>
                         </div>
 
                         <div class="twelve alpha columns bidform">
                             <label>Measure Unit : </label>
-                            <input name="measure_unit" type="text" id="measure_unit" placeholder="Measure Unit 1, Measure Unit 2, Measure Unit 3"/>
+                            <input name="measure_unit" type="text" id="measure_unit"
+                                   placeholder="Measure Unit 1, Measure Unit 2, Measure Unit 3"/>
                         </div>
 
                         <div class="twelve alpha columns bidform">
                             <label>Packing Type : </label>
-                            <input name="packing_type" type="text" id="packing_type" placeholder="Packing Type 1, Packing Type 2, Packing Type 3"/>
+                            <input name="packing_type" type="text" id="packing_type"
+                                   placeholder="Packing Type 1, Packing Type 2, Packing Type 3"/>
                         </div>
 
                         <div class="twelve alpha columns bidform">
                             <label>Alternative Names : </label>
-                            <input name="alternative_names" type="text" id="alternative_names" placeholder="Alternative Name 1, Alternative Name 2, Alternative Name 3"/>
+                            <input name="alternative_names" type="text" id="alternative_names"
+                                   placeholder="Alternative Name 1, Alternative Name 2, Alternative Name 3"/>
                         </div>
 
                         <div class="twelve alpha columns bidform">
                             <label>Specifications: </label>
-                            <textarea name="specification" cols="91" rows="3" id="specification" spellcheck="true" style="width: 97%"></textarea>
+                            <textarea name="specification" cols="91" rows="3" id="specification" spellcheck="true"
+                                      style="width: 97%"></textarea>
                         </div>
 
                         <div class="twelve alpha columns bidform">
@@ -160,7 +130,8 @@
                                 </thead>
                                 <tbody id="parameter-table-body"></tbody>
                             </table>
-                            <a class="popup-with-zoom-anim" href="#addparameter-dialog" style="color:#2db2ea; float: right">Add Parameters</a>
+                            <a class="popup-with-zoom-anim" href="#addparameter-dialog"
+                               style="color:#2db2ea; float: right">Add Parameters</a>
                         </div>
 
                         <div class="twelve columns bidform">
@@ -215,29 +186,29 @@
 ================================================== -->
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="scripts/jquery.jpanelmenu.js"></script>
-<script src="scripts/jquery.themepunch.plugins.min.js"></script>
-<script src="scripts/jquery.themepunch.revolution.min.js"></script>
-<script src="scripts/jquery.themepunch.showbizpro.min.js"></script>
-<script src="scripts/jquery.magnific-popup.min.js"></script>
-<script src="scripts/hoverIntent.js"></script>
-<script src="scripts/superfish.js"></script>
-<script src="scripts/jquery.pureparallax.js"></script>
-<script src="scripts/jquery.pricefilter.js"></script>
-<script src="scripts/jquery.selectric.min.js"></script>
-<script src="scripts/jquery.royalslider.min.js"></script>
-<script src="scripts/SelectBox.js"></script>
-<script src="scripts/modernizr.custom.js"></script>
-<script src="scripts/waypoints.min.js"></script>
-<script src="scripts/jquery.flexslider-min.js"></script>
-<script src="scripts/jquery.counterup.min.js"></script>
-<script src="scripts/jquery.tooltips.min.js"></script>
-<script src="scripts/jquery.isotope.min.js"></script>
-<script src="scripts/puregrid.js"></script>
-<script src="scripts/stacktable.js"></script>
-<script src="scripts/custom.js"></script>
-<script src="scripts/views/addcommodity.js"></script>
-<script src="scripts/views/header_func.js"></script>
+<script src="/scripts/jquery.jpanelmenu.js"></script>
+<script src="/scripts/jquery.themepunch.plugins.min.js"></script>
+<script src="/scripts/jquery.themepunch.revolution.min.js"></script>
+<script src="/scripts/jquery.themepunch.showbizpro.min.js"></script>
+<script src="/scripts/jquery.magnific-popup.min.js"></script>
+<script src="/scripts/hoverIntent.js"></script>
+<script src="/scripts/superfish.js"></script>
+<script src="/scripts/jquery.pureparallax.js"></script>
+<script src="/scripts/jquery.pricefilter.js"></script>
+<script src="/scripts/jquery.selectric.min.js"></script>
+<script src="/scripts/jquery.royalslider.min.js"></script>
+<script src="/scripts/SelectBox.js"></script>
+<script src="/scripts/modernizr.custom.js"></script>
+<script src="/scripts/waypoints.min.js"></script>
+<script src="/scripts/jquery.flexslider-min.js"></script>
+<script src="/scripts/jquery.counterup.min.js"></script>
+<script src="/scripts/jquery.tooltips.min.js"></script>
+<script src="/scripts/jquery.isotope.min.js"></script>
+<script src="/scripts/puregrid.js"></script>
+<script src="/scripts/stacktable.js"></script>
+<script src="/scripts/custom.js"></script>
+<script src="/scripts/views/addcommodity.js"></script>
+<script src="/scripts/views/header_func.js"></script>
 
 </body>
 </html>

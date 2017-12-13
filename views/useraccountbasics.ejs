@@ -25,9 +25,9 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="css/jquery-ui.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/colors/blue.css" id="colors">
+    <link rel="stylesheet" href="/css/jquery-ui.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/colors/blue.css" id="colors">
 
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -39,26 +39,6 @@
 <div id="wrapper">
 
     <% include header.ejs %>
-
-    <!-- Titlebar
-    ================================================== -->
-    <!--<section class="parallax-titlebar fullwidth-element"  data-background="#000" data-opacity="0.2" data-height="160">-->
-
-        <!--<img src="images/mini-slides/6.jpg" alt="" />-->
-        <!--<div class="parallax-overlay"></div>-->
-
-        <!--<div class="parallax-content">-->
-            <!--<h2>User <span>Basic Details</span></h2>-->
-
-            <!--<nav id="breadcrumbs">-->
-                <!--<ul>-->
-                    <!--<li>Home</li>-->
-                    <!--<li>User</li>-->
-                    <!--<li>Basic Details</li>-->
-                <!--</ul>-->
-            <!--</nav>-->
-        <!--</div>-->
-    <!--</section>-->
 <div class="row"></div>
     <div class="container">
 
@@ -105,7 +85,7 @@
                     <% if(user.profile_pic != null && user.profile_pic != '' && user.profile_pic != undefined) {%>
                     <img src="/uploads/profile_pic/<%= user.profile_pic %>" alt="" id="profile_pic"/>
                     <% } else { %>
-                    <img src="images/small_product_list_01.jpg" alt="" id="profile_pic"/>
+                    <img src="/images/small_product_list_01.jpg" alt="" id="profile_pic"/>
                     <% } %>
                     <a class="popup-with-zoom-anim" style="color:#2db2ea;" id="upload_image">
                         <% if(user.profile_pic != null && user.profile_pic != '' && user.profile_pic != undefined) {%>
@@ -305,31 +285,31 @@
 
 <!-- Java Script
 ================================================== -->
-<script src="scripts/jquery-1.11.0.min.js"></script>
-<script src="scripts/jquery-migrate-1.2.1.min.js"></script>
-<script src="scripts/jquery.jpanelmenu.js"></script>
-<script src="scripts/jquery.themepunch.plugins.min.js"></script>
-<script src="scripts/jquery.themepunch.revolution.min.js"></script>
-<script src="scripts/jquery.themepunch.showbizpro.min.js"></script>
-<script src="scripts/jquery.magnific-popup.min.js"></script>
-<script src="scripts/hoverIntent.js"></script>
-<script src="scripts/superfish.js"></script>
-<script src="scripts/jquery.pureparallax.js"></script>
-<script src="scripts/jquery.pricefilter.js"></script>
-<script src="scripts/jquery.selectric.min.js"></script>
-<script src="scripts/jquery.royalslider.min.js"></script>
-<script src="scripts/SelectBox.js"></script>
-<script src="scripts/modernizr.custom.js"></script>
-<script src="scripts/waypoints.min.js"></script>
-<script src="scripts/jquery.flexslider-min.js"></script>
-<script src="scripts/jquery.counterup.min.js"></script>
-<script src="scripts/jquery.tooltips.min.js"></script>
-<script src="scripts/jquery.isotope.min.js"></script>
-<script src="scripts/puregrid.js"></script>
-<script src="scripts/stacktable.js"></script>
-<script src="scripts/custom.js"></script>
-<script src="scripts/views/useraccountbasic.js"></script>
-<script src="scripts/views/header_func.js"></script>
+<script src="/scripts/jquery-1.11.0.min.js"></script>
+<script src="/scripts/jquery-migrate-1.2.1.min.js"></script>
+<script src="/scripts/jquery.jpanelmenu.js"></script>
+<script src="/scripts/jquery.themepunch.plugins.min.js"></script>
+<script src="/scripts/jquery.themepunch.revolution.min.js"></script>
+<script src="/scripts/jquery.themepunch.showbizpro.min.js"></script>
+<script src="/scripts/jquery.magnific-popup.min.js"></script>
+<script src="/scripts/hoverIntent.js"></script>
+<script src="/scripts/superfish.js"></script>
+<script src="/scripts/jquery.pureparallax.js"></script>
+<script src="/scripts/jquery.pricefilter.js"></script>
+<script src="/scripts/jquery.selectric.min.js"></script>
+<script src="/scripts/jquery.royalslider.min.js"></script>
+<script src="/scripts/SelectBox.js"></script>
+<script src="/scripts/modernizr.custom.js"></script>
+<script src="/scripts/waypoints.min.js"></script>
+<script src="/scripts/jquery.flexslider-min.js"></script>
+<script src="/scripts/jquery.counterup.min.js"></script>
+<script src="/scripts/jquery.tooltips.min.js"></script>
+<script src="/scripts/jquery.isotope.min.js"></script>
+<script src="/scripts/puregrid.js"></script>
+<script src="/scripts/stacktable.js"></script>
+<script src="/scripts/custom.js"></script>
+<script src="/scripts/views/useraccountbasic.js"></script>
+<script src="/scripts/views/header_func.js"></script>
 
 </body>
 </html>

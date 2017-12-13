@@ -95,31 +95,8 @@ $('.certificateremove').click(function () {
     $(this).next().next().submit();
 });
 
-
-$(function () {
-  $('#introductionEditor').froalaEditor({
-      height: '200px',
-//        toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'color', '|', 'undo', 'redo'],
-      // Colors list.
-      colorsBackground: [
-        '#15E67F', '#E3DE8C', '#D8A076', '#D83762', '#76B6D8', 'REMOVE',
-        '#1C7A90', '#249CB8', '#4ABED9', '#FBD75B', '#FBE571', '#FFFFFF'
-      ],
-      colorsDefaultTab: 'background',
-      colorsStep: 6,
-      colorsText: [
-        '#15E67F', '#E3DE8C', '#D8A076', '#D83762', '#76B6D8', 'REMOVE',
-        '#1C7A90', '#249CB8', '#4ABED9', '#FBD75B', '#FBE571', '#FFFFFF'
-      ],
-//        quickInsertButtons: ['ol', 'ul'],
-//      pluginsEnabled: ['quickInsert', 'lists'],
-//      quickInsertTags: ['h1', 'h2', 'h3', 'h4', 'blockquote']
-    }
-  )
-});
-
 $('#CompyIntroForm').submit(function() {
-  var htmlValues = $('#introductionEditor').froalaEditor('html.get', true);
+  var htmlValues = tinyMCE.get('editor').getContent();
   $('#introRawTxt').val(htmlValues);
 
 });

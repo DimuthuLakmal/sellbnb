@@ -72,22 +72,6 @@ app.use(passport.session());
 //---------------------------------------------------------------------
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/news/start', express.static(path.join(__dirname, 'public')));
-app.use('/news/id', express.static(path.join(__dirname, 'public')));
-app.use('/user', express.static(path.join(__dirname, 'public')));
-app.use('/commodity/add', express.static(path.join(__dirname, 'public')));
-app.use('/items', express.static(path.join(__dirname, 'public')));
-app.use('/items/add', express.static(path.join(__dirname, 'public')));
-app.use('/items/id', express.static(path.join(__dirname, 'public')));
-app.use('/user/sell/list/start', express.static(path.join(__dirname, 'public')));
-app.use('/user/sell/bids/start', express.static(path.join(__dirname, 'public')));
-app.use('/user/buy/list/start', express.static(path.join(__dirname, 'public')));
-app.use('/user/buy/contract/id/', express.static(path.join(__dirname, 'public')));
-app.use('/user/sell/contract/bidId/', express.static(path.join(__dirname, 'public')));
-app.use('/user/public/userId/', express.static(path.join(__dirname, 'public')));
-app.use('/user/forgotpassword/', express.static(path.join(__dirname, 'public')));
-app.use('/user/sell/', express.static(path.join(__dirname, 'public')));
-app.use('/user/messages/id', express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/user', users);
@@ -105,17 +89,13 @@ app.use('/api/offer', offers);
 app.use('/api/news', news);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+app.use('**', function (req, res, next) {
+  res.render('404', {user : {}});
 });
 
 // error handlers
 
 // development error handler
-// will print stacktrace
-// will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function (err, req, res, next) {
     res.status(err.status || 500)

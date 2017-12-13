@@ -110,7 +110,7 @@ $('#submit').click(function (e) {
 
   e.preventDefault();
 
-  var htmlValues = $('#comDescText').froalaEditor('html.get', true);
+  var htmlValues = tinyMCE.get('editor').getContent();
   $('#comDesc').val(htmlValues);
 
   var quantity = $('#quantity').val() + ' ' + $('#measureUnit').val();
@@ -196,27 +196,5 @@ $(".remove-btn").live('click', function () {
   images.splice(parseInt($(this).prev().text()), 1);
 });
 
-
-$(function () {
-  $('#comDescText').froalaEditor({
-      height: '200px',
-//        toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'color', '|', 'undo', 'redo'],
-      // Colors list.
-      colorsBackground: [
-        '#15E67F', '#E3DE8C', '#D8A076', '#D83762', '#76B6D8', 'REMOVE',
-        '#1C7A90', '#249CB8', '#4ABED9', '#FBD75B', '#FBE571', '#FFFFFF'
-      ],
-      colorsDefaultTab: 'background',
-      colorsStep: 6,
-      colorsText: [
-        '#15E67F', '#E3DE8C', '#D8A076', '#D83762', '#76B6D8', 'REMOVE',
-        '#1C7A90', '#249CB8', '#4ABED9', '#FBD75B', '#FBE571', '#FFFFFF'
-      ],
-//        quickInsertButtons: ['ol', 'ul'],
-//      pluginsEnabled: ['quickInsert', 'lists'],
-//      quickInsertTags: ['h1', 'h2', 'h3', 'h4', 'blockquote']
-    }
-  )
-});
 
 

@@ -7,11 +7,13 @@
     <!-- Global Site Tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107495910-1"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments)};
-        gtag('js', new Date());
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments)
+      };
+      gtag('js', new Date());
 
-        gtag('config', 'UA-107495910-1');
+      gtag('config', 'UA-107495910-1');
     </script>
 
     <!-- Basic Page Needs
@@ -26,18 +28,26 @@
     <!-- CSS
     ================================================== -->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/colors/blue.css" id="colors">
-    <link rel="stylesheet" href="css/croppie.css" />
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/colors/blue.css" id="colors">
+    <link rel="stylesheet" href="/css/croppie.css"/>
 
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.1/css/froala_editor.min.css' rel='stylesheet'
-          type='text/css'/>
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.1/css/froala_style.min.css' rel='stylesheet'
-          type='text/css'/>
-
-    <link rel="stylesheet" href="scripts/froalaEditor/colors.css">
-    <link rel="stylesheet" href="scripts/froalaEditor/quick_insert.min.css">
-
+    <script src="scripts/tinymce/tinymce.min.js"></script>
+    <script>
+      tinymce.init({
+        selector: '#editor',
+        height: 300,
+        menubar: false,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table contextmenu paste code table'
+        ],
+        table_toolbar: "tableprops tabledelete | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol",
+        toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | table',
+        content_css: '//www.tinymce.com/css/codepen.min.css',
+      });
+    </script>
 
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -50,28 +60,7 @@
 
     <% include header.ejs %>
 
-    <!-- Titlebar
-    ================================================== -->
-    <!--<section class="parallax-titlebar fullwidth-element"  data-background="#000" data-opacity="0.2" data-height="160">-->
-
-        <!--<img src="images/mini-slides/10.jpg" alt="" />-->
-        <!--<div class="parallax-overlay"></div>-->
-
-        <!--<div class="parallax-content">-->
-            <!--<h2>Add Your Item <span>Your commodity : <%= commodityName %></span></h2>-->
-
-            <!--<nav id="breadcrumbs">-->
-                <!--<ul>-->
-                    <!--<li>Home</li>-->
-                    <!--<li>Sell</li>-->
-                    <!--<li>Search Commodity</li>-->
-                    <!--<li>Commodity Details</li>-->
-                    <!--<li>Add Items</li>-->
-                <!--</ul>-->
-            <!--</nav>-->
-        <!--</div>-->
-    <!--</section>-->
-<div class="row"></div>
+    <div class="row"></div>
     <div class="container">
 
         <!-- Content
@@ -83,10 +72,12 @@
                 <h3 class="headline">Crop Image</h3><span class="line margin-bottom-25"></span>
                 <div class="clearfix"></div>
                 <div align="center">
-                    <div class="croppie-container" id="croppie-container" style="width: 350px; height: 350px; display: none">
+                    <div class="croppie-container" id="croppie-container"
+                         style="width: 350px; height: 350px; display: none">
                     </div>
                     <div class="one columns">
-                        <a class="button color" id="commodity-uploadimage" style="width: 200px; margin-left:3px">Select Image</a>
+                        <a class="button color" id="commodity-uploadimage" style="width: 200px; margin-left:3px">Select
+                            Image</a>
                         <input type="file" name="fileToUpload" id="fileToUpload" style="display: none"><br>
                         <a class="button color" id="crop-btn" style="width: 200px">Crop Image</a>
                     </div>
@@ -96,7 +87,7 @@
 
             <section class="variables">
 
-                <form method="post" id="addItemForm" >
+                <form method="post" id="addItemForm">
 
                     <fieldset>
                         <input type="hidden" id="userId" name="userId" value="<%= user.id %>"/>
@@ -105,7 +96,8 @@
 
                         <div class="twelve alpha columns editform">
                             <label>Title : </label>
-                            <input name="title" type="text" id="title" placeholder="Write a descriptive title. [Use words people would search for when looking for your commodity]"/>
+                            <input name="title" type="text" id="title"
+                                   placeholder="Write a descriptive title. [Use words people would search for when looking for your commodity]"/>
                         </div>
 
                         <div class="thirteen alpha columns editform">
@@ -130,7 +122,7 @@
                                 <label for="packing_type">Packing Type : </label>
                                 <select id="packing_type" name="packingType">
                                     <% for(var packingIndex = 0; packingIndex < packingTypes.length; packingIndex++) { %>
-                                        <option value="<%= packingTypes[packingIndex].type %>"><%= packingTypes[packingIndex].type %></option>
+                                    <option value="<%= packingTypes[packingIndex].type %>"><%= packingTypes[packingIndex].type %></option>
                                     <% } %>
                                 </select>
                             </div>
@@ -146,7 +138,8 @@
                         <div class="thirteen alpha columns editform">
                             <label>FOB Price : </label>
                             <div class="five columns" style="margin-left:0px">
-                                <input name="fob_price" type="text" id="suggested_price" placeholder="Suggest a price for the item"/>
+                                <input name="fob_price" type="text" id="suggested_price"
+                                       placeholder="Suggest a price for the item"/>
                             </div>
                             <div class="two columns">
                                 <select name="priceUnit" id="priceUnit">
@@ -166,7 +159,8 @@
 
                         <div class="twelve alpha columns editform">
                             <label>Producer Note: <span>*</span></label>
-                            <textarea name="producer_note" cols="91" rows="3" id="seller_note" spellcheck="true" style="width: 97%" placeholder="Describe Your Item"></textarea>
+                            <textarea name="producer_note" cols="91" rows="3" id="seller_note" spellcheck="true"
+                                      style="width: 97%" placeholder="Describe Your Item"></textarea>
                         </div>
 
                         <div class="twelve alpha columns editform">
@@ -217,39 +211,31 @@
 ================================================== -->
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="scripts/jquery.jpanelmenu.js"></script>
-<script src="scripts/jquery.themepunch.plugins.min.js"></script>
-<script src="scripts/jquery.themepunch.revolution.min.js"></script>
-<script src="scripts/jquery.themepunch.showbizpro.min.js"></script>
-<script src="scripts/jquery.magnific-popup.min.js"></script>
-<script src="scripts/hoverIntent.js"></script>
-<script src="scripts/superfish.js"></script>
-<script src="scripts/jquery.pureparallax.js"></script>
-<script src="scripts/jquery.pricefilter.js"></script>
-<script src="scripts/jquery.selectric.min.js"></script>
-<script src="scripts/jquery.royalslider.min.js"></script>
-<script src="scripts/SelectBox.js"></script>
-<script src="scripts/modernizr.custom.js"></script>
-<script src="scripts/waypoints.min.js"></script>
-<script src="scripts/jquery.flexslider-min.js"></script>
-<script src="scripts/jquery.counterup.min.js"></script>
-<script src="scripts/jquery.tooltips.min.js"></script>
-<script src="scripts/jquery.isotope.min.js"></script>
-<script src="scripts/puregrid.js"></script>
-<script src="scripts/stacktable.js"></script>
-<script src="scripts/custom.js"></script>
-<script src="scripts/croppie.js"></script>
+<script src="/scripts/jquery.jpanelmenu.js"></script>
+<script src="/scripts/jquery.themepunch.plugins.min.js"></script>
+<script src="/scripts/jquery.themepunch.revolution.min.js"></script>
+<script src="/scripts/jquery.themepunch.showbizpro.min.js"></script>
+<script src="/scripts/jquery.magnific-popup.min.js"></script>
+<script src="/scripts/hoverIntent.js"></script>
+<script src="/scripts/superfish.js"></script>
+<script src="/scripts/jquery.pureparallax.js"></script>
+<script src="/scripts/jquery.pricefilter.js"></script>
+<script src="/scripts/jquery.selectric.min.js"></script>
+<script src="/scripts/jquery.royalslider.min.js"></script>
+<script src="/scripts/SelectBox.js"></script>
+<script src="/scripts/modernizr.custom.js"></script>
+<script src="/scripts/waypoints.min.js"></script>
+<script src="/scripts/jquery.flexslider-min.js"></script>
+<script src="/scripts/jquery.counterup.min.js"></script>
+<script src="/scripts/jquery.tooltips.min.js"></script>
+<script src="/scripts/jquery.isotope.min.js"></script>
+<script src="/scripts/puregrid.js"></script>
+<script src="/scripts/stacktable.js"></script>
+<script src="/scripts/custom.js"></script>
+<script src="/scripts/croppie.js"></script>
 
-<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.1/js/froala_editor.min.js'></script>
-<script src="scripts/froalaEditor/colors.min.js"></script>
-<script src="scripts/froalaEditor/quick_insert.min.js"></script>
-<script src="scripts/froalaEditor/align.min.js"></script>
-<script src="scripts/froalaEditor/font_family.min.js"></script>
-<script src="scripts/froalaEditor/font_size.min.js"></script>
-
-
-<script src="scripts/views/additem.js"></script>
-<script src="scripts/views/header_func.js"></script>
+<script src="/scripts/views/additem.js"></script>
+<script src="/scripts/views/header_func.js"></script>
 
 </body>
 </html>
