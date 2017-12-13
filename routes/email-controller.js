@@ -9,8 +9,8 @@ module.exports.sendEmail = function (data, locals) {
   var ndmlTransporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'antcommodity@gmail.com',
-      pass: 'JSDIFIPASDIP#u3904@112s'
+      user: 'toprankz123@gmail.com',
+      pass: 'fucking12sa'
     }
   });
   const email = new Email({
