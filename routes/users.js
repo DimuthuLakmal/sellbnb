@@ -887,6 +887,15 @@ router.post('/adduser', function (req, res) {
                   number: req.body.telephone,
                   UserId: createUser.id
                 }).then(function () {
+
+                  require('./email-controller').sendEmail({
+                    template: 'new-user',
+                    subject: 'Welcome to Ant Commodity!',
+                    to: req.body.email
+                  }, {
+                    firstName: req.body.full_name
+                  });
+
                   return res.redirect('/user/basic');
                 });
               });

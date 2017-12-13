@@ -173,7 +173,7 @@ router.get('/viewlatest', function (req, res) {
                     var suggestedPrice = item.suggestedPrice;
 
                     itemsArr.push({'title': title, 'id': id, 'quantity': quantity, 'suggestedPrice': suggestedPrice,
-                        'images': item.ItemImages, 'commodity': item.Commodity});
+                        'images': item.ItemImages, 'commodity': item.Commodity, 'priceUnit': item.priceUnit });
                 });
                 console.log('Visited latest item finished');
                 req.session.latestItems = itemsArr;
