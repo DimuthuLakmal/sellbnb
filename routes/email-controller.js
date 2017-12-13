@@ -9,13 +9,13 @@ module.exports.sendEmail = function (data, locals) {
   var ndmlTransporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'toprankz123@gmail.com',
-      pass: 'fucking12sa'
+      user: 'antcommodity@gmail.com',
+      pass: 'JSDIFIPASDIP#u3904@112s'
     }
   });
   const email = new Email({
     message: {
-      from: 'sellbnb@gmail.com'
+      from: 'antcommodity@gmail.com'
     },
     send: true,
     transport: ndmlTransporter,

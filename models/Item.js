@@ -9,6 +9,7 @@ module.exports = function (sequelize, DataTypes) {
         quantityMin: DataTypes.STRING,
         quantityMax: DataTypes.STRING,
         measureUnit: DataTypes.STRING,
+        priceUnit: DataTypes.STRING,
         packageType: DataTypes.STRING,
         deliveryBy: DataTypes.STRING,
         deliveryCost: DataTypes.STRING,

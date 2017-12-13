@@ -1623,7 +1623,7 @@ router.get('/user/sell/edit', function (req, res) {
     }
 
     //this will be needed to populate commodity names in top menu
-    var commodityNames = req.session.commodityNames
+    var commodityNames = req.session.commodityNames;
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {

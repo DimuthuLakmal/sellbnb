@@ -133,29 +133,28 @@
                 }
                 %>
                 <h2 style="color: #1b3d6d; font-size: 30px"><%= item.item.title %></h2>
-                <h6><a href="/user/public/userId/<%= item.user.id %>"><i style="font-style: italic; color:#0000ff;"><%= name %></i></a> <span style="color: #1ecfca; font-style: oblique">[VERIFIED]</span></h6>
+                <h6><a  target="_blank" href="/user/public/userId/<%= item.user.id %>"><i style="font-style: italic; color:#0000ff;"><%= name %></i></a> <span style="color: #1ecfca; font-style: oblique">[VERIFIED]</span></h6>
             </section>
         </div>
-
         <div class="eight products columns"
              style="padding: 10px 0; background-color: #e2e2e2; border: solid 2px #5748ff; border-top: none; margin:0;">
             <section class="variables">
                 <div class="eight columns" style="border-bottom: solid 2px #5748ff; margin:0;">
-                    <h1 style="margin-left: 10px; background-color: #e2e2e2" class="headline">FOB Price: <strong style="font-size: 30px; color: #729331 ;"><%= item.item.suggestedPrice + ' ' + item.priceUnits[0].unitName %></strong></h1>
+                    <h1 style="margin-left: 10px; background-color: #e2e2e2" class="headline">FOB Price: <strong style="font-size: 30px; color: #729331 ;"><%= item.item.suggestedPrice + ' ' + item.item.priceUnit %></strong></h1>
                 </div>
                 <form method="POST" action="/api/offer/add" id="bidformToSubmit" style="background-color: #5d5c60">
                     <input type="hidden" name="itemId" value="<%= item.item.id %>"/>
                     <input type="hidden" name="userId" value="<%= user.id %>"/>
                     <input type="hidden" name="itemOwner" value="<%= item.user.id %>"/>
                     <input type="hidden" name="commodityId" value="<%= item.item.Commodity.id %>"/>
-                    <input type="hidden" name="priceUnit" value="<%= item.priceUnits[0].unitName %>"/>
+                    <input type="hidden" name="priceUnit" value="<%= item.item.priceUnit %>"/>
                     <div class="eight alpha columns bidform" style="display: inline-flex;">
                         <div class="two columns" style="font-size: 20px; margin-top: 10px">Your Offer : </div>
                         <div class="four columns" style="margin-left:0;">
                             <input style="font-size: 18px" name="offerPrice" type="text" id="your_bid"/>
                         </div>
                         <div class="two columns" style="margin-left:-10px">
-                            <input style="font-size: 18px" type="text" value="<%= item.priceUnits[0].unitName %>" disabled>
+                            <input style="font-size: 18px" type="text" value="<%= item.item.priceUnit %>" disabled>
                         </div>
                     </div>
 
