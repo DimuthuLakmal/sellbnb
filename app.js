@@ -100,23 +100,9 @@ app.use('/api/messages', usermessage);
 app.use('/api/countries', country);
 app.use('/api/recentsearch', recentsearch);
 app.use('/api/offer', offers);
-// app.use('/logout', function (req, res) {
-//   req.logout();
-//   res.redirect('/');
-// });
 
 //app.use('/api', passport.authenticate('basic', {session: false}));
 app.use('/api/news', news);
-
-//----------------- Following methods moved to user route---------------
-// app.get('/api/data', ensureAuthenticated,function (req, res) {
-//   res.json([
-//     {value: 'Dimuthu'},
-//     {value: 'Ruwan'},
-//     {value: 'Kamal'}
-//   ])
-// })
-//---------------------------------------------------------------------
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -128,6 +114,7 @@ app.use(function (req, res, next) {
 // error handlers
 
 // development error handler
+// will print stacktrace
 // will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function (err, req, res, next) {

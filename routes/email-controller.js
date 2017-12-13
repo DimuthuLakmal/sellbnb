@@ -25,18 +25,17 @@ module.exports.sendEmail = function (data, locals) {
       }
     }
   });
-
+  const msg = {
+    to: data.to,
+    subject: data.subject
+  };
+  if(data.attachments) {
+    msg.attachments = data.attachments;
+    console.log('Attatched - ', data.attachments.length);
+  }
   email.send({
     template: data.template,
-    message: {
-      to: data.to,
-      subject: data.subject,
-      attachments : [
-        {
-          path: 'package.json'
-        }
-      ]
-    },
+    message: msg,
     locals: locals
   }).then(function (x) {
     console.log('========= Email success', x);
