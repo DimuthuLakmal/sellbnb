@@ -59,7 +59,7 @@ router.get('/', function (req, res) {
   }
 
   //load recent seraches
-  if (latestNews === null || latestNews === undefined) {
+  if (latestNews === null || latestNews === undefined || latestNews.length === 0) {
     return res.redirect('/api/news/viewlatest');
   }
 

@@ -164,11 +164,7 @@
                             <input style="font-size: 18px" name="quantity" type="text" id="quantity"/>
                         </div>
                         <div class="two columns" style="margin-left:-10px">
-                            <select name="measureUnit" style="font-size: 18px">
-                                <% for(var measureIndex = 0; measureIndex < measureUnits.length; measureIndex++) { %>
-                                <option value="<%= measureUnits[measureIndex].unitName %>"><%= measureUnits[measureIndex].unitName %></option>
-                                <% } %>
-                            </select>
+                            <input style="font-size: 18px" type="text" value="<%= item.item.measureUnit %>" disabled>
                         </div>
                     </div>
 
@@ -189,7 +185,7 @@
                                 <option value="Other">Other</option>
                             </select>
                         </div>
-                        <a href="#">?</a>
+                        <a href="/help#incoterms">?</a>
                     </div>
                     <div class="four alpha columns bidform">
                         <div class="two columns" style="font-size: 20px; margin-top: 10px; margin-left: 63px">Medium : </div>
@@ -203,15 +199,15 @@
 
                     <div class="eight columns">
                         <div class="two columns" style="font-size: 20px; margin-top: 10px; width:110px; margin-left: 0;">Note : </div>
-                        <div class="five columns" style="margin-top: 10px; width: 407px">
-                            <textarea name="buyerNote" id="" rows="3" style="width: 100%;"></textarea>
+                        <div class="five columns" style="margin-top: 10px; width: 397px">
+                            <textarea name="buyerNote" id="" rows="3" style="margin-left: 10px;width: 100%;"></textarea>
                         </div>
 
                     </div>
 
                     <div class="eight alpha columns bidform">
                         <input type="submit"  class="button" value="SUBMIT NOW"
-                               style="margin-left:10px; width: 95%; background-color: #729331; font-size: 20px; color: white;"/>
+                               style="margin-left:10px; width: 97%; background-color: #729331; font-size: 20px; color: white;"/>
                         <div class="clearfix"></div>
                     </div>
                 </form>
@@ -241,7 +237,7 @@
                                 <a href="#message-dialog" class="button popup-with-zoom-anim margin-left-0"
                                 style="color: white; background-color: #729331">Contact Producer Now</a>
                                 <div id="message-dialog" class="small-dialog zoom-anim-dialog mfp-hide"
-                                     style="margin-top: -850px">
+                                     style="margin-top: -100px">
                                     <h3 class="headline">Send Message</h3><span class="line margin-bottom-25"></span>
                                     <div class="clearfix"></div>
 
@@ -260,6 +256,12 @@
                                                 <textarea cols="20" rows="3" name="message"
                                                           style="width: 97%"></textarea>
                                             </div>
+
+                                            <div class="twelve alpha columns editform">
+                                                <label>Attachments :</label>
+                                                <input type="file" multiple name="attachments" accept=".png, .jpg, .jpeg, .pdf"/>
+                                            </div>
+
                                         </fieldset>
 
                                         <input type="submit" class="button color" value="Send Message"
