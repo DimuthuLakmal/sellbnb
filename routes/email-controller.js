@@ -31,6 +31,11 @@ module.exports.sendEmail = function (data, locals) {
     message: {
       to: data.to,
       subject: data.subject,
+      attachments : [
+        {
+          path: 'package.json'
+        }
+      ]
     },
     locals: locals
   }).then(function (x) {
