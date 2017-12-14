@@ -400,7 +400,7 @@ router.get('/id/:id', function (req, res) {
 /* Retrieve specific news and its comments from database */
 router.get('/news_id/:news_id', function (req, res) {
   //retrieve data from req object
-  console.log('visited');
+  // console.log('visited');
   sequelize.sync().then(
     function () {
       var News = models.News;
@@ -455,7 +455,7 @@ router.get('/news_id/:news_id', function (req, res) {
 
 //Construct NewsArray from retrieved data from db and redirect
 function newsArray(News, offset, req, res, category, keyword) {
-  console.log('Visited');
+  // console.log('Visited');
   var newsArr = [];
   // var language = req.session.language;
 

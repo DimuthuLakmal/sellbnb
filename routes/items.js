@@ -157,7 +157,7 @@ router.get('/viewlatest', function (req, res) {
       }).then(function (Items) {
         var itemsArr = [];
         //pushing retrieved data to commodity array
-        console.log('Visited latest item');
+        // console.log('Visited latest item');
         _.forEach(Items.rows, function (item, index) {
           // console.log('Visited latest item '+index);
           var id = item.id;
@@ -169,7 +169,7 @@ router.get('/viewlatest', function (req, res) {
             'images': item.ItemImages, 'commodity': item.Commodity, 'priceUnit': item.priceUnit
           });
         });
-        console.log('Visited latest item finished');
+        // console.log('Visited latest item finished');
         req.session.latestItems = itemsArr;
         res.redirect('/');
       });
