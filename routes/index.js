@@ -977,7 +977,7 @@ router.get('/items/add', function (req, res) {
     }
 
     //this will be needed to populate commodity names in top menu
-    var commodityNames = req.session.commodityNames
+    var commodityNames = req.session.commodityNames;
     //check whether commodityNames session is set
     req.session.returnToCommodityName = req.path;
     if (commodityNames === null || commodityNames === undefined) {
@@ -1311,7 +1311,6 @@ router.get('/user/sell/list/start/:start', function (req, res) {
   }
 });
 
-
 //view bidding details of user
 router.get('/user/buy/list/start/:start', function (req, res) {
   removeSessionParameters(req);
@@ -1494,7 +1493,6 @@ router.get('/user/buy/list/start/:start', function (req, res) {
   }
 });
 
-
 //view biddings for particular item
 router.get('/user/sell/bids/start/:start', function (req, res) {
   removeSessionParameters(req);
@@ -1596,73 +1594,31 @@ router.get('/user/sell/bids/start/:start', function (req, res) {
 });
 
 //edit detail for particular item
-router.get('/user/sell/edit', function (req, res) {
+router.get('/items/edit/:itemId', function (req, res) {
   removeSessionParameters(req);
   removeSessionParameterSellingPage(req);
-
+  var otherFunctions = require('./items').otherFunc;
   //check whether use logged or not
   if (req.isAuthenticated()) {
-    var userwarehousesSell = req.session.bidwarehouses;
-    var specificBiddingItemSell = req.session.specificBiddingItemSell;
-    var specificBiddingItemSellMeasureUnits = req.session.specificBiddingItemSellMeasureUnits;
-    var specificBiddingItemSellPriceUnits = req.session.specificBiddingItemSellPriceUnits;
 
-    //rereive data from reqeuest
-    var itemId = req.param('itemId');
-    var user = req.user;
-
-
-    //check whether BiddingItem session is set
-    if (specificBiddingItemSell === null || specificBiddingItemSell === undefined) {
-      return res.redirect('/api/items/sell/id/' + itemId);
-    }
-
-    //check whether user warehouses are set
-    if (userwarehousesSell == null || userwarehousesSell == undefined) {
-      return res.redirect('/api/user/sell/warehouses/userId/' + user.id + '/itemId/' + itemId);
-    }
-
-    //this will be needed to populate commodity names in top menu
-    var commodityNames = req.session.commodityNames;
-    //check whether commodityNames session is set
-    req.session.returnToCommodityName = req.path;
-    if (commodityNames === null || commodityNames === undefined) {
-      return res.redirect('/api/commodity/names');
-    }
-
-    var notifications = req.session.notifications;
-    var messages = req.session.messages;
-    //check whether notification session is set.
-    if (req.isAuthenticated()) {
-      if (notifications === null || notifications === undefined) {
-        return res.redirect('/api/notification/userId/' + req.user.id);
-      }
-      if (messages === null || messages === undefined) {
-        return res.redirect('/api/messages/userId/' + req.user.id);
-      }
-    }
-
-    console.log(specificBiddingItemSellPriceUnits);
-
-    req.session.specificBiddingItemSell = null;
-    delete req.session.returnTo;
-    delete req.session.returnToCommodityName;
-    delete req.session.specificBiddingItemSellMeasureUnits;
-    delete req.session.specificBiddingItemSellPriceUnits;
-    delete req.session.notifications;
-    delete req.session.messages;
-    res.render('edititem', {
-      isAuthenticated: req.isAuthenticated(),
-      user: req.user,
-      item: specificBiddingItemSell,
-      itemId: itemId,
-      specificBiddingItemSellPriceUnits: specificBiddingItemSellPriceUnits,
-      specificBiddingItemSellMeasureUnits: specificBiddingItemSellMeasureUnits,
-      userWareHousesSell: userwarehousesSell,
-      commodityNames: commodityNames,
-      notifications: notifications,
-      messages: messages,
+    otherFunctions.getItemById(req.params['itemId'], function (item) {
+      otherFunctions.getCommodityMeasureUnit(item.CommodityId, function (cmu) {
+        otherFunctions.getCommodityPriceUnit(item.CommodityId, function (cpu) {
+          otherFunctions.getCommodityPackageType(item.CommodityId, function (cp) {
+            res.render('edititem', {
+              isAuthenticated: req.isAuthenticated(),
+              user: req.user,
+              item: item,
+              packingType: cp,
+              measureUnits: cmu,
+              priceUnits: cpu
+            });
+            // res.jsonp(item);
+          });
+        });
+      });
     });
+
   } else {
     //set visited path to session. It uses to rediect to again to that page when login success.
     req.session.returnTo = req.path;
@@ -1894,7 +1850,6 @@ router.get('/user/forgotpassword/entercode', function (req, res) {
 
 });
 
-
 //view item preview
 router.get('/items/preview', function (req, res) {
   removeSessionParameters(req);
@@ -1986,7 +1941,6 @@ router.get('/user/resetpassword', function (req, res) {
   });
 
 });
-
 
 //view message detail page
 router.get('/user/messages/id/:id', function (req, res) {

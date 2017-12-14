@@ -7,11 +7,13 @@
     <!-- Global Site Tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107495910-1"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments)};
-        gtag('js', new Date());
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments)
+      };
+      gtag('js', new Date());
 
-        gtag('config', 'UA-107495910-1');
+      gtag('config', 'UA-107495910-1');
     </script>
 
     <!-- Basic Page Needs
@@ -33,6 +35,8 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+
 </head>
 
 <body class="boxed">
@@ -40,69 +44,52 @@
 
     <% include header.ejs %>
 
-<div class="row"></div>
+    <div class="row"></div>
     <div class="container">
 
         <!-- Sidebar
         ================================================== -->
         <div class="four columns">
 
-            <!-- Widget -->
-            <!--<div class="widget">-->
-                <!--<h3 class="headline">Filter By Price</h3><span class="line"></span><div class="clearfix"></div>-->
-
-                <!--<form action="/api/items/search/start/0" method="get" id="priceFilterForm">-->
-                    <!--<div id="price-range">-->
-                        <!--<div class="padding-range"><div id="slider-range"></div></div>-->
-                        <!--<label for="amount">Price:</label>-->
-                        <!--<input type="hidden" id="maxPrice" value=""/>-->
-                        <!--<input type="hidden" name="keyword" value=""/>-->
-                        <!--<input type="hidden" id="startPrice" name="startPrice" value=/>-->
-                        <!--<input type="hidden" id="endPrice" name="endPrice" value=/>-->
-                        <!--<input type="text" id="amount"/>-->
-                        <!--<a class="button color" id="priceFilterButton">Filter</a>-->
-                    <!--</div>-->
-                <!--</form>-->
-                <!--<div class="clearfix"></div>-->
-            <!--</div>-->
-
-            <% if(distinctCharacteristics[1].length > 0) {%>
-                <!-- Classes -->
-                <div class="widget">
-                    <h3 class="headline" style="z-index: 0 !important;">Classes</h3><span class="line"></span><div class="clearfix"></div>
-                    <% for(var classIndex = 0; classIndex < distinctCharacteristics[1].length; classIndex++) {%>
-                        <form action="/api/items/search/start/0" method="get">
-                            <input type="hidden" value="0" name="start"/>
-                            <input type="hidden" value="<%= keyword %>" name="keyword"/>
-                            <input type="hidden" value="<%= distinctCharacteristics[1][classIndex] %>" name="class"/>
-                            <% if(selectedClass == distinctCharacteristics[1][classIndex]) {%>
-                                <input type="checkbox" value="<%= distinctCharacteristics[1][classIndex] %>"
-                                       class="class_check_box" checked/> <%= distinctCharacteristics[1][classIndex] %><br>
-                            <% } else {%>
-                                <input type="checkbox" value="<%= distinctCharacteristics[1][classIndex] %>"
-                                       class="class_check_box" /> <%= distinctCharacteristics[1][classIndex] %><br>
-                            <% } %>
-                        </form>
+            <% if(distinctCharacteristics[1].length > 0) { %>
+            <!-- Classes -->
+            <div class="widget">
+                <h3 class="headline" style="z-index: 0 !important;">Classes</h3><span class="line"></span>
+                <div class="clearfix"></div>
+                <% for(var classIndex = 0; classIndex < distinctCharacteristics[1].length; classIndex++) { %>
+                <form action="/api/items/search/start/0" method="get">
+                    <input type="hidden" value="0" name="start"/>
+                    <input type="hidden" value="<%= keyword %>" name="keyword"/>
+                    <input type="hidden" value="<%= distinctCharacteristics[1][classIndex] %>" name="class"/>
+                    <% if(selectedClass == distinctCharacteristics[1][classIndex]) { %>
+                    <input type="checkbox" value="<%= distinctCharacteristics[1][classIndex] %>"
+                           class="class_check_box" checked/> <%= distinctCharacteristics[1][classIndex] %><br>
+                    <% } else { %>
+                    <input type="checkbox" value="<%= distinctCharacteristics[1][classIndex] %>"
+                           class="class_check_box"/> <%= distinctCharacteristics[1][classIndex] %><br>
                     <% } %>
-                    <div class="clearfix"></div>
-                </div>
+                </form>
+                <% } %>
+                <div class="clearfix"></div>
+            </div>
             <% } %>
 
-            <% if(distinctCharacteristics[0].length > 0) {%>
+            <% if(distinctCharacteristics[0].length > 0) { %>
             <!-- Segments -->
             <div class="widget">
-                <h3 class="headline" style="z-index: 0 !important;">Segments</h3><span class="line"></span><div class="clearfix"></div>
-                <% for(var segmentIndex = 0; segmentIndex < distinctCharacteristics[0].length; segmentIndex++) {%>
+                <h3 class="headline" style="z-index: 0 !important;">Segments</h3><span class="line"></span>
+                <div class="clearfix"></div>
+                <% for(var segmentIndex = 0; segmentIndex < distinctCharacteristics[0].length; segmentIndex++) { %>
                 <form action="/api/items/search/start/0" method="get">
                     <input type="hidden" value="0" name="start"/>
                     <input type="hidden" value="<%= keyword %>" name="keyword"/>
                     <input type="hidden" value="<%= distinctCharacteristics[0][segmentIndex] %>" name="segment"/>
-                    <% if(selectedSegment == distinctCharacteristics[0][segmentIndex]) {%>
-                        <input type="checkbox" value="<%= distinctCharacteristics[0][segmentIndex] %>"
-                               class="class_check_box" checked/> <%= distinctCharacteristics[0][segmentIndex] %><br>
-                    <% } else {%>
-                        <input type="checkbox" value="<%= distinctCharacteristics[0][segmentIndex] %>"
-                               class="class_check_box" /> <%= distinctCharacteristics[0][segmentIndex] %><br>
+                    <% if(selectedSegment == distinctCharacteristics[0][segmentIndex]) { %>
+                    <input type="checkbox" value="<%= distinctCharacteristics[0][segmentIndex] %>"
+                           class="class_check_box" checked/> <%= distinctCharacteristics[0][segmentIndex] %><br>
+                    <% } else { %>
+                    <input type="checkbox" value="<%= distinctCharacteristics[0][segmentIndex] %>"
+                           class="class_check_box"/> <%= distinctCharacteristics[0][segmentIndex] %><br>
                     <% } %>
 
                 </form>
@@ -112,21 +99,22 @@
             <% } %>
 
             <!-- Location filter -->
-            <% if(distinctCharacteristics[2].length > 0) {%>
+            <% if(distinctCharacteristics[2].length > 0) { %>
             <!-- Segments -->
             <div class="widget">
-                <h3 class="headline" style="z-index: 0 !important;">Locations</h3><span class="line"></span><div class="clearfix"></div>
-                <% for(var locationIndex = 0; locationIndex < distinctCharacteristics[2].length; locationIndex++) {%>
+                <h3 class="headline" style="z-index: 0 !important;">Locations</h3><span class="line"></span>
+                <div class="clearfix"></div>
+                <% for(var locationIndex = 0; locationIndex < distinctCharacteristics[2].length; locationIndex++) { %>
                 <form action="/api/items/search/start/0" method="get">
                     <input type="hidden" value="0" name="start"/>
                     <input type="hidden" value="<%= keyword %>" name="keyword"/>
                     <input type="hidden" value="<%= distinctCharacteristics[2][locationIndex] %>" name="location"/>
-                    <% if(selectedLocation == distinctCharacteristics[2][locationIndex]) {%>
+                    <% if(selectedLocation == distinctCharacteristics[2][locationIndex]) { %>
                     <input type="checkbox" value="<%= distinctCharacteristics[2][locationIndex] %>"
                            class="class_check_box" checked/> <%= distinctCharacteristics[2][locationIndex] %><br>
-                    <% } else {%>
+                    <% } else { %>
                     <input type="checkbox" value="<%= distinctCharacteristics[2][locationIndex] %>"
-                           class="class_check_box" /> <%= distinctCharacteristics[2][locationIndex] %><br>
+                           class="class_check_box"/> <%= distinctCharacteristics[2][locationIndex] %><br>
                     <% } %>
 
                 </form>
@@ -140,47 +128,101 @@
 
         <!-- Content
         ================================================== -->
-
         <div class="twelve columns products">
 
+            <% if(items.length === 0) { %>
+            <div class="notification warning">
+                <p><span>No Any Matching Listing Found! <br></span>
+                    It appears that we currently do not have the commodity you are looking.
+                    Please use the button below to tell us more about the commodity you are looking.
+                    <br>
+                    If the commodity is available in one of the countries we currently have
+                    business operations, we will do our best to help you find it.
+                    Either way, we will let you know our progress in 24 hours!
+                </p>
+                <div class="last-bid" align="center">
+                    <table border="0px">
+                        <tr>
+                            <td>
+                                <a href="#message-dialog" class="button popup-with-zoom-anim margin-left-0"
+                                   style="">Tell Us about the Commodity</a>
+                                <div id="message-dialog" class="small-dialog zoom-anim-dialog mfp-hide"
+                                     style="margin-top: -100px">
+                                    <h3 class="headline">Support Corner</h3><span class="line margin-bottom-25"></span>
+                                    <div class="clearfix"></div>
+
+                                    <!-- Form -->
+                                    <form id="add-support" class="add-comment" action="" method="POST">
+                                        <fieldset>
+                                            <div class="twelve alpha columns editform">
+                                                <label>Subject:</label>
+                                                <input type="text" name="subject" placeholder="Type message subject"/>
+                                            </div>
+                                            <div class="twelve alpha columns editform">
+                                                <label>Email :</label>
+                                                <input type="email" name="email" placeholder="Your Email"/>
+                                            </div>
+                                            <div>
+                                                <label>Message:</label>
+                                                <textarea cols="7" rows="3" name="message"
+                                                          style="width: 97%"></textarea>
+                                            </div>
+                                            <div class="g-recaptcha" data-sitekey="6Leb9zwUAAAAAEk2Ft01XQmNjuRiiAscYB3ZcRNK"></div>
+                                        </fieldset>
+
+                                        <input type="submit" class="button color" value="Send Message"
+                                               style="width: 100%"/>
+                                        <div class="clearfix"></div>
+                                        <div class="notification" id="success-notification" style="display: none">
+                                            <p id="not-msg">Sent !</p>
+                                        </div>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <% } else { %>
             <% for(var itemIndex = 0; itemIndex < items.length; itemIndex++) {
                 var item = items[itemIndex];
             %>
-                <div class="item-selling-div twelve columns">
-                    <div class="item-selling-div">
-                        <div class="two columns">
-                            <% if (item.ItemImages.length > 0) {%>
-                                <img src="/uploads/items/<%= item.ItemImages[0].url%>"/>
-                            <% } else { %>
-                                <img src="/images/blog-widget-01.png"/>
-                            <% } %>
-                        </div>
-                        <div class="five columns">
-                            <h3><%= item.title %></h3>
-                            <%
-                                var name='';
-                                if(item.User.company_name != null && item.User.company_name != ''){
-                                    name = item.User.company_name;
-                                } else if(item.User.full_name != null && item.User.full_name != ''){
-                                    name = item.User.full_name;
-                                }else if(item.User.username != null && item.User.username != ''){
-                                    name = item.User.username;
-                                }
-                            %>
-                            <p>Seller: <a href="/user/public/userId/<%= item.User.id %>"> <%= name %></a><br>
-                                Minimum Quantity: <%= item.quantityMin %><br>
-                                Maximum iQuantity: <%= item.quantityMax %><br>
-                                Suggested Price: <%= item.suggestedPrice%><br>
-                        </div>
-                        <div class="four columns" style="float:right">
-                            <form action="/items/id/<%= item.id %>" method="GET">
-                                <input type="submit" class="item-selling-btn" value="View Details"/><br>
-                            </form>
-                        </div>
+            <div class="item-selling-div twelve columns">
+                <div class="item-selling-div">
+                    <div class="two columns">
+                        <% if (item.ItemImages.length > 0) { %>
+                        <img src="/uploads/items/<%= item.ItemImages[0].url %>"/>
+                        <% } else { %>
+                        <img src="/images/blog-widget-01.png"/>
+                        <% } %>
+                    </div>
+                    <div class="five columns">
+                        <h3><%= item.title %></h3>
+                        <%
+                            var name = '';
+                            if (item.User.company_name != null && item.User.company_name != '') {
+                                name = item.User.company_name;
+                            } else if (item.User.full_name != null && item.User.full_name != '') {
+                                name = item.User.full_name;
+                            } else if (item.User.username != null && item.User.username != '') {
+                                name = item.User.username;
+                            }
+                        %>
+                        <p>Seller: <a href="/user/public/userId/<%= item.User.id %>"> <%= name %></a><br>
+                            Minimum Quantity: <%= item.quantityMin %><br>
+                            Maximum iQuantity: <%= item.quantityMax %><br>
+                            Suggested Price: <%= item.suggestedPrice %><br>
+                    </div>
+                    <div class="four columns" style="float:right">
+                        <form action="/items/id/<%= item.id %>" method="GET">
+                            <input type="submit" class="item-selling-btn" value="View Details"/><br>
+                        </form>
                     </div>
                 </div>
+            </div>
 
-                <span class="line" style="margin-top:10px;margin-bottom: 0px"></span><div class="clearfix"></div>
+            <span class="line" style="margin-top:10px;margin-bottom: 0px"></span>
+            <div class="clearfix"></div>
             <% } %>
 
             <div class="clearfix"></div>
@@ -190,27 +232,36 @@
                 <nav class="pagination">
                     <ul>
                         <%
-                        var pageOne = (pageMultipationFactor * 10) + 1;
-                        var pageTwo = (pageMultipationFactor * 10) + 2;
-                        var pageThree = (pageMultipationFactor * 10) + 3;
+                            var pageOne = (pageMultipationFactor * 10) + 1;
+                            var pageTwo = (pageMultipationFactor * 10) + 2;
+                            var pageThree = (pageMultipationFactor * 10) + 3;
                         %>
-                        <% if(maxPageCount >= pageOne) {%>
+                        <% if(maxPageCount >= pageOne) { %>
                         <li>
-                            <a href="/api/items/search/start/<%= (pageOne-1) * 10 %>" <% if(pageOne === currentPageNumber) { %>class="current-page"<% } %>>
+                            <a href="/api/items/search/start/<%= (pageOne - 1) * 10 %>"
+                               <% if(pageOne === currentPageNumber) { %>class="current-page"
+                                    <% } %>
+                            >
                                 <%= pageOne %>
                             </a>
                         </li>
                         <% } %>
-                        <% if(maxPageCount >= pageTwo) {%>
+                        <% if(maxPageCount >= pageTwo) { %>
                         <li>
-                            <a href="/api/items/search/start/<%= (pageTwo-1) * 10 %>" <% if(pageTwo === currentPageNumber) { %>class="current-page"<% } %>>
+                            <a href="/api/items/search/start/<%= (pageTwo - 1) * 10 %>"
+                               <% if(pageTwo === currentPageNumber) { %>class="current-page"
+                                    <% } %>
+                            >
                                 <%= pageTwo %>
                             </a>
                         </li>
                         <% } %>
-                        <% if(maxPageCount >= pageThree) {%>
+                        <% if(maxPageCount >= pageThree) { %>
                         <li>
-                            <a href="/api/items/search/start/<%= (pageThree-1) * 10 %>" <% if(pageThree === currentPageNumber) { %>class="current-page"<% } %>>
+                            <a href="/api/items/search/start/<%= (pageThree - 1) * 10 %>"
+                               <% if(pageThree === currentPageNumber) { %>class="current-page"
+                                    <% } %>
+                            >
                                 <%= pageThree %>
                             </a>
                         </li>
@@ -220,15 +271,18 @@
 
                 <nav class="pagination-next-prev">
                     <ul>
-                        <% if(0 < pageMultipationFactor) {%>
-                        <li><a href="/api/items/search/start/<%= (pageMultipationFactor - 1) * 30 %>" class="prev"></a></li>
+                        <% if(0 < pageMultipationFactor) { %>
+                        <li><a href="/api/items/search/start/<%= (pageMultipationFactor - 1) * 30 %>" class="prev"></a>
+                        </li>
                         <% } %>
-                        <% if(maxPageCount >= (pageMultipationFactor * 10) + 4) {%>
-                        <li><a href="/api/items/search/start/<%= (pageMultipationFactor + 1) * 30 %>" class="next"></a></li>
+                        <% if(maxPageCount >= (pageMultipationFactor * 10) + 4) { %>
+                        <li><a href="/api/items/search/start/<%= (pageMultipationFactor + 1) * 30 %>" class="next"></a>
+                        </li>
                         <% } %>
                     </ul>
                 </nav>
             </div>
+            <% } %>
 
         </div>
 
@@ -271,6 +325,33 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
 <script src="/scripts/views/searchresults.js"></script>
 <script src="/scripts/views/header_func.js"></script>
+
+
+<script>
+//
+    $('#add-support').submit(function (event) {
+      $('#success-notification').removeClass('success');
+      $('#success-notification').removeClass('error');
+      $('#success-notification').css('display', 'none');
+      event.preventDefault();
+      var dataObj = {};
+      $( this ).serializeArray().forEach(function (val) {
+        dataObj[val['name']] = val['value'];
+      });
+      console.log(dataObj);
+      $.ajax({
+        url: '/api/messages/support_message',
+        data: dataObj,
+        type: 'POST',
+        success: function(data){
+          $('#success-notification').css('display', '');
+          $('#not-msg').html(data.msg);
+          $('#success-notification').addClass(data.success ? 'success': 'error')
+        }
+      })
+    })
+</script>
+
 
 </body>
 </html>

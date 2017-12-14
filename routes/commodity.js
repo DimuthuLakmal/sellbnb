@@ -176,22 +176,24 @@ router.get('/measureUnits/id/:id', function (req, res) {
       var CommodityPriceUnit = models.CommodityPriceUnit;
       var CommodityPacking = models.CommodityPacking;
       CommodityMeasureUnit.findAll({
-        where: {CommodityId: req.params.id},
+        where: {CommodityId: req.params.id}
       }).then(function (measureUnits) {
         //saving commodity measure units
         req.session.measureUnits = measureUnits;
 
         CommodityPriceUnit.findAll({
-          where: {CommodityId: req.params.id},
+          where: {CommodityId: req.params.id}
         }).then(function (priceUnits) {
           //saving commodity measure units
           req.session.priceUnits = priceUnits;
 
           CommodityPacking.findAll({
-            where: {CommodityId: req.params.id},
+            where: {CommodityId: req.params.id}
           }).then(function (packingTypes) {
             req.session.packingTypes = packingTypes;
-            res.redirect('/items/add');
+            var red = req.session.redirectToItemEdit;
+            delete req.session.redirectToItemEdit;
+            res.redirect(red ? red : '/items/add');
           });
 
         });
@@ -454,6 +456,11 @@ router.post('/keyword', function (req, res) {
       });
     }
   );
+});
+
+router.get('/undefined', function (req, res) {
+  // error
+  res.redirect('/');
 });
 
 module.exports = router;

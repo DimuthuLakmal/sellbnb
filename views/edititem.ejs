@@ -7,17 +7,15 @@
     <!-- Global Site Tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107495910-1"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments)};
-        gtag('js', new Date());
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments)
+      };
+      gtag('js', new Date());
 
-        gtag('config', 'UA-107495910-1');
+      gtag('config', 'UA-107495910-1');
     </script>
 
-    <%
-    if (typeof(message)== undefined)
-        var message = "";
-    %>
     <!-- Basic Page Needs
     ================================================== -->
     <meta charset="utf-8">
@@ -32,6 +30,28 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/colors/blue.css" id="colors">
+    <link rel="stylesheet" href="/css/croppie.css"/>
+
+    <script src="/scripts/tinymce/tinymce.min.js"></script>
+    <script>
+      tinymce.init({
+        selector: '#editor',
+        height: 300,
+        menubar: false,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table contextmenu paste code table'
+        ],
+        table_toolbar: "tableprops tabledelete | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol",
+        toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | table',
+        content_css: '//www.tinymce.com/css/codepen.min.css',
+      });
+
+      setTimeout(function () {
+        tinyMCE.editors[0].setContent(document.getElementById('desc-content').innerHTML);
+      }, 1000);
+    </script>
 
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -44,165 +64,159 @@
 
     <% include header.ejs %>
 
+    <div class="row"></div>
     <div class="container">
 
-        <div class="fourteen columns centered">
+        <!-- Content
+        ================================================== -->
 
-            <form name="bidform">
-
-                <fieldset>
-
-                    <input type="hidden" id="itemId" name="itemId" value="<%= item.id %>"/>
-
-                    <div class="twelve alpha columns bidform">
-                        <label>Images : </label>
-                        <div class="ten columns" id="imagepreview-div">
-                            <% for(imageIndex = 0; imageIndex < item.ItemImages.length; imageIndex++) {%>
-                            <div class="two columns">
-                                <img src="/uploads/items/<%= item.ItemImages[imageIndex].url %>"
-                                     alt="" style="width: 120px; height: 120px"/>
-                                <a href="#">(Remove)</a>
-                            </div>
-                            <% } %>
-                        </div>
-                        <button class="commodity-uploadimage" id="commodity-uploadimage">Upload Images</button>
-                        <input type="file" name="fileToUpload" id="fileToUpload" style="display: none">
-                    </div>
-
-                    <div class="twelve alpha columns bidform">
-                        <label>Title : </label>
-                        <input name="title" type="text" id="title" value="<%= item.title %>"/>
-                    </div>
-
-                    <div class="thirteen alpha columns editform">
-                        <label>Quantity : </label>
-                        <div class="ten columns" style="margin-left:0px">
-                            <input name="quantity" type="text" id="quantity" value="<%= item.quantity.split(" ")[0] %>"/>
-                        </div>
-                        <div class="two columns">
-                            <select name="measureUnit" id="measureUnit">
-                                <% for(var measureIndex = 0; measureIndex < specificBiddingItemSellMeasureUnits.length; measureIndex++) { %>
-                                <option value="<%= specificBiddingItemSellMeasureUnits[measureIndex].unitName %>"><%= specificBiddingItemSellMeasureUnits[measureIndex].unitName %></option>
-                                <% } %>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="twelve alpha columns bidform">
-                        <label for="delivery_by">Delivery By : </label>
-                        <select id="delivery_by" name="delivery_by">
-                            <% if(item.deliveryBy == 'Buyer') { %>
-                            <option selected>Buyer</option>
-                            <% } else {%>
-                            <option>Buyer</option>
-                            <%} %>
-                            <% if(item.deliveryBy == 'Seller') { %>
-                            <option selected>Buyer</option>
-                            <% } else {%>
-                            <option>Seller</option>
-                            <%} %>
-                        </select>
-                    </div>
-
-                    <div class="twelve alpha columns bidform">
-                        <label for="warehouse">Warehouse : </label>
-                        <select id="warehouse" name="warehouse">
-                            <% for(var warehouseIndex = 0; warehouseIndex < userWareHousesSell.length; warehouseIndex++) {
-                                var warehouse = userWareHousesSell[warehouseIndex];
-                                var formattedAddress = "";
-                                formattedAddress = (warehouse.warehouseAddress1 != null && warehouse.warehouseAddress1 != undefined) ?
-                                        warehouse.warehouseAddress1 : formattedAddress;
-                                formattedAddress = (warehouse.warehouseAddress2 != null && warehouse.warehouseAddress2 != undefined) ?
-                                formattedAddress + ", " + warehouse.warehouseAddress2 : formattedAddress;
-                                formattedAddress = (warehouse.warehouseCity != null && warehouse.warehouseCity != undefined) ?
-                                formattedAddress + ", " + warehouse.warehouseCity : formattedAddress;
-
-                            %>
-                            <option value="<%= warehouse.id %>"><%= formattedAddress %></option>
-                            <% } %>
-                        </select>
-                    </div>
-
-                    <div class="twelve alpha columns bidform">
-                        <label>Packing Type : </label>
-                        <input name="packing_type" type="text" id="packing_type" value="<%= item.packageType %>"/>
-                    </div>
-
-                    <div class="twelve alpha columns bidform">
-                        <label for="payment_terms">Payment Terms : </label>
-                        <select id="payment_terms" name="payment_terms" value="<%= item.paymentTerms %>">
-                            <% if(item.paymentTerms == '1 month credit') { %>
-                            <option selected>1 month credit</option>
-                            <% } else {%>
-                            <option>1 month credit</option>
-                            <%} %>
-                            <% if(item.paymentTerms == '1 week credit') { %>
-                            <option selected>1 week credit</option>
-                            <% } else {%>
-                            <option>1 week credit</option>
-                            <%} %>
-                            <% if(item.paymentTerms == 'Cash On Delivery') { %>
-                            <option selected>Cash On Delivery</option>
-                            <% } else {%>
-                            <option>Cash On Delivery</option>
-                            <%} %>
-                        </select>
-                    </div>
-
-                    <div class="thirteen alpha columns editform">
-                        <label>Suggested Price : </label>
-                        <div class="ten columns" style="margin-left:0px">
-                            <input name="suggested_price" type="text" id="suggested_price" value="<%= item.suggestedPrice.split(" ")[1] %>"/>
-                        </div>
-                        <div class="two columns">
-                            <select name="priceUnit" id="priceUnit">
-                                <% for(var priceIndex = 0; priceIndex < specificBiddingItemSellPriceUnits.length; priceIndex++) { %>
-                                <option value="<%= specificBiddingItemSellPriceUnits[priceIndex].unitName %>"><%= specificBiddingItemSellPriceUnits[priceIndex].unitName %></option>
-                                <% } %>
-                            </select>
-                        </div>
-                    </div>
-
-                    <%
-                    var duration = item.duration;
-                    var days = Math.floor(duration / (24 * 3600));
-                    var hours = Math.floor((duration % (24 * 3600)) / 3600);
-                    var mins = Math.floor(((duration % (24 * 3600)) % 3600) / 60);
-                    %>
-                    <div class="twelve alpha columns bidform">
-                        <label for="payment_terms">Duration : </label>
-                        <div class="two columns bidform" style="margin-left: 0px;">
-                            <input name="days" type="number" id="days" value="<%= days %>"/>
-                        </div>
-                        <div class="two columns bidform">
-                            <input name="hours" type="number" id="hours" value="<%= hours %>"/>
-                        </div>
-                        <div class="two columns bidform">
-                            <input name="mins" type="number" id="mins" value="<%= mins %>"/>
-                        </div>
-                    </div>
-
-                    <div class="twelve alpha columns bidform">
-                        <label>Seller Note: <span>*</span></label>
-                        <textarea name="seller_note" cols="91" rows="3" id="seller_note" spellcheck="true" style="width: 97%">
-                                        <%= item.note %>
-                                    </textarea>
-                    </div>
-
-                    <div class="twelve columns bidform">
-                        <input type="submit" class="submit" id="submit" value="Update"/>
-                    </div>
-
-                </fieldset>
-                <br>
-                <div class="notification success closeable" style="display: none" id="message_success">
-                    <p><span>Success! </span>Item details were updated successfully!</p>
-                    <a class="close" href="#"></a>
-                </div>
+        <div class="twelve columns products centered">
+            <a style="display: none" href="#small-dialog" class="popup-with-zoom-anim button color" id="cropWindow"></a>
+            <div id="small-dialog" class="small-dialog zoom-anim-dialog mfp-hide upload-demo">
+                <h3 class="headline">Crop Image</h3><span class="line margin-bottom-25"></span>
                 <div class="clearfix"></div>
-            </form>
+                <div align="center">
+                    <div class="croppie-container" id="croppie-container"
+                         style="width: 350px; height: 350px; display: none">
+                    </div>
+                    <div class="one columns">
+                        <a class="button color" id="commodity-uploadimage" style="width: 200px; margin-left:3px">Select
+                            Image</a>
+                        <input type="file" name="fileToUpload" id="fileToUpload" style="display: none"><br>
+                        <a class="button color" id="crop-btn" style="width: 200px">Crop Image</a>
+                    </div>
+                </div>
 
+            </div>
 
+            <section class="variables">
+
+                <form id="addItemForm" method="POST">
+                    <fieldset>
+                        <input type="hidden" id="itemId" name="itemId" value="<%= item.id %>"/>
+                        <input type="hidden" id="userId" name="userId" value="<%= user.id %>"/>
+                        <input type="hidden" id="commodityId" name="commodityId" value="<%= item.CommodityId %>"/>
+
+                        <div class="twelve alpha columns editform">
+                            <label>Title : </label>
+                            <input name="title" type="text" id="title" value="<%= item.title %>"
+                                   placeholder="Write a descriptive title. [Use words people would search for when looking for your commodity]"/>
+                        </div>
+
+                        <div class="thirteen alpha columns editform">
+                            <label>Quantity : </label>
+                            <div class="five columns" style="margin-left:0px">
+                                <input name="quantityMin" type="text" id="quantity" placeholder="Min"
+                                       value="<%= item.quantityMin %>"/>
+                            </div>
+                            <div class="five columns" style="margin-left:10px">
+                                <input name="quantityMax" type="text" id="quantity" placeholder="Max"
+                                       value="<%= item.quantityMax %>"/>
+                            </div>
+                            <div class="two columns">
+                                <select name="measureUnit" id="measureUnit">
+                                    <% for(var measureIndex = 0; measureIndex < measureUnits.length; measureIndex++) { %>
+                                    <% if(item.measureUnit === measureUnits[measureIndex].unitName) { %>
+                                    <option value="<%= measureUnits[measureIndex].unitName %>"
+                                            selected="selected"><%= measureUnits[measureIndex].unitName %></option>
+                                    <% } else { %>
+                                    <option value="<%= measureUnits[measureIndex].unitName %>"><%= measureUnits[measureIndex].unitName %></option>
+                                    <% } %>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="thirteen alpha columns editform">
+                            <div class="twelve columns bidform" style="margin-left: 0;">
+                                <label for="packing_type">Packing Type : </label>
+                                <select id="packing_type" name="packingType">
+                                    <% for(var i = 0; i < packingType.length; i++) { %>
+                                    <% if(item.packageType === packingType[i].type) { %>
+                                    <option value="<%= packingType[i].type %>"
+                                            selected="selected"><%= packingType[i].type %></option>
+                                    <% } else { %>
+                                    <option value="<%= packingType[i].type %>"><%= packingType[i].type %></option>
+                                    <% } %>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="twelve alpha columns editform">
+                            <label for="payment_terms">Lead Time : </label>
+                            <div class="five columns" style="margin-left: 0;">
+                                <input type="text" name="loadTime" value="<%= item.loadTime %>">
+                            </div>
+                        </div>
+
+                        <div class="thirteen alpha columns editform">
+                            <label>FOB Price : </label>
+                            <div class="five columns" style="margin-left:0px">
+                                <input name="fob_price" type="text" id="suggested_price"
+                                       placeholder="Suggest a price for the item" value="<%= item.suggestedPrice %>"/>
+                            </div>
+                            <div class="two columns">
+                                <select name="priceUnit" id="priceUnit">
+                                    <% for(var i = 0; i < priceUnits.length; i++) { %>
+                                    <% if(item.priceUnit === priceUnits[i].unitName) { %>
+                                    <option value="<%= priceUnits[i].unitName %>"
+                                            selected="selected"><%= priceUnits[i].unitName %></option>
+                                    <% } else { %>
+                                    <option value="<%= priceUnits[i].unitName %>"><%= priceUnits[i].unitName %></option>
+                                    <% } %>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="twelve alpha columns editform">
+                            <label>Origin : </label>
+                            <div class="five columns bidform" style="margin-left: 0px;">
+                                <input name="origin" type="text" id="days" placeholder="" value="<%= item.origin %>"/>
+                            </div>
+                        </div>
+
+                        <div class="twelve alpha columns editform">
+                            <label>Producer Note: <span>*</span></label>
+                            <textarea name="producer_note" cols="91" rows="3" id="seller_note" spellcheck="true"
+                                      style="width: 97%" placeholder="Describe Your Item"><%= item.note %></textarea>
+                        </div>
+
+                        <div class="twelve alpha columns editform">
+                            <label>Commodity Description: <span>*</span></label>
+                            <div class="twelve alpha columns editform">
+                                <div id="editor">
+                                    <div id='comDescText'></div>
+                                </div>
+
+                                <div style="display: none;" id="desc-content"><%- item.commodityDesc %></div>
+                            </div>
+                            <input type="hidden" name="comDesc" id="comDesc">
+                        </div>
+
+                        <div class="twelve alpha columns editform">
+                            <label>Images : </label>
+                            <div class="ten columns" id="imagepreview-div">
+                            </div>
+                            <button class="commodity-uploadimage" id="open-uploadimage-modal">Upload Images</button>
+                        </div>
+
+                        <div class="twelve columns bidform" style="margin-top: 10px">
+                            <!--<input type="submit" class="submit" id="preview" value="Preview"/>-->
+                            <input type="submit" class="submit" id="submit" value="Update" style="margin-top:5px"/>
+                        </div>
+
+                    </fieldset>
+                    <br>
+                    <div class="notification success closeable" style="display: none" id="message_success">
+                        <p><span>Success! </span>Item details were updated successfully!</p>
+                        <a class="close" href="#"></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </form>
+
+            </section>
         </div>
 
     </div>
@@ -241,8 +255,9 @@
 <script src="/scripts/puregrid.js"></script>
 <script src="/scripts/stacktable.js"></script>
 <script src="/scripts/custom.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
-<script src="/scripts/views/viewbiddingdetailsseller.js"></script>
+<script src="/scripts/croppie.js"></script>
+
+<script src="/scripts/views/edititem.js"></script>
 <script src="/scripts/views/header_func.js"></script>
 
 </body>

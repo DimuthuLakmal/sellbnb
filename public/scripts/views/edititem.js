@@ -122,7 +122,7 @@ $('#submit').click(function (e) {
   data['images'] = images;
 
   $.ajax({
-    url: "/api/items/add",
+    url: "/api/items/update",
     type: 'POST',
     data: data,
     success: function (data, status, xhr) {
@@ -151,6 +151,9 @@ $('#preview').click(function (e) {
   var paymentTerms = $('#payment_terms').val();
   var suggestedPrice = $('#priceUnit').val() + " " + $('#suggested_price').val();
   var sellerNote = $('#seller_note').val();
+  var hours = $('#hours').val();
+  var days = $('#days').val();
+  var mins = $('#mins').val();
 
   var item = {
     quantity: quantity,
@@ -163,6 +166,9 @@ $('#preview').click(function (e) {
     paymentTerms: paymentTerms,
     suggestedPrice: suggestedPrice,
     sellerNote: sellerNote,
+    hours: hours,
+    days: days,
+    mins: mins,
     images: images
   };
 
@@ -182,12 +188,10 @@ $('#preview').click(function (e) {
   } else {
     window.location = "/items/preview";
   }
+
 });
 
 $(".remove-btn").live('click', function () {
   $(this).parent().remove();
   images.splice(parseInt($(this).prev().text()), 1);
 });
-
-
-

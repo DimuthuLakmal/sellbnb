@@ -35,6 +35,7 @@
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 
 </head>
 
@@ -54,13 +55,50 @@
         <div class="one columns" style="visibility: hidden">a</div>
         <div class="fifteen columns" style="font-size: 18px">
             <div style="background-image: url('images/help-cover.jpg'); height: 250px; background-size: 100%; position: relative;">
-                <h1 style="position: absolute; top: 25px; left:35px; color:black;">How can we help you?</h1>
-                <form action="" method="POST">
-                    <textarea name="issue"  placeholder="Please describe your issue" style="resize: none; position: absolute;top: 75px;left: 45px;width: 280px;height: 78px;color:black;border-radius: 10px;"></textarea>
-                    <button style="position: absolute;top: 75px;left: 360px;border: none;color:black;border-radius: 5px;background: orange;width: 90px;height: 30px;">SEND</button>
-                </form>
-            </div>
+                <h1 style="position: absolute; top: 25px; left:35px; color:black;">If you have a problem ?</h1>
+                <div class="last-bid" align="center">
+                    <table border="0px">
+                        <tr>
+                            <td>
+                                <a href="#message-dialog" class="button popup-with-zoom-anim margin-left-0"
+                                   style="background-color: green; top:64px; left: 116px;">Click to submit A Problem</a>
+                                <div id="message-dialog" class="small-dialog zoom-anim-dialog mfp-hide"
+                                     style="margin-top: -100px">
+                                    <h3 class="headline">Support Corner</h3><span class="line margin-bottom-25"></span>
+                                    <div class="clearfix"></div>
 
+                                    <!-- Form -->
+                                    <form id="add-support" class="add-comment" action="" method="POST">
+                                        <fieldset>
+                                            <div class="twelve alpha columns editform">
+                                                <label>Subject:</label>
+                                                <input type="text" name="subject" placeholder="Type message subject"/>
+                                            </div>
+                                            <div class="twelve alpha columns editform">
+                                                <label>Email :</label>
+                                                <input type="email" name="email" placeholder="Your Email"/>
+                                            </div>
+                                            <div>
+                                                <label>Message:</label>
+                                                <textarea cols="7" rows="3" name="message"
+                                                          style="width: 97%"></textarea>
+                                            </div>
+                                            <div class="g-recaptcha" data-sitekey="6Leb9zwUAAAAAEk2Ft01XQmNjuRiiAscYB3ZcRNK"></div>
+                                        </fieldset>
+
+                                        <input type="submit" class="button color" value="Send Message"
+                                               style="width: 100%"/>
+                                        <div class="clearfix"></div>
+                                        <div class="notification" id="success-notification" style="display: none">
+                                            <p id="not-msg">Sent !</p>
+                                        </div>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
             <div>
                 <h1 style="color:#000; margin-top: 30px;">Frequently Asked Questions</h1>
                 <h3 style="color:#000; font-weight:bold"><a name="incoterms">#</a> What are incoterms?</h3>
@@ -214,6 +252,31 @@
 <script src="/scripts/stacktable.js"></script>
 <script src="/scripts/custom.js"></script>
 <script src="/scripts/views/header_func.js"></script>
+
+<script>
+  //
+  $('#add-support').submit(function (event) {
+    $('#success-notification').removeClass('success');
+    $('#success-notification').removeClass('error');
+    $('#success-notification').css('display', 'none');
+    event.preventDefault();
+    var dataObj = {};
+    $( this ).serializeArray().forEach(function (val) {
+      dataObj[val['name']] = val['value'];
+    });
+    console.log(dataObj);
+    $.ajax({
+      url: '/api/messages/support_message',
+      data: dataObj,
+      type: 'POST',
+      success: function(data){
+        $('#success-notification').css('display', '');
+        $('#not-msg').html(data.msg);
+        $('#success-notification').addClass(data.success ? 'success': 'error')
+      }
+    })
+  })
+</script>
 
 </body>
 </html>

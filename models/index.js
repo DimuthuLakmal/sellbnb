@@ -17,6 +17,7 @@ var path = require('path');
 var sequelize = new Sequelize('sell_bnb2', 'root', 'root', {
     host: 'localhost',
     dialect: 'mysql',
+    logging: false,
     pool: {
         max: 5,
         min: 0,

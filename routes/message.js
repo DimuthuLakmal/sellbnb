@@ -15,6 +15,7 @@ router.post('/add', function (req, res) {
   var receiverUserId = req.body.receiverUserIdFk;
   var subject = req.body.subject;
   var returnTo = req.body.returnTo;
+  var att = JSON.parse(req.body.imageB64);
 
   //store news in database
   sequelize.sync().then(
@@ -23,9 +24,9 @@ router.post('/add', function (req, res) {
       Message.create({
         subject: subject,
         message: message,
-        seen: 0,
+        att_count: att.length,
         senderUserIdFk: senderUserId,
-        receiverUserIdFk: receiverUserId,
+        receiverUserIdFk: receiverUserId
       }).then(function (insertedMessage) {
         // Send an emails
         models.User.findAll({
@@ -48,18 +49,22 @@ router.post('/add', function (req, res) {
             sendUser[0].PhoneNumbers.forEach(function (e) {
               numList.push(e.dataValues.number);
             });
-            require('./email-controller').sendEmail({
+            var emailData = {
               template: 'user-message',
               to: recievedUser[0].Emails[0].dataValues.email,
               subject: '[SellBnb] ' + (sendUser[0].dataValues.full_name || sendUser[0].dataValues.company_name || sendUser[0].dataValues.username) + ' send you a new message'
-            }, {
+            };
+            if(att.length > 0){
+              emailData.attachments = att;
+            }
+            require('./email-controller').sendEmail(emailData, {
               senderName: sendUser[0].dataValues.full_name || sendUser[0].dataValues.company_name || sendUser[0].dataValues.username,
               fullName: sendUser[0].dataValues.full_name,
               telephones: numList.join(', '),
               emails: emailList.join(', '),
               subject: subject,
               message: message,
-              replyUrl: 'asdfasd' + insertedMessage.id,
+              replyUrl: 'asdfasd' + insertedMessage.id
             })
           });
         });
@@ -81,6 +86,7 @@ router.post('/addreply', function (req, res) {
   var reply = req.body.reply;
   var userId = req.body.userId;
   var messageId = req.body.messageId;
+  var att = JSON.parse(req.body.imageB64);
 
   //store news in database
   sequelize.sync().then(
@@ -90,11 +96,10 @@ router.post('/addreply', function (req, res) {
       MessageReply.create({
         message: reply,
         MessageId: messageId,
-        seen: false,
         UserId: userId,
+        att_count: att.length
       }).then(function (insertedMessageReply) {
         Message.update(
-          {seen: 1},
           {where: {id: messageId}}
         ).then(function (results) {
           res.redirect('/user/messages/id/' + messageId);
@@ -119,9 +124,8 @@ router.get('/userId/:userId', function (req, res) {
       //find user's notification
       Message.findAll({
         where: {
-          receiverUserIdFk: UserId,
-          $or: [{seen: 0}, {seen: 1}],
-        },
+          receiverUserIdFk: UserId
+        }
       }).then(function (Messages) {
         req.session.messages = Messages;
         res.redirect(req.session.returnToCommodityName);
@@ -144,7 +148,7 @@ router.get('/inbox/userId/:userId', function (req, res) {
       //find user's notification
       Message.findAll({
         where: {
-          receiverUserIdFk: UserId,
+          receiverUserIdFk: UserId
         },
         include: [{
           model: User,
@@ -172,7 +176,7 @@ router.get('/sent/userId/:userId', function (req, res) {
       //find user's notification
       Message.findAll({
         where: {
-          senderUserIdFk: UserId,
+          senderUserIdFk: UserId
         },
         include: [{
           model: User,
@@ -198,12 +202,11 @@ router.get('/update/id/:id', function (req, res) {
       var MessageReply = models.MessageReply;
       var User = models.User;
       Message.update(
-        {seen: 2},
         {where: {id: id}}
       ).then(function (results) {
         Message.findAll({
           where: {
-            id: id,
+            id: id
           },
           include: [{
             model: User,
@@ -213,7 +216,7 @@ router.get('/update/id/:id', function (req, res) {
           if (msgs[0].dataValues.receiverUserIdFk === req.user.id) {
             MessageReply.findAll({
               where: {MessageId: msgs[0].dataValues.id},
-              include: [User],
+              include: [User]
             }).then(function (MessageReplies) {
               req.session.messageReplies = MessageReplies;
               req.session.messageDetails = msgs[0];
@@ -227,6 +230,45 @@ router.get('/update/id/:id', function (req, res) {
       });
     }
   );
+});
+
+router.post('/support_message', function (req, res) {
+  var Recaptcha = require('express-recaptcha');
+
+  var recaptcha = new Recaptcha('6Leb9zwUAAAAAEk2Ft01XQmNjuRiiAscYB3ZcRNK', '6Leb9zwUAAAAAM2gLIuDl3_9mKGco4sXzDwCaJ7g');
+
+  if (!((req.body.subject !== '') &&
+    (req.body.email !== '') &&
+    (req.body.message !== '') &&
+    (req.body['g-captcha-response'] !== ''))) {
+    return res.jsonp({
+      success: false,
+      msg: 'Invalid Form'
+    })
+  } else {
+    recaptcha.verify(req, function (error, data) {
+      if (error) {
+        return res.jsonp({
+          success: false,
+          msg: 'Invalid Captcha'
+        })
+      } else {
+        require('./email-controller').sendEmail({
+          template: 'support-message',
+          to: 'antcommodity@gmail.com',
+          subject: '[SUPPORT] - User Support request'
+        }, {
+          subject: req.body.subject,
+          email: req.body.email,
+          message: req.body.message
+        });
+        return res.jsonp({
+          success: true,
+          msg: 'Sent Message to Support !'
+        })
+      }
+    });
+  }
 });
 
 module.exports = router;

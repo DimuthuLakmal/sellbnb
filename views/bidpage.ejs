@@ -247,6 +247,7 @@
                                             <input type="hidden" name="returnTo" value="/items/id/<%= item.item.id %>"/>
                                             <input type="hidden" name="receiverUserIdFk" value="<%= item.user.id %>"/>
                                             <input type="hidden" name="senderUserIdFk" value="<%= user.id %>"/>
+                                            <input type="hidden" name="imageB64" id="imgData" value=""/>
                                             <div class="twelve alpha columns editform">
                                                 <label>Subject:</label>
                                                 <input type="text" name="subject" placeholder="Type message subject"/>
@@ -259,7 +260,7 @@
 
                                             <div class="twelve alpha columns editform">
                                                 <label>Attachments :</label>
-                                                <input type="file" multiple name="attachments" accept=".png, .jpg, .jpeg, .pdf"/>
+                                                <input type="file" multiple name="attachments" id="inputAtt" accept=".png, .jpg, .jpeg, .pdf"/>
                                             </div>
 
                                         </fieldset>
