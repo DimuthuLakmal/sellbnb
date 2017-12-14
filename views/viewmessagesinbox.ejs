@@ -83,7 +83,11 @@
                 %>
                     <tr data-href="/api/messages/update/id/<%= message.id %>" style="cursor: pointer; background-color: white;">
                         <td style="border-bottom:1pt solid lightgray;"><%= message.senderUserId.username %></td>
-                        <td style="border-bottom:1pt solid lightgray;"><%= message.subject %></td>
+                        <td style="border-bottom:1pt solid lightgray;"><%= message.subject %>
+                        <% if(message.att_count > 0){ %>
+                            <span> [<%=message.att_count%>] </span>
+                            <%}%>
+                        </td>
                         <td style="border-bottom:1pt solid lightgray;"><%= message.createdAt.split('T')[0] %></td>
                     </tr>
                 <% } %>

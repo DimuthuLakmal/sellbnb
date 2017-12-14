@@ -74,12 +74,12 @@
                         <p class="form-row form-row-wide">
                             <label for="username">Username or Email Address: <span class="required">*</span></label>
                             <input type="text" class="input-text" name="username" id="username"
-                                   value="<%= 'viranmalaka'%>"/>
+                                   value="<%= expectedUser ? expectedUser : '' %>"/>
                         </p>
 
                         <p class="form-row form-row-wide">
                             <label for="password">Password: <span class="required">*</span></label>
-                            <input class="input-text" type="password" name="password" id="password" value="12345678"/>
+                            <input class="input-text" type="password" name="password" id="password" value=""/>
                         </p>
 
                         <p class="form-row">

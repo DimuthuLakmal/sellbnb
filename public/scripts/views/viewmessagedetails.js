@@ -1,11 +1,9 @@
 /**
- * Created by kjtdi on 3/30/2017.
+ * Created by malaka on 12/15/17.
  */
-var imgDataArr = [];
 
-function rate(value, column){
-    $('#rating_'+column).val(value);
-}
+
+var imgDataArr = [];
 
 function readFile(file) {
   var FR = new FileReader();

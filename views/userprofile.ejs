@@ -110,6 +110,7 @@
                                    value="/user/public/userId/<%= userPublicInformation.id %>"/>
                             <input type="hidden" name="receiverUserIdFk" value="<%= userPublicInformation.id %>"/>
                             <input type="hidden" name="senderUserIdFk" value="<%= user.id %>"/>
+                            <input type="hidden" name="imageB64" id="imgData" value=""/>
                             <div class="twelve alpha columns editform">
                                 <label>Subject:</label>
                                 <input type="text" name="subject" placeholder="Type message subject"/>
@@ -117,6 +118,11 @@
                             <div>
                                 <label>Message:</label>
                                 <textarea cols="20" rows="3" name="message" style="width: 97%"></textarea>
+                            </div>
+
+                            <div class="twelve alpha columns editform">
+                                <label>Attachments for the E-mail:</label>
+                                <input type="file" multiple name="attachments" id="inputAtt" accept=".png, .jpg, .jpeg, .pdf"/>
                             </div>
                         </fieldset>
 

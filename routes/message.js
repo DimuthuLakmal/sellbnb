@@ -54,7 +54,7 @@ router.post('/add', function (req, res) {
               to: recievedUser[0].Emails[0].dataValues.email,
               subject: '[SellBnb] ' + (sendUser[0].dataValues.full_name || sendUser[0].dataValues.company_name || sendUser[0].dataValues.username) + ' send you a new message'
             };
-            if(att.length > 0){
+            if (att.length > 0) {
               emailData.attachments = att;
             }
             require('./email-controller').sendEmail(emailData, {
@@ -99,11 +99,7 @@ router.post('/addreply', function (req, res) {
         UserId: userId,
         att_count: att.length
       }).then(function (insertedMessageReply) {
-        Message.update(
-          {where: {id: messageId}}
-        ).then(function (results) {
-          res.redirect('/user/messages/id/' + messageId);
-        });
+        res.redirect('/user/messages/id/' + messageId);
       });
     }
   ).catch(function (error) {
@@ -201,32 +197,28 @@ router.get('/update/id/:id', function (req, res) {
       var Message = models.Message;
       var MessageReply = models.MessageReply;
       var User = models.User;
-      Message.update(
-        {where: {id: id}}
-      ).then(function (results) {
-        Message.findAll({
-          where: {
-            id: id
-          },
-          include: [{
-            model: User,
-            as: 'senderUserId'
-          }]
-        }).then(function (msgs) {
-          if (msgs[0].dataValues.receiverUserIdFk === req.user.id) {
-            MessageReply.findAll({
-              where: {MessageId: msgs[0].dataValues.id},
-              include: [User]
-            }).then(function (MessageReplies) {
-              req.session.messageReplies = MessageReplies;
-              req.session.messageDetails = msgs[0];
-              res.redirect('/user/messages/id/' + id);
-            });
-          } else {
-            req.session.returnTo = req.session.inCorrectLoginPath;
-            res.redirect('/user/login?action=login');
-          }
-        });
+      Message.findAll({
+        where: {
+          id: id
+        },
+        include: [{
+          model: User,
+          as: 'senderUserId'
+        }]
+      }).then(function (msgs) {
+        if (msgs[0].dataValues.receiverUserIdFk === req.user.id) {
+          MessageReply.findAll({
+            where: {MessageId: msgs[0].dataValues.id},
+            include: [User]
+          }).then(function (MessageReplies) {
+            req.session.messageReplies = MessageReplies;
+            req.session.messageDetails = msgs[0];
+            res.redirect('/user/messages/id/' + id);
+          });
+        } else {
+          req.session.returnTo = req.session.inCorrectLoginPath;
+          res.redirect('/user/login?action=login');
+        }
       });
     }
   );

@@ -38,7 +38,7 @@ router.post('/add', function (req, res) {
   _.forEach(req.body.images, function (image, index) {
     var imageBuffer = decodeBase64Image(image.data); //decoding base64 images
     fs.writeFile('public/uploads/items/' + image.filename, imageBuffer.data, function (err) {
-      console.log(err);
+      if(err) console.log(err);
     });
   });
 
@@ -89,7 +89,7 @@ router.post('/update', function (req, res) {
   _.forEach(req.body.images, function (image, index) {
     var imageBuffer = decodeBase64Image(image.data); //decoding base64 images
     fs.writeFile('public/uploads/items/' + image.filename, imageBuffer.data, function (err) {
-      console.log(err);
+      if(err) console.log(err);
     });
   });
   //store item in database
@@ -162,12 +162,10 @@ router.get('/viewlatest', function (req, res) {
           // console.log('Visited latest item '+index);
           var id = item.id;
           var title = item.title;
-          var quantity = item.quantity;
-          var duration = item.duration;
           var suggestedPrice = item.suggestedPrice;
 
           itemsArr.push({
-            'title': title, 'id': id, 'quantity': quantity, 'suggestedPrice': suggestedPrice,
+            'title': title, 'id': id, 'suggestedPrice': suggestedPrice,
             'images': item.ItemImages, 'commodity': item.Commodity, 'priceUnit': item.priceUnit
           });
         });

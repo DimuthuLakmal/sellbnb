@@ -116,9 +116,15 @@
                 <fieldset>
                     <input type="hidden" name="userId" value="<%= user.id %>" />
                     <input type="hidden" name="messageId" value="<%= messageDetails.id %>" />
+                    <input type="hidden" name="imageB64" id="imgData" value=""/>
                     <div>
                         <label>Your Reply: </label>
                         <textarea cols="40" rows="2" name="reply" style="min-height: 100px; width: 97%"></textarea>
+
+                        <div class="twelve alpha columns editform">
+                            <label>Attachments for the E-mail:</label>
+                            <input type="file" multiple name="attachments" id="inputAtt" accept=".png, .jpg, .jpeg, .pdf"/>
+                        </div>
                     </div>
 
                 </fieldset>
@@ -166,6 +172,7 @@
 <script src="/scripts/stacktable.js"></script>
 <script src="/scripts/custom.js"></script>
 <script src="/scripts/views/header_func.js"></script>
+<script src="/scripts/views/viewmessagedetails.js"></script>
 
 </body>
 </html>

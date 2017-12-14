@@ -142,7 +142,7 @@
                 <div class="eight columns" style="border-bottom: solid 2px #5748ff; margin:0;">
                     <h1 style="margin-left: 10px; background-color: #e2e2e2" class="headline">FOB Price: <strong style="font-size: 30px; color: #729331 ;"><%= item.item.suggestedPrice + ' ' + item.item.priceUnit %></strong></h1>
                 </div>
-                <form method="POST" action="/api/offer/add" id="bidformToSubmit" style="background-color: #5d5c60">
+                <form method="POST" id="bidformToSubmit" style="background-color: #5d5c60">
                     <input type="hidden" name="itemId" value="<%= item.item.id %>"/>
                     <input type="hidden" name="userId" value="<%= user.id %>"/>
                     <input type="hidden" name="itemOwner" value="<%= item.user.id %>"/>
@@ -210,6 +210,15 @@
                                style="margin-left:10px; width: 97%; background-color: #729331; font-size: 20px; color: white;"/>
                         <div class="clearfix"></div>
                     </div>
+
+                    <div class="eight alpha columns bidform">
+                        <div class="notification success closeable" style="display: none" id="message_success">
+                            <p><span>Success! </span>Your offer is successfully added.</p>
+                            <a class="close" href="#"></a>
+                        </div>
+
+                    </div>
+
                 </form>
                 <br>
                 <br>
@@ -259,7 +268,7 @@
                                             </div>
 
                                             <div class="twelve alpha columns editform">
-                                                <label>Attachments :</label>
+                                                <label>Attachments for the E-mail:</label>
                                                 <input type="file" multiple name="attachments" id="inputAtt" accept=".png, .jpg, .jpeg, .pdf"/>
                                             </div>
 
