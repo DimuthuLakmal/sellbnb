@@ -32,6 +32,11 @@
         toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | table',
         content_css: '//www.tinymce.com/css/codepen.min.css',
       });
+
+      setTimeout(function () {
+        tinyMCE.editors[0].setContent(document.getElementById('currentCI').innerHTML);
+      }, 1000);
+
     </script>
     <!-- Basic Page Needs
     ================================================== -->
@@ -95,7 +100,7 @@
 
             <h3 class="headline">Business Images</h3><span class="line margin-bottom-30"></span>
             <div class="clearfix"></div>
-            <% if(user.business_images!=null && user.business_images !='') { %>
+            <% if(user.business_images != null && user.business_images != '') { %>
             <p>you have uploaded <%= JSON.parse(user.business_images).length %> photos</p>
             <% } else { %>
             <p>You don't have upload any photo yet.</p>
@@ -110,38 +115,25 @@
             <div class="clearfix"></div>
             <p><%- user.companyIntroduction %></p>
             <% if(user.companyIntroduction != '' && user.companyIntroduction != undefined) { %>
-            <a class="popup-with-zoom-anim" href="#edit-introduction-dialog" style="color:#2db2ea;float: right">Edit</a><br/>
+            <a style="color:#2db2ea;float: right" class="toggle-form-visible">Edit</a><br/>
             <% } else { %>
-            <a class="popup-with-zoom-anim" href="#edit-introduction-dialog"
-               style="color:#2db2ea;float: right">Add</a><br/>
+            <a style="color:#2db2ea;float: right" class="toggle-form-visible">Add</a><br/>
             <% } %>
 
-            <div id="edit-introduction-dialog" class="small-dialog zoom-anim-dialog mfp-hide">
-                <h2 class="margin-bottom-10">Edit Introduction</h2>
-                <form method="post" name="editform" action="/api/user/companyIntroduction" id="CompyIntroForm">
+            <form method="post" name="editform" action="/api/user/companyIntroduction" id="CompyIntroForm" style="display: none">
+                <input type="hidden" name="id" value="<%= user.id %>"/>
+                <input type="hidden" id="introRawTxt" name="newCompanyIntroduction">
+                <div style="display: none;" id="currentCI"><%- user.companyIntroduction ? user.companyIntroduction : '' %></div>
 
-                    <fieldset>
+                <div id="editor">
+                </div>
 
-                        <input type="hidden" name="id" value="<%= user.id %>"/>
-
-                        <div class="twelve alpha columns editform">
-                            <div id="editor">
-                                <div id='introductionEditor' style="margin-top: 30px;">
-                                </div>
-                            </div>
-                        </div>
-                        <input type="hidden" id="introRawTxt" name="newCompanyIntroduction">
-
-                        <div class="twelve columns editform">
-                            <input id="submitCompyIntro" type="submit" class="submit" id="submitnewintroduction" value="Save"/>
-                        </div>
-
-                    </fieldset>
-
-                    <div class="clearfix"></div>
-                </form>
-            </div>
-
+                <% if(user.companyIntroduction != '' && user.companyIntroduction != undefined) { %>
+                <input type="submit" value="Update">
+                <% } else { %>
+                <input type="submit" value="Save">
+                <% } %>
+            </form>
             <br><br>
 
             <!-- Headline Trading Commodities-->
@@ -342,15 +334,6 @@
 <script src="/scripts/stacktable.js"></script>
 <script src="/scripts/custom.js"></script>
 <script src="/scripts/views/header_func.js"></script>
-
-<!-- Include JS file. -->
-<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.1/js/froala_editor.min.js'></script>
-<script src="/scripts/froalaEditor/colors.min.js"></script>
-<script src="/scripts/froalaEditor/quick_insert.min.js"></script>
-<script src="/scripts/froalaEditor/align.min.js"></script>
-<script src="/scripts/froalaEditor/font_family.min.js"></script>
-<script src="/scripts/froalaEditor/font_size.min.js"></script>
-
 <script src="/scripts/views/userbusinessinformation.js"></script>
 </body>
 </html>
