@@ -7,7 +7,7 @@ var router = express.Router();
 var models = require('./../models');
 var sequelize = models.sequelize;
 var fs = require('fs');
-var helper = require('sendgrid').mail;
+// var helper = require('sendgrid').mail;
 var async = require('async');
 const sgAPI = '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';
 
@@ -188,27 +188,27 @@ function sendEmailSMS(userId, subject_, message, redirection, res) {
                     function(callback){
                         EmailAddress = Users[0].dataValues.Emails[0].dataValues.email;
 
-                        var helper = require('sendgrid').mail;
-
-                        from_email = new helper.Email("sellbnb@gmail.com");
-                        to_email = new helper.Email(EmailAddress);
-                        subject = subject_;
-                        content = new helper.Content("text/plain", message);
-                        mail = new helper.Mail(from_email, subject, to_email, content);
-
-                        var sg = require('sendgrid')(sgAPI);
-                        var request = sg.emptyRequest({
-                            method: 'POST',
-                            path: '/v3/mail/send',
-                            body: mail.toJSON()
-                        });
-
-                        sg.API(request, function(error, response) {
-                            console.log(response.statusCode);
-                            console.log(response.body);
-                            console.log(response.headers);
-                            callback(null);
-                        });
+                        // var helper = require('sendgrid').mail;
+                        //
+                        // from_email = new helper.Email("sellbnb@gmail.com");
+                        // to_email = new helper.Email(EmailAddress);
+                        // subject = subject_;
+                        // content = new helper.Content("text/plain", message);
+                        // mail = new helper.Mail(from_email, subject, to_email, content);
+                        //
+                        // var sg = require('sendgrid')(sgAPI);
+                        // var request = sg.emptyRequest({
+                        //     method: 'POST',
+                        //     path: '/v3/mail/send',
+                        //     body: mail.toJSON()
+                        // });
+                        //
+                        // sg.API(request, function(error, response) {
+                        //     console.log(response.statusCode);
+                        //     console.log(response.body);
+                        //     console.log(response.headers);
+                        //     callback(null);
+                        // });
 
                     },
                     function (callback) {

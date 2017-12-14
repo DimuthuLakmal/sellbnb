@@ -66,28 +66,28 @@ router.post('/add', function (req, res) {
                 }).then(function (Users) {
 
                     var EmailAddress = Users[0].dataValues.Emails[0].dataValues.email;
-
-                    var helper = require('sendgrid').mail;
-
-                    from_email = new helper.Email("sellbnb@gmail.com");
-                    to_email = new helper.Email(EmailAddress);
-                    subject = "Seller BnB Notification";
-                    content = new helper.Content("text/plain", "You have successfully added your bid!");
-                    mail = new helper.Mail(from_email, subject, to_email, content);
-
-                    var sg = require('sendgrid')(sgAPI);
-                    var request = sg.emptyRequest({
-                        method: 'POST',
-                        path: '/v3/mail/send',
-                        body: mail.toJSON()
-                    });
-
-                    sg.API(request, function(error, response) {
-                        console.log(response.statusCode);
-                        console.log(response.body);
-                        console.log(response.headers);
-                        res.redirect('/items/id/'+itemId);
-                    });
+                    //
+                    // var helper = require('sendgrid').mail;
+                    //
+                    // from_email = new helper.Email("sellbnb@gmail.com");
+                    // to_email = new helper.Email(EmailAddress);
+                    // subject = "Seller BnB Notification";
+                    // content = new helper.Content("text/plain", "You have successfully added your bid!");
+                    // mail = new helper.Mail(from_email, subject, to_email, content);
+                    //
+                    // var sg = require('sendgrid')(sgAPI);
+                    // var request = sg.emptyRequest({
+                    //     method: 'POST',
+                    //     path: '/v3/mail/send',
+                    //     body: mail.toJSON()
+                    // });
+                    //
+                    // sg.API(request, function(error, response) {
+                    //     console.log(response.statusCode);
+                    //     console.log(response.body);
+                    //     console.log(response.headers);
+                    //     res.redirect('/items/id/'+itemId);
+                    // });
 
                 });
             });

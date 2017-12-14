@@ -2,27 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="200ba7ba-cb3c-4101-8ef0-8d87b28c23e1" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/scripts/views/viewmessagedetails.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/scripts/froalaEditor/align.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/scripts/froalaEditor/colors.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/scripts/froalaEditor/colors.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/scripts/froalaEditor/font_family.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/scripts/froalaEditor/font_size.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/scripts/froalaEditor/inline_style.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/scripts/froalaEditor/quick_insert.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/scripts/froalaEditor/quick_insert.min.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/views/bid.js" afterPath="$PROJECT_DIR$/public/scripts/views/bid.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/views/userprofile.js" afterPath="$PROJECT_DIR$/public/scripts/views/userprofile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/items.js" afterPath="$PROJECT_DIR$/routes/items.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/message.js" afterPath="$PROJECT_DIR$/routes/message.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/bidpage.ejs" afterPath="$PROJECT_DIR$/views/bidpage.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/login.ejs" afterPath="$PROJECT_DIR$/views/login.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/login_seller.ejs" afterPath="$PROJECT_DIR$/views/login_seller.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/userprofile.ejs" afterPath="$PROJECT_DIR$/views/userprofile.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/viewmessagedetails.ejs" afterPath="$PROJECT_DIR$/views/viewmessagedetails.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/viewmessagesinbox.ejs" afterPath="$PROJECT_DIR$/views/viewmessagesinbox.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/viewmessagessent.ejs" afterPath="$PROJECT_DIR$/views/viewmessagessent.ejs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/bid.js" afterPath="$PROJECT_DIR$/routes/bid.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/notification.js" afterPath="$PROJECT_DIR$/routes/notification.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -111,16 +93,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bid.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/scripts/views/bid.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="46" column="0" lean-forward="true" selection-start-line="46" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="userprofile.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/userprofile.ejs">
           <provider selected="true" editor-type-id="text-editor">
@@ -151,11 +123,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="login_seller.ejs" pinned="false" current-in-tab="true">
+      <file leaf-file-name="login_seller.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/login_seller.ejs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="459">
               <caret line="81" column="107" lean-forward="false" selection-start-line="81" selection-start-column="107" selection-end-line="81" selection-end-column="107" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bid.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/routes/bid.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="106">
+              <caret line="63" column="40" lean-forward="true" selection-start-line="63" selection-start-column="40" selection-end-line="64" selection-end-column="50" />
               <folding />
             </state>
           </provider>
@@ -173,13 +155,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>commodity/ad</find>
-      <find>/measur</find>
-      <find>commodity/add</find>
-      <find>s</find>
-      <find>sc</find>
-      <find>scri</find>
-      <find>script</find>
       <find>/script</find>
       <find>/script/ti</find>
       <find>/script/t</find>
@@ -192,17 +167,24 @@
       <find>commodit</find>
       <find>cropp</find>
       <find>addItemForm</find>
-      <find>send</find>
       <find>/user/public</find>
       <find>name</find>
       <find>inbox</find>
       <find>user/i</find>
       <find>your</find>
-      <find>var FR = new FileReader();</find>
       <find>viewlate</find>
       <find>/login</find>
       <find>'/user/login</find>
       <find>render('/user/login</find>
+      <find>var FR = new FileReader();</find>
+      <find>se</find>
+      <find>sendgri</find>
+      <find>\n                    \/\/ var helper \= require\(\'sendgrid\'\)\.mail\;\n                    \/\/\n                    \/\/ from_email \= new helper\.Email\(\&quot;sellbnb\@gmail\.com\&quot;\)\;\n                    \/\/ to_email \= new helper\.Email\(EmailAddress\)\;\n                    \/\/ subject \= \&quot;Seller BnB Notification\&quot;\;\n                    \/\/ content \= new helper\.Content\(\&quot;text\/plain\&quot;\, \&quot;You have successfully added your bid\!\&quot;\)\;\n                    \/\/ mail \= new helper\.Mail\(from_email\, subject\, to_email\, content\)\;\n                    \/\/\n                    \/\/ var sg \= require\(\'sendgrid\'\)\(sgAPI\)\;\n                    \/\/ var request \= sg\.emptyRequest\(\{\n                    \/\/     method\: \'POST\'\,\n                    \/\/     path\: \'\/v3\/mail\/send\'\,\n                    \/\/     body\: mail\.toJSON\(\)\n                    \/\/ \}\)\;\n                    \/\/\n                    \/\/ sg\.API\(request\, function\(error\, response\) \{\n                    \/\/     console\.log\(response\.statusCode\)\;\n                    \/\/     console\.log\(response\.body\)\;\n                    \/\/     console\.log\(response\.headers\)\;\n                    \/\/     res\.redirect\(\'\/items\/id\/\'\+itemId\)\;\n                    \/\/ \}\)\;</find>
+      <find>s</find>
+      <find>send</find>
+      <find>sendg</find>
+      <find>sendgr</find>
+      <find>sendgrid</find>
     </findStrings>
     <replaceStrings>
       <replace>return res.redirect</replace>
@@ -228,7 +210,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/views/footer.ejs" />
         <option value="$PROJECT_DIR$/views/forgotpassword_code.ejs" />
         <option value="$PROJECT_DIR$/views/forgotpasswordcodeenter.ejs" />
         <option value="$PROJECT_DIR$/views/how_to.ejs" />
@@ -279,6 +260,7 @@
         <option value="$PROJECT_DIR$/routes/message.js" />
         <option value="$PROJECT_DIR$/views/login.ejs" />
         <option value="$PROJECT_DIR$/views/login_seller.ejs" />
+        <option value="$PROJECT_DIR$/routes/bid.js" />
       </list>
     </option>
   </component>
@@ -657,7 +639,7 @@
       <workItem from="1513163959672" duration="3642000" />
       <workItem from="1513169385397" duration="15585000" />
       <workItem from="1513215975414" duration="13919000" />
-      <workItem from="1513258787411" duration="17600000" />
+      <workItem from="1513258787411" duration="18022000" />
     </task>
     <task id="LOCAL-00001" summary="change user-page">
       <created>1511003262195</created>
@@ -820,11 +802,18 @@
       <option name="project" value="LOCAL" />
       <updated>1513276689032</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="add attatchment to messages.">
+      <created>1513280231369</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1513280231369</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="339893000" />
+    <option name="totallyTimeSpent" value="340315000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-4" width="1366" height="772" extended-state="6" />
@@ -871,7 +860,8 @@
     <MESSAGE value="some fine-tunes. news is working." />
     <MESSAGE value="fix public path issue" />
     <MESSAGE value="edit item done" />
-    <option name="LAST_COMMIT_MESSAGE" value="edit item done" />
+    <MESSAGE value="add attatchment to messages." />
+    <option name="LAST_COMMIT_MESSAGE" value="add attatchment to messages." />
   </component>
   <component name="WindowStateProjectService">
     <state width="191" height="364" key="Git.Branch.Popup" />
@@ -907,14 +897,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/views/useraccountbuying.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="493" column="44" lean-forward="false" selection-start-line="493" selection-start-column="40" selection-end-line="493" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/useraccountbuying_backup.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
@@ -1007,6 +989,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1785">
           <caret line="105" column="5" lean-forward="false" selection-start-line="105" selection-start-column="5" selection-end-line="105" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1046,6 +1029,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" column="8" lean-forward="true" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1155,12 +1139,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="119" column="16" lean-forward="false" selection-start-line="119" selection-start-column="16" selection-end-line="119" selection-end-column="16" />
-          <folding>
-            <marker date="1513275451466" expanded="true" signature="677:704" ph="..." />
-            <marker date="1513275451466" expanded="true" signature="743:756" ph="..." />
-            <marker date="1513275451466" expanded="true" signature="2275:2302" ph="..." />
-            <marker date="1513275451466" expanded="true" signature="2329:2342" ph="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1353,6 +1332,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
           <caret line="81" column="107" lean-forward="false" selection-start-line="81" selection-start-column="107" selection-end-line="81" selection-end-column="107" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/bid.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="106">
+          <caret line="63" column="40" lean-forward="true" selection-start-line="63" selection-start-column="40" selection-end-line="64" selection-end-column="50" />
           <folding />
         </state>
       </provider>
