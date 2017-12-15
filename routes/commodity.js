@@ -1,33 +1,33 @@
-var express = require('express');
-var _ = require('lodash');
-var router = express.Router();
-var models = require('./../models');
-var sequelize = models.sequelize;
-var fs = require('fs');
-var path = require('path');
-var async = require('async');
-var moment = require('moment');
+let express = require('express');
+let _ = require('lodash');
+let router = express.Router();
+let models = require('./../models');
+let sequelize = models.sequelize;
+let fs = require('fs');
+let path = require('path');
+let async = require('async');
+let moment = require('moment');
 
 
 /* POST request to store commodities in database */
 router.post('/add', function (req, res, next) {
   //retrive data from reqeust header
-  var name = req.body.name;
-  var segment = req.body.segment;
-  var family = req.body.family;
-  var classOfCommodity = req.body.classOfCommodity;
-  var measureUnit = req.body.measureUnit;
-  var specification = req.body.specification;
-  var parameters = req.body.parameters;
-  var alternativeNames = req.body.alternativeNames;
-  var measureUnits = req.body.measureUnits;
-  var priceUnits = req.body.priceUnits;
-  var packingTypes = req.body.packingType;
+  let name = req.body.name;
+  let segment = req.body.segment;
+  let family = req.body.family;
+  let classOfCommodity = req.body.classOfCommodity;
+  let measureUnit = req.body.measureUnit;
+  let specification = req.body.specification;
+  let parameters = req.body.parameters;
+  let alternativeNames = req.body.alternativeNames;
+  let measureUnits = req.body.measureUnits;
+  let priceUnits = req.body.priceUnits;
+  let packingTypes = req.body.packingType;
 
   // console.log(parameters);
 
   _.forEach(req.body.images, function (image, index) {
-    var imageBuffer = decodeBase64Image(image.data); //decoding base64 images
+    let imageBuffer = decodeBase64Image(image.data); //decoding base64 images
     fs.writeFile('public/uploads/commodity/' + image.filename, imageBuffer.data, function (err) {
       console.log(err);
     });
@@ -36,8 +36,8 @@ router.post('/add', function (req, res, next) {
   //store commodity in database
   sequelize.sync().then(
     function () {
-      var insertedCommodityId = -1;
-      var Commodity = models.Commodity;
+      let insertedCommodityId = -1;
+      let Commodity = models.Commodity;
       Commodity.create({
         name: name,
         family: family,
@@ -48,7 +48,7 @@ router.post('/add', function (req, res, next) {
       }).then(function (insertedCommodity) {
         // console.log(insertedCommodity.dataValues);
         //store commodity parameters
-        var CommodityParameter = models.CommodityParameter;
+        let CommodityParameter = models.CommodityParameter;
         insertedCommodityId = insertedCommodity.dataValues.id;
         _.forEach(parameters, function (parameter, index) {
           CommodityParameter.create({
@@ -59,7 +59,7 @@ router.post('/add', function (req, res, next) {
         });
       }).then(function () {
         //store commodity images
-        var CommodityImage = models.CommodityImage;
+        let CommodityImage = models.CommodityImage;
         _.forEach(req.body.images, function (image, index) {
           CommodityImage.create({
             url: image.filename,
@@ -68,7 +68,7 @@ router.post('/add', function (req, res, next) {
         });
       }).then(function () {
         //store commodity alernative names
-        var CommodityAlterName = models.CommodityAlterName;
+        let CommodityAlterName = models.CommodityAlterName;
         _.forEach(alternativeNames, function (alternativeName, index) {
           CommodityAlterName.create({
             name: alternativeName,
@@ -77,7 +77,7 @@ router.post('/add', function (req, res, next) {
         });
       }).then(function () {
         //store commodity measureUnits
-        var CommodityMeasureUnit = models.CommodityMeasureUnit;
+        let CommodityMeasureUnit = models.CommodityMeasureUnit;
         _.forEach(measureUnits, function (measureUnit, index) {
           CommodityMeasureUnit.create({
             unitName: measureUnit,
@@ -86,7 +86,7 @@ router.post('/add', function (req, res, next) {
         });
       }).then(function () {
         //store commodity measureUnits
-        var CommodityPriceUnit = models.CommodityPriceUnit;
+        let CommodityPriceUnit = models.CommodityPriceUnit;
         _.forEach(priceUnits, function (priceUnit, index) {
           CommodityPriceUnit.create({
             unitName: priceUnit,
@@ -95,7 +95,7 @@ router.post('/add', function (req, res, next) {
         });
       }).then(function () {
         //store commodity measureUnits
-        var CommodityPacking = models.CommodityPacking;
+        let CommodityPacking = models.CommodityPacking;
         _.forEach(packingTypes, function (packingType, index) {
           CommodityPacking.create({
             type: packingType,
@@ -113,7 +113,7 @@ router.post('/add', function (req, res, next) {
 
 //function to decode base64 image
 function decodeBase64Image(dataString) {
-  var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+  let matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
     response = {};
 
   if (matches.length !== 3) {
@@ -132,10 +132,10 @@ router.get('/viewall', function (req, res) {
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var Commodity = models.Commodity;
-      // var CommodityImage = models.CommodityImage;
-      // var CommodityAlterName = models.CommodityAlterName;
-      // var CommodityAlterName = models.CommodityAlterName;
+      let Commodity = models.Commodity;
+      // let CommodityImage = models.CommodityImage;
+      // let CommodityAlterName = models.CommodityAlterName;
+      // let CommodityAlterName = models.CommodityAlterName;
       Commodity.findAndCountAll().then(function (Commodities) {
         //saving news array to a session and redirect
         req.session.commodities = Commodities;
@@ -152,9 +152,9 @@ router.get('/names', function (req, res) {
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var Commodity = models.Commodity;
+      let Commodity = models.Commodity;
       Commodity.findAndCountAll().then(function (Commodities) {
-        var commodityNames = [];
+        let commodityNames = [];
         //saving commodity names to the array and redirect after set the names to session
         _.forEach(Commodities.rows, function (commodity, index) {
           commodityNames.push(commodity.dataValues.name);
@@ -172,9 +172,9 @@ router.get('/measureUnits/id/:id', function (req, res) {
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var CommodityMeasureUnit = models.CommodityMeasureUnit;
-      var CommodityPriceUnit = models.CommodityPriceUnit;
-      var CommodityPacking = models.CommodityPacking;
+      let CommodityMeasureUnit = models.CommodityMeasureUnit;
+      let CommodityPriceUnit = models.CommodityPriceUnit;
+      let CommodityPacking = models.CommodityPacking;
       CommodityMeasureUnit.findAll({
         where: {CommodityId: req.params.id}
       }).then(function (measureUnits) {
@@ -191,7 +191,7 @@ router.get('/measureUnits/id/:id', function (req, res) {
             where: {CommodityId: req.params.id}
           }).then(function (packingTypes) {
             req.session.packingTypes = packingTypes;
-            var red = req.session.redirectToItemEdit;
+            let red = req.session.redirectToItemEdit;
             delete req.session.redirectToItemEdit;
             res.redirect(red ? red : '/items/add');
           });
@@ -207,9 +207,9 @@ router.get('/measureUnits/id2/:id', function (req, res) {
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var CommodityMeasureUnit = models.CommodityMeasureUnit;
-      var CommodityPriceUnit = models.CommodityPriceUnit;
-      var CommodityPacking = models.CommodityPacking;
+      let CommodityMeasureUnit = models.CommodityMeasureUnit;
+      let CommodityPriceUnit = models.CommodityPriceUnit;
+      let CommodityPacking = models.CommodityPacking;
       CommodityMeasureUnit.findAll({
         where: {CommodityId: req.params.id},
       }).then(function (measureUnits) {
@@ -241,7 +241,7 @@ router.get('/commodityName/id/:id', function (req, res) {
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var Commodity = models.Commodity;
+      let Commodity = models.Commodity;
       Commodity.findAll({
         where: {id: req.params.id},
       }).then(function (Commodities) {
@@ -259,18 +259,18 @@ router.get('/commodityName/id/:id', function (req, res) {
 //     //retrieve data from req object
 //     sequelize.sync().then(
 //         function () {
-//             var Commodity = models.Commodity;
-//             var CommodityImage = models.CommodityImage;
+//             let Commodity = models.Commodity;
+//             let CommodityImage = models.CommodityImage;
 //             Commodity.findAndCountAll({
 //                 limit: 10,
 //                 include: [CommodityImage],
 //                 order: '`hits` DESC'
 //             }).then(function (Commodities) {
-//                 var commoditiesArr = [];
+//                 let commoditiesArr = [];
 //                 //pushing retrieved data to commodity array
 //                 _.forEach(Commodities.rows, function(commodity, index) {
-//                     var id = commodity.id;
-//                     var name = commodity.name;
+//                     let id = commodity.id;
+//                     let name = commodity.name;
 //
 //                     commoditiesArr.push({'id': id, 'name': name, 'images': commodity.CommodityImages});
 //                 });
@@ -286,7 +286,7 @@ router.get('/commodityName/id/:id', function (req, res) {
 router.get('/viewpopular', function (req, res) {
   //retrieve data from req object
 
-  var commodityArr = [];
+  let commodityArr = [];
 
   sequelize.sync().then(
     function () {
@@ -323,8 +323,8 @@ router.get('/families', function (req, res) {
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var Commodity = models.Commodity;
-      var CommodityImage = models.CommodityImage;
+      let Commodity = models.Commodity;
+      let CommodityImage = models.CommodityImage;
       Commodity.aggregate('family', 'DISTINCT', {
         plain: false,
       }).then(function (Commodities) {
@@ -344,18 +344,18 @@ router.get('/families', function (req, res) {
 /* Usage: searchcommodityadd page */
 router.post('/search', function (req, res) {
   //extract name of commodity
-  var commodityName = req.body.commodity;
-  var userId = req.body.userId;
+  let commodityName = req.body.commodity;
+  let userId = req.body.userId;
 
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var Commodity = models.Commodity;
-      var CommodityAlterName = models.CommodityAlterName;
-      var CommodityParameter = models.CommodityParameter;
-      var CommodityImage = models.CommodityImage;
-      var CommodityMeasureUnit = models.CommodityMeasureUnit;
-      var RecentSearch = models.RecentSearch;
+      let Commodity = models.Commodity;
+      let CommodityAlterName = models.CommodityAlterName;
+      let CommodityParameter = models.CommodityParameter;
+      let CommodityImage = models.CommodityImage;
+      let CommodityMeasureUnit = models.CommodityMeasureUnit;
+      let RecentSearch = models.RecentSearch;
 
       RecentSearch.create({
         commodity: commodityName,
@@ -365,7 +365,7 @@ router.post('/search', function (req, res) {
           where: {name: commodityName},
           include: [CommodityAlterName, CommodityParameter, CommodityImage, CommodityMeasureUnit],
         }).then(function (Commodity) {
-          var commodity = Commodity[0].dataValues;
+          let commodity = Commodity[0].dataValues;
           req.session.commodity = commodity;
 
           res.redirect('/items/add/commoditydetails');
@@ -379,18 +379,18 @@ router.post('/search', function (req, res) {
 /* Usage: searchcommodityadd page */
 router.get('/search/commodity/:commodity/userId/:userId', function (req, res) {
   //extract name of commodity
-  var commodityName = req.params.commodity;
-  var userId = req.params.userId;
+  let commodityName = req.params.commodity;
+  let userId = req.params.userId;
 
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var Commodity = models.Commodity;
-      var CommodityAlterName = models.CommodityAlterName;
-      var CommodityParameter = models.CommodityParameter;
-      var CommodityImage = models.CommodityImage;
-      var CommodityMeasureUnit = models.CommodityMeasureUnit;
-      var RecentSearch = models.RecentSearch;
+      let Commodity = models.Commodity;
+      let CommodityAlterName = models.CommodityAlterName;
+      let CommodityParameter = models.CommodityParameter;
+      let CommodityImage = models.CommodityImage;
+      let CommodityMeasureUnit = models.CommodityMeasureUnit;
+      let RecentSearch = models.RecentSearch;
 
       RecentSearch.create({
         commodity: commodityName,
@@ -400,7 +400,7 @@ router.get('/search/commodity/:commodity/userId/:userId', function (req, res) {
           where: {name: commodityName},
           include: [CommodityAlterName, CommodityParameter, CommodityImage, CommodityMeasureUnit],
         }).then(function (Commodity) {
-          var commodity = Commodity[0].dataValues;
+          let commodity = Commodity[0].dataValues;
           req.session.commodity = commodity;
 
           res.redirect('/items/add/commoditydetails');
@@ -417,7 +417,7 @@ router.get('/recentsearch/userId/:userId', function (req, res) {
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var RecentSearch = models.RecentSearch;
+      let RecentSearch = models.RecentSearch;
 
       RecentSearch.aggregate('commodity', 'DISTINCT', {
         plain: false,
@@ -435,13 +435,13 @@ router.get('/recentsearch/userId/:userId', function (req, res) {
 /* Usage: User Business Information page */
 router.post('/keyword', function (req, res) {
   //extract keyword of commodity from req body
-  var keyword = req.body.keyword;
+  let keyword = req.body.keyword;
 
   //retrieve data from req object
   sequelize.sync().then(
     function () {
       //search commdities which include keyword
-      var Commodity = models.Commodity;
+      let Commodity = models.Commodity;
       Commodity.findAll({
         where: {
           name: {
@@ -451,7 +451,7 @@ router.post('/keyword', function (req, res) {
         },
       }).then(function (Commodities) {
         //put search results grab from items and commodities and pass as json object
-        var searchResults = Commodities;
+        let searchResults = Commodities;
         res.jsonp(searchResults);
       });
     }

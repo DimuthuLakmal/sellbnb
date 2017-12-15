@@ -1,8 +1,8 @@
-var express = require('express');
-var _ = require('lodash');
-var router = express.Router();
-var models = require('./../models');
-var sequelize = models.sequelize;
+let express = require('express');
+let _ = require('lodash');
+let router = express.Router();
+let models = require('./../models');
+let sequelize = models.sequelize;
 
 
 /**
@@ -13,9 +13,9 @@ router.get('/code/:code', function (req, res) {
     //retrieve data from req object
     sequelize.sync().then(
         function () {
-            var Country = models.Country;
+            let Country = models.Country;
 
-            var code = req.params.code;
+            let code = req.params.code;
             Country.findAll({
                 where: {code: code},
             }).then(function (Countries) {

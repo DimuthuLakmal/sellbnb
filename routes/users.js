@@ -1,14 +1,14 @@
-var express = require('express');
-var router = express.Router();
-var _ = require('lodash');
-var models = require('./../models');
-var sequelize = models.sequelize;
-var passport = require('passport');
-var passportLocal = require('passport-local');
-var bcrypt = require('bcryptjs');
-var salt = bcrypt.genSaltSync(10);
-var fs = require('fs');
-var path = require('path');
+let express = require('express');
+let router = express.Router();
+let _ = require('lodash');
+let models = require('./../models');
+let sequelize = models.sequelize;
+let passport = require('passport');
+let passportLocal = require('passport-local');
+let bcrypt = require('bcryptjs');
+let salt = bcrypt.genSaltSync(10);
+let fs = require('fs');
+let path = require('path');
 
 //local strategy use verifyCredentials
 passport.use(new passportLocal.Strategy(verifyCredentials));
@@ -21,13 +21,13 @@ passport.serializeUser(function (user, done) {
 //Whenever needed we can use userid to extract other data of user.
 passport.deserializeUser(function (id, done) {
   //retreive user object from db using userid
-  var User = models.User;
+  let User = models.User;
   User.findAll({
     where: {
       id: id,
     }
   }).then(function (User) {
-    var user = User[0].dataValues;
+    let user = User[0].dataValues;
     done(null, user);
   });
 
@@ -37,7 +37,7 @@ passport.deserializeUser(function (id, done) {
 function verifyCredentials(username, password, done) {
   sequelize.sync().then(
     function () {
-      var User = models.User;
+      let User = models.User;
 
       User.findAll({
         where: {
@@ -47,7 +47,7 @@ function verifyCredentials(username, password, done) {
       }).then(function (User) {
         if (!_.isUndefined(User[0])) {
           if (bcrypt.compareSync(password, User[0].dataValues.password)) {    //checking password
-            var user = User[0].dataValues;
+            let user = User[0].dataValues;
             done(null, {id: user.id});
           } else {
             //set error message to flash
@@ -64,35 +64,9 @@ function verifyCredentials(username, password, done) {
 
 /* GET users listing. */
 router.get('/login', function (req, res, next) {
-
-  //this will be needed to populate commodity names in top menu
-  var commodityNames = req.session.commodityNames;
-  //check whether commodityNames session is set
-  if (commodityNames === null || commodityNames === undefined) {
-    res.redirect('/api/commodity/names');
-  }
-
-  //populate notification
-  var notifications = req.session.notifications;
-  var messages = req.session.messages;
-  //check whether notification session is set.
-  if (req.isAuthenticated()) {
-    if (notifications === null || notifications === undefined) {
-      res.redirect('/api/notification/userId/' + req.user.id);
-    }
-    if (messages === null || messages === undefined) {
-      res.redirect('/api/messages/userId/' + req.user.id);
-    }
-  }
-
-    delete req.session.notifications;
-    delete req.session.messages;
     res.render('login', {
         signupError:null,
         message: req.flash("error"),
-        commodityNames: commodityNames,
-        notifications: notifications,
-        messages :messages,
         expectedUser : req.query.expUsr || '',
         loginOrRegister: 'Login',
         user: req.user,
@@ -100,35 +74,11 @@ router.get('/login', function (req, res, next) {
 });
 
 router.get('/login_seller', function (req, res, next) {
-
-  //this will be needed to populate commodity names in top menu
-  var commodityNames = req.session.commodityNames;
-  //check whether commodityNames session is set
-  if (commodityNames === null || commodityNames === undefined) {
-    res.redirect('/api/commodity/names');
-  }
-
-  //populate notification
-  var notifications = req.session.notifications;
-  var messages = req.session.messages;
-  //check whether notification session is set.
-  if (req.isAuthenticated()) {
-    if (notifications === null || notifications === undefined) {
-      res.redirect('/api/notification/userId/' + req.user.id);
-    }
-    if (messages === null || messages === undefined) {
-      res.redirect('/api/messages/userId/' + req.user.id);
-    }
-  }
-
     delete req.session.notifications;
     delete req.session.messages;
     res.render('login_seller', {
         signupError:null,
         message: req.flash("error"),
-        commodityNames: commodityNames,
-        notifications: notifications,
-        messages :messages,
         expectedUser : req.query.expUsr || '',
         loginOrRegister: 'Login',
         user: req.user,
@@ -143,27 +93,7 @@ router.get('/logout', function (req, res, next) {
 });
 
 router.get('/signup', function (req, res, next) {
-  //this will be needed to populate commodity names in top menu
-  var commodityNames = req.session.commodityNames;
-  //check whether commodityNames session is set
-  if (commodityNames === null || commodityNames === undefined) {
-    res.redirect('/api/commodity/names');
-  }
-
-  //populate notification
-  var notifications = req.session.notifications;
-  var messages = req.session.messages;
-  //check whether notification session is set.
-  if (req.isAuthenticated()) {
-    if (notifications === null || notifications === undefined) {
-      res.redirect('/api/notification/userId/' + req.user.id);
-    }
-    if (messages === null || messages === undefined) {
-      res.redirect('/api/messages/userId/' + req.user.id);
-    }
-  }
-
-  var signUpError = req.session.signupError;
+  let signUpError = req.session.signupError;
 
   delete req.session.signupError;
   delete req.session.notifications;
@@ -182,8 +112,7 @@ router.get('/signup', function (req, res, next) {
 /* POST request from login form. User passport local method for authentication */
 router.post('/login', function (req, res, next) {
   //redirect to previously visited page if login success, otherwise to login page.
-  var redirectTo = req.session.returnTo || '/';
-
+  let redirectTo = req.session.returnTo || '/';
   passport.authenticate('local', {
     successRedirect: redirectTo,
     failureRedirect: 'login?action=login',
@@ -195,14 +124,14 @@ router.post('/login', function (req, res, next) {
 /* Change password */
 router.post('/password', function (req, res) {
   //retrieve data from req object
-  var newpassword = req.body.newpassword;
-  var currentpassword = req.body.currentpassword;
-  var userId = req.body.id;
+  let newpassword = req.body.newpassword;
+  let currentpassword = req.body.currentpassword;
+  let userId = req.body.id;
 
   //retrieve current password of userid and validate, then update password
   sequelize.sync().then(
     function () {
-      var User = models.User;
+      let User = models.User;
       User.findAll({
         where: {
           id: userId,
@@ -210,8 +139,8 @@ router.post('/password', function (req, res) {
         }
       }).then(function (User) {
         if (!_.isUndefined(User[0])) {
-          var user = User[0].dataValues;
-          var User = models.User;
+          let user = User[0].dataValues;
+          let User = models.User;
           User.update(
             {password: newpassword},
             {where: {id: userId}}
@@ -232,13 +161,13 @@ router.post('/password', function (req, res) {
 /* Change FullName */
 router.post('/fullname', function (req, res) {
   //retrieve data from req object
-  var newfullname = req.body.newfullname;
-  var userId = req.body.id;
+  let newfullname = req.body.newfullname;
+  let userId = req.body.id;
 
   //update fullname of user table
   sequelize.sync().then(
     function () {
-      var User = models.User;
+      let User = models.User;
       User.update(
         {full_name: newfullname},
         {where: {id: userId}}
@@ -257,13 +186,13 @@ router.post('/fullname', function (req, res) {
 /* Change Company Name */
 router.post('/companyname', function (req, res) {
   //retrieve data from req object
-  var newcompanyname = req.body.newcompanyname;
-  var userId = req.body.id;
+  let newcompanyname = req.body.newcompanyname;
+  let userId = req.body.id;
 
   //update fullname of user table
   sequelize.sync().then(
     function () {
-      var User = models.User;
+      let User = models.User;
       User.update(
         {company_name: newcompanyname},
         {where: {id: userId}}
@@ -283,13 +212,13 @@ router.post('/companyname', function (req, res) {
 /* Add Email Of user */
 router.post('/emails/add', function (req, res) {
   //retrieve data from req object
-  var newemail = req.body.newemail;
-  var userId = req.body.id;
+  let newemail = req.body.newemail;
+  let userId = req.body.id;
 
   //add new emails of user to emails table
   sequelize.sync().then(
     function () {
-      var Email = models.Email;
+      let Email = models.Email;
       Email.create(
         {
           email: newemail,
@@ -310,12 +239,12 @@ router.post('/emails/add', function (req, res) {
 /* Delete Email Of user */
 router.post('/emails/delete', function (req, res) {
   //retrieve data from req object
-  var emailId = req.body.emailId;
+  let emailId = req.body.emailId;
 
   //add new emails of user to emails table
   sequelize.sync().then(
     function () {
-      var Email = models.Email;
+      let Email = models.Email;
       Email.destroy(
         {where: {id: emailId}}
       ).then(function (deletedEmail) {
@@ -333,13 +262,13 @@ router.post('/emails/delete', function (req, res) {
 /* Add Phone Number Of user */
 router.post('/phone/add', function (req, res) {
   //retrieve data from req object
-  var newphone = req.body.newphone;
-  var userId = req.body.id;
+  let newphone = req.body.newphone;
+  let userId = req.body.id;
 
   //add new emails of user to emails table
   sequelize.sync().then(
     function () {
-      var PhoneNumber = models.PhoneNumber;
+      let PhoneNumber = models.PhoneNumber;
       PhoneNumber.create(
         {
           number: newphone,
@@ -360,12 +289,12 @@ router.post('/phone/add', function (req, res) {
 /* Delete Phone Number Of user */
 router.post('/phone/delete', function (req, res) {
   //retrieve data from req object
-  var phoneId = req.body.phoneId;
+  let phoneId = req.body.phoneId;
 
   //add new emails of user to emails table
   sequelize.sync().then(
     function () {
-      var PhoneNumber = models.PhoneNumber;
+      let PhoneNumber = models.PhoneNumber;
       PhoneNumber.destroy(
         {where: {id: phoneId}}
       ).then(function (deletedPhoneNumber) {
@@ -383,13 +312,13 @@ router.post('/phone/delete', function (req, res) {
 /* Change Company Name */
 router.post('/website', function (req, res) {
   //retrieve data from req object
-  var newwebsite = req.body.newwebsite;
-  var userId = req.body.id;
+  let newwebsite = req.body.newwebsite;
+  let userId = req.body.id;
 
   //update website of user table
   sequelize.sync().then(
     function () {
-      var User = models.User;
+      let User = models.User;
       User.update(
         {website: newwebsite},
         {where: {id: userId}}
@@ -408,15 +337,15 @@ router.post('/website', function (req, res) {
 /* Change Location */
 router.post('/location', function (req, res) {
   //retrieve data from req object
-  var newaddress1 = req.body.newaddress1;
-  var newaddress2 = req.body.newaddress2;
-  var newcity = req.body.newcity;
-  var userId = req.body.id;
+  let newaddress1 = req.body.newaddress1;
+  let newaddress2 = req.body.newaddress2;
+  let newcity = req.body.newcity;
+  let userId = req.body.id;
 
   //update fullname of user table
   sequelize.sync().then(
     function () {
-      var User = models.User;
+      let User = models.User;
       User.update(
         {
           mailingddress1: newaddress1,
@@ -439,21 +368,21 @@ router.post('/location', function (req, res) {
 /* Add Company Logo Of user */
 router.post('/logo', function (req, res) {
   //retrieve data from req object
-  var userId = req.body.userId;
+  let userId = req.body.userId;
 
   //write images to image files
   _.forEach(req.body.images, function (image, index) {
-    var imageBuffer = decodeBase64Image(image.data); //decoding base64 images
+    let imageBuffer = decodeBase64Image(image.data); //decoding base64 images
     fs.writeFile('public/uploads/logo/' + image.filename, imageBuffer.data, function (err) {
       console.log(err);
     });
   });
 
-  var imageURL = req.body.images[req.body.images.length - 1].filename;
+  let imageURL = req.body.images[req.body.images.length - 1].filename;
   //add logo to user table
   sequelize.sync().then(
     function () {
-      var User = models.User;
+      let User = models.User;
       User.update(
         {logo: imageURL},
         {where: {id: userId}}
@@ -472,21 +401,21 @@ router.post('/logo', function (req, res) {
 /* Add User Profile Picture Of user */
 router.post('/profile_pic', function (req, res) {
   //retrieve data from req object
-  var userId = req.body.userId;
+  let userId = req.body.userId;
 
   //write images to image files
   _.forEach(req.body.images, function (image, index) {
-    var imageBuffer = decodeBase64Image(image.data); //decoding base64 images
+    let imageBuffer = decodeBase64Image(image.data); //decoding base64 images
     fs.writeFile('public/uploads/profile_pic/' + image.filename, imageBuffer.data, function (err) {
       console.log(err);
     });
   });
 
-  var imageURL = req.body.images[req.body.images.length - 1].filename;
+  let imageURL = req.body.images[req.body.images.length - 1].filename;
   //add profile_pic to user table
   sequelize.sync().then(
     function () {
-      var User = models.User;
+      let User = models.User;
       User.update(
         {profile_pic: imageURL},
         {where: {id: userId}}
@@ -505,23 +434,23 @@ router.post('/profile_pic', function (req, res) {
 /* Add Business Images Of user */
 router.post('/businessImages', function (req, res) {
   //retrieve data from req object
-  var userId = req.body.userId;
+  let userId = req.body.userId;
 
   //write images to image files
   _.forEach(req.body.images, function (image, index) {
-    var imageBuffer = decodeBase64Image(image.data); //decoding base64 images
+    let imageBuffer = decodeBase64Image(image.data); //decoding base64 images
     fs.writeFile('public/uploads/businessImages/' + image.filename, imageBuffer.data, function (err) {
       console.log(err);
     });
   });
 
-  var imageURL = req.body.images[req.body.images.length - 1].filename;
+  let imageURL = req.body.images[req.body.images.length - 1].filename;
   //add logo to user table
   sequelize.sync().then(
     function () {
-      var User = models.User;
+      let User = models.User;
       User.findAll({where: {id: userId}}).then(function (users) {
-        var bi = [];
+        let bi = [];
         if (users[0].business_images !== null && users[0].business_images !== '') {
           bi = JSON.parse(users[0].business_images);
         }
@@ -546,13 +475,13 @@ router.post('/businessImages', function (req, res) {
 /* Change Company Introduction */
 router.post('/companyIntroduction', function (req, res) {
   //retrieve data from req object
-  var newCompanyIntroduction = req.body.newCompanyIntroduction;
-  var userId = req.body.id;
+  let newCompanyIntroduction = req.body.newCompanyIntroduction;
+  let userId = req.body.id;
 
   //update website of user table
   sequelize.sync().then(
     function () {
-      var User = models.User;
+      let User = models.User;
       User.update(
         {companyIntroduction: newCompanyIntroduction},
         {where: {id: userId}}
@@ -572,15 +501,15 @@ router.post('/companyIntroduction', function (req, res) {
 /* Add Warehouse Of user */
 router.post('/warehouse/add', function (req, res) {
   //retrieve data from req object
-  var newwarehouseaddress1 = req.body.newwarehouseaddress1;
-  var newwarehouseaddress2 = req.body.newwarehouseaddress2;
-  var warehouseCity = req.body.newwarehousecity;
-  var userId = req.body.id;
+  let newwarehouseaddress1 = req.body.newwarehouseaddress1;
+  let newwarehouseaddress2 = req.body.newwarehouseaddress2;
+  let warehouseCity = req.body.newwarehousecity;
+  let userId = req.body.id;
 
   //add new emails of user to emails table
   sequelize.sync().then(
     function () {
-      var WareHouse = models.WareHouse;
+      let WareHouse = models.WareHouse;
       WareHouse.create(
         {
           warehouseAddress1: newwarehouseaddress1,
@@ -603,15 +532,15 @@ router.post('/warehouse/add', function (req, res) {
 /* Add Trading Commidty Of user */
 router.post('/tradingcommodity/add', function (req, res) {
   //retrieve data from req object
-  var tradingcommodity = req.body.tradingcommodity;
-  var userId = req.body.id;
-  var type = req.body.type;
+  let tradingcommodity = req.body.tradingcommodity;
+  let userId = req.body.id;
+  let type = req.body.type;
 
   //add new emails of user to emails table
   sequelize.sync().then(
     function () {
-      var TradingCommodity = models.TradingCommodity;
-      var Commodity = models.Commodity;
+      let TradingCommodity = models.TradingCommodity;
+      let Commodity = models.Commodity;
       Commodity.findAll({
         where: {name: tradingcommodity}
       }).then(function (Commodities) {
@@ -635,12 +564,12 @@ router.post('/tradingcommodity/add', function (req, res) {
 /* Delete Trading Commodity Of user */
 router.post('/tradingcommodity/delete', function (req, res) {
   //retrieve data from req object
-  var tradingCommodityId = req.body.tradingCommodityId;
+  let tradingCommodityId = req.body.tradingCommodityId;
 
   //remove warehouse from warehouse table
   sequelize.sync().then(
     function () {
-      var TradingCommodity = models.TradingCommodity;
+      let TradingCommodity = models.TradingCommodity;
       TradingCommodity.destroy(
         {where: {id: tradingCommodityId}}
       ).then(function (deletedTradingCommodities) {
@@ -658,12 +587,12 @@ router.post('/tradingcommodity/delete', function (req, res) {
 /* Delete Warehouse Of user */
 router.post('/warehouse/delete', function (req, res) {
   //retrieve data from req object
-  var warehouseId = req.body.warehouseId;
+  let warehouseId = req.body.warehouseId;
 
   //remove warehouse from warehouse table
   sequelize.sync().then(
     function () {
-      var WareHouse = models.WareHouse;
+      let WareHouse = models.WareHouse;
       WareHouse.destroy(
         {where: {id: warehouseId}}
       ).then(function (deletedWareHouse) {
@@ -681,17 +610,17 @@ router.post('/warehouse/delete', function (req, res) {
 /* Get Warehouses */
 router.get('/view/warehouses/userId/:userId', function (req, res) {
   //retrieve data from req object
-  var userId = req.params.userId;
+  let userId = req.params.userId;
   //get warehouses details of user
   sequelize.sync().then(
     function () {
-      var User = models.User;
-      var WareHouse = models.WareHouse;
+      let User = models.User;
+      let WareHouse = models.WareHouse;
       User.findAll({
         where: {id: userId},
         include: [WareHouse],
       }).then(function (User) {
-        var user = User[0].dataValues;
+        let user = User[0].dataValues;
         req.session.warehouses = user.WareHouses;
         res.redirect('/items/add');
       });
@@ -705,14 +634,14 @@ router.get('/view/warehouses/userId/:userId', function (req, res) {
 /* Add Business Certificate Of user */
 router.post('/certificate/add', function (req, res) {
   //retrieve data from req object
-  var newcertificatename = req.body.newcertificatename;
-  var newcertificatenumber = req.body.newcertificatenumber;
-  var userId = req.body.id;
+  let newcertificatename = req.body.newcertificatename;
+  let newcertificatenumber = req.body.newcertificatenumber;
+  let userId = req.body.id;
 
   //add new emails of user to emails table
   sequelize.sync().then(
     function () {
-      var BusinessCertificate = models.BusinessCertificate;
+      let BusinessCertificate = models.BusinessCertificate;
       BusinessCertificate.create(
         {
           number: newcertificatenumber,
@@ -734,12 +663,12 @@ router.post('/certificate/add', function (req, res) {
 /* Delete Certificate Information Of user */
 router.post('/certificate/delete', function (req, res) {
   //retrieve data from req object
-  var certificateId = req.body.certificateId;
+  let certificateId = req.body.certificateId;
 
   //remove payment information from payment table
   sequelize.sync().then(
     function () {
-      var BusinessCertificate = models.BusinessCertificate;
+      let BusinessCertificate = models.BusinessCertificate;
       BusinessCertificate.destroy(
         {where: {id: certificateId}}
       ).then(function (deletedCertificateInfromation) {
@@ -758,18 +687,18 @@ router.post('/certificate/delete', function (req, res) {
 /* Usage: userpaymentinformationpage */
 router.post('/paymentinfo/add', function (req, res) {
   //retrieve data from req object
-  var newbankaccountno = req.body.newbankaccountno;
-  var newbankaccounttype = req.body.newbankaccounttype;
-  var newbankaccountname = req.body.newbankaccountname;
-  var newbankname = req.body.newbankname;
-  var newbankbranch = req.body.newbankbranch;
-  var newbankcountry = req.body.newbankcountry;
-  var userId = req.body.id;
+  let newbankaccountno = req.body.newbankaccountno;
+  let newbankaccounttype = req.body.newbankaccounttype;
+  let newbankaccountname = req.body.newbankaccountname;
+  let newbankname = req.body.newbankname;
+  let newbankbranch = req.body.newbankbranch;
+  let newbankcountry = req.body.newbankcountry;
+  let userId = req.body.id;
 
   //add new payment information of user to PaymentInformation table
   sequelize.sync().then(
     function () {
-      var PaymentInformation = models.PaymentInformation;
+      let PaymentInformation = models.PaymentInformation;
       PaymentInformation.create(
         {
           bankAccountNo: newbankaccountno,
@@ -796,12 +725,12 @@ router.post('/paymentinfo/add', function (req, res) {
 /* Delete Payment Information Of user */
 router.post('/paymentinfo/delete', function (req, res) {
   //retrieve data from req object
-  var paymentId = req.body.paymentId;
+  let paymentId = req.body.paymentId;
 
   //remove payment information from payment table
   sequelize.sync().then(
     function () {
-      var PaymentInformation = models.PaymentInformation;
+      let PaymentInformation = models.PaymentInformation;
       PaymentInformation.destroy(
         {where: {id: paymentId}}
       ).then(function (deletedPaymentInfromation) {
@@ -819,13 +748,13 @@ router.post('/paymentinfo/delete', function (req, res) {
 
 /* Get Warehouses for bidding page*/
 router.get('/bidding/warehouses/userId/:userId/itemId/:itemId', function (req, res) {
-  var itemId = req.params.itemId;
+  let itemId = req.params.itemId;
   getWareHouses(req, res, '/items/id/' + itemId)
 });
 
 /* Get Warehouses for viewbiddingdetailsseller page*/
 router.get('/sell/warehouses/userId/:userId/itemId/:itemId', function (req, res) {
-  var itemId = req.params.itemId;
+  let itemId = req.params.itemId;
   getWareHouses(req, res, '/user/sell/bids/start/0?itemId=' + itemId);
 });
 
@@ -855,7 +784,7 @@ router.post('/adduser', function (req, res) {
           } else {
             //set error message to flash
             //done(null, false, { message: 'Wrong username or password!' } );
-            var hash = bcrypt.hashSync(req.body.password[0], salt);
+            let hash = bcrypt.hashSync(req.body.password[0], salt);
             models.User.create(
               {
                 username: req.body.username,
@@ -927,7 +856,7 @@ router.post('/addseller', function (req, res) {
       } else {
         //set error message to flash
         //done(null, false, { message: 'Wrong username or password!' } );
-        var hash = bcrypt.hashSync(req.body.password[0], salt);
+        let hash = bcrypt.hashSync(req.body.password[0], salt);
         models.User.create(
           {
             username: req.body.username,
@@ -977,17 +906,17 @@ router.get('/contactinfo/userId/:userId', function (req, res) {
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var Email = models.Email;
-      var PhoneNumber = models.PhoneNumber;
-      var WareHouse = models.WareHouse;
-      var User = models.User;
+      let Email = models.Email;
+      let PhoneNumber = models.PhoneNumber;
+      let WareHouse = models.WareHouse;
+      let User = models.User;
       User.findAll({
         where: {id: req.params.userId},
         include: [Email, PhoneNumber, WareHouse],
       }).then(function (Users) {
         //saving contact informations to sessions
-        var user = Users[0];
-        console.log(Users);
+        let user = Users[0];
+        // console.log(Users);
         req.session.userContactInformation = user;
         res.redirect(req.session.redirectContactInforPath);
       });
@@ -1001,9 +930,9 @@ router.get('/businessinfo/userId/:userId', function (req, res) {
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var TradingCommodity = models.TradingCommodity;
-      var Commodity = models.Commodity;
-      var User = models.User;
+      let TradingCommodity = models.TradingCommodity;
+      let Commodity = models.Commodity;
+      let User = models.User;
       TradingCommodity.findAll({
         where: {
           '$User.id$': req.params.userId,
@@ -1024,14 +953,14 @@ router.get('/paymentinfo/userId/:userId', function (req, res) {
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var PaymentInformation = models.PaymentInformation;
-      var User = models.User;
+      let PaymentInformation = models.PaymentInformation;
+      let User = models.User;
       User.findAll({
         where: {id: req.params.userId},
         include: [PaymentInformation],
       }).then(function (Users) {
         //saving contact informations to sessions
-        var user = Users[0];
+        let user = Users[0];
         req.session.userPaymentInformation = user;
         res.redirect('/user/payment');
       });
@@ -1044,14 +973,14 @@ router.get('/certificateinfo/userId/:userId', function (req, res) {
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var BusinessCertificate = models.BusinessCertificate;
-      var User = models.User;
+      let BusinessCertificate = models.BusinessCertificate;
+      let User = models.User;
       User.findAll({
         where: {id: req.params.userId},
         include: [BusinessCertificate],
       }).then(function (Users) {
         //saving contact informations to sessions
-        var user = Users[0];
+        let user = Users[0];
         console.log(user);
         req.session.userCertificateInformation = user.dataValues.BusinessCertificates;
         res.redirect('/user/business');
@@ -1067,16 +996,16 @@ router.get('/public/userId/:userId', function (req, res) {
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var User = models.User;
-      var UserComment = models.UserComment;
-      var Item = models.Item;
-      var ItemImage = models.ItemImage;
-      var Commodity = models.Commodity;
+      let User = models.User;
+      let UserComment = models.UserComment;
+      let Item = models.Item;
+      let ItemImage = models.ItemImage;
+      let Commodity = models.Commodity;
       User.findAll({
         where: {id: req.params.userId}
       }).then(function (Users) {
         //saving informations to sessions
-        var user = Users[0];
+        let user = Users[0];
 
         UserComment.findAll({
           where: {receivedUserIdFk: req.params.userId},
@@ -1110,8 +1039,8 @@ router.get('/userFeedback/id/:id/itemId/:itemId', function (req, res) {
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var User = models.User;
-      var UserComment = models.UserComment;
+      let User = models.User;
+      let UserComment = models.UserComment;
       UserComment.findAll({
         where: {receivedUserIdFk: req.params.id},
         include: [{
@@ -1130,35 +1059,35 @@ router.get('/userFeedback/id/:id/itemId/:itemId', function (req, res) {
 /* Usage: userprofile.ejs page */
 router.post('/feedback', function (req, res) {
   //retrieve data from req object
-  var userId = req.body.id;
-  var rate_quality = req.body.rating_quality;
-  var rate_delivery = req.body.rating_delivery;
-  var rate_reliability_seller = req.body.rating_reliability_seller;
-  var rate_payment = req.body.rating_payment;
-  var rate_efficiency = req.body.rating_efficiency;
-  var rate_reliability_buyer = req.body.rating_reliability_buyer;
-  var feedback = req.body.feedback;
-  var feedbackUserId = req.body.userId;
+  let userId = req.body.id;
+  let rate_quality = req.body.rating_quality;
+  let rate_delivery = req.body.rating_delivery;
+  let rate_reliability_seller = req.body.rating_reliability_seller;
+  let rate_payment = req.body.rating_payment;
+  let rate_efficiency = req.body.rating_efficiency;
+  let rate_reliability_buyer = req.body.rating_reliability_buyer;
+  let feedback = req.body.feedback;
+  let feedbackUserId = req.body.userId;
 
-  var rate_quality_new = rate_quality;
-  var rate_delivery_new = rate_delivery;
-  var rate_reliability_seller_new = rate_reliability_seller;
-  var rate_payment_new = rate_payment;
-  var rate_efficiency_new = rate_efficiency;
-  var rate_reliability_buyer_new = rate_reliability_buyer;
+  let rate_quality_new = rate_quality;
+  let rate_delivery_new = rate_delivery;
+  let rate_reliability_seller_new = rate_reliability_seller;
+  let rate_payment_new = rate_payment;
+  let rate_efficiency_new = rate_efficiency;
+  let rate_reliability_buyer_new = rate_reliability_buyer;
 
-  var no_of_rate_quality_new = rate_quality == 0 ? 0 : 1;
-  var no_of_rate_delivery_new = rate_delivery == 0 ? 0 : 1;
-  var no_of_rate_reliability_seller_new = rate_reliability_seller == 0 ? 0 : 1;
-  var no_of_rate_payment_new = rate_payment == 0 ? 0 : 1;
-  var no_of_rate_efficiency_new = rate_efficiency == 0 ? 0 : 1;
-  var no_of_rate_reliability_buyer_new = rate_reliability_buyer == 0 ? 0 : 1;
+  let no_of_rate_quality_new = rate_quality == 0 ? 0 : 1;
+  let no_of_rate_delivery_new = rate_delivery == 0 ? 0 : 1;
+  let no_of_rate_reliability_seller_new = rate_reliability_seller == 0 ? 0 : 1;
+  let no_of_rate_payment_new = rate_payment == 0 ? 0 : 1;
+  let no_of_rate_efficiency_new = rate_efficiency == 0 ? 0 : 1;
+  let no_of_rate_reliability_buyer_new = rate_reliability_buyer == 0 ? 0 : 1;
 
   //store news in database
   sequelize.sync().then(
     function () {
-      var UserComment = models.UserComment;
-      var User = models.User;
+      let UserComment = models.UserComment;
+      let User = models.User;
       UserComment.create({
         comment: feedback,
         rate_quality: rate_quality,
@@ -1174,24 +1103,24 @@ router.post('/feedback', function (req, res) {
           where: {id: userId},
         }).then(function (Users) {
           //saving informations to sessions
-          var user = Users[0].dataValues;
+          let user = Users[0].dataValues;
 
-          var rate_quality_old = user.rate_quality;
-          var rate_delivery_old = user.rate_delivery;
-          var rate_reliability_buyer_old = user.rate_reliablity_buyer;
-          var rate_payment_old = user.payment;
-          var rate_efficiency_old = user.efficiency;
-          var rate_reliablity_seller_old = user.rate_reliablity_seller;
-          var no_of_ratings_quality_old = user.no_of_ratings_quality;
-          var no_of_ratings_delivery_old = user.no_of_ratings_delivery;
-          var no_of_ratings_reliablity_seller_old = user.no_of_ratings_reliablity_seller;
-          var no_of_ratings_payment_old = user.no_of_ratings_payment;
-          var no_of_ratings_efficiency_old = user.no_of_ratings_efficiency;
-          var no_of_ratings_reliablity_buyer_old = user.no_of_ratings_reliablity_buyer;
+          let rate_quality_old = user.rate_quality;
+          let rate_delivery_old = user.rate_delivery;
+          let rate_reliability_buyer_old = user.rate_reliablity_buyer;
+          let rate_payment_old = user.payment;
+          let rate_efficiency_old = user.efficiency;
+          let rate_reliablity_seller_old = user.rate_reliablity_seller;
+          let no_of_ratings_quality_old = user.no_of_ratings_quality;
+          let no_of_ratings_delivery_old = user.no_of_ratings_delivery;
+          let no_of_ratings_reliablity_seller_old = user.no_of_ratings_reliablity_seller;
+          let no_of_ratings_payment_old = user.no_of_ratings_payment;
+          let no_of_ratings_efficiency_old = user.no_of_ratings_efficiency;
+          let no_of_ratings_reliablity_buyer_old = user.no_of_ratings_reliablity_buyer;
 
 
           if (no_of_ratings_quality_old > 0 && no_of_ratings_quality_old != null) {
-            var sum = ((rate_quality_old * no_of_ratings_quality_old) + parseInt(rate_quality));
+            let sum = ((rate_quality_old * no_of_ratings_quality_old) + parseInt(rate_quality));
             rate_quality_new = (sum) / (parseInt(no_of_ratings_quality_old) + 1);
           }
 
@@ -1244,20 +1173,20 @@ router.post('/feedback', function (req, res) {
 /* GET users listing. */
 router.get('/forgotpassword_code', function (req, res, next) {
 
-  var email = req.query['email'];
+  let email = req.query['email'];
 
   sequelize.sync().then(
     function () {
-      var User = models.User;
-      var Email = models.Email;
+      let User = models.User;
+      let Email = models.Email;
       Email.findAll({
         where: {
           email: email,
         },
       }).then(function (Email) {
         if (!_.isUndefined(Email[0])) {
-          //var emails = Email[0].dataValues;
-          var random_numeber = Math.floor(Math.random() * (100000 - 10000 + 1)) + 10000;
+          //let emails = Email[0].dataValues;
+          let random_numeber = Math.floor(Math.random() * (100000 - 10000 + 1)) + 10000;
 
           require('./email-controller').sendEmail({
             template: 'forgot-password',
@@ -1280,7 +1209,7 @@ router.get('/forgotpassword_code', function (req, res, next) {
 /* GET users listing. */
 router.get('/forgotpassword_code_check', function (req, res, next) {
 
-  var code = req.query['code'];
+  let code = req.query['code'];
 
   if (code == req.session.recoveryCode) {
     res.redirect('/user/resetpassword');
@@ -1295,24 +1224,24 @@ router.get('/forgotpassword_code_check', function (req, res, next) {
 /* Change password */
 router.post('/forgotpassword/update', function (req, res) {
   //retrieve data from req object
-  var newpassword = req.body.password;
-  var currentpassword = req.body.repassword;
-  var email = req.session.recoveryEmail;
+  let newpassword = req.body.password;
+  let currentpassword = req.body.repassword;
+  let email = req.session.recoveryEmail;
 
-  var hash = bcrypt.hashSync(newpassword, salt);
+  let hash = bcrypt.hashSync(newpassword, salt);
 
   //retrieve current password of userid and validate, then update password
   sequelize.sync().then(
     function () {
-      var User = models.User;
-      var Email = models.Email;
+      let User = models.User;
+      let Email = models.Email;
       Email.findAll({
         where: {
           email: email,
         },
       }).then(function (Email) {
         if (!_.isUndefined(Email[0])) {
-          var userId = Email[0].dataValues.UserId;
+          let userId = Email[0].dataValues.UserId;
           User.update(
             {password: hash},
             {where: {id: userId}}
@@ -1356,18 +1285,18 @@ router.get('/delall', function () {
 function getWareHouses(req, res, url) {
   /* Get Warehouses for bidding page*/
   //retrieve data from req object
-  var userId = req.params.userId;
-  var itemId = req.params.itemId;
+  let userId = req.params.userId;
+  let itemId = req.params.itemId;
   //get warehouses details of user
   sequelize.sync().then(
     function () {
-      var User = models.User;
-      var WareHouse = models.WareHouse;
+      let User = models.User;
+      let WareHouse = models.WareHouse;
       User.findAll({
         where: {id: userId},
         include: [WareHouse],
       }).then(function (User) {
-        var user = User[0].dataValues;
+        let user = User[0].dataValues;
         req.session.bidwarehouses = user.WareHouses;
         res.redirect(url);
       });
@@ -1379,7 +1308,7 @@ function getWareHouses(req, res, url) {
 
 //function to decode base64 image
 function decodeBase64Image(dataString) {
-  var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+  let matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
     response = {};
 
   if (matches.length !== 3) {

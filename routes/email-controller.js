@@ -2,11 +2,11 @@
  * Created by malaka on 11/26/17.
  */
 
-var nodemailer = require('nodemailer');
-var Email = require('email-templates');
+let nodemailer = require('nodemailer');
+let Email = require('email-templates');
 
 module.exports.sendEmail = function (data, locals) {
-  var ndmlTransporter = nodemailer.createTransport({
+  let ndmlTransporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: 'toprankz123@gmail.com',

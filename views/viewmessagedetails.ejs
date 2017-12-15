@@ -81,10 +81,10 @@
                     <div class="comment-content" style="padding: 19px 22px 22px 100px;">
                         <div class="arrow-comment"></div>
                         <div class="comment-by"><strong><%= messageDetails.senderUserId.full_name+' ('+messageDetails.senderUserId.username+')' %></strong><span
-                                    class="date"><%= messageDetails.createdAt.split('T')[0]+' '+messageDetails.createdAt.split('T')[1].split('.')[0] %></span>
+                                    class="date"><%= messageDetails.createdAt.toLocaleString() %></span>
                         </div>
                         <h4><strong><%= messageDetails.subject %></strong></h4>
-                        <p><%= messageDetails.message %></p>
+                        <p><%- messageDetails.message %></p>
                     </div>
                 </li>
 
@@ -102,9 +102,9 @@
                         <div class="comment-content" style="padding: 19px 22px 22px 100px;">
                             <div class="arrow-comment"></div>
                             <div class="comment-by"><strong><%= reply.User.full_name+' ('+reply.User.username+')' %></strong><span
-                                        class="date"><%= reply.createdAt.split('T')[0]+' '+reply.createdAt.split('T')[1].split('.')[0] %></span>
+                                        class="date"><%= reply.createdAt.toLocaleString() %></span>
                             </div>
-                            <p><%= reply.message %></p>
+                            <p><%- reply.message %></p>
                             <br>
                         </div>
                     </li>

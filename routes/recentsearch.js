@@ -1,23 +1,23 @@
 /**
  * Created by kjtdi on 5/26/2017.
  */
-var express = require('express');
-var _ = require('lodash');
-var router = express.Router();
-var models = require('./../models');
-var sequelize = models.sequelize;
-var async = require('async');
-var moment = require('moment');
+let express = require('express');
+let _ = require('lodash');
+let router = express.Router();
+let models = require('./../models');
+let sequelize = models.sequelize;
+let async = require('async');
+let moment = require('moment');
 
 //retreive messages from database for user
 /* Usage: Header */
 router.get('/userId/:userId', function (req, res) {
-    var userId = req.params.userId;
+    let userId = req.params.userId;
     if(userId!=undefined && userId!=null && userId!='null') {
         //store item in database
         sequelize.sync().then(
             function () {
-                var RecentSearchCommodity = models.RecentSearchCommodity;
+                let RecentSearchCommodity = models.RecentSearchCommodity;
 
                 //find user's recentsearches
                 RecentSearchCommodity.aggregate('CommodityId', 'DISTINCT',{
@@ -26,7 +26,7 @@ router.get('/userId/:userId', function (req, res) {
                     limit: 3,
                     order: '`id` DESC',
                 }).then(function (RecentSearches) {
-                    var CommodityArr = [];
+                    let CommodityArr = [];
                     if(RecentSearches.length == 0){
                         CommodityArr = [];
                         sequelize.query("SELECT count(id) as count, CommodityId FROM Items GROUP BY CommodityId ORDER BY count DESC", { type: sequelize.QueryTypes.SELECT})
@@ -57,7 +57,7 @@ router.get('/userId/:userId', function (req, res) {
                             });
                     } else if(RecentSearches.length >= 1) {
                         async.forEach(RecentSearches, function(commodity, callback1) {
-                            var commodityId = commodity.DISTINCT;
+                            let commodityId = commodity.DISTINCT;
                             models.Item.findAll({
                                 where: {
                                     CommodityId: commodityId,
@@ -74,8 +74,8 @@ router.get('/userId/:userId', function (req, res) {
                         }, function (err) {
                             //pushing retrieved data to commodity array
 
-                            var itemCount = 0;
-                            var itemArr = [];
+                            let itemCount = 0;
+                            let itemArr = [];
 
                             async.forEach(CommodityArr, function(itemsInCommodity, callback1) {
                                 itemCount += itemsInCommodity.length;
@@ -121,7 +121,7 @@ router.get('/userId/:userId', function (req, res) {
             }
         );
     } else {
-        var CommodityArr = [];
+        let CommodityArr = [];
         sequelize.query("SELECT count(id) as count, CommodityId FROM Items GROUP BY CommodityId ORDER BY count DESC", { type: sequelize.QueryTypes.SELECT})
             .then(function(Commodities) {
 

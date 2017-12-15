@@ -1,14 +1,15 @@
 <h2>Item <%= item.title %> has offer</h2>
 <h3>Buyer Details</h3>
 <ul>
-    <li><strong>Name :</strong><%= buy.name %></li>
-    <li><strong>Telephones :</strong><%= buy.telephones %></li>
-    <li><strong>Emails :</strong><%= buy.emails %></li>
+    <li><strong>Name : </strong><%= buy.name %></li>
+    <li><strong>Telephones : </strong><%= buy.telephones %></li>
+    <li><strong>Emails : </strong><%= buy.emails %></li>
 </ul>
 <h3>Item Details</h3>
 <ul>
     <li><strong>Commodity: </strong><%= item.commodity %></li>
-    <li><strong>Item Title: </strong><%= item.title %></li>
+    <li><strong>Item Title: </strong><%= item.title %>
+        [<a href="<%= origin + '/items/name/' + item.itemLink %>"><%= origin + '/items/name/' + item.itemLink %></a>]</li>
     <li><strong>Producer Name: </strong><%= item.producer %></li>
     <li><strong>Min Qty: </strong><%= item.minQ %></li>
     <li><strong>Max Qty: </strong><%= item.maxQ %></li>

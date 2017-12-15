@@ -1,24 +1,24 @@
 /**
  * Created by kjtdi on 1/30/2017.
  */
-var express = require('express');
-var _ = require('lodash');
-var router = express.Router();
-var models = require('./../models');
-var sequelize = models.sequelize;
-var fs = require('fs');
-var path = require('path');
-var moment = require('moment');
-var async = require('async');
-var forEach = require('async-foreach').forEach;
+let express = require('express');
+let _ = require('lodash');
+let router = express.Router();
+let models = require('./../models');
+let sequelize = models.sequelize;
+let fs = require('fs');
+let path = require('path');
+let moment = require('moment');
+let async = require('async');
+let forEach = require('async-foreach').forEach;
 
 /* Retrieve all items from database */
 router.get('/viewall', function (req, res) {
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var News = models.News;
-      var User = models.User;
+      let News = models.News;
+      let User = models.User;
       News.findAndCountAll({
         limit: 3,
         offset: parseInt(req.params.start),
@@ -36,7 +36,7 @@ router.get('/viewall', function (req, res) {
 router.post('/add', function (req, res) {
   //write images to image files
   _.forEach(req.body.images, function (image, index) {
-    var imageBuffer = decodeBase64Image(image.data); //decoding base64 images
+    let imageBuffer = decodeBase64Image(image.data); //decoding base64 images
     fs.writeFile('public/uploads/items/' + image.filename, imageBuffer.data, function (err) {
       if(err) console.log(err);
     });
@@ -45,7 +45,7 @@ router.post('/add', function (req, res) {
   //store item in database
   sequelize.sync().then(
     function () {
-      var Item = models.Item;
+      let Item = models.Item;
       Item.create({
         title: req.body.title,
         quantityMin: req.body.quantityMin,
@@ -65,9 +65,9 @@ router.post('/add', function (req, res) {
         hits: 0,
         item_url_code: req.body.item_url_code
       }).then(function (insertedItem) {
-        var insertedItemId = insertedItem.dataValues.id;
+        let insertedItemId = insertedItem.dataValues.id;
         //store item images
-        var ItemImage = models.ItemImage;
+        let ItemImage = models.ItemImage;
         _.forEach(req.body.images, function (image, index) {
           ItemImage.create({
             url: image.filename,
@@ -88,7 +88,7 @@ router.post('/add', function (req, res) {
 router.post('/update', function (req, res) {
 
   _.forEach(req.body.images, function (image, index) {
-    var imageBuffer = decodeBase64Image(image.data); //decoding base64 images
+    let imageBuffer = decodeBase64Image(image.data); //decoding base64 images
     fs.writeFile('public/uploads/items/' + image.filename, imageBuffer.data, function (err) {
       if(err) console.log(err);
     });
@@ -96,7 +96,7 @@ router.post('/update', function (req, res) {
   //store item in database
   sequelize.sync().then(
     function () {
-      var Item = models.Item;
+      let Item = models.Item;
       Item.update(
         {
           title: req.body.title,
@@ -116,9 +116,9 @@ router.post('/update', function (req, res) {
         },
         {where: {id: req.body.itemId}}
       ).then(function (updatedItem) {
-        var updatedItemId = req.body.itemId;
+        let updatedItemId = req.body.itemId;
         //store item images
-        var ItemImage = models.ItemImage;
+        let ItemImage = models.ItemImage;
         ItemImage.destroy({
           where: {ItemId: updatedItemId}
         }).then(function () {
@@ -144,9 +144,9 @@ router.get('/viewlatest', function (req, res) {
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var Item = models.Item;
-      var ItemImage = models.ItemImage;
-      var Commodity = models.Commodity;
+      let Item = models.Item;
+      let ItemImage = models.ItemImage;
+      let Commodity = models.Commodity;
       Item.findAndCountAll({
         where: {
           // duration: {gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))},
@@ -156,14 +156,14 @@ router.get('/viewlatest', function (req, res) {
         include: [ItemImage, Commodity],
         order: '`createdAt` DESC'
       }).then(function (Items) {
-        var itemsArr = [];
+        let itemsArr = [];
         //pushing retrieved data to commodity array
         // console.log('Visited latest item');
         _.forEach(Items.rows, function (item, index) {
           // console.log('Visited latest item '+index);
-          var id = item.id;
-          var title = item.title;
-          var suggestedPrice = item.suggestedPrice;
+          let id = item.id;
+          let title = item.title;
+          let suggestedPrice = item.suggestedPrice;
 
           itemsArr.push({
             'title': title, 'id': id, 'item_url_code': item.item_url_code, 'suggestedPrice': suggestedPrice,
@@ -182,30 +182,30 @@ router.get('/viewlatest', function (req, res) {
 /* Usage: Home Page */
 /* Usage: Search Results Page */
 router.get('/search/start/:start', function (req, res) {
-  var keyword = req.query['keyword'] ? req.query['keyword'] : req.session.keyword;
+  let keyword = req.query['keyword'] ? req.query['keyword'] : req.session.keyword;
   retrieveItems(req, res, keyword);
 });
 
 /* Retrieve items for search from database */
 /* Usage: Heading Menu. Category Search*/
 router.get('/search/start/:start/keyword/:keyword', function (req, res) {
-  var keyword = req.params.keyword ? req.params.keyword : req.session.keyword;
+  let keyword = req.params.keyword ? req.params.keyword : req.session.keyword;
   retrieveItems(req, res, keyword);
 });
 
 /* Retrieve items for search from database. use selected class of commodity */
 /* Usage: Search Results Page */
 router.post('/search/class', function (req, res) {
-  var class_ = req.body.class;
-  var start = req.body.start;
+  let class_ = req.body.class;
+  let start = req.body.start;
 
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var Item = models.Item;
-      var Commodity = models.Commodity;
-      var ItemImage = models.ItemImage;
-      var User = models.User;
+      let Item = models.Item;
+      let Commodity = models.Commodity;
+      let ItemImage = models.ItemImage;
+      let User = models.User;
       Item.findAndCountAll({
         where: {
           duration: {
@@ -231,16 +231,16 @@ router.post('/search/class', function (req, res) {
 /* Retrieve items for search from database. use selected segment of commodity */
 /* Usage: Serach Result Page */
 router.post('/search/segment', function (req, res) {
-  var segment = req.body.segment;
-  var start = req.body.start;
+  let segment = req.body.segment;
+  let start = req.body.start;
 
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var Item = models.Item;
-      var Commodity = models.Commodity;
-      var ItemImage = models.ItemImage;
-      var User = models.User;
+      let Item = models.Item;
+      let Commodity = models.Commodity;
+      let ItemImage = models.ItemImage;
+      let User = models.User;
       Item.findAndCountAll({
         where: {
           duration: {
@@ -266,13 +266,13 @@ router.post('/search/segment', function (req, res) {
 /* Usage: Main Menu */
 router.post('/keyword', function (req, res) {
   //extract keyword of commodity from req body
-  var keyword = req.body.keyword;
+  let keyword = req.body.keyword;
 
   //retrieve data from req object
   sequelize.sync().then(
     function () {
       //search items which include keyword
-      var Item = models.Item;
+      let Item = models.Item;
       Item.findAll({
         where: {
           title: {
@@ -285,7 +285,7 @@ router.post('/keyword', function (req, res) {
         order: '`id` DESC',
       }).then(function (Items) {
         //search for commodities which include the keywords
-        var Commodity = models.Commodity;
+        let Commodity = models.Commodity;
         Commodity.findAll({
           where: {
             name: {
@@ -295,7 +295,7 @@ router.post('/keyword', function (req, res) {
           },
         }).then(function (Commodities) {
           //put search results grab from items and commodities and pass as json object
-          var searchResults = [Items, Commodities];
+          let searchResults = [Items, Commodities];
           res.jsonp(searchResults);
         });
       });
@@ -309,17 +309,17 @@ router.get('/name/:name', function (req, res) {
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var Item = models.Item;
-      var User = models.User;
-      var ItemImage = models.ItemImage;
-      var Commodity = models.Commodity;
-      var WareHouse = models.WareHouse;
-      var CommodityMeasureUnit = models.CommodityMeasureUnit;
-      var CommodityPriceUnit = models.CommodityPriceUnit;
-      var CommodityPacking = models.CommodityPacking;
+      let Item = models.Item;
+      let User = models.User;
+      let ItemImage = models.ItemImage;
+      let Commodity = models.Commodity;
+      let WareHouse = models.WareHouse;
+      let CommodityMeasureUnit = models.CommodityMeasureUnit;
+      let CommodityPriceUnit = models.CommodityPriceUnit;
+      let CommodityPacking = models.CommodityPacking;
 
-      var itemName = req.params.name;
-      var whereClose = {};
+      let itemName = req.params.name;
+      let whereClose = {};
       if(isNaN(parseInt(itemName))){
         whereClose['item_url_code'] = itemName
       } else {
@@ -330,17 +330,17 @@ router.get('/name/:name', function (req, res) {
         where: whereClose,
         include: [User, ItemImage, Commodity, WareHouse]
       }).then(function (Items) {
-        var item = Items[0].dataValues;
-        var id = item.id;
-        var hits = item.hits;
-        var user = item.User;
-        var itemImages = item.ItemImages;
-        var commodity = item.Commodity;
-        var warehouse = item.WareHouse;
+        let item = Items[0].dataValues;
+        let id = item.id;
+        let hits = item.hits;
+        let user = item.User;
+        let itemImages = item.ItemImages;
+        let commodity = item.Commodity;
+        let warehouse = item.WareHouse;
 
         //calculate remaining time
-        var currentTime = new Date().getTime() / 1000;
-        var difference = ((item.createdAt.getTime() / 1000) + item.duration) - currentTime;
+        let currentTime = new Date().getTime() / 1000;
+        let difference = ((item.createdAt.getTime() / 1000) + item.duration) - currentTime;
 
         //retrieve similar items
         Item.findAll({
@@ -355,7 +355,7 @@ router.get('/name/:name', function (req, res) {
           },
           include: [ItemImage, User],
         }).then(function (Items) {
-          var similarItems = Items;
+          let similarItems = Items;
 
           //retrieve similar items
           Item.findAll({
@@ -461,15 +461,15 @@ router.get('/name/:name', function (req, res) {
 /* Add feedback to database. */
 router.post('/feedback', function (req, res) {
   //retrieve data from req object
-  var userId = req.body.userId;
-  var rating = req.body.rating;
-  var feedback = req.body.feedback;
-  var itemId = req.body.id;
+  let userId = req.body.userId;
+  let rating = req.body.rating;
+  let feedback = req.body.feedback;
+  let itemId = req.body.id;
 
   //store news in database
   sequelize.sync().then(
     function () {
-      var ItemComment = models.ItemComment;
+      let ItemComment = models.ItemComment;
       ItemComment.create({
         rate: rating,
         comment: feedback,
@@ -490,16 +490,16 @@ router.post('/feedback', function (req, res) {
 /* Usage: User Account Selling Page */
 router.get('/start/:start/userId/:userId', function (req, res) {
   //retrieve data from req object
-  var userId = req.params.userId;
-  var start = req.params.start;
-  var sellingpageItemOption = req.query['sellingpageItemOption'];
-  var openDurationOption = req.query['openDurationOption'];
-  var pendingDurationOption = req.query['pendingDurationOption'];
-  var cancelledDurationOption = req.query['cancelledDurationOption'];
-  var nextSellingpageItemOption = '';
+  let userId = req.params.userId;
+  let start = req.params.start;
+  let sellingpageItemOption = req.query['sellingpageItemOption'];
+  let openDurationOption = req.query['openDurationOption'];
+  let pendingDurationOption = req.query['pendingDurationOption'];
+  let cancelledDurationOption = req.query['cancelledDurationOption'];
+  let nextSellingpageItemOption = '';
 
   //define where object of sequelize object according to filtering parameters selected in User Account Selling page
-  var whereObject = {};
+  let whereObject = {};
 
   if (sellingpageItemOption == 'Open') {
     if (openDurationOption == "0") {
@@ -554,11 +554,11 @@ router.get('/start/:start/userId/:userId', function (req, res) {
 
   sequelize.sync().then(
     function () {
-      var Item = models.Item;
-      var ItemImage = models.ItemImage;
-      var Bidding = models.Bidding;
-      var User = models.User;
-      var Commodity = models.Commodity;
+      let Item = models.Item;
+      let ItemImage = models.ItemImage;
+      let Bidding = models.Bidding;
+      let User = models.User;
+      let Commodity = models.Commodity;
       Item.findAndCountAll({
         where: whereObject,
         offset: parseInt(start),
@@ -567,27 +567,27 @@ router.get('/start/:start/userId/:userId', function (req, res) {
         order: '`createdAt` DESC'
       }).then(function (Items) {
         //calculate remaining times for bidding items & bidding details of each item
-        var currentTime = new Date().getTime() / 1000;
-        var remainingTimes = [];
-        var allBiddings = [];
+        let currentTime = new Date().getTime() / 1000;
+        let remainingTimes = [];
+        let allBiddings = [];
         async.forEach(Items.rows, function (item, callback1) {
           //calculate remaining time
-          var difference = ((item.createdAt.getTime() / 1000) + item.duration) - currentTime;
+          let difference = ((item.createdAt.getTime() / 1000) + item.duration) - currentTime;
           if (difference < 0) {
             difference = 0;
           }
 
           //calculate bidding close time
-          var closedTimeinSec = ((item.createdAt.getTime() / 1000) + item.duration) * 1000;
-          var closedTime = moment(closedTimeinSec).format('YYYY-MM-DD HH:mm:ss');
+          let closedTimeinSec = ((item.createdAt.getTime() / 1000) + item.duration) * 1000;
+          let closedTime = moment(closedTimeinSec).format('YYYY-MM-DD HH:mm:ss');
 
-          var formatedTimeCreated = moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss');
+          let formatedTimeCreated = moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss');
           remainingTimes.push([difference, formatedTimeCreated, closedTime]);
 
           //retrieve user of bidding.
-          var biddings = []
+          let biddings = []
           async.forEach(item.Biddings, function (bidding, callback2) {
-            var userId = bidding.UserId;
+            let userId = bidding.UserId;
             User.findAll({
               where: {
                 id: userId,
@@ -618,12 +618,12 @@ router.get('/start/:start/userId/:userId', function (req, res) {
 /* Usage: User Account Selling Page. When action triggered */
 router.post('/update/status', function (req, res) {
   //retrieve data from req object
-  var itemId = req.body.itemId;
-  var status = req.body.action;
+  let itemId = req.body.itemId;
+  let status = req.body.action;
 
   sequelize.sync().then(
     function () {
-      var Item = models.Item;
+      let Item = models.Item;
       Item.update(
         {status: status},
         {where: {id: itemId}}
@@ -638,18 +638,18 @@ router.post('/update/status', function (req, res) {
 /* Retrieve specific item and its comments from database */
 /* Usage: View Bidding Details Seller Page */
 router.get('/sell/id/:id', function (req, res) {
-  var itemId = req.params.id;
+  let itemId = req.params.id;
 
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var Item = models.Item;
-      var User = models.User;
-      var ItemImage = models.ItemImage;
-      var Commodity = models.Commodity;
-      var CommodityMeasureUnit = models.CommodityMeasureUnit;
-      var CommodityPriceUnit = models.CommodityPriceUnit;
-      var WareHouse = models.WareHouse;
+      let Item = models.Item;
+      let User = models.User;
+      let ItemImage = models.ItemImage;
+      let Commodity = models.Commodity;
+      let CommodityMeasureUnit = models.CommodityMeasureUnit;
+      let CommodityPriceUnit = models.CommodityPriceUnit;
+      let WareHouse = models.WareHouse;
       Item.findAll({
         where: {id: itemId},
         include: [User, ItemImage, Commodity, WareHouse],
@@ -686,7 +686,7 @@ router.post('/preview', function (req, res) {
 
 //function to decode base64 image
 function decodeBase64Image(dataString) {
-  var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+  let matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
     response = {};
 
   if (matches.length !== 3) {
@@ -701,11 +701,11 @@ function decodeBase64Image(dataString) {
 
 //retreive item list from db.
 function retrieveItems(req, res, keyword) {
-  var start = req.params.start;
-  var class_ = req.query['class'] ? req.query['class'] : req.session.selectedClass;
-  var segment = req.query['segment'] ? req.query['segment'] : req.session.selectedSegment;
-  var location = req.query['location'] ? req.query['location'] : req.session.selectedLocation;
-  var startPrice = req.query['startPrice'] ? req.query['startPrice'] : req.session.startPrice;
+  let start = req.params.start;
+  let class_ = req.query['class'] ? req.query['class'] : req.session.selectedClass;
+  let segment = req.query['segment'] ? req.query['segment'] : req.session.selectedSegment;
+  let location = req.query['location'] ? req.query['location'] : req.session.selectedLocation;
+  let startPrice = req.query['startPrice'] ? req.query['startPrice'] : req.session.startPrice;
 
   //check whether checkbox is already ticked or not
   if (req.query['class'] == req.session.selectedClass) {
@@ -726,7 +726,7 @@ function retrieveItems(req, res, keyword) {
   }
 
   //define where object of sequelize object according to parameter selected in search results page
-  var whereObject = {
+  let whereObject = {
     // duration: {
     //     gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
     // },
@@ -756,7 +756,7 @@ function retrieveItems(req, res, keyword) {
 
   //Filter by price range
   if (startPrice != null && startPrice != undefined) {
-    var endPrice = req.query['endPrice'] ? req.query['endPrice'] : req.session.endPrice;
+    let endPrice = req.query['endPrice'] ? req.query['endPrice'] : req.session.endPrice;
     //whereObject['suggestedPrice'] = {$between: ["LKR "+startPrice, "LKR "+endPrice]};
     req.session.startPrice = startPrice;
     req.session.endPrice = endPrice;
@@ -765,10 +765,10 @@ function retrieveItems(req, res, keyword) {
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var Item = models.Item;
-      var Commodity = models.Commodity;
-      var ItemImage = models.ItemImage;
-      var User = models.User;
+      let Item = models.Item;
+      let Commodity = models.Commodity;
+      let ItemImage = models.ItemImage;
+      let User = models.User;
       Item.findAndCountAll({
         where: whereObject,
         subQuery: false,
@@ -784,13 +784,13 @@ function retrieveItems(req, res, keyword) {
               function (callback) {
                 //Identify distinct characteristics of commodities according to keyword search
                 /*Usage: sidebar of search result page */
-                var segments = ["All"];
-                var classes = ["All"];
-                var locations = ["All"];
+                let segments = ["All"];
+                let classes = ["All"];
+                let locations = ["All"];
                 sequelize.sync().then(
                   function () {
-                    var Item = models.Item;
-                    var Commodity = models.Commodity;
+                    let Item = models.Item;
+                    let Commodity = models.Commodity;
                     Item.aggregate('segment', 'DISTINCT', {
                       plain: false,
                       where: {
@@ -864,8 +864,8 @@ function retrieveItems(req, res, keyword) {
                 /*Usage: sidebar of search result page */
                 sequelize.sync().then(
                   function () {
-                    var Item = models.Item;
-                    var Commodity = models.Commodity;
+                    let Item = models.Item;
+                    let Commodity = models.Commodity;
                     Item.aggregate('suggestedPrice', 'MAX', {
                       plain: false,
                       where: {
@@ -893,11 +893,11 @@ function retrieveItems(req, res, keyword) {
               req.session.searchResult = Items.rows;
 
               //calculate remaining times for biddings
-              var currentTime = new Date().getTime() / 1000;
-              var remainingTimes = []
+              let currentTime = new Date().getTime() / 1000;
+              let remainingTimes = []
               _.forEach(Items.rows, function (item, index) {
                 //calculate remaining time
-                var difference = ((item.createdAt.getTime() / 1000) + item.duration) - currentTime;
+                let difference = ((item.createdAt.getTime() / 1000) + item.duration) - currentTime;
                 remainingTimes.push(difference);
               });
               req.session.searchResultRemainingTime = remainingTimes;
@@ -949,10 +949,10 @@ router.get('/toprated', function (req, res) {
 router.get('/neartoclose', function (req, res) {
   sequelize.sync().then(
     function () {
-      var Item = models.Item;
-      var ItemImage = models.ItemImage;
-      var ItemComment = models.ItemComment;
-      var User = models.User;
+      let Item = models.Item;
+      let ItemImage = models.ItemImage;
+      let ItemComment = models.ItemComment;
+      let User = models.User;
       Item.findAll({
         attributes: ['id', 'title', [sequelize.fn('timediff', moment().format(), sequelize.col("Item.createdAt")), 'left_time']],
         where: {
@@ -963,7 +963,7 @@ router.get('/neartoclose', function (req, res) {
         order: '`left_time` DESC',
         include: [ItemImage, User],
       }).then(function (items) {
-        var limitedItems = [];
+        let limitedItems = [];
         _.forEach(items, function (item) {
           limitedItems.push(item);
         });
@@ -975,16 +975,16 @@ router.get('/neartoclose', function (req, res) {
 });
 
 function getItemForContract(req, res, redirection) {
-  var itemId = req.params.id;
+  let itemId = req.params.id;
 
   //retrieve data from req object
   sequelize.sync().then(
     function () {
-      var Item = models.Item;
-      var User = models.User;
-      var ItemImage = models.ItemImage;
-      var Commodity = models.Commodity;
-      var WareHouse = models.WareHouse;
+      let Item = models.Item;
+      let User = models.User;
+      let ItemImage = models.ItemImage;
+      let Commodity = models.Commodity;
+      let WareHouse = models.WareHouse;
       Item.findAll({
         where: {id: itemId},
         include: [User, ItemImage, Commodity, WareHouse],
