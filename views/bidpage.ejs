@@ -120,7 +120,7 @@
 
         <!-- Content
         ================================================== -->
-        <div class="eight columns" style="border: solid 2px #5748ff; border-bottom: none; margin:0;">
+        <div class="eight columns" style="border: solid 2px #ffffff; border-bottom: none; margin:0;">
             <section class="title" style="margin: 5px 0 10px 5px;">
                 <%
                 var name = '';
@@ -137,9 +137,9 @@
             </section>
         </div>
         <div class="eight products columns"
-             style="padding: 10px 0; background-color: #e2e2e2; border: solid 2px #5748ff; border-top: none; margin:0;">
+             style="padding: 10px 0; background-color: #e2e2e2; border: solid 2px #feffff; border-top: none; margin:0;">
             <section class="variables">
-                <div class="eight columns" style="border-bottom: solid 2px #5748ff; margin:0;">
+                <div class="eight columns" style="border-bottom: solid 2px #feffff; margin:0;">
                     <h1 style="margin-left: 10px; background-color: #e2e2e2" class="headline">FOB Price: <strong style="font-size: 30px; color: #729331 ;"><%= item.item.suggestedPrice + ' ' + item.item.priceUnit %></strong></h1>
                 </div>
                 <form method="POST" id="bidformToSubmit" style="background-color: #5d5c60">
@@ -148,30 +148,31 @@
                     <input type="hidden" name="itemOwner" value="<%= item.user.id %>"/>
                     <input type="hidden" name="commodityId" value="<%= item.item.Commodity.id %>"/>
                     <input type="hidden" name="priceUnit" value="<%= item.item.priceUnit %>"/>
+                    <input type="hidden" value="<%= item.item.measureUnit %>" name="measureUnit" />
                     <div class="eight alpha columns bidform" style="display: inline-flex;">
                         <div class="two columns" style="font-size: 20px; margin-top: 10px">Your Offer : </div>
                         <div class="four columns" style="margin-left:0;">
-                            <input style="font-size: 18px" name="offerPrice" type="text" id="your_bid"/>
+                            <input style="font-size: 18px" name="offerPrice" type="text" id="your_bid" value="<%= previousData ? previousData.yourOffer: '' %>"/>
                         </div>
                         <div class="two columns" style="margin-left:-10px">
-                            <input style="font-size: 18px" type="text" value="<%= item.item.priceUnit %>" disabled>
+                            <input style="font-size: 18px" type="text" value="<%= item.item.priceUnit %>" name="priceUnit" disabled>
                         </div>
                     </div>
 
                     <div class="eight alpha columns bidform" style="display: inline-flex;">
                         <div class="two columns" style="font-size: 20px; margin-top: 10px">Quantity : </div>
                         <div class="four columns" style="margin-left:0;">
-                            <input style="font-size: 18px" name="quantity" type="text" id="quantity"/>
+                            <input style="font-size: 18px" name="quantity" type="text" id="quantity"  value="<%= previousData ? previousData.quantity: '' %>"/>
                         </div>
                         <div class="two columns" style="margin-left:-10px">
-                            <input style="font-size: 18px" type="text" value="<%= item.item.measureUnit %>" disabled>
+                            <input style="font-size: 18px" type="text" value="<%= item.item.measureUnit %>" name="mUnit" disabled>
                         </div>
                     </div>
 
                     <div class="eight alpha columns bidform" style="display: inline-flex;">
                         <div class="three columns" style="font-size: 20px; margin-top: 10px">Destination port :</div>
                         <div class="five columns" style="margin-left: -10px; width: 344px">
-                            <input style="font-size: 18px;" name="destPort" type="text" id="quantity"/>
+                            <input style="font-size: 18px;" name="destPort" type="text" id="quantity"  value="<%= previousData ? previousData.desPort: '' %>"/>
                         </div>
                     </div>
 
@@ -200,13 +201,13 @@
                     <div class="eight columns">
                         <div class="two columns" style="font-size: 20px; margin-top: 10px; width:110px; margin-left: 0;">Note : </div>
                         <div class="five columns" style="margin-top: 10px; width: 397px">
-                            <textarea name="buyerNote" id="" rows="3" style="margin-left: 10px;width: 100%;"></textarea>
+                            <textarea name="buyerNote" id="" rows="3" style="margin-left: 10px;width: 100%;"><%= previousData ? previousData.note: '' %></textarea>
                         </div>
 
                     </div>
 
                     <div class="eight alpha columns bidform">
-                        <input type="submit"  class="button" value="SUBMIT NOW"
+                        <input type="submit" class="button" value="SUBMIT NOW"
                                style="margin-left:10px; width: 97%; background-color: #729331; font-size: 20px; color: white;"/>
                         <div class="clearfix"></div>
                     </div>
@@ -214,6 +215,11 @@
                     <div class="eight alpha columns bidform">
                         <div class="notification success closeable" style="display: none" id="message_success">
                             <p><span>Success! </span>Your offer is successfully added.</p>
+                            <a class="close" href="#"></a>
+                        </div>
+
+                        <div class="notification warning closeable" style="display: none" id="message_pending">
+                            <p><span>Request Sent </span>Please wait few seconds to success the request.</p>
                             <a class="close" href="#"></a>
                         </div>
 
@@ -243,8 +249,13 @@
                     <table border="0px">
                         <tr>
                             <td>
+                                <% if(user && user.id){ %>
                                 <a href="#message-dialog" class="button popup-with-zoom-anim margin-left-0"
-                                style="color: white; background-color: #729331">Contact Producer Now</a>
+                                   style="color: white; background-color: #729331">Contact Producer Now</a>
+                                <% } else { %>
+                                <a href="/need_auth?returnTo=%2Fitems%2Fid%2F<%- item.item.id %>" class="button"
+                                   style="color: white; background-color: #729331">Contact Producer Now</a>
+                                <% } %>
                                 <div id="message-dialog" class="small-dialog zoom-anim-dialog mfp-hide"
                                      style="margin-top: -100px">
                                     <h3 class="headline">Send Message</h3><span class="line margin-bottom-25"></span>
@@ -368,6 +379,7 @@
 
     <div class="margin-top-50"></div>
 
+    <div>PREVIOUS <%- JSON.stringify(previousData)%></div>
     <!-- Footer
     ================================================== -->
     <% include footer.ejs %>

@@ -63,6 +63,7 @@ router.post('/add', function (req, res) {
         UserId: req.body.userId,
         suggestedPrice: req.body.fob_price,
         hits: 0,
+        item_ulr_code: req.body.item_ulr_code
       }).then(function (insertedItem) {
         var insertedItemId = insertedItem.dataValues.id;
         //store item images
@@ -304,7 +305,7 @@ router.post('/keyword', function (req, res) {
 
 /* Retrieve specific item and its comments from database */
 /* Usage: Search Page */
-router.get('/id/:id/userId/:userId', function (req, res) {
+router.get('/id/:id', function (req, res) {
   //retrieve data from req object
   sequelize.sync().then(
     function () {
@@ -383,7 +384,7 @@ router.get('/id/:id/userId/:userId', function (req, res) {
                       limit: 1,
                       where: {UserId: user.id},
                     }).then(function (PhoneNumbers) {
-                      if (req.params.userId != undefined && req.params.userId != null) {
+                      if (req.query.userId != undefined && req.query.userId != null) {
                         //Store Searched Commodity in
                         models.RecentSearchCommodity.create({
                           CommodityId: commodity.id,
@@ -433,7 +434,7 @@ router.get('/id/:id/userId/:userId', function (req, res) {
                           {hits: (parseInt(hits) + 1)},
                           {where: {id: id}}
                         ).then(function (results) {
-
+                          res.redirect('/items/id/' + itemId);
                         });
                       }
                     })

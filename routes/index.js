@@ -159,7 +159,6 @@ router.get('/addnews', function (req, res) {
     req.session.returnTo = req.path;
     return res.redirect('/user/login?action=login');
   }
-
 });
 
 /* GET view first news page. */
@@ -1023,38 +1022,19 @@ router.get('/items/add', function (req, res) {
 router.get('/items/id/:id', function (req, res) {
   removeSessionParameters(req);
   removeSessionParameterSellingPage(req);
-  if (req.isAuthenticated()) {
+  // if (req.isAuthenticated()) {
     var item = req.session.specificBiddingItem;
-    var bidwarehouses = req.session.bidwarehouses;
-    var lastBid = req.session.lastBid;
-    var lastUserBid = req.session.lastUserBid;
-    var userFeedback = req.session.bidpageUserFeedback;
     var user = req.user;
     var measureUnits = req.session.measureUnits;
+
     //check whether item is retrieved from database
     if (item === null || item === undefined) {
-      return res.redirect('/api/items/id/' + req.params.id + '/userId/' + user.id);
+      return res.redirect('/api/items/id/' + req.params.id + (user ? + '?userId=' + user.id: ''));
     }
 
     //check whether commodityMeasurements session is set
     if (measureUnits === null || measureUnits === undefined) {
       return res.redirect('/api/commodity/measureUnits/id2/' + item.commodity.id);
-    }
-
-    //check whether item is retrieved from database
-    if (userFeedback === null || userFeedback === undefined) {
-      return res.redirect('/api/user/userFeedback/id/' + item.user.id + '/itemId/' + req.params.id);
-    }
-
-    //check whether bid details are retrieved from database
-    if (lastBid === null || lastBid === undefined) {
-      return res.redirect('/api/bid/items/userId/' + user.id + '/itemId/' + req.params.id);
-    }
-
-
-    //check whether user is set. this is needed to retrieve user's warehouses
-    if ((bidwarehouses === null || bidwarehouses === undefined) && (user != null && user != undefined)) {
-      return res.redirect('/api/user/bidding/warehouses/userId/' + user.id + '/itemId/' + item.item.id);
     }
 
     //this will be needed to populate commodity names in top menu
@@ -1077,9 +1057,7 @@ router.get('/items/id/:id', function (req, res) {
       }
     }
 
-    var message = req.session.bidAddMessage;
-
-    // console.log(item.user);
+    var previousData = req.session.listingPageDetails;
 
     req.session.lastBid = null;
     req.session.lastUserBid = null;
@@ -1090,29 +1068,18 @@ router.get('/items/id/:id', function (req, res) {
     delete req.session.messages;
     delete req.session.bidAddMessage;
     delete req.session.bidpageUserFeedback;
-
+    delete req.session.listingPageDetails;
     delete req.session.measureUnits;
 
     res.render('bidpage', {
       isAuthenticated: req.isAuthenticated(),
-      user: req.user,
+      user: req.user || {},
       item: item,
-      userWareHouses: bidwarehouses,
       itemComments: item.itemComments,
-      lastBid: lastBid[0],
-      lastUserBid: lastUserBid[0],
       commodityNames: commodityNames,
-      notifications: notifications,
       measureUnits: measureUnits,
-      messages: messages,
-      message: message,
-      userFeedback: userFeedback,
+      previousData: previousData,
     });
-  } else {
-    //set visited path to session. It uses to rediect to again to that page when login success.
-    req.session.returnTo = req.path;
-    return res.redirect('/user/login?action=login');
-  }
 });
 
 //view selling details of user
@@ -2136,6 +2103,21 @@ router.get('/my_hidden_links', function (req, res) {
   });
 });
 
+
+router.get('/need_auth', function (req, res) {
+  req.session.returnTo = req.query.returnTo;
+
+  if(req.query.listingPage){
+    req.session.listingPageDetails = {
+      yourOffer: req.query.yourOffer,
+      quantity: req.query.quantity,
+      desPort: req.query.desPort,
+      note: req.query.note
+    };
+    return res.jsonp({ redirectTo : '/user/login?action=login'})
+  }
+  return res.redirect('/user/login?action=login');
+});
 
 //to remove unnecessary session parameters
 function removeSessionParameters(req) {

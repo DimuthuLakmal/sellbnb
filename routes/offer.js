@@ -89,21 +89,8 @@ router.post('/add', function (req, res) {
                 },
                 replyUrl: ''
               });
-              // var Message = models.Message;
-              // Message.create({
-              //   subject: emailSubject,
-              //   message: emailTxt,
-              //   seen: 0,
-              //   senderUserIdFk: senderUserId,
-              //   receiverUserIdFk: receiverUserId,
-              // }).then(function (insertedMessage) {
-              //   // Send an emails
-              //   if(returnTo !== undefined && returnTo != null) {
-              //     res.redirect(returnTo);
-              //   } else {
-              //     res.redirect('/user/public/userId/'+senderUserId);
-              //   }
-              // });
+
+              res.sendStatus(200);
             }).bind(this);
           }).bind(this);
         })

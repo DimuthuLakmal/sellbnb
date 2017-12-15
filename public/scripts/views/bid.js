@@ -12,16 +12,35 @@ $('#bidformToSubmit').submit(function (e) {
     data[d['name']] = d['value'];
   });
 
-  $.ajax({
-    url: "/api/offer/add",
-    type: 'POST',
-    data: data,
-    success: function (data, status, xhr) {
-      if (status == 'success') {
-        $('#message_success').show();
+  if(data['userId']){
+    $('#message_pending').show();
+    $.ajax({
+      url: "/api/offer/add",
+      type: 'POST',
+      data: data,
+      success: function (data, status, xhr) {
+        if (status == 'success') {
+          $('#message_pending').hide();
+          $('#message_success').show();
+        }
       }
-    }
-  });
+    });
+  } else {
+    $.ajax({
+      url: '/need_auth?returnTo=%2Fitems%2Fid%2F' + data['itemId'],
+      type: 'GET',
+      data: {
+        listingPage: true,
+        yourOffer: data['offerPrice'],
+        quantity: data['quantity'],
+        desPort: data['destPort'],
+        note: data['buyerNote']
+      },
+      success : function (data) {
+        window.location.replace(data.redirectTo);
+      }
+    })
+  }
 
 });
 

@@ -23,6 +23,7 @@ module.exports = function (sequelize, DataTypes) {
         thumbnail: DataTypes.TEXT,
         origin: DataTypes.TEXT,
         commodityDesc: DataTypes.TEXT,
+        item_url_code: DataTypes.STRING,
     }, {
       charset: 'utf8',
       collate: 'utf8_unicode_ci',
