@@ -180,7 +180,7 @@
                             <li>
                                 <figure class="product">
                                     <div class="mediaholder">
-                                        <a href="/items/id/<%= userPublicCurrentListing[itemIndex].id %>">
+                                        <a href="/items/name/<%= userPublicCurrentListing[itemIndex].item_url_code%>">
                                             <% if(userPublicCurrentListing[itemIndex].ItemImages.length > 0) { %>
                                             <img alt=""
                                                  src="/uploads/items/<%= userPublicCurrentListing[itemIndex].ItemImages[0].url %>"
@@ -197,11 +197,11 @@
                                             </div>
                                             <% } %>
                                         </a>
-                                        <a href="/items/id/<%= userPublicCurrentListing[itemIndex].id %>"
+                                        <a href="/items/name/<%= userPublicCurrentListing[itemIndex].item_url_code %>"
                                            class="product-button"><i class="fa fa-shopping-cart"></i> Make Offer</a>
                                     </div>
 
-                                    <a href="/items/id/<%= userPublicCurrentListing[itemIndex].id %>">
+                                    <a href="/items/name/<%= userPublicCurrentListing[itemIndex].item_url_code %>">
                                         <section>
                                             <span class="product-category"><%= userPublicCurrentListing[itemIndex].Commodity.name %></span>
                                             <span class="product-price"><%= userPublicCurrentListing[itemIndex].suggestedPrice %></span>

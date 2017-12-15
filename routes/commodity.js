@@ -226,7 +226,7 @@ router.get('/measureUnits/id2/:id', function (req, res) {
             where: {CommodityId: req.params.id},
           }).then(function (packingTypes) {
             req.session.packingTypes = packingTypes;
-            res.redirect('/items/id/' + req.session.specificBiddingItem.item.id);
+            res.redirect('/items/name/' + req.session.specificBiddingItem.item.id);
           });
 
         });

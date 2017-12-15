@@ -132,7 +132,7 @@ router.get('/items/userId/:userId/itemId/:itemId', function (req, res) {
 
                     req.session.lastBid = lastBid;
                     req.session.lastUserBid = lastUserBid;
-                    res.redirect('/items/id/'+itemId);
+                    res.redirect('/items/name/'+itemId);
                 });
             });
         }

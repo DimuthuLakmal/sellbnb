@@ -63,7 +63,7 @@ router.post('/add', function (req, res) {
         UserId: req.body.userId,
         suggestedPrice: req.body.fob_price,
         hits: 0,
-        item_ulr_code: req.body.item_ulr_code
+        item_url_code: req.body.item_url_code
       }).then(function (insertedItem) {
         var insertedItemId = insertedItem.dataValues.id;
         //store item images
@@ -166,7 +166,7 @@ router.get('/viewlatest', function (req, res) {
           var suggestedPrice = item.suggestedPrice;
 
           itemsArr.push({
-            'title': title, 'id': id, 'suggestedPrice': suggestedPrice,
+            'title': title, 'id': id, 'item_url_code': item.item_url_code, 'suggestedPrice': suggestedPrice,
             'images': item.ItemImages, 'commodity': item.Commodity, 'priceUnit': item.priceUnit
           });
         });
@@ -305,7 +305,7 @@ router.post('/keyword', function (req, res) {
 
 /* Retrieve specific item and its comments from database */
 /* Usage: Search Page */
-router.get('/id/:id', function (req, res) {
+router.get('/name/:name', function (req, res) {
   //retrieve data from req object
   sequelize.sync().then(
     function () {
@@ -318,10 +318,17 @@ router.get('/id/:id', function (req, res) {
       var CommodityPriceUnit = models.CommodityPriceUnit;
       var CommodityPacking = models.CommodityPacking;
 
-      var itemId = req.params.id;
+      var itemName = req.params.name;
+      var whereClose = {};
+      if(isNaN(parseInt(itemName))){
+        whereClose['item_url_code'] = itemName
+      } else {
+        whereClose['id'] = itemName
+      }
+
       Item.findAll({
-        where: {id: itemId},
-        include: [User, ItemImage, Commodity, WareHouse],
+        where: whereClose,
+        include: [User, ItemImage, Commodity, WareHouse]
       }).then(function (Items) {
         var item = Items[0].dataValues;
         var id = item.id;
@@ -411,7 +418,7 @@ router.get('/id/:id', function (req, res) {
                             {hits: (parseInt(hits) + 1)},
                             {where: {id: id}}
                           ).then(function (results) {
-                            res.redirect('/items/id/' + itemId);
+                            res.redirect('/items/name/' + itemName);
                           });
                         });
                       } else {
@@ -434,7 +441,7 @@ router.get('/id/:id', function (req, res) {
                           {hits: (parseInt(hits) + 1)},
                           {where: {id: id}}
                         ).then(function (results) {
-                          res.redirect('/items/id/' + itemId);
+                          res.redirect('/items/name/' + itemName);
                         });
                       }
                     })
@@ -476,7 +483,7 @@ router.post('/feedback', function (req, res) {
     console.log(error);
   });
 
-  res.redirect('/items/id/' + itemId);
+  res.redirect('/items/name/' + itemId);
 });
 
 /* Retrieve item added by a specific user */

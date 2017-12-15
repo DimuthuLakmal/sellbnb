@@ -145,6 +145,7 @@
                 <form method="POST" id="bidformToSubmit" style="background-color: #5d5c60">
                     <input type="hidden" name="itemId" value="<%= item.item.id %>"/>
                     <input type="hidden" name="userId" value="<%= user.id %>"/>
+                    <input type="hidden" name="item_url_code" value="<%= item.item.item_url_code %>"/>
                     <input type="hidden" name="itemOwner" value="<%= item.user.id %>"/>
                     <input type="hidden" name="commodityId" value="<%= item.item.Commodity.id %>"/>
                     <input type="hidden" name="priceUnit" value="<%= item.item.priceUnit %>"/>
@@ -253,7 +254,7 @@
                                 <a href="#message-dialog" class="button popup-with-zoom-anim margin-left-0"
                                    style="color: white; background-color: #729331">Contact Producer Now</a>
                                 <% } else { %>
-                                <a href="/need_auth?returnTo=%2Fitems%2Fid%2F<%- item.item.id %>" class="button"
+                                <a href="/need_auth?returnTo=%2Fitems%2Fname%2F<%- item.item.item_url_code %>" class="button"
                                    style="color: white; background-color: #729331">Contact Producer Now</a>
                                 <% } %>
                                 <div id="message-dialog" class="small-dialog zoom-anim-dialog mfp-hide"
@@ -264,7 +265,7 @@
                                     <!-- Form -->
                                     <form id="add-comment" class="add-comment" action="/api/messages/add" method="POST">
                                         <fieldset>
-                                            <input type="hidden" name="returnTo" value="/items/id/<%= item.item.id %>"/>
+                                            <input type="hidden" name="returnTo" value="/items/name/<%= item.item.item_url_code %>"/>
                                             <input type="hidden" name="receiverUserIdFk" value="<%= item.user.id %>"/>
                                             <input type="hidden" name="senderUserIdFk" value="<%= user.id %>"/>
                                             <input type="hidden" name="imageB64" id="imgData" value=""/>
@@ -333,7 +334,7 @@
             <div class="four columns">
                 <figure class="product">
                     <div class="mediaholder">
-                        <a href="/items/id/<%= similarItem.id %>">
+                        <a href="/items/name/<%= similarItem.item_url_code %>">
                             <% if(similarItem.ItemImages.length > 0) { %>
                             <img alt="" src="/uploads/items/<%= similarItem.ItemImages[0].url %>"
                                  style="width: 280px; height: 280px"/>
@@ -346,11 +347,11 @@
                                      style="width: 270px; height: 270px"/>
                             </div>
                             <% } %>
-                            <a href="/items/id/<%= similarItem.id %>" class="product-button"><i
+                            <a href="/items/name/<%= similarItem.item_url_code %>" class="product-button"><i
                                         class="fa fa-shopping-cart"></i> Make Offer</a>
                         </a>
                     </div>
-                    <a href="/items/id/<%= similarItem.id %>">
+                    <a href="/items/name/<%= similarItem.item_url_code %>">
                         <section>
                             <span class="product-category"><%= similarItem.title %></span>
                             <%

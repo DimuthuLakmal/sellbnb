@@ -1019,67 +1019,78 @@ router.get('/items/add', function (req, res) {
   }
 });
 
-router.get('/items/id/:id', function (req, res) {
+router.get('/items/name/:name', function (req, res) {
   removeSessionParameters(req);
   removeSessionParameterSellingPage(req);
   // if (req.isAuthenticated()) {
-    var item = req.session.specificBiddingItem;
-    var user = req.user;
-    var measureUnits = req.session.measureUnits;
+  var item = req.session.specificBiddingItem;
+  var user = req.user;
+  var measureUnits = req.session.measureUnits;
 
-    //check whether item is retrieved from database
-    if (item === null || item === undefined) {
-      return res.redirect('/api/items/id/' + req.params.id + (user ? + '?userId=' + user.id: ''));
+  //check whether item is retrieved from database
+  if (item === null || item === undefined) {
+    var url = '/api/items/name/' + req.params.name;
+    if(user){
+      url += '?userId=' + String(user.id);
     }
+    return res.redirect(url);
+  }
 
-    //check whether commodityMeasurements session is set
-    if (measureUnits === null || measureUnits === undefined) {
-      return res.redirect('/api/commodity/measureUnits/id2/' + item.commodity.id);
-    }
+  //check whether commodityMeasurements session is set
+  // if (measureUnits === null || measureUnits === undefined) {
+  //   return res.redirect('/api/commodity/measureUnits/id2/' + item.commodity.id);
+  // }
 
-    //this will be needed to populate commodity names in top menu
-    var commodityNames = req.session.commodityNames;
-    //check whether commodityNames session is set
-    req.session.returnToCommodityName = req.path;
-    if (commodityNames === null || commodityNames === undefined) {
-      return res.redirect('/api/commodity/names');
-    }
+  //this will be needed to populate commodity names in top menu
+  var commodityNames = req.session.commodityNames;
+  //check whether commodityNames session is set
+  req.session.returnToCommodityName = req.path;
+  if (commodityNames === null || commodityNames === undefined) {
+    return res.redirect('/api/commodity/names');
+  }
 
-    var notifications = req.session.notifications;
-    var messages = req.session.messages;
-    //check whether notification session is set.
-    if (req.isAuthenticated()) {
-      if (notifications === null || notifications === undefined) {
-        return res.redirect('/api/notification/userId/' + req.user.id);
-      }
-      if (messages === null || messages === undefined) {
-        return res.redirect('/api/messages/userId/' + req.user.id);
-      }
-    }
+  var otherFunctions = require('./items').otherFunc;
+  otherFunctions.getCommodityPriceUnit(item.item.id, function (cpu) {
+    otherFunctions.getCommodityMeasureUnit(item.item.id, function (cmu) {
+      otherFunctions.getCommodityPackageType(item.item.id, function (cpt) {
+        // var notifications = req.session.notifications;
+        // var messages = req.session.messages;
+        // //check whether notification session is set.
+        // if (req.isAuthenticated()) {
+        //   if (notifications === null || notifications === undefined) {
+        //     return res.redirect('/api/notification/userId/' + req.user.id);
+        //   }
+        //   if (messages === null || messages === undefined) {
+        //     return res.redirect('/api/messages/userId/' + req.user.id);
+        //   }
+        // }
 
-    var previousData = req.session.listingPageDetails;
+        var previousData = req.session.listingPageDetails;
 
-    req.session.lastBid = null;
-    req.session.lastUserBid = null;
-    req.session.specificBiddingItem = null;
-    delete req.session.returnTo;
-    delete req.session.returnToCommodityName;
-    delete req.session.notifications;
-    delete req.session.messages;
-    delete req.session.bidAddMessage;
-    delete req.session.bidpageUserFeedback;
-    delete req.session.listingPageDetails;
-    delete req.session.measureUnits;
+        req.session.lastBid = null;
+        req.session.lastUserBid = null;
+        req.session.specificBiddingItem = null;
+        delete req.session.returnTo;
+        delete req.session.returnToCommodityName;
+        delete req.session.notifications;
+        delete req.session.messages;
+        delete req.session.bidAddMessage;
+        delete req.session.bidpageUserFeedback;
+        delete req.session.listingPageDetails;
+        delete req.session.measureUnits;
 
-    res.render('bidpage', {
-      isAuthenticated: req.isAuthenticated(),
-      user: req.user || {},
-      item: item,
-      itemComments: item.itemComments,
-      commodityNames: commodityNames,
-      measureUnits: measureUnits,
-      previousData: previousData,
+        res.render('bidpage', {
+          isAuthenticated: req.isAuthenticated(),
+          user: req.user || {},
+          item: item,
+          itemComments: item.itemComments,
+          commodityNames: commodityNames,
+          measureUnits: cmu,
+          previousData: previousData
+        });
+      });
     });
+  });
 });
 
 //view selling details of user
@@ -1974,7 +1985,7 @@ router.get('/user/inbox', function (req, res) {
 
   var user = req.user;
 
-  if(user === undefined) {
+  if (user === undefined) {
     req.session.returnTo = req.path;
     return res.redirect('/user/login?action=login');
   }
@@ -2107,14 +2118,14 @@ router.get('/my_hidden_links', function (req, res) {
 router.get('/need_auth', function (req, res) {
   req.session.returnTo = req.query.returnTo;
 
-  if(req.query.listingPage){
+  if (req.query.listingPage) {
     req.session.listingPageDetails = {
       yourOffer: req.query.yourOffer,
       quantity: req.query.quantity,
       desPort: req.query.desPort,
       note: req.query.note
     };
-    return res.jsonp({ redirectTo : '/user/login?action=login'})
+    return res.jsonp({redirectTo: '/user/login?action=login'})
   }
   return res.redirect('/user/login?action=login');
 });

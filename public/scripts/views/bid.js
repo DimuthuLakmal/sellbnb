@@ -27,7 +27,7 @@ $('#bidformToSubmit').submit(function (e) {
     });
   } else {
     $.ajax({
-      url: '/need_auth?returnTo=%2Fitems%2Fid%2F' + data['itemId'],
+      url: '/need_auth?returnTo=%2Fitems%2Fname%2F' + data['item_url_code'],
       type: 'GET',
       data: {
         listingPage: true,

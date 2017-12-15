@@ -1120,7 +1120,7 @@ router.get('/userFeedback/id/:id/itemId/:itemId', function (req, res) {
         }]
       }).then(function (UserComments) {
         req.session.bidpageUserFeedback = UserComments;
-        res.redirect('/items/id/' + req.params.itemId)
+        res.redirect('/items/name/' + req.params.itemId)
       });
     }
   );

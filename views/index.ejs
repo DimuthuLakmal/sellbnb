@@ -132,7 +132,7 @@
                         <% for(var itemIndex = 0; itemIndex < latestItems.length; itemIndex++) { %>
                         <li>
                             <div class="one-third column">
-                                <a href="/items/id/<%= latestItems[itemIndex].id %>" class="img-caption">
+                                <a href="/items/name/<%= latestItems[itemIndex].item_url_code %>" class="img-caption">
                                     <figure style="width: 280px">
                                         <% if(latestItems[itemIndex].images.length > 0) { %>
                                         <img alt="" src="/uploads/items/<%= latestItems[itemIndex].images[0].url %>"
