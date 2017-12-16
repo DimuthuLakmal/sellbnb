@@ -107,8 +107,6 @@ router.get('/addnews', function (req, res) {
     delete req.session.newsTitles;
     return res.render('addnews', {
       commodityNames: commodityNames,
-      notifications: notifications,
-      messages: messages,
       user: req.user,
       families: families,
       newsTitles: newsTitles,
