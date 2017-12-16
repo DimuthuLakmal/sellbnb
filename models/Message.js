@@ -3,7 +3,7 @@ module.exports = function (sequelize, DataTypes) {
     var Message = sequelize.define('Message', {
         subject: DataTypes.STRING,
         message: DataTypes.TEXT,
-        att_count: DataTypes.INTEGER
+        att: DataTypes.TEXT,
     }, {
       charset: 'utf8',
       collate: 'utf8_unicode_ci',

@@ -1,27 +1,27 @@
-var express = require('express');
-var expressSession = require('express-session');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var passport = require('passport');
+let express = require('express');
+let expressSession = require('express-session');
+let path = require('path');
+let favicon = require('serve-favicon');
+let logger = require('morgan');
+let cookieParser = require('cookie-parser');
+let bodyParser = require('body-parser');
+let passport = require('passport');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var login = require('./routes/login');
-var news = require('./routes/news');
-var commodity = require('./routes/commodity');
-var items = require('./routes/items');
-var signup = require('./routes/signup');
-var bid = require('./routes/bid');
-var notification = require('./routes/notification');
-var usermessage = require('./routes/message');
-var country = require('./routes/country');
-var recentsearch = require('./routes/recentsearch');
-var offers = require('./routes/offer');
+let routes = require('./routes/index');
+let users = require('./routes/users');
+let login = require('./routes/login');
+let news = require('./routes/news');
+let commodity = require('./routes/commodity');
+let items = require('./routes/items');
+let signup = require('./routes/signup');
+let bid = require('./routes/bid');
+let notification = require('./routes/notification');
+let usermessage = require('./routes/message');
+let country = require('./routes/country');
+let recentsearch = require('./routes/recentsearch');
+let offers = require('./routes/offer');
 
-var app = express();
+let app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -35,7 +35,7 @@ app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
 app.use(cookieParser());
 
 //setting up passportjs
-var flash = require("connect-flash");
+let flash = require("connect-flash");
 app.use(flash());
 app.use(expressSession({
   secret: process.env.SESSION_SECRET || 'secret',

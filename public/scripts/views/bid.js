@@ -49,7 +49,7 @@ function readFile(file) {
 
   FR.addEventListener("load", function (e) {
     imgDataArr.push({
-      // filename: file.name,
+      filename: file.name,
       path: e.target.result
       // encoding: 'base64'
     });

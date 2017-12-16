@@ -5,13 +5,18 @@ let models = require('./../models');
 let sequelize = models.sequelize;
 
 module.exports.saveNewMessage = function (data, cb) {
+  let fileNameArr = [];
+  data.att.forEach(function (f) {
+    fileNameArr.push(f.filename);
+  });
+
   sequelize.sync().then(
     function () {
       let Message = models.Message;
       Message.create({
         subject: data.subject,
         message: data.message,
-        att_count: data.att.length,
+        att: JSON.stringify(fileNameArr),
         senderUserIdFk: data.senderUserId,
         receiverUserIdFk: data.receiverUserId
       }).then(function (insertedMessage) {
@@ -53,6 +58,9 @@ module.exports.saveNewMessage = function (data, cb) {
               message: data.message,
               replyUrl: data.origin + '/user/messages/id/' + insertedMessage.id + '?expUsr=' + recievedUser[0].username,
             });
+
+            saveAtts({att : data.att}, insertedMessage.id);
+
             cb();
           });
         });
@@ -64,6 +72,12 @@ module.exports.saveNewMessage = function (data, cb) {
 };
 
 module.exports.saveNewReplay = function (msgId, userId, data, cb) {
+  let fileNameArr = [];
+
+  data.att.forEach(function (f) {
+    fileNameArr.push(f.filename);
+  });
+
   sequelize.sync().then(
     function () {
       let MessageReply = models.MessageReply;
@@ -72,7 +86,7 @@ module.exports.saveNewReplay = function (msgId, userId, data, cb) {
         message: data.reply,
         MessageId: msgId,
         UserId: data.userId,
-        att_count: data.att.length
+        att: JSON.stringify(fileNameArr)
       }).then(function (insertedMessageReply) {
         Message.findAll({
           where: {'$Message.id$': msgId}
@@ -116,6 +130,7 @@ module.exports.saveNewReplay = function (msgId, userId, data, cb) {
                   replyUrl: data.origin + '/user/messages/id/' + msgId + '?expUsr=' + user2.username,
                 });
               }
+              saveAtts({att : data.att}, msgId);
               cb();
             });
           });
@@ -221,3 +236,32 @@ module.exports.getUserNameByMsgId = function (msgId, cb) {
     }
   })
 };
+
+function saveAtts(data, msgId) {
+  let fs = require("fs");
+  function saveFiles() {
+    data.att.forEach(function (f) {
+      let b64 = f.path.replace(/^data:image\/png;base64,/, "")
+        .replace(/^data:image\/jpg;base64,/, "")
+        .replace(/^data:image\/jpeg;base64,/, "")
+        .replace(/^data:application\/pdf;base64,/, "");
+      fs.writeFile('./public/uploads/messages/' + msgId +'/' + f.filename, b64, 'base64', function(err) {
+        if(err) {
+          console.log(err);
+        } else {
+          console.log('save ', f.filename);
+        }
+      });
+    });
+  }
+  fs.exists('./public/uploads/messages/' + msgId, function (e) {
+    if(!e) {
+      fs.mkdir('./public/uploads/messages/' + msgId, function (err, result) {
+        console.log('create dir', msgId);
+        saveFiles();
+      })
+    }else {
+      saveFiles();
+    }
+  });
+}
