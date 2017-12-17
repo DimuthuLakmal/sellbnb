@@ -1191,7 +1191,7 @@ router.get('/forgotpassword_code', function (req, res, next) {
           require('./email-controller').sendEmail({
             template: 'forgot-password',
             to: email,
-            subject: '[SellBnb] Password Recovery',
+            subject: '[AntCommodity] Password Recovery',
           }, {
             randomNumber: random_numeber,
           })

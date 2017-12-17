@@ -44,7 +44,7 @@ module.exports.saveNewMessage = function (data, cb) {
             let emailData = {
               template: 'user-message',
               to: recievedUser[0].Emails[0].dataValues.email,
-              subject: '[SellBnb] ' + (sendUser[0].dataValues.full_name || sendUser[0].dataValues.company_name || sendUser[0].dataValues.username) + ' send you a new message'
+              subject: '[AntCommodity] ' + (sendUser[0].dataValues.full_name || sendUser[0].dataValues.company_name || sendUser[0].dataValues.username) + ' send you a new message'
             };
             if (data.att.length > 0) {
               emailData.attachments = data.att;
@@ -115,7 +115,7 @@ module.exports.saveNewReplay = function (msgId, userId, data, cb) {
 
               if(user2.id === parseInt(userId)){
                 emailData.to = user1.Emails[0].dataValues.email;
-                emailData.subject = '[SellBnb] You and ' + user2.username + ' conversation got a reply';
+                emailData.subject = '[AntCommodity] You and ' + user2.username + ' conversation got a reply';
                 require('./email-controller').sendEmail(emailData, {
                   message: data.reply,
                   senderName: user2.username,
@@ -123,7 +123,7 @@ module.exports.saveNewReplay = function (msgId, userId, data, cb) {
                 });
               } else {
                 emailData.to = user2.Emails[0].dataValues.email;
-                emailData.subject = '[SellBnb] You and ' + user1.username + ' conversation got a reply';
+                emailData.subject = '[AntCommodity] You and ' + user1.username + ' conversation got a reply';
                 require('./email-controller').sendEmail(emailData, {
                   message: data.reply,
                   senderName: user1.username,
