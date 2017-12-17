@@ -1571,6 +1571,23 @@ router.get('/my_hidden_links', function (req, res) {
   });
 });
 
+router.get('/terms_conditions', function (req, res) {
+  removeSessionParameters(req);
+  let user = req.user;
+  res.render('terms_conditions', {
+    user: user,
+  });
+});
+
+router.get('/privacy_policy', function (req, res) {
+  removeSessionParameters(req);
+  let user = req.user;
+  res.render('privacy_policy', {
+    user: user,
+  });
+});
+
+
 router.get('/need_auth', function (req, res) {
   req.session.returnTo = req.query.returnTo;
 
@@ -1585,6 +1602,7 @@ router.get('/need_auth', function (req, res) {
   }
   return res.redirect('/user/login?action=login');
 });
+
 
 //to remove unnecessary session parameters
 function removeSessionParameters(req) {
