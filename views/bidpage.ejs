@@ -231,15 +231,23 @@
                 <br>
             </section>
         </div>
+
         <div class="eight products columns" style="margin-top: 30px">
             <section class="variables">
+                <div class="eight columns">
+                    <div class="notification success">
+                        <p>Ant Commodity has vetted this producer. For further assurance, our field officers will inspect the consignment before shipping it to you.</p>
+                    </div>
+                </div>
                 <div class="eight columns">
                     <h2 class="headline" style="color: black; font-size: 30px; margin-bottom: 10px; text-transform: capitalize">Producer Details</h2>
                     <span class="line margin-bottom-0"></span>
                 </div>
+                <% if(item.user.profile_pic ) { %>
                 <div style="align-items: center; width: 100%;">
                     <img src="/uploads/profile_pic/<%= item.user.profile_pic %>" style="height: 150px;"/>
                 </div>
+                <% } %>
                 <div>
                     <%- (item.user.companyIntroduction ? item.user.companyIntroduction : '').substr(0, 500) %>
                 </div>
@@ -257,9 +265,6 @@
                                 <a href="/need_auth?returnTo=%2Fitems%2Fname%2F<%- item.item.item_url_code %>" class="button"
                                    style="color: white; background-color: #729331">Contact Producer Now</a>
                                 <% } %>
-                                <div class="notification success">
-                                    <p>Ant Commodity has vetted this producer. For further assurance, our field officers will inspect the consignment before shipping it to you.</p>
-                                </div>
 
                                 <div id="message-dialog" class="small-dialog zoom-anim-dialog mfp-hide"
                                      style="margin-top: -100px">
