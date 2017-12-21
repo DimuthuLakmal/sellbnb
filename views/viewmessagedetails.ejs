@@ -86,19 +86,23 @@
                         <p><%- messageDetails.message %></p>
                         <% var att = JSON.parse(messageDetails.att) %>
                         <div>
+                            <% if(att.length > 0) { %>
                             <% for(x = 0; x < att.length; x++) {%>
                                 <span>
                                     <a style="background-color: #c5c5c5; border-radius: 3px; padding: 1px 5px; color: #0000ff;"
                                        target="_blank" href="/uploads/messages/<%- messageDetails.id %>/<%- att[x] %>"><%- att[x] %></a>
                                 </span>
                             <% } %>
+                            <% }%>
                         </div>
                     </div>
                 </li>
 
+                <% if(messageReplies.length > 0) { %>
                 <% for(replyIndex = 0; replyIndex < messageReplies.length; replyIndex++) {
                     var reply = messageReplies[replyIndex];
                 %>
+                <%}%>
                     <li style="border-bottom: thin solid lightgray">
                         <div class="message_avatar">
                             <%if(reply.User.profile_pic == null) { %>
@@ -114,6 +118,8 @@
                             </div>
                             <p><%- reply.message %></p>
                             <% var Ratt = JSON.parse(reply.att) %>
+
+                            <% if(Ratt.length > 0) { %>
                             <div>
                                 <% for(x = 0; x < Ratt.length; x++) {%>
                                 <span>
@@ -122,6 +128,7 @@
                                 </span>
                                 <% } %>
                             </div>
+                            <% } %>
                             <br>
                         </div>
                     </li>
