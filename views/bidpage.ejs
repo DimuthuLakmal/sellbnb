@@ -49,6 +49,12 @@
         }
     </style>
 
+    <script>
+        setTimeout(function () {
+            console.log('item id', $('#input_item_id').val());
+        }, 1000);
+    </script>
+
 </head>
 
 <body class="boxed">
@@ -143,7 +149,7 @@
                     <h1 style="margin-left: 10px; background-color: #e2e2e2" class="headline">FOB Price: <strong style="font-size: 30px; color: #729331 ;"><%= item.item.suggestedPrice + ' ' + item.item.priceUnit %></strong></h1>
                 </div>
                 <form method="POST" id="bidformToSubmit" style="background-color: #5d5c60">
-                    <input type="hidden" name="itemId" value="<%= item.item.id %>"/>
+                    <input type="hidden" id="input_item_id" name="itemId" value="<%= item.item.id %>"/>
                     <input type="hidden" name="userId" value="<%= user.id %>"/>
                     <input type="hidden" name="item_url_code" value="<%= item.item.item_url_code %>"/>
                     <input type="hidden" name="itemOwner" value="<%= item.user.id %>"/>

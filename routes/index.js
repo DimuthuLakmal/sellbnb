@@ -1223,21 +1223,30 @@ router.get('/items/edit/:itemId', function (req, res) {
   if (req.isAuthenticated()) {
 
     otherFunctions.getItemById(req.params['itemId'], function (item) {
-      otherFunctions.getCommodityMeasureUnit(item.CommodityId, function (cmu) {
-        otherFunctions.getCommodityPriceUnit(item.CommodityId, function (cpu) {
-          otherFunctions.getCommodityPackageType(item.CommodityId, function (cp) {
-            res.render('edititem', {
-              isAuthenticated: req.isAuthenticated(),
-              user: req.user,
-              item: item,
-              packingType: cp,
-              measureUnits: cmu,
-              priceUnits: cpu
-            });
-            // res.jsonp(item);
+      if(item) {
+          otherFunctions.getCommodityMeasureUnit(item.CommodityId, function (cmu) {
+              otherFunctions.getCommodityPriceUnit(item.CommodityId, function (cpu) {
+                  otherFunctions.getCommodityPackageType(item.CommodityId, function (cp) {
+                      res.render('edititem', {
+                          isAuthenticated: req.isAuthenticated(),
+                          user: req.user,
+                          item: item,
+                          packingType: cp,
+                          measureUnits: cmu,
+                          priceUnits: cpu
+                      });
+                  });
+              });
           });
-        });
-      });
+      } else {
+          res.render('error', {
+              message: 'No item found (please check the item id) - ' + req.params['itemId'],
+              error : {
+                  status: 404,
+                  stack : ''
+              }
+          })
+      }
     });
 
   } else {
