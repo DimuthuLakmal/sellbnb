@@ -197,7 +197,7 @@
                     <% } %>
                 </figure>
 
-                <section class="from-the-blog-content">
+                <section class="from-the-blog-content" style="padding: 15px">
                     <a href="/news/id/<%= news.id %>?lan=en">
                         <h5>
                             <%= news.title.substring(0, 25) %>
@@ -211,7 +211,7 @@
                         <% if(news.summary != null) { %>
                         <%= news.summary.substr(0, 50) + '...' %>
                         <% } %>
-                    </span><br>
+                    </span>
                     <a href="/news/id/<%= news.id %>?lan=en" class="button gray">Read More</a>
                 </section>
 
