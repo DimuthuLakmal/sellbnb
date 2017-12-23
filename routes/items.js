@@ -183,6 +183,7 @@ router.get('/viewlatest', function (req, res) {
 /* Usage: Search Results Page */
 router.get('/search/start/:start', function (req, res) {
   let keyword = req.query['keyword'] ? req.query['keyword'] : req.session.keyword;
+  if(!keyword) keyword = '';
   retrieveItems(req, res, keyword);
 });
 
