@@ -63,7 +63,8 @@ router.post('/add', function (req, res) {
         UserId: req.body.userId,
         suggestedPrice: req.body.fob_price,
         hits: 0,
-        item_url_code: req.body.item_url_code
+        item_url_code: req.body.item_url_code,
+        meta_description: req.body.meta_description
       }).then(function (insertedItem) {
         let insertedItemId = insertedItem.dataValues.id;
         //store item images

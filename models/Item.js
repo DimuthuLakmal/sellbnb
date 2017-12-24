@@ -24,6 +24,7 @@ module.exports = function (sequelize, DataTypes) {
         origin: DataTypes.TEXT,
         commodityDesc: DataTypes.TEXT,
         item_url_code: DataTypes.STRING,
+        meta_description: DataTypes.TEXT,
     }, {
       charset: 'utf8',
       collate: 'utf8_unicode_ci',

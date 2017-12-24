@@ -101,9 +101,6 @@ router.get('/signup', function (req, res, next) {
   res.render('login', {
     signupError: signUpError,
     message: req.flash("error"),
-    notifications: notifications,
-    messages: messages,
-    commodityNames: commodityNames,
     loginOrRegister: 'Register',
     user: req.user,
   });
