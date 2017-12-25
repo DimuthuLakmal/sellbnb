@@ -102,6 +102,7 @@ router.get('/signup', function (req, res, next) {
     signupError: signUpError,
     message: req.flash("error"),
     loginOrRegister: 'Register',
+    expectedUser : req.query.expUsr || '',
     user: req.user,
   });
 });

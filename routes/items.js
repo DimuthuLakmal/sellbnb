@@ -113,7 +113,9 @@ router.post('/update', function (req, res) {
           origin: req.body.origin,
           commodityDesc: req.body.comDesc,
           CommodityId: req.body.commodityId,
-          suggestedPrice: req.body.fob_price
+          suggestedPrice: req.body.fob_price,
+          item_url_code: req.body.item_url_code,
+          meta_description: req.body.meta_description
         },
         {where: {id: req.body.itemId}}
       ).then(function (updatedItem) {
