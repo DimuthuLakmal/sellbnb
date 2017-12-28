@@ -46,6 +46,22 @@
         .black-text{
             color: black;
         }
+
+        .itm-desc table {
+            border-collapse: collapse;
+        }
+
+        .itm-desc table{
+            border: 1px solid black;
+        }
+
+        .itm-desc th{
+            border: 1px solid black;
+        }
+
+        .itm-desc td{
+            border: 1px solid black;
+        }
     </style>
 
     <script>
@@ -325,7 +341,7 @@
             <span class="line margin-bottom-0"></span>
         </div>
         <br><br>
-        <div style="padding-left: 10px;"><%-item.item.commodityDesc%></div>
+        <div style="padding-left: 10px;" class="itm-desc"><%-item.item.commodityDesc%></div>
     </div>
     <br><br>
     <% if(item.similarItems.length > 0) { %>

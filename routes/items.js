@@ -731,9 +731,6 @@ function retrieveItems(req, res, keyword) {
 
   //define where object of sequelize object according to parameter selected in search results page
   let whereObject = {
-    // duration: {
-    //     gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
-    // },
     $or: [
       {'$Commodity.name$': {$like: '%' + keyword + '%'}},
       {title: {$like: '%' + keyword + '%'}}
@@ -798,10 +795,6 @@ function retrieveItems(req, res, keyword) {
                     Item.aggregate('segment', 'DISTINCT', {
                       plain: false,
                       where: {
-                        // duration: {
-                        //     gte: sequelize.fn("TIME_TO_SEC",
-                        //         sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
-                        // },
                         $or: [
                           {'$Commodity.name$': {$like: '%' + keyword + '%'}},
                           {title: {$like: '%' + keyword + '%'}}
@@ -813,14 +806,9 @@ function retrieveItems(req, res, keyword) {
                       _.forEach(Segments, function (segment, index) {
                         segments.push(segment.DISTINCT);
                       });
-
                       Item.aggregate('class', 'DISTINCT', {
                         plain: false,
                         where: {
-                          duration: {
-                            gte: sequelize.fn("TIME_TO_SEC",
-                              sequelize.fn('timediff', moment().format(), sequelize.col("Item.createdAt")))
-                          },
                           $or: [
                             {'$Commodity.name$': {$like: '%' + keyword + '%'}},
                             {title: {$like: '%' + keyword + '%'}}
@@ -837,10 +825,6 @@ function retrieveItems(req, res, keyword) {
                         Item.aggregate('User.mailingCity', 'DISTINCT', {
                           plain: false,
                           where: {
-                            duration: {
-                              gte: sequelize.fn("TIME_TO_SEC",
-                                sequelize.fn('timediff', moment().format(), sequelize.col("Item.createdAt")))
-                            },
                             $or: [
                               {'$Commodity.name$': {$like: '%' + keyword + '%'}},
                               {title: {$like: '%' + keyword + '%'}}
@@ -857,7 +841,6 @@ function retrieveItems(req, res, keyword) {
                           req.session.distinctCharacteristics = [segments, classes, locations];
                           callback(null, keyword, req);
                         });
-
                       });
                     });
                   }
@@ -873,10 +856,6 @@ function retrieveItems(req, res, keyword) {
                     Item.aggregate('suggestedPrice', 'MAX', {
                       plain: false,
                       where: {
-                        duration: {
-                          gte: sequelize.fn("TIME_TO_SEC",
-                            sequelize.fn('timediff', moment().format(), sequelize.col("Item.createdAt")))
-                        },
                         $or: [
                           {'$Commodity.name$': {$like: '%' + keyword + '%'}},
                           {title: {$like: '%' + keyword + '%'}}
@@ -913,7 +892,6 @@ function retrieveItems(req, res, keyword) {
           req.session.searchResult = Items.rows;
           res.redirect('/items');
         }
-
       });
     }
   );
