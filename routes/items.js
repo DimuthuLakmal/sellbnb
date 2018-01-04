@@ -1032,6 +1032,43 @@ router['otherFunc'] = {
         })
       }
     )
+  },
+  viewlatest : function (next) {
+      sequelize.sync().then(
+          function () {
+              let Item = models.Item;
+              let ItemImage = models.ItemImage;
+              let Commodity = models.Commodity;
+              Item.findAndCountAll({
+                  where: {
+                      // duration: {gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))},
+                      status: 'pending',
+                  },
+                  limit: 10,
+                  include: [ItemImage, Commodity],
+                  order: '`createdAt` DESC'
+              }).then(function (Items) {
+                  let itemsArr = [];
+                  //pushing retrieved data to commodity array
+                  // console.log('Visited latest item');
+                  _.forEach(Items.rows, function (item, index) {
+                      // console.log('Visited latest item '+index);
+                      let id = item.id;
+                      let title = item.title;
+                      let suggestedPrice = item.suggestedPrice;
+
+                      itemsArr.push({
+                          'title': title, 'id': id, 'item_url_code': item.item_url_code, 'suggestedPrice': suggestedPrice,
+                          'images': item.ItemImages, 'commodity': item.Commodity, 'priceUnit': item.priceUnit
+                      });
+                  });
+                  // console.log('Visited latest item finished');
+                  // req.session.latestItems = itemsArr;
+                  // res.redirect('/');
+                  next(itemsArr);
+              });
+          }
+      );
   }
 };
 

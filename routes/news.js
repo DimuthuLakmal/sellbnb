@@ -555,7 +555,6 @@ function newsArray(News, offset, req, res, category, keyword) {
         req.session.latestNews = newsArr;
         res.redirect('/');
     }
-
 }
 
 //function to decode base64 image
@@ -572,5 +571,114 @@ function decodeBase64Image(dataString) {
 
     return response;
 }
+
+router['methods'] = {
+    viewlatest: function (next) {
+        //retrieve data from req object
+        sequelize.sync().then(
+            function () {
+                var News = models.News;
+                var User = models.User;
+                News.findAndCountAll({
+                    limit: 8,
+                    include: [User],
+                    order: '`createdAt` DESC'
+                }).then(function (News) {
+                    //saving news array to a session and redirect
+                    // newsArray(News, null, req, res);
+
+                    // function newsArray(News, offset, req, res, category, keyword) {
+                    // console.log('Visited');
+                    var newsArr = [];
+                    // var language = req.session.language;
+
+                    _.forEach(News.rows, function (news) {
+                        // var content = '';
+                        // var title = '';
+                        var has_sinhala_content = false;
+                        var has_tamil_content = false;
+                        if (news.sinhala_content != "" && news.sinhala_content != null) {
+                            has_sinhala_content = true;
+                        } else if (news.tamil_content != "" && news.tamil_content != null) {
+                            has_tamil_content = true;
+                        }
+
+                        // if(content != null && content != '') {
+                        var id = news.id;
+                        var category = news.category;
+                        var hits = news.hits;
+                        var user = news.User.full_name;
+                        var createdAt = news.createdAt;
+                        var content = news.english_content;
+                        var title = news.english_title;
+                        var summary = news.english_summary;
+
+                        //removing <p> tags and <img> tags and extract image
+                        var removedImage = content;
+                        var img = '';
+                        while (removedImage.indexOf('<img') != -1) {
+                            if (removedImage.indexOf('<img') != -1) {
+                                if (img == '') {
+                                    img = removedImage.substring(removedImage.indexOf('src="', removedImage.indexOf("<img")) + 5
+                                        , removedImage.indexOf('"', removedImage.indexOf('src=\"') + 5));
+                                }
+                                var imgToReplace = removedImage.substring(removedImage.indexOf('<img')
+                                    , removedImage.indexOf('>', removedImage.indexOf('<img')) + 1);
+                                removedImage = removedImage.replace(imgToReplace, "");
+                            }
+                        }
+
+                        var removeTable = '';
+                        if (content.indexOf('<table') != -1) {
+                            var tableToReplace = removedImage.substring(removedImage.indexOf('<table')
+                                , removedImage.indexOf('</table>'));
+                            removedTable = removedImage.replace(tableToReplace, "");
+                        } else {
+                            removedTable = removedImage;
+                        }
+
+                        var removedBlankPara = removedTable;
+                        while (removedBlankPara.indexOf('<p></p>') != -1) {
+                            if (removedBlankPara.indexOf('<p></p>') != -1) {
+                                removedBlankPara = removedBlankPara.replace('<p></p>', "");
+                            }
+                        }
+
+                        while (removedBlankPara.indexOf('<p>&nbsp;</p>') != -1) {
+                            if (removedBlankPara.indexOf('<p>&nbsp;</p>') != -1) {
+                                removedBlankPara = removedBlankPara.replace('<p>&nbsp;</p>', "");
+                            }
+                        }
+
+                        //mapping month
+                        var dateComponents = createdAt.toString().split(" ");
+                        var dateOfNews = dateComponents[2];
+                        var monthOfNews = dateComponents[1];
+                        var yearOfNews = dateComponents[3];
+
+                        newsArr.push({
+                            'id': id,
+                            'title': title,
+                            'category': category,
+                            'img': img,
+                            'hits': hits,
+                            'content': removedBlankPara,
+                            'summary': summary,
+                            'user': user,
+                            'date': dateOfNews,
+                            'month': monthOfNews,
+                            'year': yearOfNews,
+                            'has_sinhala_content': has_sinhala_content,
+                            'has_tamil_content': has_tamil_content
+                        });
+                        // }
+                    });
+                    next(newsArr);
+                });
+            }
+        );
+
+    }
+};
 
 module.exports = router;
