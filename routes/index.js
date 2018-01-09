@@ -129,27 +129,24 @@ router.get('/news/id/:id', function (req, res) {
   let news = req.session.specificNews;
 
   //check whether newsAll session is set
-  if (news === null || news === undefined) {
-    return res.redirect('/api/news/id/' + req.params.id + '?lan=' + req.query['lan']);
-  }
-
-  //this will be needed to populate commodity names in top menu
-  let commodityNames = req.session.commodityNames;
-  //check whether commodityNames session is set
-  req.session.returnToCommodityName = req.path + '?lan=' + req.query['lan'];
-  if (commodityNames === null || commodityNames === undefined) {
-    return res.redirect('/api/commodity/names');
-  }
-
-  req.session.specificNews = null;
-  delete req.session.returnToCommodityName;
-  return res.render('viewnews', {
-    News: news,
-    commodityNames: commodityNames,
-    user: req.user,
+  // if (news === null || news === undefined) {
+  //   return res.redirect('/api/news/id/' + req.params.id + '?lan=' + req.query['lan']);
+  // }
+  require('./news').methods.getById(req.params.id, function (news) {
+    require('./commodity').methods.names(function (commodityNames) {
+      require('./news').methods.getByNewsId(req.params.id, function (api_news) {
+        req.session.specificNews = null;
+        delete req.session.returnToCommodityName;
+        return res.render('viewnews', {
+          apiNews: api_news,
+          News: news,
+          commodityNames: commodityNames,
+          user: req.user,
+        });
+      });
+    });
   });
 });
-
 
 //view basic details
 router.get('/user/basic', function (req, res) {
@@ -184,7 +181,6 @@ router.get('/user/basic', function (req, res) {
     return res.redirect('/user/login?action=login');
   }
 });
-
 
 //view contact details
 router.get('/user/contact', function (req, res) {
@@ -324,7 +320,6 @@ router.get('/user/payment', function (req, res) {
     return res.redirect('/user/login?action=login');
   }
 });
-
 
 //view user notification details
 router.get('/user/notification', function (req, res) {

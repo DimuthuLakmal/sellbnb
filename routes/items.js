@@ -84,7 +84,6 @@ router.post('/add', function (req, res) {
   });
 });
 
-
 //update item in database
 router.post('/update', function (req, res) {
 
@@ -182,8 +181,6 @@ router.get('/viewlatest', function (req, res) {
 });
 
 /* Retrieve items for search from database */
-/* Usage: Home Page */
-/* Usage: Search Results Page */
 router.get('/search/start/:start', function (req, res) {
   let keyword = req.query['keyword'] ? req.query['keyword'] : req.session.keyword;
   if(!keyword) keyword = '';
@@ -230,7 +227,6 @@ router.post('/search/class', function (req, res) {
     }
   );
 });
-
 
 /* Retrieve items for search from database. use selected segment of commodity */
 /* Usage: Serach Result Page */
@@ -617,7 +613,6 @@ router.get('/start/:start/userId/:userId', function (req, res) {
   );
 });
 
-
 /* Update item status */
 /* Usage: User Account Selling Page. When action triggered */
 router.post('/update/status', function (req, res) {
@@ -637,7 +632,6 @@ router.post('/update/status', function (req, res) {
     }
   );
 });
-
 
 /* Retrieve specific item and its comments from database */
 /* Usage: View Bidding Details Seller Page */
@@ -877,7 +871,7 @@ function retrieveItems(req, res, keyword) {
 
               //calculate remaining times for biddings
               let currentTime = new Date().getTime() / 1000;
-              let remainingTimes = []
+              let remainingTimes = [];
               _.forEach(Items.rows, function (item, index) {
                 //calculate remaining time
                 let difference = ((item.createdAt.getTime() / 1000) + item.duration) - currentTime;
