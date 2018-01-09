@@ -1069,6 +1069,159 @@ router['otherFunc'] = {
               });
           }
       );
+  },
+  getItem: function (itemName, userId, cb) {
+    //retrieve data from req object
+    sequelize.sync().then(
+      function () {
+        let Item = models.Item;
+        let User = models.User;
+        let ItemImage = models.ItemImage;
+        let Commodity = models.Commodity;
+        let WareHouse = models.WareHouse;
+        let CommodityMeasureUnit = models.CommodityMeasureUnit;
+        let CommodityPriceUnit = models.CommodityPriceUnit;
+        let CommodityPacking = models.CommodityPacking;
+
+        let whereClose = {};
+        if(isNaN(parseInt(itemName))){
+          whereClose['item_url_code'] = itemName
+        } else {
+          whereClose['id'] = itemName
+        }
+
+        Item.findAll({
+          where: whereClose,
+          include: [User, ItemImage, Commodity, WareHouse]
+        }).then(function (Items) {
+          let item = Items[0].dataValues;
+          let id = item.id;
+          let hits = item.hits;
+          let user = item.User;
+          let itemImages = item.ItemImages;
+          let commodity = item.Commodity;
+          let warehouse = item.WareHouse;
+
+          //calculate remaining time
+          let currentTime = new Date().getTime() / 1000;
+          let difference = ((item.createdAt.getTime() / 1000) + item.duration) - currentTime;
+
+          //retrieve similar items
+          Item.findAll({
+            where: {
+              CommodityId: item.CommodityId,
+              // duration: {
+              //     gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff',moment().format(),sequelize.col("Item.createdAt")))
+              // },
+              id: {
+                $ne: id,
+              }
+            },
+            include: [ItemImage, User],
+          }).then(function (Items) {
+            let similarItems = Items;
+
+            //retrieve similar items
+            Item.findAll({
+              where: {
+                CommodityId: item.CommodityId,
+                duration: {
+                  gte: sequelize.fn("TIME_TO_SEC", sequelize.fn('timediff', moment().format(), sequelize.col("Item.createdAt")))
+                },
+                id: {
+                  $ne: id,
+                }
+              },
+              include: [ItemImage, User],
+            }).then(function (Items) {
+
+              //retreive measure units
+              CommodityMeasureUnit.findAll({
+                where: {CommodityId: commodity.id}
+              }).then(function (MeasuerUnits) {
+                //retrieve price units
+                CommodityPriceUnit.findAll({
+                  where: {CommodityId: commodity.id}
+                }).then(function (PriceUnits) {
+
+                  CommodityPacking.findAll({
+                    where: {CommodityId: commodity.id}
+                  }).then(function (PackingTypes) {
+                    models.Email.findAll({
+                      limit: 1,
+                      where: {UserId: user.id},
+                    }).then(function (Emails) {
+                      models.PhoneNumber.findAll({
+                        limit: 1,
+                        where: {UserId: user.id},
+                      }).then(function (PhoneNumbers) {
+                        if (userId != undefined && userId != null) {
+                          //Store Searched Commodity in
+                          models.RecentSearchCommodity.create({
+                            CommodityId: commodity.id,
+                            ItemId: item.id,
+                            UserId: userId,
+                          }).then(function (insertedRecentSearches) {
+
+                            let specificBiddingItem = {
+                              'item': item,
+                              'commodity': commodity,
+                              'itemImages': itemImages,
+                              'emails': Emails,
+                              'user': user,
+                              'warehouse': warehouse,
+                              'remainingTime': difference,
+                              'phoneNumbers': PhoneNumbers,
+                              'similarItems': similarItems,
+                              'measureUnits': MeasuerUnits,
+                              'priceUnits': PriceUnits,
+                              'packingTypes': PackingTypes
+                            };
+
+                            Item.update(
+                              {hits: (parseInt(hits) + 1)},
+                              {where: {id: id}}
+                            ).then(function (results) {
+                              // res.redirect('/items/name/' + itemName);
+                              return cb(specificBiddingItem);
+                            });
+                          });
+                        } else {
+                          let specificBiddingItem = {
+                            'item': item,
+                            'commodity': commodity,
+                            'itemImages': itemImages,
+                            'emails': Emails,
+                            'user': user,
+                            'warehouse': warehouse,
+                            'remainingTime': difference,
+                            'phoneNumbers': PhoneNumbers,
+                            'similarItems': similarItems,
+                            'measureUnits': MeasuerUnits,
+                            'priceUnits': PriceUnits,
+                            'packingTypes': PackingTypes
+                          };
+
+                          Item.update(
+                            {hits: (parseInt(hits) + 1)},
+                            {where: {id: id}}
+                          ).then(function (results) {
+                            // res.redirect('/items/name/' + itemName);
+                            return cb(specificBiddingItem);
+                          });
+                        }
+                      })
+                    })
+                  });
+
+                });
+              });
+            });
+
+          });
+        });
+      }
+    );
   }
 };
 
