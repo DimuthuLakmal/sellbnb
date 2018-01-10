@@ -154,7 +154,7 @@
              style="padding: 10px 0; background-color: #e2e2e2; border: solid 2px #feffff; border-top: none; margin:0;">
             <section class="variables">
                 <div class="eight columns" style="border-bottom: solid 2px #feffff; margin:0;">
-                    <h1 style="margin-left: 10px; background-color: #e2e2e2" class="headline">Ask Price: <strong style="font-size: 30px; color: #729331 ;"><%= item.item.suggestedPrice + ' ' + item.item.priceUnit %></strong></h1>
+                    <h1 style="margin-left: 10px; background-color: #e2e2e2" class="headline">Ask Price: <strong style="font-size: 30px; color: #729331 ;"><%= item.item.priceUnit + ' ' + item.item.suggestedPrice %></strong></h1>
                 </div>
                 <form method="POST" id="bidformToSubmit" style="background-color: #5d5c60">
                     <input type="hidden" id="input_item_id" name="itemId" value="<%= item.item.id %>"/>
