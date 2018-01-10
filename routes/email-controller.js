@@ -7,15 +7,19 @@ let Email = require('email-templates');
 
 module.exports.sendEmail = function (data, locals) {
   let ndmlTransporter = nodemailer.createTransport({
-    service: 'gmail',
+    // service: 'gmail',
+    name: 'bluehost',
+    port: '465',
+    host: 'box802.bluehost.com',
+    secure: true,
     auth: {
-      user: 'antcommodity@gmail.com',
-      pass: 'JSDIFIPASDIP#u3904@112s'
+      user: 'support@antcommodity.com',
+      pass: '|ZLOT07,Q+Iu('
     }
   });
   const email = new Email({
     message: {
-      from: 'antcommodity@gmail.com'
+      from: 'support@antcommodity.com'
     },
     send: true,
     transport: ndmlTransporter,
